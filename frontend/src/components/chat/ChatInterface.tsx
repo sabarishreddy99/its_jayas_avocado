@@ -1,0 +1,211 @@
+"use client";
+
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import { API_BASE_URL } from "@/lib/api/client";
+import { saveMessages, loadMessages, clearSession } from "@/lib/session";
+import { profile } from "@/data/profile";
+import ChatMessage from "./ChatMessage";
+import ChatInput from "./ChatInput";
+
+export interface Message {
+  role: "user" | "assistant";
+  content: string;
+}
+
+const WELCOME: Message = {
+  role: "assistant",
+  content:
+    "Hi! I'm Avocado, Jaya's AI assistant. Ask me anything about his background, work experience, projects, or skills.",
+};
+
+const SUGGESTIONS = [
+  { label: "Most impressive project?", full: "What's your most impressive project?" },
+  { label: "AI & ML experience?", full: "Tell me about your AI and machine learning experience." },
+  { label: "Education background?", full: "Walk me through your educational background." },
+  { label: "Strongest tech stack?", full: "What's your strongest tech stack and languages?" },
+  { label: "Can I see your resume?", full: "Can I see your resume?" },
+];
+
+export default function ChatInterface() {
+  const [messages, setMessages] = useState<Message[]>(() => {
+    const saved = loadMessages();
+    return saved && saved.length > 0 ? [WELCOME, ...saved] : [WELCOME];
+  });
+  const [streaming, setStreaming] = useState(false);
+  const [streamingContent, setStreamingContent] = useState("");
+  const [prefill, setPrefill] = useState("");
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const abortRef = useRef<AbortController | null>(null);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages, streamingContent]);
+
+  async function handleSend(text: string) {
+    const userMsg: Message = { role: "user", content: text };
+    const nextMessages = [...messages, userMsg];
+    setMessages(nextMessages);
+    setStreaming(true);
+    setStreamingContent("");
+    abortRef.current = new AbortController();
+
+    try {
+      const res = await fetch(`${API_BASE_URL}/ai/chat/stream`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          messages: nextMessages
+            .filter((m) => m !== WELCOME)
+            .slice(-10)
+            .map((m) => ({ role: m.role, content: m.content })),
+          message: text,
+        }),
+        signal: abortRef.current.signal,
+      });
+
+      if (!res.ok || !res.body) throw new Error(`HTTP ${res.status}`);
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let accumulated = "";
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        for (const line of decoder.decode(value, { stream: true }).split("\n")) {
+          if (!line.startsWith("data: ")) continue;
+          try {
+            const data = JSON.parse(line.slice(6));
+            if (data.token) { accumulated += data.token; setStreamingContent(accumulated); }
+            if (data.done) break;
+          } catch { /* partial chunk */ }
+        }
+      }
+
+      const assistantMsg: Message = { role: "assistant", content: accumulated };
+      const finalMessages = [...nextMessages, assistantMsg];
+      setMessages(finalMessages);
+      saveMessages(finalMessages.filter((m) => m !== WELCOME));
+    } catch (err: unknown) {
+      if (err instanceof Error && err.name === "AbortError") return;
+      setMessages((prev) => [
+        ...prev,
+        { role: "assistant", content: "Sorry, something went wrong. Please try again." },
+      ]);
+    } finally {
+      setStreaming(false);
+      setStreamingContent("");
+    }
+  }
+
+  function handleClear() {
+    clearSession();
+    setMessages([WELCOME]);
+  }
+
+  const isInitial = messages.length === 1 && !streaming;
+
+  return (
+    <div className="flex flex-col h-full">
+
+      {/* Messages */}
+      <div className="flex-1 overflow-y-auto px-6 sm:px-10 py-4">
+        <div className="mx-auto max-w-2xl space-y-5">
+          {messages.map((m, i) => (
+            <ChatMessage key={i} message={m} />
+          ))}
+
+          {/* Suggestion chips — only on initial state */}
+          {isInitial && (
+            <div className="pt-2">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400 mb-3">
+                Suggested
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {SUGGESTIONS.map((s) => (
+                  <button
+                    key={s.full}
+                    onClick={() => setPrefill(s.full)}
+                    className="group text-left rounded-xl border border-zinc-200 bg-white px-4 py-3 shadow-sm transition-all hover:border-indigo-300 hover:shadow-md"
+                  >
+                    <span className="flex items-start gap-2">
+                      <svg
+                        className="mt-0.5 shrink-0 text-zinc-300 group-hover:text-indigo-400 transition-colors"
+                        width="12" height="12" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" strokeWidth="2.5"
+                      >
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                      <span className="text-xs text-zinc-600 group-hover:text-indigo-700 transition-colors leading-relaxed">
+                        {s.label}
+                      </span>
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {streaming && (
+            <ChatMessage
+              message={{ role: "assistant", content: streamingContent }}
+              streaming={!streamingContent}
+            />
+          )}
+          <div ref={bottomRef} />
+        </div>
+      </div>
+
+      {/* Bottom — input + footer */}
+      <div className="shrink-0 px-6 sm:px-10 pt-2 pb-5">
+        <div className="mx-auto max-w-2xl space-y-2">
+
+          <ChatInput
+            onSend={handleSend}
+            disabled={streaming}
+            prefill={prefill}
+            onPrefillConsumed={() => setPrefill("")}
+          />
+
+          <div className="flex items-center justify-between px-1">
+            <p className="text-[11px] text-zinc-400">
+              Avocado answers from Jaya&apos;s profile.{" "}
+              <Link href="/portfolio" className="text-indigo-500 hover:text-indigo-700 font-medium">
+                View portfolio →
+              </Link>
+            </p>
+            {messages.length > 1 && (
+              <button
+                onClick={handleClear}
+                className="text-[11px] text-zinc-400 hover:text-zinc-600 transition-colors"
+              >
+                Clear
+              </button>
+            )}
+          </div>
+
+          {/* Footer */}
+          <div className="pt-3 border-t border-zinc-200 flex items-center justify-between flex-wrap gap-2">
+            <span className="text-[11px] text-zinc-400">
+              © {new Date().getFullYear()} Jaya Sabarish Reddy Remala
+            </span>
+            <div className="flex items-center gap-4">
+              <Link href="/blog" className="text-[11px] text-zinc-400 hover:text-zinc-700 transition-colors">
+                Blog
+              </Link>
+              <a href={profile.github} target="_blank" rel="noopener noreferrer"
+                className="text-[11px] text-zinc-400 hover:text-zinc-700 transition-colors">GitHub</a>
+              <a href={profile.linkedin} target="_blank" rel="noopener noreferrer"
+                className="text-[11px] text-zinc-400 hover:text-zinc-700 transition-colors">LinkedIn</a>
+              <a href={`mailto:${profile.email}`}
+                className="text-[11px] text-zinc-400 hover:text-zinc-700 transition-colors">Email</a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  );
+}

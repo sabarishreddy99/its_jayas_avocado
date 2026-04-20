@@ -1,0 +1,27 @@
+export interface SkillGroup {
+  category: string;
+  items: string[];
+}
+
+export const skills: SkillGroup[] = [
+  {
+    category: "Languages",
+    items: ["Python", "Java", "C++", "TypeScript", "JavaScript", "SQL", "Apex", "Bash", "C"],
+  },
+  {
+    category: "AI & Agents",
+    items: ["LangGraph", "RAG", "FAISS", "QLoRA", "AWQ Quantization", "ONNX Runtime", "Voyage AI", "PyTorch", "BGE-M3"],
+  },
+  {
+    category: "Systems & Cloud",
+    items: ["AWS (ECS, S3, EC2, SNS, SQS, Bedrock)", "Apache Kafka", "Docker", "Kubernetes", "Redis", "Nginx", "Jenkins", "CI/CD"],
+  },
+  {
+    category: "Frameworks & Databases",
+    items: ["FastAPI", "Django", "Spring Boot", "Next.js", "React", "Node.js", "PostgreSQL", "DynamoDB", "MongoDB"],
+  },
+  {
+    category: "Certifications",
+    items: ["Salesforce Certified Platform Developer I", "LangGraph Essentials – Python", "SQL (Advanced)", "Microsoft AI Classroom Series"],
+  },
+];
