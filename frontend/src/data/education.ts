@@ -24,7 +24,7 @@ export const education: Education[] = [
       "Coursework: Design and Analysis of Algorithms, Machine Learning, Distributed Systems, Operating Systems",
       "Teaching Assistant — Data Structures & Algorithms for Bioinformatics",
       "Teaching Assistant — Machine Learning & Data Science for Bioinformatics",
-      "Head of Operations, NYU Graduate Indian Student Association (GISA) — Outstanding Inclusivity Initiative award",
+      "Head of Operations, NYU Graduate Indian Student Association (GISA) — Outstanding Inclusivity Initiative and Community Development awards at NYU’s Annual Student Leader Awards, with nominations in 7 distinct categories.",
     ],
   },
   {
@@ -36,7 +36,7 @@ export const education: Education[] = [
     start: "Jul 2017",
     end: "May 2021",
     highlights: [
-      "Built gradeVITian — a PWA serving 17K+ monthly users and achieving #2 Google Search ranking",
+      "Built gradeVITian — a PWA serving 17K+ monthly active users and 30K+ registered accounts, achieving #2 Google Search ranking",
       "Head of Finance, VIT_Animation Club — managed events with 1,000+ attendees",
     ],
   },
