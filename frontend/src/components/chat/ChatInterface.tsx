@@ -8,10 +8,12 @@ import { profile } from "@/data/profile";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import LoadingGame from "./LoadingGame";
+import NavSuggestions, { detectNavLinks, NavLink } from "./NavSuggestions";
 
 export interface Message {
   role: "user" | "assistant";
   content: string;
+  navLinks?: NavLink[];
 }
 
 const WELCOME: Message = {
@@ -87,7 +89,8 @@ export default function ChatInterface() {
         }
       }
 
-      const assistantMsg: Message = { role: "assistant", content: accumulated };
+      const navLinks = detectNavLinks(text, accumulated);
+      const assistantMsg: Message = { role: "assistant", content: accumulated, navLinks };
       const finalMessages = [...nextMessages, assistantMsg];
       setMessages(finalMessages);
       saveMessages(finalMessages.filter((m) => m !== WELCOME));
@@ -117,7 +120,14 @@ export default function ChatInterface() {
       <div className="flex-1 overflow-y-auto px-3 sm:px-10 py-3 sm:py-4">
         <div className="mx-auto max-w-2xl space-y-4 sm:space-y-5">
           {messages.map((m, i) => (
-            <ChatMessage key={i} message={m} />
+            <div key={i}>
+              <ChatMessage message={m} />
+              {m.role === "assistant" && m.navLinks && m.navLinks.length > 0 && m !== WELCOME && (
+                <div className="ml-10">
+                  <NavSuggestions links={m.navLinks} />
+                </div>
+              )}
+            </div>
           ))}
 
           {/* Suggestion chips — only on initial state */}
