@@ -118,6 +118,8 @@ export default function Footer() {
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3">
           <span className="text-xs text-zinc-400">
             © {new Date().getFullYear()} Jaya Sabarish Reddy Remala
+            <span className="mx-2 text-zinc-300">·</span>
+            Updated {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
           </span>
           <div className="flex items-center gap-5">
             {profile.github && (
