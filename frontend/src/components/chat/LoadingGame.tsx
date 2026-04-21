@@ -14,7 +14,6 @@ const HINTS = [
 const COMBO_LABELS = ["Nice!", "Sweet!", "On fire! 🔥", "Unstoppable! 💥", "LEGEND 🥑"];
 const GRID = 9;
 
-// speed tier: [showMs, intervalMs]
 const SPEEDS = [
   [950, 750],
   [800, 600],
@@ -35,11 +34,19 @@ export default function LoadingGame() {
   const [streak, setStreak] = useState(0);
   const [combo, setCombo] = useState<string | null>(null);
   const [hint] = useState(() => HINTS[Math.floor(Math.random() * HINTS.length)]);
+  const [coldStart, setColdStart] = useState(false);
   const scoreRef = useRef(0);
   const livesRef = useRef(3);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
   const hideRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const comboRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const coldRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Show cold start notice after 6 s of waiting
+  useEffect(() => {
+    coldRef.current = setTimeout(() => setColdStart(true), 6000);
+    return () => { if (coldRef.current) clearTimeout(coldRef.current); };
+  }, []);
 
   const showCombo = useCallback((s: number) => {
     const label = COMBO_LABELS[Math.min(Math.floor((s - 1) / 2), COMBO_LABELS.length - 1)];
@@ -62,7 +69,6 @@ export default function LoadingGame() {
       hideRef.current = setTimeout(() => {
         setCells((prev) => {
           if (prev[idx] === "avocado") {
-            // missed avocado — lose a life
             livesRef.current = Math.max(0, livesRef.current - 1);
             setLives(livesRef.current);
             setStreak(0);
@@ -100,7 +106,6 @@ export default function LoadingGame() {
       return;
     }
 
-    // hit avocado
     const newScore = scoreRef.current + 1;
     scoreRef.current = newScore;
     setScore(newScore);
@@ -114,7 +119,6 @@ export default function LoadingGame() {
     scheduleNext();
   }
 
-  // reset when lives hit 0
   useEffect(() => {
     if (lives <= 0) {
       setTimeout(() => {
@@ -139,7 +143,23 @@ export default function LoadingGame() {
   };
 
   return (
-    <div className="animate-in fade-in duration-300 mx-auto max-w-xs w-full">
+    <div className="animate-in fade-in duration-300 mx-auto max-w-xs w-full space-y-2">
+
+      {/* Cold start notice — appears after 6 s */}
+      {coldStart && (
+        <div className="animate-in fade-in duration-500 rounded-xl border border-amber-200 bg-amber-50 px-4 py-2.5 flex items-start gap-2.5">
+          <span className="text-base shrink-0 mt-px">🥑</span>
+          <div>
+            <p className="text-[11px] font-semibold text-amber-700 leading-snug">
+              Avocado is waking up…
+            </p>
+            <p className="text-[10px] text-amber-600 leading-relaxed mt-0.5">
+              It usually experiences cold start. First response takes ~20–30 s. Subsequent ones are instant.
+            </p>
+          </div>
+        </div>
+      )}
+
       <div className="rounded-2xl border border-indigo-100 bg-white shadow-md px-5 py-4 space-y-3">
 
         {/* Header */}
@@ -185,7 +205,6 @@ export default function LoadingGame() {
             })}
           </div>
 
-          {/* Combo popup */}
           {combo && (
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
               <span className="text-sm font-black text-indigo-600 bg-white/90 rounded-full px-3 py-1 shadow animate-in zoom-in duration-150">
@@ -194,7 +213,6 @@ export default function LoadingGame() {
             </div>
           )}
 
-          {/* Game over flash */}
           {lives === 0 && (
             <div className="absolute inset-0 flex items-center justify-center rounded-xl bg-white/80 pointer-events-none">
               <span className="text-xs font-bold text-red-400">Resetting…</span>
