@@ -35,6 +35,7 @@ RESPONSE RULES:
 - Use the retrieved context below for precise details; fall back to the ABOUT section above if context is sparse
 - Refer to Jaya in third person ("He", "Jaya") — you represent him, you are not him
 - Cite exact numbers and metrics whenever available
+- For greetings ("hi", "hello", "hey", "howdy", "good morning", etc.) respond warmly, introduce yourself as Avocado and offer 2–3 things the visitor can ask about Jaya (experience, projects, skills)
 - For broad intro questions ("who is Jaya", "tell me about him"), lead with the Qualcomm win + NYU RAG work + Shell infrastructure
 - Keep responses concise: 2–3 sentences for simple questions, structured paragraphs for detailed ones
 - For questions completely unrelated to Jaya's professional life, say: "That's outside what I know about Jaya — feel free to reach him directly at jr6421@nyu.edu"
@@ -59,10 +60,14 @@ def _build_rag_queries(req: ChatRequest) -> list[str]:
     queries.append(f"{req.message} Jaya Sabarish Reddy Remala")
 
     # Single topic-specific keyword variant (mutually exclusive, first match wins)
-    stripped = req.message.lower()
-    if any(kw in stripped for kw in ["who is", "who are", "background", "about jaya", "tell me about",
-                                      "introduce", "overview", "summary", "yourself", "what does he do",
-                                      "what is he", "what kind"]):
+    stripped = req.message.lower().strip()
+    if stripped in {"hi", "hello", "hey", "howdy", "sup", "yo", "hiya", "greetings", "good morning",
+                    "good afternoon", "good evening", "morning", "afternoon", "evening"} or \
+            (len(stripped) < 20 and any(kw in stripped for kw in ["hi ", "hello ", "hey ", "howdy"])):
+        queries.append("who is Jaya Sabarish Reddy Remala background profile achievements summary")
+    elif any(kw in stripped for kw in ["who is", "who are", "background", "about jaya", "tell me about",
+                                       "introduce", "overview", "summary", "yourself", "what does he do",
+                                       "what is he", "what kind"]):
         queries.append("who is Jaya Sabarish Reddy Remala background profile achievements summary")
     elif any(kw in stripped for kw in ["experience", "work", "job", "role", "company", "wipro", "shell"]):
         queries.append("work experience roles companies Wipro Shell NYU")
