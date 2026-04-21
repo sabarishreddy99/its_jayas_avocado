@@ -4,13 +4,15 @@
     "description": "Achieved 15ms token latency on Snapdragon NPUs — a 10x improvement over cloud inference — by fine-tuning Llama 3.2 3B on security logs with QLoRA and deploying via 4-bit AWQ quantization through ONNX Runtime on-device. Guaranteed zero data loss during network partitions via offline-first SQLite buffer with background sync workers.",
     "tags": ["Python", "FastAPI", "QLoRA", "AWQ Quantization", "ONNX Runtime", "Llama 3.2", "Snapdragon NPU"],
     "featured": true,
-    "award": "Qualcomm Edge AI Hackathon Winner"
+    "award": "Qualcomm Edge AI Hackathon Winner",
+    "github": "https://github.com/sabarishreddy99/snap-log"
   },
   {
     "title": "CodeCollab – Real-Time Collaborative Code Editor",
     "description": "Conflict-free simultaneous multi-user editing using Yjs (CRDTs) and WebSockets, scaled horizontally via Nginx load balancing. Increased AI auto-complete context quality by 65% with a Context-Aware Coding Agent using AST-based chunking and Voyage-Code-2 embeddings.",
     "tags": ["Claude 3.5", "Voyage AI", "Redis", "CRDTs", "WebSockets", "Nginx", "Docker"],
-    "featured": true
+    "featured": true,
+    "github": "https://github.com/sabarishreddy99/CodeCollab"
   },
   {
     "title": "Multi-Agent Research Discovery Engine",
@@ -28,6 +30,7 @@
     "title": "gradeVITian",
     "description": "High-traffic progressive web app for academic grade forecasting at VIT. Scaled to 17K+ monthly active users. Achieved #2 Google Search ranking via programmatic SEO.",
     "tags": ["PHP", "MySQL", "JavaScript", "SEO", "PWA"],
-    "featured": false
+    "featured": false,
+    "github": "https://github.com/sabarishreddy99/gv-official"
   }
 ]

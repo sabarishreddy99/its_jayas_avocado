@@ -16,6 +16,7 @@ export const projects: Project[] = [
     tags: ["Python", "FastAPI", "QLoRA", "AWQ Quantization", "ONNX Runtime", "Llama 3.2", "Snapdragon NPU"],
     featured: true,
     award: "Qualcomm Edge AI Hackathon Winner",
+    github: "https://github.com/sabarishreddy99/snap-log"
   },
   {
     title: "CodeCollab – Real-Time Collaborative Code Editor",
@@ -23,6 +24,7 @@ export const projects: Project[] = [
       "Conflict-free simultaneous multi-user editing using Yjs (CRDTs) and WebSockets, scaled horizontally via Nginx load balancing across containerized instances. Increased AI auto-complete context quality by 65% with a Context-Aware Coding Agent using AST-based chunking and Voyage-Code-2 embeddings.",
     tags: ["Claude 3.5", "Voyage AI", "Redis", "CRDTs", "WebSockets", "Nginx", "Docker"],
     featured: true,
+    github: "https://github.com/sabarishreddy99/CodeCollab"
   },
   {
     title: "Multi-Agent Research Discovery Engine",
@@ -30,6 +32,7 @@ export const projects: Project[] = [
       "Production LangGraph + Llama 3.1 70B system that semantically maps global researcher collaboration networks by indexing millions of papers from Elsevier's Science Direct/Scopus. Cut P99 RAG latency by 78% with Write-Through Redis caching; sustained 99.9% uptime at 3,000+ RPS on AWS ECS.",
     tags: ["LangGraph", "Llama 3.1 70B", "BGE-M3", "FastAPI", "Redis", "AWS ECS", "Kubernetes"],
     featured: true,
+    github: ""
   },
   {
     title: "GeneCart",
@@ -45,5 +48,6 @@ export const projects: Project[] = [
     tags: ["PHP", "MySQL", "JavaScript", "SEO", "PWA"],
     url: undefined,
     featured: false,
+    github: "https://github.com/sabarishreddy99/gv-official"
   },
 ];
