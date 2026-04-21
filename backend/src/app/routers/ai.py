@@ -163,7 +163,7 @@ def _build_chat_prompt(req: ChatRequest, context: str) -> str:
 def _generate(system: str, prompt: str) -> str:
     client = _get_client()
     response = client.models.generate_content(
-        model=settings.gemma_model,
+        model=settings.gemini_model,
         contents=f"{system}\n\n{prompt}" if system else prompt,
     )
     return response.text or ""
@@ -172,7 +172,7 @@ def _generate(system: str, prompt: str) -> str:
 def _stream_tokens(full_prompt: str) -> Iterator[str]:
     client = _get_client()
     for chunk in client.models.generate_content_stream(
-        model=settings.gemma_model,
+        model=settings.gemini_model,
         contents=full_prompt,
     ):
         if chunk.text:
