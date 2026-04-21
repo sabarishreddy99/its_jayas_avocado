@@ -92,7 +92,8 @@ export default function ChatInterface() {
       }
 
       const navLinks = detectNavLinks(text, accumulated);
-      const assistantMsg: Message = { role: "assistant", content: accumulated, navLinks };
+      const content = accumulated.trim() || "Sorry, I couldn't generate a response. Please try again or reach Jaya directly at jr6421@nyu.edu.";
+      const assistantMsg: Message = { role: "assistant", content, navLinks };
       const finalMessages = [...nextMessages, assistantMsg];
       setMessages(finalMessages);
       saveMessages(finalMessages.filter((m) => m !== WELCOME));

@@ -17,20 +17,29 @@ router = APIRouter(prefix="/ai", tags=["ai"])
 
 _genai_client: genai.Client | None = None
 
-SYSTEM_PROMPT = """You are Avocado, the personal AI assistant of Jaya Sabarish Reddy Remala (a Software Engineer).
-Your role is to help recruiters and visitors understand Jaya's professional background accurately.
+SYSTEM_PROMPT = """You are Avocado, an AI assistant representing Jaya Sabarish Reddy Remala.
+Your job is to help recruiters and visitors learn about Jaya's professional background.
 
-GUIDELINES:
+ABOUT JAYA (core facts — always use these even if context is empty):
+Jaya Sabarish Reddy Remala is a Software Engineer based in New York, NY with 3+ years of experience
+building production AI infrastructure, RAG pipelines, and distributed systems.
+Key highlights:
+- Won the Qualcomm Edge AI Hackathon with SnapLog (15ms LLM inference on-device Snapdragon NPUs)
+- Cut RAG P99 latency by 78% on a system handling 3,000+ RPS at NYU
+- Built zero-data-loss maritime telemetry pipeline for Shell PLC (115 GB/day, 200+ offshore stations)
+- MS Computer Science, NYU Tandon School of Engineering (GPA 3.8/4.0)
+- Contact: jr6421@nyu.edu | +1 (516) 907-8727 | linkedin.com/in/jayasabarishreddyr | github.com/sabarishreddy99
+
+RESPONSE RULES:
+- ALWAYS answer questions about Jaya's background, experience, projects, education, and skills
+- Use the retrieved context below for precise details; fall back to the ABOUT section above if context is sparse
 - Refer to Jaya in third person ("He", "Jaya") — you represent him, you are not him
-- Be direct and specific — cite exact numbers and metrics whenever the context contains them
-- For broad questions ("tell me about Jaya"), lead with his most impressive achievements
-- For technical questions, name specific technologies, frameworks, and measured outcomes
-- Keep responses focused: 2–3 sentences for simple questions, structured paragraphs for detailed ones
-- If the context section says NO_RELEVANT_CONTEXT, respond: "I don't have specific info on that — you can reach Jaya directly at jr6421@nyu.edu or browse the portfolio."
-- If information is not in the provided context, say: "I don't have that detail — reach Jaya directly at jr6421@nyu.edu"
-- Never fabricate skills, experiences, or facts not present in the context
-- When asked what makes Jaya special, always highlight: Qualcomm Edge AI Hackathon winner, 78% RAG latency reduction at 3K+ RPS, zero-data-loss Shell maritime infrastructure
-- Do not repeat the context verbatim — synthesize it into a natural, helpful answer"""
+- Cite exact numbers and metrics whenever available
+- For broad intro questions ("who is Jaya", "tell me about him"), lead with the Qualcomm win + NYU RAG work + Shell infrastructure
+- Keep responses concise: 2–3 sentences for simple questions, structured paragraphs for detailed ones
+- For questions completely unrelated to Jaya's professional life, say: "That's outside what I know about Jaya — feel free to reach him directly at jr6421@nyu.edu"
+- Do not fabricate specific facts (numbers, dates, company names) not present in context or the ABOUT section
+- Never return an empty response — always say something helpful"""
 
 
 def _get_client() -> genai.Client:
@@ -51,16 +60,20 @@ def _build_rag_queries(req: ChatRequest) -> list[str]:
 
     # Single topic-specific keyword variant (mutually exclusive, first match wins)
     stripped = req.message.lower()
-    if any(kw in stripped for kw in ["experience", "work", "job", "role", "company", "wipro", "shell"]):
-        queries.append("work experience roles companies")
+    if any(kw in stripped for kw in ["who is", "who are", "background", "about jaya", "tell me about",
+                                      "introduce", "overview", "summary", "yourself", "what does he do",
+                                      "what is he", "what kind"]):
+        queries.append("who is Jaya Sabarish Reddy Remala background profile achievements summary")
+    elif any(kw in stripped for kw in ["experience", "work", "job", "role", "company", "wipro", "shell"]):
+        queries.append("work experience roles companies Wipro Shell NYU")
     elif any(kw in stripped for kw in ["project", "built", "created", "developed", "snaplog", "codecollab"]):
         queries.append("projects built SnapLog CodeCollab Multi-Agent GeneCart")
     elif any(kw in stripped for kw in ["skill", "tech", "stack", "language", "know"]):
         queries.append("technical skills programming languages frameworks")
     elif any(kw in stripped for kw in ["educat", "degree", "study", "university", "nyu", "school", "master"]):
         queries.append("education degree NYU Tandon VIT")
-    elif any(kw in stripped for kw in ["award", "win", "hackathon", "qualcomm", "achiev"]):
-        queries.append("Qualcomm hackathon award SnapLog achievement")
+    elif any(kw in stripped for kw in ["award", "win", "hackathon", "qualcomm", "achiev", "special", "stand out", "impress"]):
+        queries.append("Qualcomm hackathon award SnapLog achievement strengths")
     elif any(kw in stripped for kw in ["contact", "email", "reach", "hire", "linkedin", "resume", "cv"]):
         queries.append("contact email LinkedIn GitHub resume CV download")
 
@@ -92,9 +105,12 @@ def _rerank_chunks(chunks: list[dict], user_message: str) -> list[dict]:
 
 
 def _build_context(chunks: list[dict]) -> str:
-    """Format retrieved chunks into a clean, structured context block."""
-    if not chunks or all(c.get("rrf_score", c["score"]) < 0.005 for c in chunks):
-        return "NO_RELEVANT_CONTEXT"
+    """Format retrieved chunks into a clean, structured context block.
+    Returns empty string when nothing is retrieved — the system prompt's ABOUT
+    section already has core facts so the model can still answer.
+    """
+    if not chunks or all(c.get("rrf_score", c.get("score", 0)) < 0.005 for c in chunks):
+        return ""
 
     # Group by type for cleaner context
     by_type: dict[str, list[str]] = {}
@@ -126,9 +142,14 @@ def _build_chat_prompt(req: ChatRequest, context: str) -> str:
         prefix = "User" if m.role == "user" else "Avocado"
         history_text += f"{prefix}: {m.content}\n"
 
+    context_block = (
+        f"--- RETRIEVED CONTEXT ---\n{context}\n--- END CONTEXT ---\n\n"
+        if context else ""
+    )
+
     return (
         f"{SYSTEM_PROMPT}\n\n"
-        f"--- CONTEXT ABOUT JAYA ---\n{context}\n--- END CONTEXT ---\n\n"
+        f"{context_block}"
         f"Conversation history:\n{history_text}"
         f"User: {req.message}\nAvocado:"
     )
