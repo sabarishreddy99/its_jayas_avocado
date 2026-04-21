@@ -43,21 +43,32 @@ export default function ProjectsPage() {
               ))}
             </div>
 
-            <div className="flex gap-3 pt-2 border-t border-zinc-100">
-              {p.github && (
-                <a href={p.github} target="_blank" rel="noopener noreferrer"
-                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
-                  GitHub →
-                </a>
-              )}
-              {p.url && (
-                <a href={p.url} target="_blank" rel="noopener noreferrer"
-                  className="text-xs font-semibold text-indigo-600 hover:text-indigo-800 transition-colors">
-                  Live demo →
-                </a>
-              )}
-              {!p.github && !p.url && (
-                <span className="text-[11px] text-zinc-400">In progress</span>
+            {/* Note */}
+            {p.note && (
+              <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-3 py-2 mb-3 leading-relaxed">
+                {p.note}
+              </p>
+            )}
+
+            {/* Source links */}
+            <div className="flex flex-wrap gap-2 pt-2 border-t border-zinc-100">
+              {p.sourceLinks && p.sourceLinks.length > 0 ? (
+                p.sourceLinks.map((link) => (
+                  <a
+                    key={link.url}
+                    href={link.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1 rounded-full bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 text-[10px] font-semibold text-indigo-700 hover:bg-indigo-100 hover:border-indigo-400 transition-colors"
+                  >
+                    {link.label}
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                  </a>
+                ))
+              ) : (
+                <span className="text-[11px] text-zinc-400">
+                  {p.note ? "" : "In progress"}
+                </span>
               )}
             </div>
           </div>

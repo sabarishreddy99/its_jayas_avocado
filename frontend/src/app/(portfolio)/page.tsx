@@ -97,19 +97,21 @@ export default function PortfolioHome() {
                     </span>
                   ))}
                 </div>
-                <div className="flex gap-3 pt-1">
-                  {p.github && (
-                    <a href={p.github} target="_blank" rel="noopener noreferrer"
-                      className="text-xs font-medium text-indigo-600 hover:text-indigo-800">
-                      GitHub →
-                    </a>
-                  )}
-                  {p.url && (
-                    <a href={p.url} target="_blank" rel="noopener noreferrer"
-                      className="text-xs font-medium text-indigo-600 hover:text-indigo-800">
-                      Live →
-                    </a>
-                  )}
+                {p.note && (
+                  <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-2.5 py-1.5 leading-relaxed">
+                    {p.note}
+                  </p>
+                )}
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {p.sourceLinks && p.sourceLinks.length > 0 ? (
+                    p.sourceLinks.map((link) => (
+                      <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1 rounded-full bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 text-[10px] font-semibold text-indigo-700 hover:bg-indigo-100 hover:border-indigo-400 transition-colors">
+                        {link.label}
+                        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
+                      </a>
+                    ))
+                  ) : null}
                 </div>
               </div>
             ))}
