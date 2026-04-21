@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllPosts } from "@/lib/blog";
+import BlogGuideDrawer from "@/components/blog/BlogGuideDrawer";
 
 export const metadata = { title: "Blog — Jaya Sabarish Reddy Remala" };
 
@@ -47,6 +48,8 @@ export default function BlogIndexPage() {
           ))}
         </ol>
       )}
+
+      <BlogGuideDrawer />
     </div>
   );
 }

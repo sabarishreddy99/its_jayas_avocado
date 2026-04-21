@@ -2,6 +2,8 @@ import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllSlugs, getPostBySlug } from "@/lib/blog";
 import Link from "next/link";
+import { mdxComponents } from "@/components/blog/MDXComponents";
+import BlogGuideDrawer from "@/components/blog/BlogGuideDrawer";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -48,7 +50,7 @@ export default async function BlogPostPage({ params }: Props) {
         </header>
 
         <div className="prose max-w-none">
-          <MDXRemote source={post.content} />
+          <MDXRemote source={post.content} components={mdxComponents} />
         </div>
       </article>
 
@@ -63,6 +65,8 @@ export default async function BlogPostPage({ params }: Props) {
           Back to all posts
         </Link>
       </div>
+
+      <BlogGuideDrawer />
     </div>
   );
 }
