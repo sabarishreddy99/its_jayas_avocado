@@ -23,7 +23,7 @@ export default function PortfolioHome() {
           {profile.name}
         </h1>
         <p className="text-base sm:text-lg font-medium text-indigo-600">{profile.tagline}</p>
-        <p className="max-w-xl text-sm sm:text-base leading-7 text-zinc-900">Prev @ {profile.previous}</p>
+        <p className="max-w-xl text-sm sm:text-base leading-7 text-zinc-900">Prev @  {profile.previous}</p>
         <p className="max-w-xl text-sm sm:text-base leading-7 text-zinc-600">{profile.bio}</p>
         <p className="max-w-xl text-sm sm:text-base leading-7 text-zinc-800">{profile.obsession}</p>
         <div className="flex flex-wrap gap-3 pt-1">

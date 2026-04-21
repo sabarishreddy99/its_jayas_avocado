@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, startTransition } from "react";
 import Link from "next/link";
 import { API_BASE_URL } from "@/lib/api/client";
 import { saveMessages, loadMessages, clearSession } from "@/lib/session";
@@ -36,7 +36,9 @@ export default function ChatInterface() {
   // Load persisted messages after hydration to avoid SSR mismatch
   useEffect(() => {
     const saved = loadMessages();
-    if (saved && saved.length > 0) setMessages([WELCOME, ...saved]);
+    if (saved && saved.length > 0) {
+      startTransition(() => setMessages([WELCOME, ...saved]));
+    }
   }, []);
   const [streaming, setStreaming] = useState(false);
   const [streamingContent, setStreamingContent] = useState("");

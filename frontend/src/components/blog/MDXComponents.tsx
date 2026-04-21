@@ -1,5 +1,5 @@
-import Image from "next/image";
 import type { MDXComponents } from "mdx/types";
+import BlogImageClient from "./BlogImage";
 
 /* ── Callout ─────────────────────────────────────────── */
 type CalloutVariant = "info" | "tip" | "warning" | "quote";
@@ -24,18 +24,9 @@ export function Callout({ type = "info", title, children }: { type?: CalloutVari
   );
 }
 
-/* ── BlogImage ───────────────────────────────────────── */
+/* ── BlogImage — delegates to client component for lightbox ── */
 export function BlogImage({ src, alt, caption }: { src: string; alt: string; caption?: string }) {
-  return (
-    <figure className="not-prose my-8">
-      <div className="relative w-full overflow-hidden rounded-2xl border border-zinc-200 shadow-sm">
-        <img src={src} alt={alt} className="w-full h-auto block" />
-      </div>
-      {caption && (
-        <figcaption className="mt-2.5 text-center text-xs text-zinc-400 italic">{caption}</figcaption>
-      )}
-    </figure>
-  );
+  return <BlogImageClient src={src} alt={alt} caption={caption} />;
 }
 
 /* ── Divider ─────────────────────────────────────────── */
@@ -52,13 +43,13 @@ export function Divider() {
 /* ── MDX component overrides ─────────────────────────── */
 export const mdxComponents: MDXComponents = {
   // Images: auto-wrap with caption if title provided
-  img: ({ src, alt, title, ...props }) => (
-    <BlogImage src={src as string} alt={alt ?? ""} caption={title} />
+  img: ({ src, alt, title }) => (
+    <BlogImageClient src={src as string} alt={alt ?? ""} caption={title} />
   ),
 
   // Styled inline code
-  code: ({ children, ...props }) => (
-    <code className="bg-zinc-100 border border-zinc-200 rounded px-1.5 py-0.5 text-[0.83em] font-mono text-fuchsia-700" {...props}>
+  code: ({ children }) => (
+    <code className="bg-zinc-100 border border-zinc-200 rounded px-1.5 py-0.5 text-[0.83em] font-mono text-fuchsia-700">
       {children}
     </code>
   ),

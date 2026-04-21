@@ -23,14 +23,9 @@ export default function ChatInput({ onSend, disabled, prefill, onPrefillConsumed
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const recognitionRef = useRef<any>(null);
   const [isListening, setIsListening] = useState(false);
-  const [voiceSupported, setVoiceSupported] = useState(false);
-
-  useEffect(() => {
-    setVoiceSupported(
-      typeof window !== "undefined" &&
-        ("SpeechRecognition" in window || "webkitSpeechRecognition" in window)
-    );
-  }, []);
+  const [voiceSupported] = useState(
+    () => typeof window !== "undefined" && ("SpeechRecognition" in window || "webkitSpeechRecognition" in window)
+  );
 
   // Populate textarea when a suggestion chip is clicked
   useEffect(() => {
@@ -78,7 +73,9 @@ export default function ChatInput({ onSend, disabled, prefill, onPrefillConsumed
     recognition.interimResults = true;
 
     recognition.onstart = () => setIsListening(true);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     recognition.onresult = (e: any) => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const transcript = Array.from(e.results).map((r: any) => r[0].transcript).join("");
       if (textareaRef.current) { textareaRef.current.value = transcript; resize(); }
     };
