@@ -29,10 +29,13 @@ const SUGGESTIONS = [
 ];
 
 export default function ChatInterface() {
-  const [messages, setMessages] = useState<Message[]>(() => {
+  const [messages, setMessages] = useState<Message[]>([WELCOME]);
+
+  // Load persisted messages after hydration to avoid SSR mismatch
+  useEffect(() => {
     const saved = loadMessages();
-    return saved && saved.length > 0 ? [WELCOME, ...saved] : [WELCOME];
-  });
+    if (saved && saved.length > 0) setMessages([WELCOME, ...saved]);
+  }, []);
   const [streaming, setStreaming] = useState(false);
   const [streamingContent, setStreamingContent] = useState("");
   const [prefill, setPrefill] = useState("");
