@@ -5,8 +5,8 @@ export default function ChatPage() {
   return (
     <div className="flex flex-col h-[100dvh] bg-[#f8f8f6]">
 
-      {/* Nav — open, no border */}
-      <header className="shrink-0 px-6 sm:px-12 pt-5 pb-3">
+      {/* Nav */}
+      <header className="shrink-0 px-4 sm:px-12 pt-4 sm:pt-5 pb-2 sm:pb-3">
         <div className="mx-auto flex w-full max-w-2xl items-center justify-between">
           <span className="text-sm font-black tracking-tight text-zinc-950">
             Jaya Sabarish Reddy Remala<span className="text-indigo-600">.</span>
@@ -23,24 +23,24 @@ export default function ChatPage() {
         </div>
       </header>
 
-      {/* Intro — centered, breathing room */}
-      <div className="shrink-0 px-6 text-center pb-5 pt-3">
-        <div className="flex items-center justify-center gap-2 mb-3">
+      {/* Intro */}
+      <div className="shrink-0 px-4 sm:px-6 text-center pb-3 sm:pb-5 pt-1 sm:pt-3">
+        <div className="flex items-center justify-center gap-2 mb-2 sm:mb-3">
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
           <span className="text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-400">
             Avocado · Live
           </span>
         </div>
-        <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-950">
+        <h1 className="text-lg sm:text-2xl font-bold tracking-tight text-zinc-950">
           Chat with Avocado 🥑
         </h1>
-        <p className="mt-1 text-[11px] font-medium text-indigo-500 tracking-wide">
+        <p className="mt-0.5 text-[11px] font-medium text-indigo-500 tracking-wide">
           Jaya&apos;s personal AI chatbot
         </p>
-        <p className="mt-2 text-sm text-zinc-500 max-w-sm mx-auto leading-relaxed">
+        <p className="hidden sm:block mt-2 text-sm text-zinc-500 max-w-sm mx-auto leading-relaxed">
           Ask anything about his work, projects, skills, or background.
         </p>
-        <div className="mx-auto mt-5 w-8 h-px bg-zinc-200" />
+        <div className="mx-auto mt-3 sm:mt-5 w-8 h-px bg-zinc-200" />
       </div>
 
       {/* Chat — open, fills remaining height */}

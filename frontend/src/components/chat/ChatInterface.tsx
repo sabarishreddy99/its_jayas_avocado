@@ -111,8 +111,8 @@ export default function ChatInterface() {
     <div className="flex flex-col h-full">
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-6 sm:px-10 py-4">
-        <div className="mx-auto max-w-2xl space-y-5">
+      <div className="flex-1 overflow-y-auto px-3 sm:px-10 py-3 sm:py-4">
+        <div className="mx-auto max-w-2xl space-y-4 sm:space-y-5">
           {messages.map((m, i) => (
             <ChatMessage key={i} message={m} />
           ))}
@@ -161,7 +161,7 @@ export default function ChatInterface() {
       </div>
 
       {/* Bottom — input + footer */}
-      <div className="shrink-0 px-6 sm:px-10 pt-2 pb-5">
+      <div className="shrink-0 px-3 sm:px-10 pt-2 pb-3 sm:pb-5">
         <div className="mx-auto max-w-2xl space-y-2">
 
           <ChatInput
@@ -188,8 +188,8 @@ export default function ChatInterface() {
             )}
           </div>
 
-          {/* Footer */}
-          <div className="pt-3 border-t border-zinc-200 flex items-center justify-between flex-wrap gap-2">
+          {/* Footer — hidden on mobile to maximise chat space */}
+          <div className="hidden sm:flex pt-3 border-t border-zinc-200 items-center justify-between flex-wrap gap-2">
             <span className="text-[11px] text-zinc-400">
               © {new Date().getFullYear()} Jaya Sabarish Reddy Remala
             </span>
