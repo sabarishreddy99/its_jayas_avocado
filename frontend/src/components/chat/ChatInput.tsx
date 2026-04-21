@@ -11,14 +11,17 @@ interface ChatInputProps {
 
 declare global {
   interface Window {
-    SpeechRecognition: typeof SpeechRecognition;
-    webkitSpeechRecognition: typeof SpeechRecognition;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    SpeechRecognition: new () => any;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    webkitSpeechRecognition: new () => any;
   }
 }
 
 export default function ChatInput({ onSend, disabled, prefill, onPrefillConsumed }: ChatInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
-  const recognitionRef = useRef<SpeechRecognition | null>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const recognitionRef = useRef<any>(null);
   const [isListening, setIsListening] = useState(false);
   const [voiceSupported, setVoiceSupported] = useState(false);
 
@@ -75,7 +78,7 @@ export default function ChatInput({ onSend, disabled, prefill, onPrefillConsumed
     recognition.interimResults = true;
 
     recognition.onstart = () => setIsListening(true);
-    recognition.onresult = (e: SpeechRecognitionEvent) => {
+    recognition.onresult = (e: any) => {
       const transcript = Array.from(e.results).map((r) => r[0].transcript).join("");
       if (textareaRef.current) { textareaRef.current.value = transcript; resize(); }
     };
