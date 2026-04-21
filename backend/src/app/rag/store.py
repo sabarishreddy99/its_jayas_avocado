@@ -1,6 +1,9 @@
 from __future__ import annotations
 
+import asyncio
 import logging
+from concurrent.futures import ThreadPoolExecutor
+from functools import lru_cache
 from typing import List
 
 import chromadb
@@ -11,6 +14,7 @@ logger = logging.getLogger(__name__)
 
 _client: chromadb.PersistentClient | None = None
 _collection: chromadb.Collection | None = None
+_executor = ThreadPoolExecutor(max_workers=4)
 
 COLLECTION_NAME = "portfolio"
 EMBED_MODEL = "all-MiniLM-L6-v2"
@@ -55,6 +59,7 @@ def reset_collection() -> None:
     except Exception:
         pass
     _collection = None
+    _query_single_cached.cache_clear()
 
 
 def query(text: str, n_results: int = 8) -> list[dict]:
@@ -88,11 +93,35 @@ def query(text: str, n_results: int = 8) -> list[dict]:
     return chunks
 
 
+@lru_cache(maxsize=256)
+def _query_single_cached(query_text: str, n_results: int) -> tuple:
+    """LRU-cached single query — avoids re-embedding identical/repeated questions."""
+    return tuple(query(query_text, n_results))
+
+
 def query_multi(texts: list[str], n_per_query: int = 6) -> list[dict]:
-    """Query with multiple text variants and merge/deduplicate results."""
+    """Synchronous multi-query with caching (used by non-streaming endpoint)."""
     seen: dict[str, dict] = {}
     for text in texts:
-        for chunk in query(text, n_results=n_per_query):
+        for chunk in _query_single_cached(text, n_per_query):
+            cid = chunk["id"]
+            if cid not in seen or chunk["score"] > seen[cid]["score"]:
+                seen[cid] = chunk
+    return sorted(seen.values(), key=lambda c: c["score"], reverse=True)[:10]
+
+
+async def query_multi_async(texts: list[str], n_per_query: int = 6) -> list[dict]:
+    """Async parallel multi-query — runs all ChromaDB queries concurrently in a thread pool."""
+    loop = asyncio.get_event_loop()
+    tasks = [
+        loop.run_in_executor(_executor, _query_single_cached, text, n_per_query)
+        for text in texts
+    ]
+    results = await asyncio.gather(*tasks)
+
+    seen: dict[str, dict] = {}
+    for chunks in results:
+        for chunk in chunks:
             cid = chunk["id"]
             if cid not in seen or chunk["score"] > seen[cid]["score"]:
                 seen[cid] = chunk

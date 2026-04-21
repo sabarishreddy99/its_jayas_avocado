@@ -233,13 +233,19 @@ def _build_documents() -> list[tuple[str, str, str]]:
     return docs
 
 
-def run_ingest(force: bool = True) -> int:
+def run_ingest(force: bool = False) -> int:
     """Ingest knowledge base into ChromaDB. Returns number of documents upserted."""
     if force:
         logger.info("Force re-ingest: resetting ChromaDB collection...")
         reset_collection()
 
     collection = get_collection()
+
+    if not force and collection.count() > 0:
+        count = collection.count()
+        logger.info("Knowledge base already populated (%d docs) — skipping ingest", count)
+        return count
+
     docs = _build_documents()
     if not docs:
         logger.warning("No knowledge documents found in %s", DATA_DIR)

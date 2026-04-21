@@ -26,6 +26,7 @@ GUIDELINES:
 - For broad questions ("tell me about Jaya"), lead with his most impressive achievements
 - For technical questions, name specific technologies, frameworks, and measured outcomes
 - Keep responses focused: 2–3 sentences for simple questions, structured paragraphs for detailed ones
+- If the context section says NO_RELEVANT_CONTEXT, respond: "I don't have specific info on that — you can reach Jaya directly at jr6421@nyu.edu or browse the portfolio."
 - If information is not in the provided context, say: "I don't have that detail — reach Jaya directly at jr6421@nyu.edu"
 - Never fabricate skills, experiences, or facts not present in the context
 - When asked what makes Jaya special, always highlight: Qualcomm Edge AI Hackathon winner, 78% RAG latency reduction at 3K+ RPS, zero-data-loss Shell maritime infrastructure
@@ -42,42 +43,58 @@ def _get_client() -> genai.Client:
 
 
 def _build_rag_queries(req: ChatRequest) -> list[str]:
-    """Generate multiple query angles from the current message + recent history.
-    Multi-query retrieval dramatically improves recall for follow-up and vague questions.
-    """
+    """Generate up to 4 targeted query angles: verbatim, name-anchored, topic keyword, follow-up context."""
     queries = [req.message]
 
-    # Add recent user turns as extra context for retrieval
-    recent_user_msgs = [m.content for m in req.messages[-6:] if m.role == "user"][-2:]
-    if recent_user_msgs:
-        combined = " ".join(recent_user_msgs) + " " + req.message
-        if combined.strip() != req.message.strip():
-            queries.append(combined)
+    # Name-anchored variant improves person-specific retrieval
+    queries.append(f"{req.message} Jaya Sabarish Reddy Remala")
 
-    # Add a keyword-stripped version for broad concept matching
+    # Single topic-specific keyword variant (mutually exclusive, first match wins)
     stripped = req.message.lower()
-    if any(kw in stripped for kw in ["experience", "work", "job", "role", "company"]):
+    if any(kw in stripped for kw in ["experience", "work", "job", "role", "company", "wipro", "shell"]):
         queries.append("work experience roles companies")
-    if any(kw in stripped for kw in ["project", "built", "created", "developed"]):
+    elif any(kw in stripped for kw in ["project", "built", "created", "developed", "snaplog", "codecollab"]):
         queries.append("projects built SnapLog CodeCollab Multi-Agent GeneCart")
-    if any(kw in stripped for kw in ["skill", "tech", "stack", "language", "know"]):
+    elif any(kw in stripped for kw in ["skill", "tech", "stack", "language", "know"]):
         queries.append("technical skills programming languages frameworks")
-    if any(kw in stripped for kw in ["educat", "degree", "study", "university", "nyu", "school"]):
+    elif any(kw in stripped for kw in ["educat", "degree", "study", "university", "nyu", "school", "master"]):
         queries.append("education degree NYU Tandon VIT")
-    if any(kw in stripped for kw in ["award", "win", "hackathon", "qualcomm", "achiev"]):
+    elif any(kw in stripped for kw in ["award", "win", "hackathon", "qualcomm", "achiev"]):
         queries.append("Qualcomm hackathon award SnapLog achievement")
-    if any(kw in stripped for kw in ["contact", "email", "reach", "hire", "linkedin"]):
-        queries.append("contact email LinkedIn GitHub phone")
-    if any(kw in stripped for kw in ["resume", "cv", "download", "pdf"]):
-        queries.append("resume CV download link Google Drive")
+    elif any(kw in stripped for kw in ["contact", "email", "reach", "hire", "linkedin", "resume", "cv"]):
+        queries.append("contact email LinkedIn GitHub resume CV download")
 
-    return queries
+    # Add recent conversation context for follow-up questions (only if slot remains)
+    if len(queries) < 4:
+        recent = [m.content for m in req.messages[-4:] if m.role == "user"][-1:]
+        if recent:
+            combined = recent[0] + " " + req.message
+            if combined.strip() != req.message.strip():
+                queries.append(combined)
+
+    return queries[:4]
+
+
+_STOP_WORDS = {"what", "tell", "about", "your", "have", "does", "that", "with", "from", "this",
+               "jaya", "his", "the", "and", "for", "you", "can", "more", "some", "any"}
+
+
+def _rerank_chunks(chunks: list[dict], user_message: str) -> list[dict]:
+    """Boost chunks that contain keywords from the user message as a tie-breaker."""
+    keywords = {w.lower() for w in user_message.split() if len(w) > 3 and w.lower() not in _STOP_WORDS}
+    if not keywords:
+        return chunks
+    for chunk in chunks:
+        text_lower = chunk["text"].lower()
+        overlap = sum(1 for kw in keywords if kw in text_lower)
+        chunk["_rank"] = chunk["score"] + overlap * 0.05
+    return sorted(chunks, key=lambda c: c.get("_rank", c["score"]), reverse=True)
 
 
 def _build_context(chunks: list[dict]) -> str:
     """Format retrieved chunks into a clean, structured context block."""
-    if not chunks:
-        return "No specific context retrieved."
+    if not chunks or all(c["score"] < 0.15 for c in chunks):
+        return "NO_RELEVANT_CONTEXT"
 
     # Group by type for cleaner context
     by_type: dict[str, list[str]] = {}
@@ -105,7 +122,7 @@ def _build_context(chunks: list[dict]) -> str:
 
 def _build_chat_prompt(req: ChatRequest, context: str) -> str:
     history_text = ""
-    for m in req.messages[-6:]:
+    for m in req.messages[-4:]:
         prefix = "User" if m.role == "user" else "Avocado"
         history_text += f"{prefix}: {m.content}\n"
 
@@ -159,6 +176,7 @@ class ChatResponse(BaseModel):
 def ai_chat(req: ChatRequest) -> ChatResponse:
     queries = _build_rag_queries(req)
     chunks = rag_store.query_multi(queries)
+    chunks = _rerank_chunks(chunks, req.message)
     context = _build_context(chunks)
     sources = [f"{c['type']}:{c['id']}" for c in chunks]
     prompt = _build_chat_prompt(req, context)
@@ -169,9 +187,11 @@ def ai_chat(req: ChatRequest) -> ChatResponse:
 # ── /ai/chat/stream (SSE streaming) ──────────────────────────────────────────
 
 @router.post("/chat/stream")
-def ai_chat_stream(req: ChatRequest) -> StreamingResponse:
+async def ai_chat_stream(req: ChatRequest) -> StreamingResponse:
     queries = _build_rag_queries(req)
-    chunks = rag_store.query_multi(queries)
+    # Parallel async RAG — all queries run concurrently, dramatically reducing TTFT
+    chunks = await rag_store.query_multi_async(queries)
+    chunks = _rerank_chunks(chunks, req.message)
     context = _build_context(chunks)
     sources = [f"{c['type']}:{c['id']}" for c in chunks]
     full_prompt = _build_chat_prompt(req, context)
