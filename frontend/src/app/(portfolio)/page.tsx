@@ -2,6 +2,7 @@ import Link from "next/link";
 import { profile } from "@/data/profile";
 import { projects } from "@/data/projects";
 import { skills } from "@/data/skills";
+import TestimonialsCarousel from "@/components/TestimonialsCarousel";
 
 export const metadata = { title: "Jaya Sabarish Reddy Remala — Software Engineer" };
 
@@ -134,6 +135,9 @@ export default function PortfolioHome() {
           ))}
         </div>
       </section>
+
+      {/* Testimonials */}
+      <TestimonialsCarousel />
 
       {/* Contact */}
       <section className="rounded-2xl border border-zinc-200 bg-white p-6 sm:p-8">
