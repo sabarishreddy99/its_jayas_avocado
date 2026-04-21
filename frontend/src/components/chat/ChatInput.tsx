@@ -79,7 +79,7 @@ export default function ChatInput({ onSend, disabled, prefill, onPrefillConsumed
 
     recognition.onstart = () => setIsListening(true);
     recognition.onresult = (e: any) => {
-      const transcript = Array.from(e.results).map((r) => r[0].transcript).join("");
+      const transcript = Array.from(e.results).map((r: any) => r[0].transcript).join("");
       if (textareaRef.current) { textareaRef.current.value = transcript; resize(); }
     };
     recognition.onend = () => { setIsListening(false); textareaRef.current?.focus(); };
