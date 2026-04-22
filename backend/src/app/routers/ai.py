@@ -43,7 +43,16 @@ RESPONSE RULES:
 - Keep responses concise: 2–3 sentences for simple questions, structured paragraphs for detailed ones
 - For questions completely unrelated to Jaya's professional life, say: "That's outside what I know about Jaya — feel free to reach him directly at jr6421@nyu.edu"
 - Do not fabricate specific facts (numbers, dates, company names) not present in context or the ABOUT section
-- Never return an empty response — always say something helpful"""
+- Never return an empty response — always say something helpful
+
+PORTFOLIO SECTION LINKS (use these when relevant — the UI will render them as clickable pills):
+- Full work history → /experience
+- All projects → /projects
+- Education details → /education
+- Skills overview → /portfolio
+- Blog posts → /blog  (individual post → /blog/[slug])
+- Lab / system design docs → /lab  (individual entry → /lab/[slug])
+- Resume → available via the Resume link in navigation"""
 
 
 def _get_client() -> genai.Client:
@@ -128,14 +137,16 @@ def _build_context(chunks: list[dict]) -> str:
 
     sections = []
     type_labels = {
-        "profile": "Profile",
+        "profile":    "Profile",
         "experience": "Work Experience",
-        "education": "Education",
-        "project": "Projects",
-        "skills": "Skills",
-        "faq": "Key Facts",
+        "education":  "Education",
+        "project":    "Projects",
+        "skills":     "Skills",
+        "faq":        "Key Facts",
+        "blog":       "Blog Posts",
+        "lab":        "Lab / System Design",
     }
-    for t in ["faq", "profile", "experience", "project", "education", "skills"]:
+    for t in ["faq", "profile", "experience", "project", "education", "skills", "blog", "lab"]:
         if t in by_type:
             label = type_labels.get(t, t.title())
             content = "\n".join(f"• {text}" for text in by_type[t])

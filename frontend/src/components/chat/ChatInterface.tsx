@@ -8,7 +8,7 @@ import { profile } from "@/data/profile";
 import ChatMessage from "./ChatMessage";
 import ChatInput from "./ChatInput";
 import LoadingGame from "./LoadingGame";
-import NavSuggestions, { detectNavLinks, NavLink } from "./NavSuggestions";
+import NavSuggestions, { detectNavLinks, sourcesToNavLinks, mergeNavLinks, NavLink } from "./NavSuggestions";
 
 export interface Message {
   role: "user" | "assistant";
@@ -86,6 +86,7 @@ export default function ChatInterface() {
       const reader = res.body.getReader();
       const decoder = new TextDecoder();
       let accumulated = "";
+      let ragSources: string[] = [];
 
       while (true) {
         const { done, value } = await reader.read();
@@ -95,12 +96,19 @@ export default function ChatInterface() {
           try {
             const data = JSON.parse(line.slice(6));
             if (data.token) { accumulated += data.token; setStreamingContent(accumulated); }
-            if (data.done) { if (data.model) setActiveModel(data.model); break; }
+            if (data.done) {
+              if (data.model) setActiveModel(data.model);
+              if (data.sources) ragSources = data.sources as string[];
+              break;
+            }
           } catch { /* partial chunk */ }
         }
       }
 
-      const navLinks = detectNavLinks(text, accumulated);
+      const navLinks = mergeNavLinks(
+        sourcesToNavLinks(ragSources),
+        detectNavLinks(text, accumulated),
+      );
       const content = accumulated.trim() || "Sorry, I couldn't generate a response. Please try again or reach Jaya directly at jr6421@nyu.edu.";
       const assistantMsg: Message = { role: "assistant", content, navLinks };
       const finalMessages = [...nextMessages, assistantMsg];

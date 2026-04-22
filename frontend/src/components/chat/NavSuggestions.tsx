@@ -5,30 +5,40 @@ export interface NavLink {
   label: string;
   href: string;
   external?: boolean;
+  icon?: string;
 }
+
+// ── Section keyword map ───────────────────────────────────────────────────────
 
 const SECTIONS: { href: string; label: string; icon: string; keywords: string[] }[] = [
   {
     href: "/projects",
     label: "Projects",
     icon: "◈",
-    keywords: ["project", "built", "build", "snaplog", "codecollab", "gradeVITian", "genecart",
-      "hackathon", "award", "winner", "github", "demo", "app", "system", "engine"],
+    keywords: [
+      "project", "built", "build", "snaplog", "codecollab", "gradeVITian", "genecart",
+      "hackathon", "award", "winner", "github", "demo", "app", "system", "engine",
+      "qualcomm", "SnapLog",
+    ],
   },
   {
     href: "/experience",
     label: "Experience",
     icon: "◎",
-    keywords: ["experience", "work", "job", "role", "shell", "wipro", "nyu", "engineer",
+    keywords: [
+      "experience", "work", "job", "role", "shell", "wipro", "nyu", "engineer",
       "intern", "company", "position", "career", "employed", "team", "led", "built at",
-      "latency", "pipeline", "kafka", "langraph", "production"],
+      "latency", "pipeline", "kafka", "langraph", "production",
+    ],
   },
   {
     href: "/education",
     label: "Education",
     icon: "◉",
-    keywords: ["education", "degree", "university", "nyu", "vit", "gpa", "tandon",
-      "master", "bachelor", "school", "college", "coursework", "study", "studied", "graduate"],
+    keywords: [
+      "education", "degree", "university", "nyu", "vit", "gpa", "tandon",
+      "master", "bachelor", "school", "college", "coursework", "study", "studied", "graduate",
+    ],
   },
   {
     href: "/blog",
@@ -37,31 +47,118 @@ const SECTIONS: { href: string; label: string; icon: string; keywords: string[] 
     keywords: ["blog", "writing", "post", "article", "thoughts", "wrote", "publish"],
   },
   {
+    href: "/lab",
+    label: "Lab",
+    icon: "⬡",
+    keywords: [
+      "lab", "system design", "architecture", "living doc", "in progress",
+      "decision", "progress log", "building in public", "itsjaya",
+    ],
+  },
+  {
     href: "/portfolio",
     label: "Skills",
     icon: "◆",
-    keywords: ["skill", "stack", "technology", "language", "tool", "framework", "python",
-      "typescript", "react", "fastapi", "kubernetes", "aws", "redis", "proficient"],
+    keywords: [
+      "skill", "stack", "technology", "language", "tool", "framework", "python",
+      "typescript", "react", "fastapi", "kubernetes", "aws", "redis", "proficient",
+    ],
   },
 ];
+
+// ── RAG source type → portfolio URL ──────────────────────────────────────────
+
+const SOURCE_TYPE_MAP: Record<string, { href: string; label: string; icon: string }> = {
+  experience: { href: "/experience", label: "Experience",  icon: "◎" },
+  education:  { href: "/education",  label: "Education",   icon: "◉" },
+  project:    { href: "/projects",   label: "Projects",    icon: "◈" },
+  skills:     { href: "/portfolio",  label: "Skills",      icon: "◆" },
+  profile:    { href: "/portfolio",  label: "Portfolio",   icon: "✦" },
+};
+
+/**
+ * Convert RAG source strings (e.g. "experience:exp_0_bullet_2", "blog:blog_my-post",
+ * "lab:lab_itsjaya") into deduplicated NavLink pills.
+ */
+export function sourcesToNavLinks(sources: string[]): NavLink[] {
+  const seen = new Set<string>();
+  const links: NavLink[] = [];
+
+  for (const src of sources) {
+    const colon = src.indexOf(":");
+    if (colon === -1) continue;
+    const type = src.slice(0, colon);
+    const id   = src.slice(colon + 1);
+
+    if (type === "blog") {
+      // id format: "blog_{slug}"
+      const slug = id.replace(/^blog_/, "");
+      const href = `/blog/${slug}`;
+      if (!seen.has(href)) {
+        seen.add(href);
+        links.push({ href, label: "Blog post ↗", icon: "◇" });
+      }
+      // Also surface blog index
+      if (!seen.has("/blog")) { seen.add("/blog"); links.push({ href: "/blog", label: "Blog", icon: "◇" }); }
+      continue;
+    }
+
+    if (type === "lab") {
+      // id format: "lab_{slug}"
+      const slug = id.replace(/^lab_/, "");
+      const href = `/lab/${slug}`;
+      if (!seen.has(href)) {
+        seen.add(href);
+        links.push({ href, label: "Lab entry ↗", icon: "⬡" });
+      }
+      if (!seen.has("/lab")) { seen.add("/lab"); links.push({ href: "/lab", label: "Lab", icon: "⬡" }); }
+      continue;
+    }
+
+    const mapped = SOURCE_TYPE_MAP[type];
+    if (mapped && !seen.has(mapped.href)) {
+      seen.add(mapped.href);
+      links.push({ href: mapped.href, label: mapped.label, icon: mapped.icon });
+    }
+  }
+
+  return links;
+}
+
+// ── Keyword-based detection (from conversation text) ─────────────────────────
 
 export function detectNavLinks(userMsg: string, assistantMsg: string): NavLink[] {
   const combined = (userMsg + " " + assistantMsg).toLowerCase();
   const links: NavLink[] = [];
 
   for (const s of SECTIONS) {
-    if (s.keywords.some((kw) => combined.includes(kw))) {
-      links.push({ label: s.label, href: s.href, icon: s.icon } as NavLink & { icon: string });
+    if (s.keywords.some((kw) => combined.includes(kw.toLowerCase()))) {
+      links.push({ label: s.label, href: s.href, icon: s.icon });
     }
   }
 
-  // Resume link when resume/cv/download mentioned
   if (/\b(resume|cv|download|pdf)\b/.test(combined)) {
     links.push({ label: "Resume ↗", href: profile.resume, external: true });
   }
 
-  return links.slice(0, 4); // cap at 4 to avoid clutter
+  return links;
 }
+
+// ── Merge RAG-based + keyword-based links, deduped, capped at 5 ──────────────
+
+export function mergeNavLinks(ragLinks: NavLink[], keywordLinks: NavLink[]): NavLink[] {
+  const seen = new Set<string>();
+  const result: NavLink[] = [];
+  for (const l of [...ragLinks, ...keywordLinks]) {
+    if (!seen.has(l.href)) {
+      seen.add(l.href);
+      result.push(l);
+    }
+  }
+  return result.slice(0, 5);
+}
+
+// ── Component ────────────────────────────────────────────────────────────────
 
 export default function NavSuggestions({ links }: { links: NavLink[] }) {
   if (!links.length) return null;
@@ -77,6 +174,7 @@ export default function NavSuggestions({ links }: { links: NavLink[] }) {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-1 rounded-full border border-indigo-200 bg-indigo-50 px-3 py-1 text-[11px] font-medium text-indigo-600 hover:bg-indigo-100 hover:border-indigo-400 transition-all"
           >
+            {l.icon && <span className="text-indigo-400 text-[10px]">{l.icon}</span>}
             {l.label}
           </a>
         ) : (
@@ -85,9 +183,7 @@ export default function NavSuggestions({ links }: { links: NavLink[] }) {
             href={l.href}
             className="inline-flex items-center gap-1 rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-[11px] font-medium text-zinc-600 hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-700 transition-all"
           >
-            {(l as NavLink & { icon?: string }).icon && (
-              <span className="text-zinc-400 text-[10px]">{(l as NavLink & { icon?: string }).icon}</span>
-            )}
+            {l.icon && <span className="text-zinc-400 text-[10px]">{l.icon}</span>}
             {l.label}
           </Link>
         )
