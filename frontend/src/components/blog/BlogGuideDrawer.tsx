@@ -121,7 +121,7 @@ export default function BlogGuideDrawer() {
       <button
         onClick={() => setOpen(true)}
         title="Blog writing guide"
-        className="fixed bottom-6 right-5 z-40 flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white/80 backdrop-blur px-3 py-2 text-[10px] font-semibold text-zinc-300 shadow-sm hover:text-indigo-500 hover:border-indigo-200 transition-all duration-300 select-none"
+        className="fixed bottom-20 md:bottom-6 right-5 z-40 flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white/80 backdrop-blur px-3 py-2 text-[10px] font-semibold text-zinc-300 shadow-sm hover:text-indigo-500 hover:border-indigo-200 transition-all duration-300 select-none"
       >
         <span className="text-[11px]">✦</span>
         <span>Guide</span>
