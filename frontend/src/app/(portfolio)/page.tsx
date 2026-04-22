@@ -24,8 +24,33 @@ export default function PortfolioHome() {
           {profile.name}
         </h1>
         <p className="text-base sm:text-lg font-medium text-indigo-600">{profile.tagline}</p>
-        <p className="max-w-xl text-sm sm:text-base leading-7 text-zinc-900">Prev @  {profile.previous}</p>
+        <p className="max-w-xl text-sm sm:text-base leading-7 text-zinc-900">Prev @ {profile.previous}</p>
         <p className="max-w-xl text-sm sm:text-base leading-7 text-zinc-600">{profile.bio}</p>
+
+        {/* Domain focus */}
+        <div className="flex flex-col gap-1.5 max-w-xl border-l-2 border-zinc-200 pl-4">
+          <p className="text-[11px] text-zinc-400">
+            <span className="font-semibold uppercase tracking-widest mr-2">Previously</span>
+            {profile.prev_domain.split(",").map((d, i, arr) => (
+              <span key={d}>
+                <span className="text-zinc-500">{d.trim()}</span>
+                {i < arr.length - 1 && <span className="mx-1.5 text-zinc-300">·</span>}
+              </span>
+            ))}
+          </p>
+          <p className="text-[11px] text-zinc-400">
+            <span className="font-semibold uppercase tracking-widest mr-2">Excited in</span>
+            {profile.interested_domain.split(",").map((d, i, arr) => (
+              <span key={d}>
+                <span className="text-indigo-500">{d.trim()}</span>
+                {i < arr.length - 1 && <span className="mx-1.5 text-zinc-300">·</span>}
+              </span>
+            ))}
+            <span className="mx-1.5 text-zinc-300">·</span>
+            <span className="text-zinc-400 italic">& more</span>
+          </p>
+        </div>
+
         <p className="max-w-xl text-sm sm:text-base leading-7 text-zinc-800">{profile.obsession}</p>
         <div className="flex flex-wrap gap-3 pt-1">
           <Link
