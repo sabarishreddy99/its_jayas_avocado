@@ -184,7 +184,7 @@ def _generate(system: str, prompt: str) -> str:
     raise last_exc or RuntimeError("All models exhausted")
 
 
-def _stream_tokens(full_prompt: str) -> Iterator[str]:
+def _stream_tokens(full_prompt: str, used_model: list[str]) -> Iterator[str]:
     client = _get_client()
     last_exc: Exception | None = None
     for model in settings.model_chain:
@@ -192,6 +192,7 @@ def _stream_tokens(full_prompt: str) -> Iterator[str]:
             for chunk in client.models.generate_content_stream(model=model, contents=full_prompt):
                 if chunk.text:
                     yield chunk.text
+            used_model.append(model)
             if model != settings.gemini_model:
                 logger.info("Streamed via fallback model: %s", model)
             return
@@ -259,10 +260,11 @@ async def ai_chat_stream(req: ChatRequest) -> StreamingResponse:
     full_prompt = _build_chat_prompt(req, context)
 
     def event_stream():
+        used_model: list[str] = []
         try:
-            for token in _stream_tokens(full_prompt):
+            for token in _stream_tokens(full_prompt, used_model):
                 yield f"data: {json.dumps({'token': token})}\n\n"
-            yield f"data: {json.dumps({'done': True, 'sources': sources})}\n\n"
+            yield f"data: {json.dumps({'done': True, 'sources': sources, 'model': used_model[0] if used_model else settings.gemini_model})}\n\n"
         except Exception as exc:
             logger.error("Streaming error: %s", exc)
             yield f"data: {json.dumps({'error': str(exc)})}\n\n"

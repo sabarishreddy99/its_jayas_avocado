@@ -32,6 +32,7 @@ const SUGGESTIONS = [
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([WELCOME]);
+  const [activeModel, setActiveModel] = useState<string | null>(null);
 
   // Load persisted messages after hydration to avoid SSR mismatch
   useEffect(() => {
@@ -86,7 +87,7 @@ export default function ChatInterface() {
           try {
             const data = JSON.parse(line.slice(6));
             if (data.token) { accumulated += data.token; setStreamingContent(accumulated); }
-            if (data.done) break;
+            if (data.done) { if (data.model) setActiveModel(data.model); break; }
           } catch { /* partial chunk */ }
         }
       }
@@ -188,11 +189,18 @@ export default function ChatInterface() {
           />
 
           <div className="flex items-center justify-between px-1">
-            <p className="text-[11px] text-zinc-400">
+            <p className="text-[11px] text-zinc-400 flex items-center gap-2">
               Avocado answers from Jaya&apos;s profile.{" "}
+              {activeModel && (
+                <span className="inline-flex items-center gap-1 rounded-full bg-zinc-100 border border-zinc-200 px-2 py-0.5 text-[10px] font-medium text-zinc-500">
+                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
+                  {activeModel}
+                </span>
+              )}
               <Link href="/" className="text-indigo-500 hover:text-indigo-700 font-medium">
                 View portfolio →
               </Link>
+              
             </p>
             {messages.length > 1 && (
               <button
