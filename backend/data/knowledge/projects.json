@@ -10,32 +10,37 @@
     ],
     "note": ""
   },
+
+  {
+    "title": "GeneCart",
+    "description": "AI-powered genomics discovery platform currently being built at NYU College of Arts and Science. Focused on making genomic data exploration accessible and actionable for researchers.",
+    "tags": ["Machine Learning", "Python", "TypeScript", "FastAPI", "React", "PostgreSQL", "AWS", "PyTorch", "Kubernetes"],
+    "featured": false,
+    "sourceLinks": [],
+    "note": "In active development at NYU CAS."
+  },
+
+  {
+    "title": "Multi-Agent Research Discovery Engine",
+    "description": "Production LangGraph + Llama 3.1 70B system that semantically maps global researcher collaboration networks by indexing millions of papers from Elsevier's Science Direct/Scopus. Cut P99 RAG latency by 78% with Write-Through Redis caching; sustained 99.9% uptime at 3,000+ RPS on AWS ECS.",
+    "tags": ["LangGraph", "Llama 3.1 70B", "BGE-M3", "FastAPI", "Redis", "AWS", "Kubernetes"],
+    "featured": true,
+    "sourceLinks": [],
+    "note": ""
+  },
+
   {
     "title": "CodeCollab – Real-Time Collaborative Code Editor",
     "description": "Conflict-free simultaneous multi-user editing using Yjs (CRDTs) and WebSockets, scaled horizontally via Nginx load balancing across containerized instances. Increased AI auto-complete context quality by 65% with a Context-Aware Coding Agent using AST-based chunking and Voyage-Code-2 embeddings.",
-    "tags": ["Claude 3.5", "Voyage AI", "Redis", "CRDTs", "WebSockets", "Nginx", "Docker"],
+    "tags": ["AWS", "Claude 3.5", "Voyage AI", "Redis", "CRDTs", "WebSockets", "Nginx", "Docker"],
     "featured": true,
     "sourceLinks": [
       { "label": "GitHub", "url": "https://github.com/sabarishreddy99/CodeCollab" }
     ],
     "note": ""
   },
-  {
-    "title": "Multi-Agent Research Discovery Engine",
-    "description": "Production LangGraph + Llama 3.1 70B system that semantically maps global researcher collaboration networks by indexing millions of papers from Elsevier's Science Direct/Scopus. Cut P99 RAG latency by 78% with Write-Through Redis caching; sustained 99.9% uptime at 3,000+ RPS on AWS ECS.",
-    "tags": ["LangGraph", "Llama 3.1 70B", "BGE-M3", "FastAPI", "Redis", "AWS ECS", "Kubernetes"],
-    "featured": true,
-    "sourceLinks": [],
-    "note": ""
-  },
-  {
-    "title": "GeneCart",
-    "description": "AI-powered genomics discovery platform currently being built at NYU College of Arts and Science. Focused on making genomic data exploration accessible and actionable for researchers.",
-    "tags": ["Python", "FastAPI", "React", "PostgreSQL", "AI"],
-    "featured": false,
-    "sourceLinks": [],
-    "note": "In active development at NYU CAS."
-  },
+ 
+ 
   {
     "title": "gradeVITian",
     "description": "High-traffic progressive web app for academic grade forecasting at VIT. Scaled to 17K+ monthly active users and around 20K+ registered accounts. Achieved #2 Google Search ranking via programmatic SEO with sub-second mobile load times.",
@@ -47,13 +52,13 @@
       {"label": "Version 2.0", "url": "https://www.linkedin.com/feed/update/urn:li:activity:6809389656187265024/" },
       {"label": "Promo", "url":"https://www.linkedin.com/posts/jayasabarishreddyr_undergrad-attendance-grades-activity-6699032199272001536-zi52/"}
     ],
-    "note": "To the VITian community (Class of 2020–2025), thank you for making gradeVITan a success. With six years in production and 17,000+ monthly users, your support has been deeply humbling. As I decommission the service to embrace the LLM era, I reflect on the invaluable lessons learned. This journey truly defined me as an engineer. I am profoundly grateful to everyone who was a part of this incredible chapter."
+    "note": "To the VITian community (Class of 2020–2025), thank you for making gradeVITian a success. With six years in production and 17,000+ monthly users, your support has been deeply humbling. As I decommission the service to embrace the LLM era, I reflect on the invaluable lessons learned. This journey truly defined me as an engineer. I am profoundly grateful to everyone who was a part of this incredible chapter."
   },
 
   {
     "title": "VRF Bricks",
     "description": "A simple online web application that helped people find my dad's business in a mid-sized town in India.",
-    "tags": ["HTML", "Js", "CSS"],
+    "tags": ["HTML", "JavaScript", "CSS", "SEO"],
     "featured": false,
     "sourceLinks": [{ "label": "GitHub", "url": "https://github.com/sabarishreddy99/vrfbricks.github.io" }],
     "note": "At its heart, this was a project of purpose: an online gateway built to help people navigate my father's new business within our town. Seeing a simple web application drive real-world sales and provide stability for my family during the COVID-era was a transformative experience. It taught me that engineering is most powerful when it serves a personal and communal need."

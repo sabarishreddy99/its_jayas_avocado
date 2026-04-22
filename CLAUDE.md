@@ -4,21 +4,33 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this project is
 
-Personal AI-assisted portfolio for Jaya Sabarish Reddy Remala. The landing page is a **RAG-powered recruiter chatbot** (Gemma 4 via Google AI API + ChromaDB). From there, visitors can navigate to a full portfolio (Experience, Education, Projects, Blog).
+Personal AI-assisted portfolio for Jaya Sabarish Reddy Remala (`itsjaya.com`). The site has two entry points:
+
+- `/` — Full-screen RAG-powered recruiter chatbot ("Avocado") powered by Gemini via Google AI API + ChromaDB
+- `/portfolio` — Portfolio home with hero, featured projects, domain interests, skills, testimonials carousel, and contact
+
+From the portfolio visitors navigate to Experience, Education, Projects, and Blog.
+
+---
 
 ## Routing
 
 | Route | Purpose |
 |---|---|
-| `/` | AI Chatbot landing page |
-| `/portfolio` | Portfolio home — hero, featured projects, skills, contact |
+| `/` | Avocado — AI chatbot landing (full-screen, no nav) |
+| `/chat` | Same chatbot, accessible from portfolio nav |
+| `/portfolio` | Portfolio home — hero, featured projects, skills, testimonials, contact |
 | `/experience` | Work history timeline |
 | `/education` | Education cards |
-| `/projects` | Projects grid |
-| `/blog` | Blog index (MDX) |
-| `/blog/[slug]` | Blog post |
+| `/projects` | Projects grid with source link tag buttons |
+| `/blog` | Blog index sorted by `publishedAt` |
+| `/blog/[slug]` | Blog post rendered in Source Serif 4 font |
 
-Portfolio routes (`/portfolio`, `/experience`, `/education`, `/projects`, `/blog`) live inside `frontend/src/app/(portfolio)/` route group, sharing a `Nav` + `Footer` layout.
+All portfolio routes live inside `frontend/src/app/(portfolio)/` route group sharing a `Nav` + `Footer` layout. The chatbot (`/`) is outside this group — no nav or footer.
+
+A mobile FAB (fixed bottom-right) appears on all portfolio pages linking to `/chat`.
+
+---
 
 ## Commands
 
@@ -27,8 +39,9 @@ Portfolio routes (`/portfolio`, `/experience`, `/education`, `/projects`, `/blog
 ```bash
 cd frontend
 npm install
-npm run dev        # http://localhost:3000
-npm run build
+npm run dev        # runs sync first, then http://localhost:3000
+npm run build      # runs sync first, then builds
+npm run sync       # manually sync backend JSON → frontend (run after editing any backend JSON)
 npm run lint
 ```
 
@@ -39,11 +52,18 @@ cd backend
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 uvicorn app.main:app --app-dir src --reload   # http://localhost:8000
-# On startup, auto-ingests knowledge base into ChromaDB
-# To re-ingest manually:
-python -m app.rag.ingest                      # (from backend/src/)
+# Auto-ingests knowledge base at startup; re-ingests only if content hash changed
+python -m app.rag.ingest   # manual re-ingest (from backend/src/)
 pytest
 ruff check src
+```
+
+### Sync script (repo root)
+
+```bash
+node scripts/sync-knowledge.mjs
+# Generates backend/data/knowledge/blog.json from MDX posts
+# Copies all backend/data/knowledge/*.json → frontend/src/data/knowledge/
 ```
 
 ### Docker
@@ -53,53 +73,110 @@ cp .env.example .env   # fill in GOOGLE_API_KEY
 docker compose -f infra/compose.yml up --build
 ```
 
+---
+
 ## Architecture
 
 ### Frontend (`frontend/src/`)
 
-- `app/page.tsx` — Chatbot landing (full-screen)
-- `app/(portfolio)/layout.tsx` — Shared Nav + Footer for all portfolio routes
-- `components/chat/` — `ChatInterface`, `ChatMessage`, `ChatInput` (all client components)
-- `components/Nav.tsx` — Portfolio navigation (client component, uses `usePathname`)
-- `components/Footer.tsx` — Footer with social links from `data/profile.ts`
-- `data/` — Static TypeScript data: `profile.ts`, `experience.ts`, `education.ts`, `projects.ts`, `skills.ts`
-- `lib/blog.ts` — MDX blog loader (`getAllPosts`, `getPostBySlug`, `getAllSlugs`)
+- `app/page.tsx` — Chatbot landing (full-screen, outside portfolio layout)
+- `app/(portfolio)/layout.tsx` — Shared Nav + Footer + mobile Avocado FAB
+- `app/(portfolio)/page.tsx` — Portfolio home: hero with domain chips, featured projects, skills, testimonials, contact
+- `components/chat/` — `ChatInterface`, `ChatMessage`, `ChatInput`, `LoadingGame` (all client components)
+- `components/Nav.tsx` — Portfolio navigation (client, uses `usePathname`)
+- `components/Footer.tsx` — Animated marquee footer; shows "Updated [date]" baked at build time
+- `components/TestimonialsCarousel.tsx` — Auto-advancing carousel (5s), pause on hover, dots + arrows
+- `components/blog/BlogGuideDrawer.tsx` — Floating guide drawer on blog pages; includes MDX syntax reference + **Appendix: data reference table** (where to edit each data type)
+- `components/blog/MDXComponents.tsx` — Auto-imported MDX components: `Callout`, `BlogImage`, `Divider`
+- `data/*.ts` — Typed re-exports from `data/knowledge/*.json` (do not hardcode values here)
+- `data/knowledge/` — Synced copies of backend JSON (auto-generated by sync script, do not edit directly)
+- `lib/blog.ts` — MDX blog loader; sorts by `publishedAt` field (stable publish date), falls back to `date`
 - `lib/api/client.ts` — `apiPost<T>()` helper pointing to backend
-- `content/blog/*.mdx` — Blog posts with frontmatter (`title`, `date`, `description`, `tags[]`)
+- `content/blog/*.mdx` — Blog posts; frontmatter: `title`, `date`, `publishedAt`, `description`, `tags[]`
 
 ### Backend (`backend/src/app/`)
 
-- `main.py` — FastAPI app; auto-ingests RAG knowledge base at startup via lifespan
-- `routers/ai.py` — All AI endpoints: `POST /ai/chat`, `/ai/summarize`, `/ai/draft`, `/ai/rewrite`
+- `main.py` — FastAPI app; triggers `run_ingest()` at startup via lifespan
+- `routers/ai.py` — AI endpoints: `POST /ai/chat`, `/ai/summarize`, `/ai/draft`, `/ai/rewrite`
 - `rag/store.py` — ChromaDB persistent client + `query()` function
-- `rag/ingest.py` — Reads `backend/data/knowledge/*.json`, upserts into ChromaDB (idempotent)
-- `core/settings.py` — Pydantic settings: `frontend_origin`, `google_api_key`, `gemma_model`
+- `rag/ingest.py` — Hash-based ingest: computes SHA256 of all knowledge JSON files; skips re-ingest if hash unchanged; includes blog documents from `blog.json`
+- `core/settings.py` — Pydantic settings: `frontend_origin`, `google_api_key`, `gemini_model`
 
 ### RAG flow for `/ai/chat`
 
 1. User message → embed with `all-MiniLM-L6-v2` (sentence-transformers)
-2. Query ChromaDB for top-5 relevant chunks from knowledge base
-3. Inject chunks as context into Gemma 4 system prompt
+2. Query ChromaDB for top-5 relevant chunks + BM25 hybrid retrieval
+3. Inject chunks as context into Gemini system prompt
 4. Return `{ reply, sources }`
 
-### Knowledge base (`backend/data/knowledge/`)
+---
 
-JSON files mirroring the TypeScript data files. Update both when changing profile data:
-- `profile.json`, `experience.json`, `education.json`, `projects.json`, `skills.json`
+## Knowledge base — single source of truth
+
+**Always edit files in `backend/data/knowledge/`. Never edit `frontend/src/data/knowledge/` directly** — those are auto-overwritten by the sync script.
+
+| File | Controls |
+|---|---|
+| `profile.json` | name, tagline, bio, obsession, previous, `prev_domain`, `interested_domain`, location, email, phone, github, linkedin, resume |
+| `experience.json` | Work history roles, companies, bullet points |
+| `education.json` | Degrees, institutions, GPA, highlights |
+| `projects.json` | title, description, tags[], featured, award, `sourceLinks[{label,url}]`, note |
+| `skills.json` | Skill categories and items |
+| `testimonials.json` | name, designation, company, linkedin, description, givenAt, source |
+| `blog.json` | Auto-generated from MDX posts by sync script — do not edit |
+
+After editing any JSON: run `npm run sync` from `frontend/`, or just restart `npm run dev`.
+
+---
+
+## Blog posts
+
+- Files live at `frontend/src/content/blog/[slug].mdx`
+- Filename becomes the URL slug: `my-post.mdx` → `/blog/my-post`
+- Frontmatter fields: `title`, `date` (display), `publishedAt` (sort key — set once, never change), `description`, `tags[]`
+- Images go in `frontend/public/blog/`, referenced as `/blog/filename.jpg`
+- MDX components (`Callout`, `BlogImage`, `Divider`) are auto-imported — no import statement needed
+- Blog posts are indexed into ChromaDB automatically via the sync script + Railway redeploy
+
+---
+
+## Auto-sync pipeline
+
+```
+Edit backend JSON  →  npm run sync  →  frontend/src/data/knowledge/ updated
+Write MDX post     →  git push      →  GH Actions runs sync, commits blog.json
+                                        Railway redeploys → hash changed → re-ingest
+```
+
+GH Actions workflow (`.github/workflows/deploy.yml`) has `contents: write` permission and auto-commits synced files with `[skip ci]` to avoid infinite loops.
+
+---
 
 ## Environment variables
 
 ```
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8000   # frontend → backend
-FRONTEND_ORIGIN=http://localhost:3000            # backend CORS
-GOOGLE_API_KEY=                                  # required for AI endpoints
-GEMMA_MODEL=gemma-4-31b-it                       # Gemma model via Google AI API
+# Frontend
+NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+NEXT_PUBLIC_BLOG_FONT=Source_Serif_4      # blog reading font (static import in layout.tsx)
+
+# Backend
+APP_ENV=dev
+FRONTEND_ORIGIN=http://localhost:3000
+GOOGLE_API_KEY=                           # required for AI endpoints
+GEMINI_MODEL=gemini-2.5-flash            # swap model here without code changes
 ```
+
+---
 
 ## Key conventions
 
-- Backend module path is `backend/src`; uvicorn must use `--app-dir backend/src`
-- Tailwind 4 config lives in `globals.css` via `@theme inline` (no `tailwind.config.js`)
-- Blog MDX frontmatter shape: `title`, `date` (YYYY-MM-DD string), `description`, `tags[]`
-- The `(portfolio)` route group adds no URL segment — `/experience` not `/(portfolio)/experience`
-- ChromaDB persists to `backend/chroma_db/` (git-ignored)
+- **Single source of truth**: edit `backend/data/knowledge/*.json` for all portfolio data
+- **Blog font**: `NEXT_PUBLIC_BLOG_FONT` documents the choice; actual font imported statically in `layout.tsx` as `Source_Serif_4`; applied via `--font-blog` CSS variable in `globals.css`
+- **Tailwind 4**: config lives in `globals.css` via `@theme inline` — no `tailwind.config.js`
+- **Blog sort**: ordered by `publishedAt` (immutable), not `date` (editable display date)
+- **Source links on projects**: render as indigo pill tag buttons (`sourceLinks[{label, url}]`)
+- **Domain chips on hero**: `prev_domain` and `interested_domain` in `profile.json` are comma-separated strings; split and rendered as chips on the portfolio home
+- **`(portfolio)` route group**: adds no URL segment — `/experience` not `/(portfolio)/experience`
+- **ChromaDB**: persists to `backend/chroma_db/` (git-ignored); hash file at `chroma_db/.ingest_hash`
+- **Backend module path**: uvicorn must use `--app-dir backend/src`
+- **Favicon**: `src/app/icon.png` (Next.js App Router auto-detects)

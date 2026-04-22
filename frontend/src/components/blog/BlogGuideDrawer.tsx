@@ -140,6 +140,65 @@ export default function BlogGuideDrawer() {
             </div>
           ))}
 
+          {/* Appendix — Data Reference */}
+          <div className="rounded-xl border border-zinc-200 bg-white p-4 space-y-4">
+            <div>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-0.5">Appendix</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">Where to edit website data</p>
+              <p className="text-[10px] text-zinc-400 mt-1">After editing any JSON file, run <span className="font-mono bg-zinc-100 px-1 rounded">npm run sync</span> from <span className="font-mono bg-zinc-100 px-1 rounded">frontend/</span></p>
+            </div>
+            <div className="space-y-2">
+              {[
+                {
+                  what: "Name, bio, tagline, location, email, phone, GitHub, LinkedIn, resume",
+                  file: "backend/data/knowledge/profile.json",
+                  fields: "name, tagline, bio, obsession, previous, prev_domain, interested_domain, location, email, phone, github, linkedin, resume",
+                },
+                {
+                  what: "Work experience — roles, companies, bullet points",
+                  file: "backend/data/knowledge/experience.json",
+                  fields: "role, company, location, start, end, description, bullets[]",
+                },
+                {
+                  what: "Education — degrees, institutions, highlights",
+                  file: "backend/data/knowledge/education.json",
+                  fields: "institution, school, degree, field, location, start, end, gpa, highlights[]",
+                },
+                {
+                  what: "Projects — title, description, tags, source links, notes",
+                  file: "backend/data/knowledge/projects.json",
+                  fields: "title, description, tags[], featured, award, sourceLinks[{label,url}], note",
+                },
+                {
+                  what: "Skills & tools — categories and items",
+                  file: "backend/data/knowledge/skills.json",
+                  fields: "category, items[]",
+                },
+                {
+                  what: "Testimonials — name, role, company, quote",
+                  file: "backend/data/knowledge/testimonials.json",
+                  fields: "name, designation, company, linkedin, description, givenAt, source",
+                },
+                {
+                  what: "Blog posts — new article",
+                  file: "frontend/src/content/blog/[slug].mdx",
+                  fields: "title, date, publishedAt, description, tags[] (frontmatter) — no sync needed",
+                },
+                {
+                  what: "Blog post images",
+                  file: "frontend/public/blog/",
+                  fields: "place image files here, reference as /blog/filename.jpg",
+                },
+              ].map(({ what, file, fields }) => (
+                <div key={file} className="border border-zinc-100 rounded-lg p-2.5 space-y-1">
+                  <p className="text-[11px] font-semibold text-zinc-700">{what}</p>
+                  <p className="font-mono text-[10px] text-indigo-600 break-all">{file}</p>
+                  <p className="text-[10px] text-zinc-400 leading-relaxed">{fields}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+
           {/* Quick card */}
           <div className="rounded-xl border border-zinc-100 bg-zinc-50 p-4">
             <p className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-3">Quick card</p>

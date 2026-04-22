@@ -22,7 +22,7 @@
     "bullets": [
       "Architected a production Multi-Agent Research Discovery Engine (LangGraph + Llama 3.1 70B) that semantically maps global researcher collaboration networks by indexing millions of papers from Elsevier's (Science Direct/Scopus), enabling cross-institutional discovery at a scale previously requiring manual curation.",
       "Improved scientific query accuracy by 40% by engineering a Multi-Agent Search Router with hybrid retrieval, combining BGE-M3 dense embeddings with Reciprocal Rank Fusion (RRF) to resolve ambiguous cross-domain nomenclature lookups.",
-      "Sustained 99.9% uptime at 3,000+ RPS by building a horizontally-scaled async pipeline (Node.js + FastAPI on AWS ECS) with fault-isolated workers and circuit-breaker patterns.",
+      "Sustained 99.9% uptime at 3,000+ RPS by building a horizontally scaled async pipeline (Node.js + FastAPI on AWS ECS) with fault-isolated workers and circuit-breaker patterns.",
       "Reduced P99 retrieval latency by 78% (450ms to <100ms) by designing a Write-Through Redis caching strategy for multi-hop Chain-of-Retrieval queries across chained LangGraph agent calls.",
       "Cut deployment lead times by 65% by owning the full CI/CD lifecycle, containerizing stateful LLM workloads on Kubernetes with zero-downtime rolling deploys."
     ]
