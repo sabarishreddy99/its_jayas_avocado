@@ -27,7 +27,7 @@ export default async function BlogPostPage({ params }: Props) {
     <div className="mx-auto w-full max-w-3xl px-4 sm:px-6 py-12 sm:py-16">
       <Link
         href="/blog"
-        className="inline-flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors mb-10"
+        className="inline-flex items-center gap-1.5 text-xs font-medium text-accent hover:text-accent-hover transition-colors mb-10"
       >
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
           <path d="M19 12H5M12 19l-7-7 7-7"/>
@@ -36,14 +36,14 @@ export default async function BlogPostPage({ params }: Props) {
       </Link>
 
       <article>
-        <header className="mb-10 pb-8 border-b border-zinc-200">
-          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-zinc-950 leading-tight mb-3 font-[family-name:var(--font-blog)]">
+        <header className="mb-10 pb-8 border-b border-border">
+          <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-fg leading-tight mb-3 font-[family-name:var(--font-blog)]">
             {post.title}
           </h1>
           <div className="flex flex-wrap items-center gap-3">
-            <span className="text-sm text-zinc-400">{post.date}</span>
+            <span className="text-sm text-fg-faint">{post.date}</span>
             {post.tags.map((t) => (
-              <span key={t} className="rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-500">
+              <span key={t} className="rounded-full bg-surface-raised px-2 py-0.5 text-[10px] font-medium text-fg-subtle">
                 #{t}
               </span>
             ))}
@@ -57,10 +57,10 @@ export default async function BlogPostPage({ params }: Props) {
         <BlogEngagement slug={post.slug} />
       </article>
 
-      <div className="mt-16 pt-8 border-t border-zinc-200">
+      <div className="mt-16 pt-8 border-t border-border">
         <Link
           href="/blog"
-          className="inline-flex items-center gap-1.5 text-xs font-medium text-indigo-600 hover:text-indigo-800 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-accent hover:text-accent-hover transition-colors"
         >
           <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
             <path d="M19 12H5M12 19l-7-7 7-7"/>

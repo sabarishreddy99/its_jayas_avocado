@@ -153,7 +153,7 @@ export default function ChatInterface() {
           {/* Suggestion chips — only on initial state */}
           {isInitial && (
             <div className="pt-2">
-              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-zinc-400 mb-3">
+              <p className="text-[10px] font-semibold uppercase tracking-[0.18em] text-fg-faint mb-3">
                 Suggested
               </p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -161,17 +161,17 @@ export default function ChatInterface() {
                   <button
                     key={s.full}
                     onClick={() => setPrefill(s.full)}
-                    className="group text-left rounded-xl border border-zinc-200 bg-white px-4 py-3 shadow-sm transition-all hover:border-indigo-300 hover:shadow-md"
+                    className="group text-left rounded-xl border border-border bg-surface px-4 py-3 shadow-sm transition-all hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-md"
                   >
                     <span className="flex items-start gap-2">
                       <svg
-                        className="mt-0.5 shrink-0 text-zinc-300 group-hover:text-indigo-400 transition-colors"
+                        className="mt-0.5 shrink-0 text-fg-faint group-hover:text-accent transition-colors"
                         width="12" height="12" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" strokeWidth="2.5"
                       >
                         <path d="M5 12h14M12 5l7 7-7 7" />
                       </svg>
-                      <span className="text-xs text-zinc-600 group-hover:text-indigo-700 transition-colors leading-relaxed">
+                      <span className="text-xs text-fg-muted group-hover:text-accent transition-colors leading-relaxed">
                         {s.label}
                       </span>
                     </span>
@@ -205,23 +205,22 @@ export default function ChatInterface() {
           />
 
           <div className="flex items-center justify-between px-1">
-            <p className="text-[11px] text-zinc-400 flex items-center gap-2">
+            <p className="text-[11px] text-fg-faint flex items-center gap-2">
               Avocado answers from Jaya&apos;s profile.{" "}
               {activeModel && (
-                <span className="inline-flex items-center gap-1 rounded-full bg-zinc-100 border border-zinc-200 px-2 py-0.5 text-[10px] font-medium text-zinc-500">
+                <span className="inline-flex items-center gap-1 rounded-full bg-surface-raised border border-border px-2 py-0.5 text-[10px] font-medium text-fg-subtle">
                   <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
                   {activeModel}
                 </span>
               )}
-              <Link href="/" className="text-indigo-500 hover:text-indigo-700 font-medium">
+              <Link href="/" className="text-accent hover:text-accent-hover font-medium">
                 View portfolio →
               </Link>
-              
             </p>
             {messages.length > 1 && (
               <button
                 onClick={handleClear}
-                className="text-[11px] text-zinc-400 hover:text-zinc-600 transition-colors"
+                className="text-[11px] text-fg-faint hover:text-fg-muted transition-colors"
               >
                 Clear
               </button>
@@ -232,37 +231,37 @@ export default function ChatInterface() {
           {stats && stats.total_responses > 0 && (
             <div className="flex items-center justify-center gap-4 py-1.5">
               <div className="flex items-center gap-1.5">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-indigo-400"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                <span className="text-[10px] text-zinc-400">
-                  <span className="font-semibold text-zinc-600">{stats.total_responses.toLocaleString()}</span> responses
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-accent"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span className="text-[10px] text-fg-faint">
+                  <span className="font-semibold text-fg-muted">{stats.total_responses.toLocaleString()}</span> responses
                 </span>
               </div>
-              <span className="text-zinc-200">·</span>
+              <span className="text-border">·</span>
               <div className="flex items-center gap-1.5">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-indigo-400"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                <span className="text-[10px] text-zinc-400">
-                  <span className="font-semibold text-zinc-600">{stats.unique_visitors.toLocaleString()}</span> unique visitors
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-accent"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                <span className="text-[10px] text-fg-faint">
+                  <span className="font-semibold text-fg-muted">{stats.unique_visitors.toLocaleString()}</span> unique visitors
                 </span>
               </div>
             </div>
           )}
 
           {/* Footer */}
-          <div className="pt-2 sm:pt-3 border-t border-zinc-200">
+          <div className="pt-2 sm:pt-3 border-t border-border">
             <div className="flex items-center justify-between gap-2">
-              <span className="text-[10px] sm:text-[11px] text-zinc-400 hidden sm:block">
+              <span className="text-[10px] sm:text-[11px] text-fg-faint hidden sm:block">
                 © {new Date().getFullYear()} Jaya Sabarish Reddy Remala
               </span>
               <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto justify-between sm:justify-end">
-                <Link href="/blog" className="text-[10px] sm:text-[11px] text-zinc-400 hover:text-zinc-700 transition-colors">Blog</Link>
+                <Link href="/blog" className="text-[10px] sm:text-[11px] text-fg-faint hover:text-fg-muted transition-colors">Blog</Link>
                 <a href={profile.github} target="_blank" rel="noopener noreferrer"
-                  className="text-[10px] sm:text-[11px] text-zinc-400 hover:text-zinc-700 transition-colors">GitHub</a>
+                  className="text-[10px] sm:text-[11px] text-fg-faint hover:text-fg-muted transition-colors">GitHub</a>
                 <a href={profile.linkedin} target="_blank" rel="noopener noreferrer"
-                  className="text-[10px] sm:text-[11px] text-zinc-400 hover:text-zinc-700 transition-colors">LinkedIn</a>
+                  className="text-[10px] sm:text-[11px] text-fg-faint hover:text-fg-muted transition-colors">LinkedIn</a>
                 <a href={`mailto:${profile.email}`}
-                  className="text-[10px] sm:text-[11px] text-zinc-400 hover:text-zinc-700 transition-colors">Email</a>
+                  className="text-[10px] sm:text-[11px] text-fg-faint hover:text-fg-muted transition-colors">Email</a>
                 <a href={profile.resume} target="_blank" rel="noopener noreferrer"
-                  className="text-[10px] sm:text-[11px] text-zinc-400 hover:text-zinc-700 transition-colors">Resume</a>
+                  className="text-[10px] sm:text-[11px] text-fg-faint hover:text-fg-muted transition-colors">Resume</a>
               </div>
             </div>
           </div>

@@ -33,7 +33,7 @@ function MarqueeText({
           className={`transition-colors duration-150 ${hoveredIdx === idx ? hoverOpacity : baseOpacity}`}
           style={{ cursor: "default" }}
         >
-          {ch === " " ? "\u00A0" : ch}
+          {ch === " " ? " " : ch}
         </span>
       );
     });
@@ -57,7 +57,7 @@ export default function Footer() {
   const [paused, setPaused] = useState(false);
 
   return (
-    <footer className="mt-auto border-t border-zinc-200 bg-white">
+    <footer className="mt-auto border-t border-border bg-surface">
 
       {/* Scrolling name — hover pauses */}
       <div
@@ -83,8 +83,8 @@ export default function Footer() {
             animationDelay: "-24s",
             willChange: "transform",
           }}
-          baseOpacity="text-zinc-950/[0.07]"
-          hoverOpacity="text-zinc-950/60"
+          baseOpacity="text-fg/[0.07]"
+          hoverOpacity="text-fg/60"
         />
 
         {/* SABARISH REDDY REMALA — left to right */}
@@ -107,39 +107,39 @@ export default function Footer() {
               animationDelay: "-12s",
               willChange: "transform",
             }}
-            baseOpacity="text-zinc-400/50"
-            hoverOpacity="text-zinc-950"
+            baseOpacity="text-fg-faint/50"
+            hoverOpacity="text-fg"
           />
         </div>
       </div>
 
       {/* Bottom bar */}
-      <div className="border-t border-zinc-100 px-4 sm:px-6 py-4">
+      <div className="border-t border-border-subtle px-4 sm:px-6 py-4">
         <div className="mx-auto flex w-full max-w-6xl flex-wrap items-center justify-between gap-3">
-          <span className="text-xs text-zinc-400">
+          <span className="text-xs text-fg-faint">
             © {new Date().getFullYear()} Jaya Sabarish Reddy Remala
-            <span className="mx-2 text-zinc-300">·</span>
+            <span className="mx-2 text-fg-faint/50">·</span>
             Updated {new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })}
           </span>
           <div className="flex items-center gap-5">
             {profile.github && (
               <a href={profile.github} target="_blank" rel="noopener noreferrer"
-                className="text-xs font-medium text-zinc-400 hover:text-zinc-950 transition-colors duration-300">
+                className="text-xs font-medium text-fg-faint hover:text-fg transition-colors duration-300">
                 GitHub
               </a>
             )}
             {profile.linkedin && (
               <a href={profile.linkedin} target="_blank" rel="noopener noreferrer"
-                className="text-xs font-medium text-zinc-400 hover:text-zinc-950 transition-colors duration-300">
+                className="text-xs font-medium text-fg-faint hover:text-fg transition-colors duration-300">
                 LinkedIn
               </a>
             )}
             <a href={`mailto:${profile.email}`}
-              className="text-xs font-medium text-zinc-400 hover:text-zinc-950 transition-colors duration-300">
+              className="text-xs font-medium text-fg-faint hover:text-fg transition-colors duration-300">
               Email
             </a>
             <Link href="/"
-              className="text-xs font-medium text-indigo-400 hover:text-indigo-700 transition-colors duration-300">
+              className="text-xs font-medium text-accent hover:text-accent-hover transition-colors duration-300">
               Chat with Avocado 🥑
             </Link>
           </div>

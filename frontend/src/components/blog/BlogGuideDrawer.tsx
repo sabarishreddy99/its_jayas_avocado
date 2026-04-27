@@ -107,7 +107,6 @@ export default function BlogGuideDrawer() {
     fetch(`${API_BASE_URL}/stats/overview`).then(r => r.json()).then(setOverview).catch(() => {});
   }, []);
 
-  // Close on Escape
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
@@ -121,7 +120,7 @@ export default function BlogGuideDrawer() {
       <button
         onClick={() => setOpen(true)}
         title="Blog writing guide"
-        className="fixed bottom-20 md:bottom-6 right-5 z-40 flex items-center gap-1.5 rounded-full border border-zinc-200 bg-white/80 backdrop-blur px-3 py-2 text-[10px] font-semibold text-zinc-300 shadow-sm hover:text-indigo-500 hover:border-indigo-200 transition-all duration-300 select-none"
+        className="fixed bottom-20 md:bottom-6 right-5 z-40 flex items-center gap-1.5 rounded-full border border-border bg-surface/80 backdrop-blur px-3 py-2 text-[10px] font-semibold text-fg-faint shadow-sm hover:text-accent hover:border-indigo-300 dark:hover:border-indigo-700 transition-all duration-300 select-none"
       >
         <span className="text-[11px]">✦</span>
         <span>Guide</span>
@@ -130,24 +129,24 @@ export default function BlogGuideDrawer() {
       {/* Backdrop */}
       {open && (
         <div
-          className="fixed inset-0 z-40 bg-black/20 backdrop-blur-[2px]"
+          className="fixed inset-0 z-40 bg-black/20 dark:bg-black/50 backdrop-blur-[2px]"
           onClick={() => setOpen(false)}
         />
       )}
 
       {/* Drawer */}
       <aside
-        className={`fixed top-0 right-0 z-50 h-full w-full sm:max-w-sm bg-white shadow-2xl border-l border-zinc-200 flex flex-col transition-transform duration-300 ease-in-out ${open ? "translate-x-0" : "translate-x-full"}`}
+        className={`fixed top-0 right-0 z-50 h-full w-full sm:max-w-sm bg-surface shadow-2xl border-l border-border flex flex-col transition-transform duration-300 ease-in-out ${open ? "translate-x-0" : "translate-x-full"}`}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-5 py-4 border-b border-zinc-100">
+        <div className="flex items-center justify-between px-5 py-4 border-b border-border-subtle">
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Reference</p>
-            <h2 className="text-sm font-bold text-zinc-950 mt-0.5">Site Guide & Maintenance</h2>
+            <p className="text-[10px] font-bold uppercase tracking-widest text-fg-faint">Reference</p>
+            <h2 className="text-sm font-bold text-fg mt-0.5">Site Guide & Maintenance</h2>
           </div>
           <button
             onClick={() => setOpen(false)}
-            className="w-7 h-7 flex items-center justify-center rounded-full text-zinc-400 hover:bg-zinc-100 hover:text-zinc-700 transition-colors text-lg leading-none"
+            className="w-7 h-7 flex items-center justify-center rounded-full text-fg-faint hover:bg-surface-raised hover:text-fg-muted transition-colors text-lg leading-none"
           >
             ×
           </button>
@@ -157,9 +156,9 @@ export default function BlogGuideDrawer() {
         <div className="flex-1 overflow-y-auto px-5 py-4 space-y-6">
           {SECTIONS.map((s) => (
             <div key={s.heading}>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-indigo-600 mb-2">{s.heading}</p>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-accent mb-2">{s.heading}</p>
               {s.note && (
-                <p className="text-[11px] text-zinc-400 mb-1.5 italic">{s.note}</p>
+                <p className="text-[11px] text-fg-faint mb-1.5 italic">{s.note}</p>
               )}
               <pre className="bg-zinc-950 text-zinc-300 text-[11px] leading-relaxed rounded-xl p-3.5 overflow-x-auto font-mono whitespace-pre-wrap break-words">
                 {s.code}
@@ -168,38 +167,37 @@ export default function BlogGuideDrawer() {
           ))}
 
           {/* Appendix — Project Maintenance */}
-          <div className="rounded-xl border border-zinc-200 bg-white p-4 space-y-6">
+          <div className="rounded-xl border border-border bg-surface p-4 space-y-6">
             <div>
-              <p className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-0.5">Appendix</p>
-              <h3 className="text-sm font-bold text-zinc-950">Project Maintenance</h3>
-              <p className="text-[10px] text-zinc-400 mt-1 leading-relaxed">Everything you need to keep the site up to date — data, blog posts, and deployments.</p>
+              <p className="text-[11px] font-bold uppercase tracking-wider text-fg-faint mb-0.5">Appendix</p>
+              <h3 className="text-sm font-bold text-fg">Project Maintenance</h3>
+              <p className="text-[10px] text-fg-faint mt-1 leading-relaxed">Everything you need to keep the site up to date — data, blog posts, and deployments.</p>
             </div>
 
             {/* Live Stats Dashboard */}
             <div className="space-y-4">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">Live Stats</span>
-                <div className="flex-1 h-px bg-zinc-100" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">Live Stats</span>
+                <div className="flex-1 h-px bg-border-subtle" />
                 {overview && <span className="text-[9px] text-emerald-400 uppercase tracking-widest font-semibold">● live</span>}
               </div>
 
               {!overview ? (
-                <p className="text-[10px] text-zinc-300 italic">Fetching stats…</p>
+                <p className="text-[10px] text-fg-faint italic">Fetching stats…</p>
               ) : (
                 <>
-                  {/* Period table — site + blog metrics */}
                   <div className="overflow-x-auto -mx-1 px-1">
                   <table className="w-full min-w-[260px] text-[10px] border-collapse">
                     <thead>
-                      <tr className="border-b border-zinc-100">
-                        <th className="text-left py-1.5 text-zinc-400 font-semibold w-[40%]">Metric</th>
-                        <th className="text-right py-1.5 text-zinc-300 font-semibold">7d</th>
-                        <th className="text-right py-1.5 text-zinc-300 font-semibold">30d</th>
-                        <th className="text-right py-1.5 text-zinc-300 font-semibold">1y</th>
-                        <th className="text-right py-1.5 text-zinc-500 font-semibold">All</th>
+                      <tr className="border-b border-border-subtle">
+                        <th className="text-left py-1.5 text-fg-faint font-semibold w-[40%]">Metric</th>
+                        <th className="text-right py-1.5 text-fg-faint font-semibold">7d</th>
+                        <th className="text-right py-1.5 text-fg-faint font-semibold">30d</th>
+                        <th className="text-right py-1.5 text-fg-faint font-semibold">1y</th>
+                        <th className="text-right py-1.5 text-fg-subtle font-semibold">All</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-zinc-50">
+                    <tbody className="divide-y divide-border-subtle">
                       {[
                         {
                           label: "Unique visitors",
@@ -219,16 +217,16 @@ export default function BlogGuideDrawer() {
                         },
                       ].map(({ label, values }) => (
                         <tr key={label}>
-                          <td className="py-1.5 text-zinc-600">{label}</td>
+                          <td className="py-1.5 text-fg-muted">{label}</td>
                           {values.map((v, i) => (
-                            <td key={i} className={`py-1.5 text-right font-semibold ${i === 3 ? "text-zinc-800" : "text-zinc-500"}`}>{v}</td>
+                            <td key={i} className={`py-1.5 text-right font-semibold ${i === 3 ? "text-fg" : "text-fg-subtle"}`}>{v}</td>
                           ))}
                         </tr>
                       ))}
-                      <tr className="border-t border-zinc-200">
-                        <td className="py-1.5 text-zinc-400">Posts published</td>
+                      <tr className="border-t border-border">
+                        <td className="py-1.5 text-fg-faint">Posts published</td>
                         <td colSpan={3} />
-                        <td className="py-1.5 text-right font-semibold text-zinc-800">
+                        <td className="py-1.5 text-right font-semibold text-fg">
                           {overview.blog["all"].posts.length}
                         </td>
                       </tr>
@@ -236,27 +234,26 @@ export default function BlogGuideDrawer() {
                   </table>
                   </div>
 
-                  {/* Per-post breakdown */}
                   {overview.blog["all"].posts.length > 0 && (
                     <div>
-                      <p className="text-[9px] font-bold uppercase tracking-widest text-zinc-400 mb-1.5">Per-post (all time)</p>
+                      <p className="text-[9px] font-bold uppercase tracking-widest text-fg-faint mb-1.5">Per-post (all time)</p>
                       <div className="overflow-x-auto -mx-1 px-1">
                       <table className="w-full min-w-[200px] text-[10px] border-collapse">
                         <thead>
-                          <tr className="border-b border-zinc-100">
-                            <th className="text-left py-1 text-zinc-400 font-semibold">Post</th>
-                            <th className="text-right py-1 text-zinc-400 font-semibold">Views</th>
-                            <th className="text-right py-1 text-zinc-400 font-semibold">Claps</th>
+                          <tr className="border-b border-border-subtle">
+                            <th className="text-left py-1 text-fg-faint font-semibold">Post</th>
+                            <th className="text-right py-1 text-fg-faint font-semibold">Views</th>
+                            <th className="text-right py-1 text-fg-faint font-semibold">Claps</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-zinc-50">
+                        <tbody className="divide-y divide-border-subtle">
                           {[...overview.blog["all"].posts]
                             .sort((a, b) => b.views - a.views)
                             .map((post) => (
                               <tr key={post.slug}>
-                                <td className="py-1 text-zinc-500 font-mono text-[9px] truncate max-w-[130px]">{post.slug}</td>
-                                <td className="py-1 text-right text-zinc-700">{fmt(post.views)}</td>
-                                <td className="py-1 text-right text-zinc-700">{fmt(post.claps)}</td>
+                                <td className="py-1 text-fg-subtle font-mono text-[9px] truncate max-w-[130px]">{post.slug}</td>
+                                <td className="py-1 text-right text-fg-muted">{fmt(post.views)}</td>
+                                <td className="py-1 text-right text-fg-muted">{fmt(post.claps)}</td>
                               </tr>
                             ))}
                         </tbody>
@@ -271,13 +268,13 @@ export default function BlogGuideDrawer() {
             {/* Section 1 — Portfolio Data */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">1 · Portfolio Data</span>
-                <div className="flex-1 h-px bg-zinc-100" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">1 · Portfolio Data</span>
+                <div className="flex-1 h-px bg-border-subtle" />
               </div>
-              <p className="text-[10px] text-zinc-400 leading-relaxed">
-                Edit only in <span className="font-mono bg-zinc-100 px-1 rounded">backend/data/knowledge/</span> — these are the single source of truth for both the website UI and the Avocado chatbot knowledge base.
-                After any edit, run <span className="font-mono bg-zinc-100 px-1 rounded">npm run sync</span> from <span className="font-mono bg-zinc-100 px-1 rounded">frontend/</span> (or just restart <span className="font-mono bg-zinc-100 px-1 rounded">npm run dev</span>).
-                Never edit <span className="font-mono bg-zinc-100 px-1 rounded">frontend/src/data/knowledge/</span> directly — those files are auto-overwritten.
+              <p className="text-[10px] text-fg-faint leading-relaxed">
+                Edit only in <span className="font-mono bg-surface-raised px-1 rounded">backend/data/knowledge/</span> — these are the single source of truth for both the website UI and the Avocado chatbot knowledge base.
+                After any edit, run <span className="font-mono bg-surface-raised px-1 rounded">npm run sync</span> from <span className="font-mono bg-surface-raised px-1 rounded">frontend/</span> (or just restart <span className="font-mono bg-surface-raised px-1 rounded">npm run dev</span>).
+                Never edit <span className="font-mono bg-surface-raised px-1 rounded">frontend/src/data/knowledge/</span> directly — those files are auto-overwritten.
               </p>
               {[
                 {
@@ -311,15 +308,15 @@ export default function BlogGuideDrawer() {
                   fields: "name, designation, company, linkedin, description, givenAt, source",
                 },
               ].map(({ what, file, fields }) => (
-                <div key={file} className="border border-zinc-100 rounded-lg p-2.5 space-y-1">
-                  <p className="text-[11px] font-semibold text-zinc-700">{what}</p>
-                  <p className="font-mono text-[10px] text-indigo-600 break-all">{file}</p>
-                  <p className="text-[10px] text-zinc-400 leading-relaxed">{fields}</p>
+                <div key={file} className="border border-border-subtle rounded-lg p-2.5 space-y-1">
+                  <p className="text-[11px] font-semibold text-fg-muted">{what}</p>
+                  <p className="font-mono text-[10px] text-accent break-all">{file}</p>
+                  <p className="text-[10px] text-fg-faint leading-relaxed">{fields}</p>
                 </div>
               ))}
-              <div className="border border-amber-100 bg-amber-50 rounded-lg p-2.5 space-y-1">
-                <p className="text-[11px] font-semibold text-amber-700">⚠ Resume link is hardcoded in Nav.tsx</p>
-                <p className="text-[10px] text-amber-600 leading-relaxed">
+              <div className="border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/50 rounded-lg p-2.5 space-y-1">
+                <p className="text-[11px] font-semibold text-amber-700 dark:text-amber-400">⚠ Resume link is hardcoded in Nav.tsx</p>
+                <p className="text-[10px] text-amber-600 dark:text-amber-500 leading-relaxed">
                   The resume Google Drive URL in <span className="font-mono">profile.json</span> powers the chatbot and home page, but <span className="font-mono">components/Nav.tsx</span> has a separate hardcoded copy in both desktop and mobile nav. Update both when the resume changes.
                 </p>
               </div>
@@ -328,12 +325,12 @@ export default function BlogGuideDrawer() {
             {/* Section 2 — Blog Posts */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">2 · Blog Posts</span>
-                <div className="flex-1 h-px bg-zinc-100" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">2 · Blog Posts</span>
+                <div className="flex-1 h-px bg-border-subtle" />
               </div>
-              <p className="text-[10px] text-zinc-400 leading-relaxed">
-                Create a new <span className="font-mono bg-zinc-100 px-1 rounded">.mdx</span> file — the filename becomes the URL slug.
-                No sync needed; GitHub Actions auto-generates <span className="font-mono bg-zinc-100 px-1 rounded">blog.json</span> on push so the chatbot indexes the new post automatically.
+              <p className="text-[10px] text-fg-faint leading-relaxed">
+                Create a new <span className="font-mono bg-surface-raised px-1 rounded">.mdx</span> file — the filename becomes the URL slug.
+                No sync needed; GitHub Actions auto-generates <span className="font-mono bg-surface-raised px-1 rounded">blog.json</span> on push so the chatbot indexes the new post automatically.
               </p>
               {[
                 {
@@ -352,15 +349,15 @@ export default function BlogGuideDrawer() {
                   fields: "Do not edit — auto-generated by scripts/sync-knowledge.mjs. GH Actions commits it on push; Railway re-ingests on deploy.",
                 },
               ].map(({ what, file, fields }) => (
-                <div key={file} className="border border-zinc-100 rounded-lg p-2.5 space-y-1">
-                  <p className="text-[11px] font-semibold text-zinc-700">{what}</p>
-                  <p className="font-mono text-[10px] text-indigo-600 break-all">{file}</p>
-                  <p className="text-[10px] text-zinc-400 leading-relaxed">{fields}</p>
+                <div key={file} className="border border-border-subtle rounded-lg p-2.5 space-y-1">
+                  <p className="text-[11px] font-semibold text-fg-muted">{what}</p>
+                  <p className="font-mono text-[10px] text-accent break-all">{file}</p>
+                  <p className="text-[10px] text-fg-faint leading-relaxed">{fields}</p>
                 </div>
               ))}
-              <div className="border border-amber-100 bg-amber-50 rounded-lg p-2.5 space-y-1">
-                <p className="text-[11px] font-semibold text-amber-700">publishedAt vs date</p>
-                <p className="text-[10px] text-amber-600 leading-relaxed">
+              <div className="border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/50 rounded-lg p-2.5 space-y-1">
+                <p className="text-[11px] font-semibold text-amber-700 dark:text-amber-400">publishedAt vs date</p>
+                <p className="text-[10px] text-amber-600 dark:text-amber-500 leading-relaxed">
                   <span className="font-mono">publishedAt</span> is the sort key — set it once and never change it.
                   <span className="font-mono"> date</span> is the display date — update freely (e.g. after a major revision).
                 </p>
@@ -370,15 +367,14 @@ export default function BlogGuideDrawer() {
             {/* Section 2b — Lab Maintenance */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">2b · Lab — Living System Docs</span>
-                <div className="flex-1 h-px bg-zinc-100" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">2b · Lab — Living System Docs</span>
+                <div className="flex-1 h-px bg-border-subtle" />
               </div>
-              <p className="text-[10px] text-zinc-400 leading-relaxed">
-                Lab is for living, in-progress project documentation — architecture, decisions, and progress logs updated as the project evolves. Files live at <span className="font-mono bg-zinc-100 px-1 rounded">frontend/src/content/lab/[slug].mdx</span>. Filename = URL slug.
+              <p className="text-[10px] text-fg-faint leading-relaxed">
+                Lab is for living, in-progress project documentation — architecture, decisions, and progress logs updated as the project evolves. Files live at <span className="font-mono bg-surface-raised px-1 rounded">frontend/src/content/lab/[slug].mdx</span>. Filename = URL slug.
               </p>
 
-              {/* Frontmatter */}
-              <p className="text-[9px] font-bold uppercase tracking-widest text-zinc-400 mt-2">Frontmatter (required)</p>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-fg-faint mt-2">Frontmatter (required)</p>
               <pre className="bg-zinc-950 text-zinc-300 text-[11px] leading-relaxed rounded-xl p-3.5 overflow-x-auto font-mono whitespace-pre-wrap break-words">{`---
 title: "My Project"
 status: "active"        # active | paused | shipped
@@ -388,25 +384,23 @@ updatedAt: "2026-04-22"  # ← update this every time you edit
 tech: [Next.js, FastAPI, PostgreSQL]
 ---`}</pre>
 
-              {/* Status behavior */}
               {[
                 { what: "status: active", detail: "Green badge with pulse animation. Sorted to top of lab index. Use while actively building.", color: "emerald" },
                 { what: "status: paused", detail: "Amber badge. Sorted second. Use when work is on hold.", color: "amber" },
                 { what: "status: shipped", detail: "Indigo badge. Sorted last. Use when the project is complete and deployed.", color: "indigo" },
               ].map(({ what, detail }) => (
-                <div key={what} className="border border-zinc-100 rounded-lg p-2.5 space-y-0.5">
-                  <p className="font-mono text-[11px] font-semibold text-zinc-700">{what}</p>
-                  <p className="text-[10px] text-zinc-400 leading-relaxed">{detail}</p>
+                <div key={what} className="border border-border-subtle rounded-lg p-2.5 space-y-0.5">
+                  <p className="font-mono text-[11px] font-semibold text-fg-muted">{what}</p>
+                  <p className="text-[10px] text-fg-faint leading-relaxed">{detail}</p>
                 </div>
               ))}
 
-              <div className="border border-amber-100 bg-amber-50 rounded-lg p-2.5">
-                <p className="text-[11px] font-semibold text-amber-700">Always update updatedAt</p>
-                <p className="text-[10px] text-amber-600 leading-relaxed mt-0.5">The lab index card shows "last updated [date]". Set it to today&apos;s date every time you make changes or the card will show a stale date.</p>
+              <div className="border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/50 rounded-lg p-2.5">
+                <p className="text-[11px] font-semibold text-amber-700 dark:text-amber-400">Always update updatedAt</p>
+                <p className="text-[10px] text-amber-600 dark:text-amber-500 leading-relaxed mt-0.5">The lab index card shows "last updated [date]". Set it to today&apos;s date every time you make changes or the card will show a stale date.</p>
               </div>
 
-              {/* MDX components */}
-              <p className="text-[9px] font-bold uppercase tracking-widest text-zinc-400 mt-3">Lab MDX components</p>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-fg-faint mt-3">Lab MDX components</p>
               {[
                 {
                   what: "<Status status=\"active\" />",
@@ -429,34 +423,32 @@ tech: [Next.js, FastAPI, PostgreSQL]
                   detail: "Lighter timeline entry with zinc dot. Use for progress notes, milestone completions, or status changes over time. Add a new Update entry each time you revisit the project.",
                 },
               ].map(({ what, detail }) => (
-                <div key={what} className="border border-zinc-100 rounded-lg p-2.5 space-y-0.5">
-                  <p className="font-mono text-[10px] font-semibold text-indigo-600 break-all">{what}</p>
-                  <p className="text-[10px] text-zinc-400 leading-relaxed">{detail}</p>
+                <div key={what} className="border border-border-subtle rounded-lg p-2.5 space-y-0.5">
+                  <p className="font-mono text-[10px] font-semibold text-accent break-all">{what}</p>
+                  <p className="text-[10px] text-fg-faint leading-relaxed">{detail}</p>
                 </div>
               ))}
 
-              {/* arch blocks */}
-              <p className="text-[9px] font-bold uppercase tracking-widest text-zinc-400 mt-2">Architecture diagrams</p>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-fg-faint mt-2">Architecture diagrams</p>
               <pre className="bg-zinc-950 text-zinc-300 text-[11px] leading-relaxed rounded-xl p-3.5 overflow-x-auto font-mono whitespace-pre-wrap break-words">{`\`\`\`arch
 ┌─────────────┐     ┌─────────────┐
 │  Frontend   │────▶│   Backend   │
 └─────────────┘     └─────────────┘
 \`\`\``}</pre>
-              <p className="text-[10px] text-zinc-400 italic leading-relaxed">
-                Always use fenced <span className="font-mono bg-zinc-100 px-1 rounded">```arch</span> blocks for diagrams — never a JSX component. Characters like <span className="font-mono bg-zinc-100 px-1 rounded">&lt;</span>, <span className="font-mono bg-zinc-100 px-1 rounded">&gt;</span>, and <span className="font-mono bg-zinc-100 px-1 rounded">{"{}"}</span> inside JSX children cause an MDX acorn parse error.
+              <p className="text-[10px] text-fg-faint italic leading-relaxed">
+                Always use fenced <span className="font-mono bg-surface-raised px-1 rounded">```arch</span> blocks for diagrams — never a JSX component. Characters like <span className="font-mono bg-surface-raised px-1 rounded">&lt;</span>, <span className="font-mono bg-surface-raised px-1 rounded">&gt;</span>, and <span className="font-mono bg-surface-raised px-1 rounded">{"{}"}</span> inside JSX children cause an MDX acorn parse error.
               </p>
 
-              {/* Workflow */}
-              <p className="text-[9px] font-bold uppercase tracking-widest text-zinc-400 mt-2">Typical update workflow</p>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-fg-faint mt-2">Typical update workflow</p>
               {[
                 { what: "Create a new lab entry", detail: "Add frontend/src/content/lab/my-project.mdx with required frontmatter → commit + push → deploys automatically." },
                 { what: "Update an existing entry", detail: "Edit the MDX file, update updatedAt in frontmatter → commit + push. No sync script needed — lab files are read directly at build time." },
                 { what: "Mark a project shipped", detail: "Change status to \"shipped\" in frontmatter, update updatedAt, add a final <Update> timeline note → commit + push." },
                 { what: "Chatbot indexing", detail: "Lab entries are indexed into ChromaDB via lab.json (auto-generated by sync-knowledge.mjs on every push). Avocado can answer questions about active lab projects, tech stack, and decisions." },
               ].map(({ what, detail }) => (
-                <div key={what} className="border border-zinc-100 rounded-lg p-2.5 space-y-0.5">
-                  <p className="text-[11px] font-semibold text-zinc-700">{what}</p>
-                  <p className="text-[10px] text-zinc-400 leading-relaxed">{detail}</p>
+                <div key={what} className="border border-border-subtle rounded-lg p-2.5 space-y-0.5">
+                  <p className="text-[11px] font-semibold text-fg-muted">{what}</p>
+                  <p className="text-[10px] text-fg-faint leading-relaxed">{detail}</p>
                 </div>
               ))}
             </div>
@@ -464,10 +456,10 @@ tech: [Next.js, FastAPI, PostgreSQL]
             {/* Section 3 — Deploy Pipeline */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">3 · Deploy Pipeline (auto)</span>
-                <div className="flex-1 h-px bg-zinc-100" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">3 · Deploy Pipeline (auto)</span>
+                <div className="flex-1 h-px bg-border-subtle" />
               </div>
-              <p className="text-[10px] text-zinc-400 leading-relaxed">Everything is automated — just commit and push.</p>
+              <p className="text-[10px] text-fg-faint leading-relaxed">Everything is automated — just commit and push.</p>
               {[
                 {
                   what: "Update portfolio data",
@@ -494,9 +486,9 @@ tech: [Next.js, FastAPI, PostgreSQL]
                   detail: "Frontend builds as a static export and deploys to GitHub Pages (sabarishreddy99.github.io). Backend deploys to Railway. Both trigger on push to main.",
                 },
               ].map(({ what, detail }) => (
-                <div key={what} className="border border-zinc-100 rounded-lg p-2.5 space-y-0.5">
-                  <p className="text-[11px] font-semibold text-zinc-700">{what}</p>
-                  <p className="text-[10px] text-zinc-400 leading-relaxed">{detail}</p>
+                <div key={what} className="border border-border-subtle rounded-lg p-2.5 space-y-0.5">
+                  <p className="text-[11px] font-semibold text-fg-muted">{what}</p>
+                  <p className="text-[10px] text-fg-faint leading-relaxed">{detail}</p>
                 </div>
               ))}
             </div>
@@ -504,10 +496,10 @@ tech: [Next.js, FastAPI, PostgreSQL]
             {/* Section 4 — Blog Engagement */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">4 · Blog Engagement</span>
-                <div className="flex-1 h-px bg-zinc-100" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">4 · Blog Engagement</span>
+                <div className="flex-1 h-px bg-border-subtle" />
               </div>
-              <p className="text-[10px] text-zinc-400 leading-relaxed">Tracked automatically. No config needed for new posts — engagement starts recording as soon as a reader opens the post.</p>
+              <p className="text-[10px] text-fg-faint leading-relaxed">Tracked automatically. No config needed for new posts — engagement starts recording as soon as a reader opens the post.</p>
               {[
                 {
                   what: "Views — unique per visitor per post",
@@ -530,9 +522,9 @@ tech: [Next.js, FastAPI, PostgreSQL]
                   detail: "POST /blog/{slug}/view · POST /blog/{slug}/clap (body: {count}) · GET /blog/{slug}/stats · GET /blog/stats/summary",
                 },
               ].map(({ what, detail }) => (
-                <div key={what} className="border border-zinc-100 rounded-lg p-2.5 space-y-0.5">
-                  <p className="text-[11px] font-semibold text-zinc-700">{what}</p>
-                  <p className="text-[10px] text-zinc-400 leading-relaxed">{detail}</p>
+                <div key={what} className="border border-border-subtle rounded-lg p-2.5 space-y-0.5">
+                  <p className="text-[11px] font-semibold text-fg-muted">{what}</p>
+                  <p className="text-[10px] text-fg-faint leading-relaxed">{detail}</p>
                 </div>
               ))}
             </div>
@@ -540,8 +532,8 @@ tech: [Next.js, FastAPI, PostgreSQL]
             {/* Section 5 — Avocado Chatbot */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">5 · Avocado Chatbot</span>
-                <div className="flex-1 h-px bg-zinc-100" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">5 · Avocado Chatbot</span>
+                <div className="flex-1 h-px bg-border-subtle" />
               </div>
               {[
                 {
@@ -573,9 +565,9 @@ tech: [Next.js, FastAPI, PostgreSQL]
                   detail: "Embedding model and cross-encoder load at startup. First response may be ~1–2s slower. Models download once and cache in Railway's ephemeral storage.",
                 },
               ].map(({ what, detail }) => (
-                <div key={what} className="border border-zinc-100 rounded-lg p-2.5 space-y-0.5">
-                  <p className="text-[11px] font-semibold text-zinc-700">{what}</p>
-                  <p className="text-[10px] text-zinc-400 leading-relaxed">{detail}</p>
+                <div key={what} className="border border-border-subtle rounded-lg p-2.5 space-y-0.5">
+                  <p className="text-[11px] font-semibold text-fg-muted">{what}</p>
+                  <p className="text-[10px] text-fg-faint leading-relaxed">{detail}</p>
                 </div>
               ))}
             </div>
@@ -583,11 +575,11 @@ tech: [Next.js, FastAPI, PostgreSQL]
             {/* Section 6 — Environment Variables */}
             <div className="space-y-2">
               <div className="flex items-center gap-2 mb-1">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-indigo-600">6 · Environment Variables</span>
-                <div className="flex-1 h-px bg-zinc-100" />
+                <span className="text-[10px] font-bold uppercase tracking-widest text-accent">6 · Environment Variables</span>
+                <div className="flex-1 h-px bg-border-subtle" />
               </div>
-              <p className="text-[10px] text-zinc-400 mb-1">Backend vars → Railway → your backend service → Variables. Frontend vars → GitHub Actions secrets (used at build time).</p>
-              <p className="text-[9px] font-bold uppercase tracking-widest text-zinc-400 mt-2 mb-1">Backend (Railway)</p>
+              <p className="text-[10px] text-fg-faint mb-1">Backend vars → Railway → your backend service → Variables. Frontend vars → GitHub Actions secrets (used at build time).</p>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-fg-faint mt-2 mb-1">Backend (Railway)</p>
               {[
                 { key: "GOOGLE_API_KEY", detail: "Required. Google AI API key for Gemini. Chat endpoints return 503 without this." },
                 { key: "GEMINI_MODEL", detail: "Primary model. Default: gemini-2.5-flash. Change here to swap models without code changes." },
@@ -596,28 +588,28 @@ tech: [Next.js, FastAPI, PostgreSQL]
                 { key: "FRONTEND_ORIGIN", detail: "CORS allowed origins (comma-separated). Must include production frontend URL or browser requests will be blocked. Default includes localhost:3000 and GitHub Pages." },
                 { key: "APP_ENV", detail: "dev or prod. Default: dev. Controls logging and debug behavior." },
               ].map(({ key, detail }) => (
-                <div key={key} className="border border-zinc-100 rounded-lg p-2.5 space-y-0.5">
-                  <p className="font-mono text-[11px] font-semibold text-indigo-600">{key}</p>
-                  <p className="text-[10px] text-zinc-400 leading-relaxed">{detail}</p>
+                <div key={key} className="border border-border-subtle rounded-lg p-2.5 space-y-0.5">
+                  <p className="font-mono text-[11px] font-semibold text-accent">{key}</p>
+                  <p className="text-[10px] text-fg-faint leading-relaxed">{detail}</p>
                 </div>
               ))}
-              <p className="text-[9px] font-bold uppercase tracking-widest text-zinc-400 mt-3 mb-1">Frontend (GitHub Actions secrets / .env.local)</p>
+              <p className="text-[9px] font-bold uppercase tracking-widest text-fg-faint mt-3 mb-1">Frontend (GitHub Actions secrets / .env.local)</p>
               {[
                 { key: "NEXT_PUBLIC_API_BASE_URL", detail: "Backend URL the browser calls. Set to your Railway backend URL in production (e.g. https://your-backend.up.railway.app). Required — chat and blog stats break without it." },
                 { key: "NEXT_PUBLIC_BLOG_FONT", detail: "Blog reading font. Default: Source_Serif_4. Must match the font statically imported in frontend/src/app/layout.tsx." },
               ].map(({ key, detail }) => (
-                <div key={key} className="border border-zinc-100 rounded-lg p-2.5 space-y-0.5">
-                  <p className="font-mono text-[11px] font-semibold text-indigo-600">{key}</p>
-                  <p className="text-[10px] text-zinc-400 leading-relaxed">{detail}</p>
+                <div key={key} className="border border-border-subtle rounded-lg p-2.5 space-y-0.5">
+                  <p className="font-mono text-[11px] font-semibold text-accent">{key}</p>
+                  <p className="text-[10px] text-fg-faint leading-relaxed">{detail}</p>
                 </div>
               ))}
             </div>
           </div>
 
           {/* Quick card */}
-          <div className="rounded-xl border border-zinc-100 bg-zinc-50 p-4">
-            <p className="text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-3">Quick card</p>
-            <div className="space-y-1.5 font-mono text-[10px] text-zinc-600">
+          <div className="rounded-xl border border-border bg-surface-raised p-4">
+            <p className="text-[11px] font-bold uppercase tracking-wider text-fg-faint mb-3">Quick card</p>
+            <div className="space-y-1.5 font-mono text-[10px] text-fg-muted">
               {[
                 ["Image",       "![alt](/blog/f.jpg)"],
                 ["Caption",     "![alt](/blog/f.jpg \"cap\")"],
@@ -636,8 +628,8 @@ tech: [Next.js, FastAPI, PostgreSQL]
                 ["Quote box",   "<Callout type=\"quote\">"],
               ].map(([label, syntax]) => (
                 <div key={label} className="flex gap-2">
-                  <span className="text-zinc-400 w-20 shrink-0">{label}</span>
-                  <span className="text-zinc-700">{syntax}</span>
+                  <span className="text-fg-faint w-20 shrink-0">{label}</span>
+                  <span className="text-fg-muted">{syntax}</span>
                 </div>
               ))}
             </div>

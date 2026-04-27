@@ -181,7 +181,7 @@ export default function NavSuggestions({ links }: { links: NavLink[] }) {
           <Link
             key={l.href}
             href={l.href}
-            className="inline-flex items-center gap-1 rounded-full border border-zinc-200 bg-zinc-50 px-3 py-1 text-[11px] font-medium text-zinc-600 hover:bg-indigo-50 hover:border-indigo-300 hover:text-indigo-700 transition-all"
+            className="inline-flex items-center gap-1 rounded-full border border-border bg-surface-raised px-3 py-1 text-[11px] font-medium text-fg-muted hover:bg-accent-light hover:border-indigo-300 dark:hover:border-indigo-700 hover:text-accent transition-all"
           >
             {l.icon && <span className="text-zinc-400 text-[10px]">{l.icon}</span>}
             {l.label}

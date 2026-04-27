@@ -30,18 +30,18 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: (id: number)
 
   const styles: Record<ToastType, { wrapper: string; icon: string; iconPath: string }> = {
     success: {
-      wrapper: "border-indigo-200 bg-white",
-      icon: "text-indigo-600 bg-indigo-50",
+      wrapper: "border-indigo-200 dark:border-indigo-800 bg-surface",
+      icon: "text-indigo-600 bg-indigo-50 dark:bg-indigo-950",
       iconPath: "M20 6L9 17l-5-5",
     },
     warning: {
-      wrapper: "border-amber-200 bg-white",
-      icon: "text-amber-600 bg-amber-50",
+      wrapper: "border-amber-200 dark:border-amber-800 bg-surface",
+      icon: "text-amber-600 bg-amber-50 dark:bg-amber-950",
       iconPath: "M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z",
     },
     error: {
-      wrapper: "border-red-200 bg-white",
-      icon: "text-red-500 bg-red-50",
+      wrapper: "border-red-200 dark:border-red-800 bg-surface",
+      icon: "text-red-500 bg-red-50 dark:bg-red-950",
       iconPath: "M18 6L6 18M6 6l12 12",
     },
   };
@@ -60,12 +60,12 @@ function ToastItem({ toast, onDismiss }: { toast: Toast; onDismiss: (id: number)
         </svg>
       </span>
       <div className="min-w-0 flex-1">
-        <p className="text-sm font-semibold text-zinc-900">{toast.title}</p>
-        <p className="text-xs text-zinc-500 mt-0.5">{toast.body}</p>
+        <p className="text-sm font-semibold text-fg">{toast.title}</p>
+        <p className="text-xs text-fg-subtle mt-0.5">{toast.body}</p>
       </div>
       <button
         onClick={() => { setVisible(false); setTimeout(() => onDismiss(toast.id), 300); }}
-        className="ml-1 shrink-0 text-zinc-300 hover:text-zinc-500 transition-colors"
+        className="ml-1 shrink-0 text-fg-faint hover:text-fg-subtle transition-colors"
       >
         <svg className="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
           <path d="M18 6L6 18M6 6l12 12" />
@@ -129,52 +129,52 @@ export default function ContactForm() {
         ))}
       </div>
 
-      <section className="rounded-2xl border border-zinc-200 bg-white p-6 sm:p-8">
-        <h2 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-3">Get in Touch</h2>
+      <section className="rounded-2xl border border-border bg-surface p-6 sm:p-8">
+        <h2 className="text-xs font-bold uppercase tracking-widest text-fg-faint mb-3">Get in Touch</h2>
         {profile.contact_description && (
-          <p className="text-sm text-zinc-600 mb-6 max-w-md">{profile.contact_description}</p>
+          <p className="text-sm text-fg-subtle mb-6 max-w-md">{profile.contact_description}</p>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4 mb-6">
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="text-xs font-medium text-zinc-500 mb-1.5 block">Name</label>
-              <div className="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 focus-within:border-indigo-300 focus-within:bg-white focus-within:shadow-sm transition-all">
+              <label className="text-xs font-medium text-fg-subtle mb-1.5 block">Name</label>
+              <div className="rounded-xl border border-border bg-surface-raised px-4 py-3 focus-within:border-indigo-300 dark:focus-within:border-indigo-600 focus-within:bg-surface focus-within:shadow-sm transition-all">
                 <input
                   required
                   type="text"
                   placeholder="Your name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-transparent text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none"
+                  className="w-full bg-transparent text-sm text-fg placeholder:text-fg-faint focus:outline-none"
                 />
               </div>
             </div>
             <div>
-              <label className="text-xs font-medium text-zinc-500 mb-1.5 block">Email</label>
-              <div className="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 focus-within:border-indigo-300 focus-within:bg-white focus-within:shadow-sm transition-all">
+              <label className="text-xs font-medium text-fg-subtle mb-1.5 block">Email</label>
+              <div className="rounded-xl border border-border bg-surface-raised px-4 py-3 focus-within:border-indigo-300 dark:focus-within:border-indigo-600 focus-within:bg-surface focus-within:shadow-sm transition-all">
                 <input
                   required
                   type="email"
                   placeholder="you@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-transparent text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none"
+                  className="w-full bg-transparent text-sm text-fg placeholder:text-fg-faint focus:outline-none"
                 />
               </div>
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-medium text-zinc-500 mb-1.5 block">Message</label>
-            <div className="rounded-xl border border-zinc-200 bg-zinc-50 px-4 py-3 focus-within:border-indigo-300 focus-within:bg-white focus-within:shadow-sm transition-all">
+            <label className="text-xs font-medium text-fg-subtle mb-1.5 block">Message</label>
+            <div className="rounded-xl border border-border bg-surface-raised px-4 py-3 focus-within:border-indigo-300 dark:focus-within:border-indigo-600 focus-within:bg-surface focus-within:shadow-sm transition-all">
               <textarea
                 required
                 rows={4}
                 placeholder="What's on your mind?"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full resize-none bg-transparent text-sm text-zinc-900 placeholder:text-zinc-400 focus:outline-none leading-relaxed"
+                className="w-full resize-none bg-transparent text-sm text-fg placeholder:text-fg-faint focus:outline-none leading-relaxed"
               />
             </div>
           </div>
@@ -182,7 +182,7 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={sending}
-            className="rounded-full bg-zinc-950 text-white px-6 py-2.5 text-sm font-semibold hover:bg-zinc-800 transition-colors disabled:opacity-50 flex items-center gap-2"
+            className="rounded-full bg-fg text-bg px-6 py-2.5 text-sm font-semibold hover:opacity-80 transition-opacity disabled:opacity-50 flex items-center gap-2"
           >
             {sending ? (
               <>
@@ -197,10 +197,10 @@ export default function ContactForm() {
           </button>
         </form>
 
-        <div className="border-t border-zinc-100 pt-5 flex flex-wrap gap-3">
+        <div className="border-t border-border-subtle pt-5 flex flex-wrap gap-3">
           <a
             href={`mailto:${profile.email}`}
-            className="rounded-full border-2 border-zinc-950 bg-zinc-950 px-5 py-2 text-sm font-semibold text-white hover:bg-zinc-800 transition-colors"
+            className="rounded-full border-2 border-fg bg-fg px-5 py-2 text-sm font-semibold text-bg hover:opacity-80 transition-opacity"
           >
             {profile.email}
           </a>
@@ -209,7 +209,7 @@ export default function ContactForm() {
               href={profile.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full border-2 border-zinc-300 px-5 py-2 text-sm font-semibold text-zinc-700 hover:border-zinc-950 hover:text-zinc-950 transition-colors"
+              className="rounded-full border-2 border-border px-5 py-2 text-sm font-semibold text-fg-muted hover:border-fg hover:text-fg transition-colors"
             >
               LinkedIn
             </a>
@@ -219,7 +219,7 @@ export default function ContactForm() {
               href={profile.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded-full border-2 border-zinc-300 px-5 py-2 text-sm font-semibold text-zinc-700 hover:border-zinc-950 hover:text-zinc-950 transition-colors"
+              className="rounded-full border-2 border-border px-5 py-2 text-sm font-semibold text-fg-muted hover:border-fg hover:text-fg transition-colors"
             >
               GitHub
             </a>
@@ -228,7 +228,7 @@ export default function ContactForm() {
             href={profile.resume}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border-2 border-indigo-200 bg-indigo-50 px-5 py-2 text-sm font-semibold text-indigo-700 hover:border-indigo-600 hover:bg-indigo-100 transition-colors inline-flex items-center gap-1.5"
+            className="rounded-full border-2 border-indigo-200 dark:border-indigo-800 bg-accent-light px-5 py-2 text-sm font-semibold text-accent hover:border-accent hover:opacity-90 transition-all inline-flex items-center gap-1.5"
           >
             Download Resume
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">

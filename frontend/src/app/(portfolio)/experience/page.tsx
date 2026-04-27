@@ -7,9 +7,9 @@ export default function ExperiencePage() {
   return (
     <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 py-12 sm:py-16">
       <header className="mb-12 sm:mb-16">
-        <p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mb-2">Career</p>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950">Experience</h1>
-        {profile.page_experience && <p className="mt-2 text-sm text-zinc-500">{profile.page_experience}</p>}
+        <p className="text-[11px] font-bold uppercase tracking-widest text-fg-faint mb-2">Career</p>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-fg">Experience</h1>
+        {profile.page_experience && <p className="mt-2 text-sm text-fg-subtle">{profile.page_experience}</p>}
       </header>
 
       <ol className="relative space-y-0">
@@ -17,30 +17,30 @@ export default function ExperiencePage() {
           <li key={i} className="relative pl-8 pb-12 last:pb-0">
             {/* Timeline line */}
             {i < experience.length - 1 && (
-              <div className="absolute left-[11px] top-4 bottom-0 w-px bg-zinc-200" />
+              <div className="absolute left-[11px] top-4 bottom-0 w-px bg-border" />
             )}
             {/* Timeline dot */}
-            <div className="absolute left-0 top-1 h-[22px] w-[22px] rounded-full border-2 border-white bg-indigo-600 shadow-sm ring-2 ring-zinc-200" />
+            <div className="absolute left-0 top-1 h-[22px] w-[22px] rounded-full border-2 border-bg bg-indigo-600 shadow-sm ring-2 ring-border" />
 
-            <div className="rounded-2xl border border-zinc-200 bg-white p-5 sm:p-6 hover:border-zinc-300 hover:shadow-sm transition-all">
+            <div className="rounded-2xl border border-border bg-surface p-5 sm:p-6 hover:border-border-strong hover:shadow-sm transition-all">
               {/* Header row */}
               <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
                 <div>
-                  <h2 className="text-base font-bold text-zinc-950">{job.role}</h2>
-                  <p className="text-sm font-medium text-indigo-600">{job.company}</p>
+                  <h2 className="text-base font-bold text-fg">{job.role}</h2>
+                  <p className="text-sm font-medium text-accent">{job.company}</p>
                 </div>
                 <div className="text-right">
-                  <span className="inline-block rounded-full bg-zinc-100 px-3 py-0.5 text-[11px] font-medium text-zinc-600">
+                  <span className="inline-block rounded-full bg-surface-raised px-3 py-0.5 text-[11px] font-medium text-fg-muted">
                     {job.start} – {job.end}
                   </span>
-                  <p className="text-[11px] text-zinc-400 mt-0.5">{job.location}</p>
+                  <p className="text-[11px] text-fg-faint mt-0.5">{job.location}</p>
                 </div>
               </div>
 
               {job.tech && (
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {job.tech.split(", ").map((t) => (
-                    <span key={t} className="rounded-full bg-indigo-50 border border-indigo-100 px-2 py-0.5 text-[10px] font-medium text-indigo-700">
+                    <span key={t} className="rounded-full bg-accent-light border border-indigo-200 dark:border-indigo-800 px-2 py-0.5 text-[10px] font-medium text-accent">
                       {t}
                     </span>
                   ))}
@@ -49,7 +49,7 @@ export default function ExperiencePage() {
 
               <ul className="space-y-2.5">
                 {job.bullets.map((b, j) => (
-                  <li key={j} className="flex gap-2.5 text-sm text-zinc-600 leading-relaxed">
+                  <li key={j} className="flex gap-2.5 text-sm text-fg-muted leading-relaxed">
                     <span className="mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-indigo-400" />
                     {b}
                   </li>

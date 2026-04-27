@@ -5,9 +5,9 @@ import BlogGuideDrawer from "@/components/blog/BlogGuideDrawer";
 export const metadata = { title: "Lab — Jaya Sabarish Reddy Remala" };
 
 const STATUS_STYLES: Record<LabStatus, { dot: string; text: string; bg: string; label: string }> = {
-  active:  { dot: "bg-emerald-400 animate-pulse", text: "text-emerald-700", bg: "bg-emerald-50 border-emerald-200", label: "Active" },
-  shipped: { dot: "bg-indigo-400",                text: "text-indigo-700",  bg: "bg-indigo-50 border-indigo-200",   label: "Shipped" },
-  paused:  { dot: "bg-amber-400",                 text: "text-amber-700",   bg: "bg-amber-50 border-amber-200",     label: "Paused" },
+  active:  { dot: "bg-emerald-400 animate-pulse", text: "text-emerald-700 dark:text-emerald-400", bg: "bg-emerald-50 dark:bg-emerald-950/50 border-emerald-200 dark:border-emerald-800", label: "Active" },
+  shipped: { dot: "bg-indigo-400",                text: "text-indigo-700 dark:text-indigo-400",   bg: "bg-indigo-50 dark:bg-indigo-950/50 border-indigo-200 dark:border-indigo-800",   label: "Shipped" },
+  paused:  { dot: "bg-amber-400",                 text: "text-amber-700 dark:text-amber-400",     bg: "bg-amber-50 dark:bg-amber-950/50 border-amber-200 dark:border-amber-800",     label: "Paused" },
 };
 
 export default function LabPage() {
@@ -17,18 +17,18 @@ export default function LabPage() {
     <>
     <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 py-12 sm:py-16">
       <header className="mb-12 sm:mb-16">
-        <p className="text-[11px] font-bold uppercase tracking-widest text-zinc-400 mb-2">Build Log | In the Open</p>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-zinc-950">Lab</h1>
-        <p className="text-sm text-indigo-700">Building in public</p>
-        <p className="mt-2 text-sm text-zinc-500 max-w-xl">
+        <p className="text-[11px] font-bold uppercase tracking-widest text-fg-faint mb-2">Build Log | In the Open</p>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-fg">Lab</h1>
+        <p className="text-sm text-accent">Building in public</p>
+        <p className="mt-2 text-sm text-fg-subtle max-w-xl">
           Live system designs, technical decisions, and progress logs for projects I&apos;m actively working on.
           Updated as things evolve — not a polished writeup, a working document.
         </p>
       </header>
 
       {entries.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-zinc-300 bg-white p-10 text-center">
-          <p className="text-sm text-zinc-400">Nothing here yet — check back soon.</p>
+        <div className="rounded-2xl border border-dashed border-border bg-surface p-10 text-center">
+          <p className="text-sm text-fg-faint">Nothing here yet — check back soon.</p>
         </div>
       ) : (
         <ol className="space-y-4">
@@ -38,11 +38,11 @@ export default function LabPage() {
               <li key={entry.slug}>
                 <Link
                   href={`/lab/${entry.slug}`}
-                  className="group block rounded-2xl border border-zinc-200 bg-white p-5 sm:p-6 hover:border-indigo-300 hover:shadow-md transition-all"
+                  className="group block rounded-2xl border border-border bg-surface p-5 sm:p-6 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-md transition-all"
                 >
                   <div className="flex items-start justify-between gap-4 mb-3">
                     <div className="flex items-center gap-3 min-w-0">
-                      <h2 className="text-base font-bold text-zinc-950 group-hover:text-indigo-700 transition-colors leading-snug truncate">
+                      <h2 className="text-base font-bold text-fg group-hover:text-accent transition-colors leading-snug truncate">
                         {entry.title}
                       </h2>
                     </div>
@@ -51,15 +51,15 @@ export default function LabPage() {
                         <span className={`w-1.5 h-1.5 rounded-full ${s.dot}`} />
                         {s.label}
                       </span>
-                      <span className="text-[10px] text-zinc-400">updated {entry.updatedAt}</span>
+                      <span className="text-[10px] text-fg-faint">updated {entry.updatedAt}</span>
                     </div>
                   </div>
 
-                  <p className="text-sm text-zinc-500 leading-relaxed mb-3">{entry.description}</p>
+                  <p className="text-sm text-fg-subtle leading-relaxed mb-3">{entry.description}</p>
 
                   <div className="flex flex-wrap gap-1.5">
                     {entry.tech.map((t) => (
-                      <span key={t} className="rounded-md bg-zinc-100 px-2 py-0.5 text-[10px] font-mono font-medium text-zinc-500 border border-zinc-200">
+                      <span key={t} className="rounded-md bg-surface-raised px-2 py-0.5 text-[10px] font-mono font-medium text-fg-subtle border border-border">
                         {t}
                       </span>
                     ))}

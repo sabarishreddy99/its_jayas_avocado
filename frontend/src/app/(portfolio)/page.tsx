@@ -14,61 +14,61 @@ export default function PortfolioHome() {
     <div className="mx-auto w-full max-w-6xl px-4 sm:px-6 pb-24 pt-10 sm:pt-16 space-y-20">
 
       {/* Hero */}
-      <section className="grid gap-5 border-b border-zinc-200 pb-16">
+      <section className="grid gap-5 border-b border-border pb-16">
         <div className="flex items-center gap-2">
           <span className="inline-block w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-          <span className="text-[11px] font-semibold uppercase tracking-widest text-zinc-400">
+          <span className="text-[11px] font-semibold uppercase tracking-widest text-fg-faint">
             Open to opportunities · {profile.location}
           </span>
         </div>
-        <h1 className="text-3xl sm:text-5xl font-bold leading-tight tracking-tight text-zinc-950 max-w-2xl">
+        <h1 className="text-3xl sm:text-5xl font-bold leading-tight tracking-tight text-fg max-w-2xl">
           {profile.name}
         </h1>
-        <p className="text-base sm:text-lg font-medium text-indigo-600">{profile.tagline}</p>
-        <p className="max-w-xl text-sm sm:text-base leading-7 text-zinc-900">Prev @ {profile.previous}</p>
-        <p className="max-w-xl text-sm sm:text-base leading-7 text-zinc-600">{profile.bio}</p>
+        <p className="text-base sm:text-lg font-medium text-accent">{profile.tagline}</p>
+        <p className="max-w-xl text-sm sm:text-base leading-7 text-fg">Prev @ {profile.previous}</p>
+        <p className="max-w-xl text-sm sm:text-base leading-7 text-fg-muted">{profile.bio}</p>
 
         {/* Domain focus */}
-        <div className="flex flex-col gap-1.5 max-w-xl border-l-2 border-zinc-200 pl-4">
-          <p className="text-[11px] text-zinc-400">
+        <div className="flex flex-col gap-1.5 max-w-xl border-l-2 border-border pl-4">
+          <p className="text-[11px] text-fg-faint">
             <span className="font-semibold uppercase tracking-widest mr-2">Previously</span>
             {profile.prev_domain.split(",").map((d, i, arr) => (
               <span key={d}>
-                <span className="text-zinc-500">{d.trim()}</span>
-                {i < arr.length - 1 && <span className="mx-1.5 text-zinc-300">·</span>}
+                <span className="text-fg-subtle">{d.trim()}</span>
+                {i < arr.length - 1 && <span className="mx-1.5 text-fg-faint">·</span>}
               </span>
             ))}
           </p>
-          <p className="text-[11px] text-zinc-400">
+          <p className="text-[11px] text-fg-faint">
             <span className="font-semibold uppercase tracking-widest mr-2">Excited in</span>
             {profile.interested_domain.split(",").map((d, i, arr) => (
               <span key={d}>
-                <span className="text-indigo-500">{d.trim()}</span>
-                {i < arr.length - 1 && <span className="mx-1.5 text-zinc-300">·</span>}
+                <span className="text-accent">{d.trim()}</span>
+                {i < arr.length - 1 && <span className="mx-1.5 text-fg-faint">·</span>}
               </span>
             ))}
-            <span className="mx-1.5 text-zinc-300">·</span>
-            <span className="text-zinc-400 italic">& more</span>
+            <span className="mx-1.5 text-fg-faint">·</span>
+            <span className="text-fg-faint italic">& more</span>
           </p>
         </div>
 
-        <p className="max-w-xl text-sm sm:text-base leading-7 text-zinc-800">{profile.obsession}</p>
+        <p className="max-w-xl text-sm sm:text-base leading-7 text-fg-muted">{profile.obsession}</p>
         <div className="flex flex-wrap gap-3 pt-1">
           <Link
             href="/experience"
-            className="rounded-full border-2 border-zinc-950 bg-zinc-950 px-5 py-2 text-sm font-semibold text-white hover:bg-zinc-800 hover:border-zinc-800 transition-colors shadow-sm"
+            className="rounded-full border-2 border-fg bg-fg px-5 py-2 text-sm font-semibold text-bg hover:opacity-80 transition-opacity shadow-sm"
           >
             View Experience
           </Link>
           <Link
             href="/projects"
-            className="rounded-full border-2 border-zinc-300 px-5 py-2 text-sm font-semibold text-zinc-700 hover:border-zinc-950 hover:text-zinc-950 transition-colors"
+            className="rounded-full border-2 border-border px-5 py-2 text-sm font-semibold text-fg-muted hover:border-fg hover:text-fg transition-colors"
           >
             See Projects
           </Link>
           <Link
             href="/blog"
-            className="rounded-full border-2 border-zinc-300 px-5 py-2 text-sm font-semibold text-zinc-700 hover:border-zinc-950 hover:text-zinc-950 transition-colors"
+            className="rounded-full border-2 border-border px-5 py-2 text-sm font-semibold text-fg-muted hover:border-fg hover:text-fg transition-colors"
           >
             Read Blog
           </Link>
@@ -76,7 +76,7 @@ export default function PortfolioHome() {
             href={profile.resume}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border-2 border-zinc-300 px-5 py-2 text-sm font-semibold text-zinc-700 hover:border-zinc-950 hover:text-zinc-950 transition-colors inline-flex items-center gap-1.5"
+            className="rounded-full border-2 border-border px-5 py-2 text-sm font-semibold text-fg-muted hover:border-fg hover:text-fg transition-colors inline-flex items-center gap-1.5"
           >
             Resume
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -85,7 +85,7 @@ export default function PortfolioHome() {
           </a>
           <Link
             href="/chat"
-            className="rounded-full bg-indigo-600 px-5 py-2 text-sm font-semibold text-white hover:bg-indigo-700 transition-colors shadow-sm"
+            className="rounded-full bg-indigo-600 dark:bg-indigo-500 px-5 py-2 text-sm font-semibold text-white hover:bg-indigo-700 dark:hover:bg-indigo-400 transition-colors shadow-sm"
           >
             Avocado ✦
           </Link>
@@ -96,8 +96,8 @@ export default function PortfolioHome() {
       {featured.length > 0 && (
         <section>
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-xs font-bold uppercase tracking-widest text-zinc-400">Featured Projects</h2>
-            <Link href="/projects" className="text-xs font-medium text-indigo-600 hover:text-indigo-800">
+            <h2 className="text-xs font-bold uppercase tracking-widest text-fg-faint">Featured Projects</h2>
+            <Link href="/projects" className="text-xs font-medium text-accent hover:text-accent-hover">
               All projects →
             </Link>
           </div>
@@ -105,26 +105,26 @@ export default function PortfolioHome() {
             {featured.map((p) => (
               <div
                 key={p.title}
-                className="group rounded-2xl border border-zinc-200 bg-white p-5 space-y-3 hover:border-indigo-300 hover:shadow-md transition-all"
+                className="group rounded-2xl border border-border bg-surface p-5 space-y-3 hover:border-indigo-300 dark:hover:border-indigo-700 hover:shadow-md transition-all"
               >
                 <div className="flex items-start justify-between gap-2">
-                  <h3 className="font-semibold text-zinc-950 text-sm leading-snug">{p.title}</h3>
+                  <h3 className="font-semibold text-fg text-sm leading-snug">{p.title}</h3>
                   {p.award && (
-                    <span className="text-[10px] font-semibold rounded-full bg-amber-50 text-amber-700 border border-amber-200 px-2 py-0.5 whitespace-nowrap flex-shrink-0">
+                    <span className="text-[10px] font-semibold rounded-full bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800 px-2 py-0.5 whitespace-nowrap flex-shrink-0">
                       🏆 Winner
                     </span>
                   )}
                 </div>
-                <p className="text-xs leading-5 text-zinc-500">{p.description}</p>
+                <p className="text-xs leading-5 text-fg-subtle">{p.description}</p>
                 <div className="flex flex-wrap gap-1.5">
                   {p.tags.slice(0, 4).map((t) => (
-                    <span key={t} className="rounded-full bg-zinc-100 px-2 py-0.5 text-[10px] font-medium text-zinc-600">
+                    <span key={t} className="rounded-full bg-surface-raised px-2 py-0.5 text-[10px] font-medium text-fg-muted">
                       {t}
                     </span>
                   ))}
                 </div>
                 {p.note && (
-                  <p className="text-[11px] text-amber-700 bg-amber-50 border border-amber-100 rounded-lg px-2.5 py-1.5 leading-relaxed">
+                  <p className="text-[11px] text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/50 border border-amber-100 dark:border-amber-900 rounded-lg px-2.5 py-1.5 leading-relaxed">
                     {p.note}
                   </p>
                 )}
@@ -132,7 +132,7 @@ export default function PortfolioHome() {
                   {p.sourceLinks && p.sourceLinks.length > 0 ? (
                     p.sourceLinks.map((link) => (
                       <a key={link.url} href={link.url} target="_blank" rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 rounded-full bg-indigo-50 border border-indigo-200 px-2.5 py-0.5 text-[10px] font-semibold text-indigo-700 hover:bg-indigo-100 hover:border-indigo-400 transition-colors">
+                        className="inline-flex items-center gap-1 rounded-full bg-accent-light border border-indigo-200 dark:border-indigo-800 px-2.5 py-0.5 text-[10px] font-semibold text-accent hover:opacity-80 transition-opacity">
                         {link.label}
                         <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg>
                       </a>
@@ -147,14 +147,14 @@ export default function PortfolioHome() {
 
       {/* Skills */}
       <section>
-        <h2 className="text-xs font-bold uppercase tracking-widest text-zinc-400 mb-6">Skills & Tools</h2>
+        <h2 className="text-xs font-bold uppercase tracking-widest text-fg-faint mb-6">Skills & Tools</h2>
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {skills.map((group) => (
-            <div key={group.category} className="rounded-2xl border border-zinc-200 bg-white p-5">
-              <p className="text-[11px] font-bold uppercase tracking-wider text-indigo-600 mb-3">{group.category}</p>
+            <div key={group.category} className="rounded-2xl border border-border bg-surface p-5">
+              <p className="text-[11px] font-bold uppercase tracking-wider text-accent mb-3">{group.category}</p>
               <div className="flex flex-wrap gap-1.5">
                 {group.items.map((item) => (
-                  <span key={item} className="rounded-full border border-zinc-200 bg-zinc-50 px-2.5 py-0.5 text-xs text-zinc-700">
+                  <span key={item} className="rounded-full border border-border bg-surface-raised px-2.5 py-0.5 text-xs text-fg-muted">
                     {item}
                   </span>
                 ))}

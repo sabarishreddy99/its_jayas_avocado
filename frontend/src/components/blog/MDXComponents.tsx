@@ -5,10 +5,10 @@ import BlogImageClient from "./BlogImage";
 type CalloutVariant = "info" | "tip" | "warning" | "quote";
 
 const CALLOUT_STYLES: Record<CalloutVariant, { border: string; bg: string; icon: string; label: string; text: string }> = {
-  info:    { border: "border-blue-200",  bg: "bg-blue-50",   icon: "ℹ",  label: "text-blue-700",  text: "text-blue-800" },
-  tip:     { border: "border-green-200", bg: "bg-green-50",  icon: "✦",  label: "text-green-700", text: "text-green-800" },
-  warning: { border: "border-amber-200", bg: "bg-amber-50",  icon: "⚠",  label: "text-amber-700", text: "text-amber-900" },
-  quote:   { border: "border-indigo-200",bg: "bg-indigo-50", icon: "❝",  label: "text-indigo-600",text: "text-indigo-900" },
+  info:    { border: "border-blue-200 dark:border-blue-800",   bg: "bg-blue-50 dark:bg-blue-950/50",   icon: "ℹ",  label: "text-blue-700 dark:text-blue-400",   text: "text-blue-800 dark:text-blue-300" },
+  tip:     { border: "border-green-200 dark:border-green-800", bg: "bg-green-50 dark:bg-green-950/50", icon: "✦",  label: "text-green-700 dark:text-green-400", text: "text-green-800 dark:text-green-300" },
+  warning: { border: "border-amber-200 dark:border-amber-800", bg: "bg-amber-50 dark:bg-amber-950/50", icon: "⚠",  label: "text-amber-700 dark:text-amber-400", text: "text-amber-900 dark:text-amber-300" },
+  quote:   { border: "border-indigo-200 dark:border-indigo-800", bg: "bg-indigo-50 dark:bg-indigo-950/50", icon: "❝", label: "text-indigo-600 dark:text-indigo-400", text: "text-indigo-900 dark:text-indigo-300" },
 };
 
 export function Callout({ type = "info", title, children }: { type?: CalloutVariant; title?: string; children: React.ReactNode }) {
@@ -33,9 +33,9 @@ export function BlogImage({ src, alt, caption }: { src: string; alt: string; cap
 export function Divider() {
   return (
     <div className="not-prose my-8 flex items-center gap-3">
-      <div className="flex-1 h-px bg-zinc-200" />
-      <span className="text-zinc-300 text-xs">✦</span>
-      <div className="flex-1 h-px bg-zinc-200" />
+      <div className="flex-1 h-px bg-border" />
+      <span className="text-fg-faint text-xs">✦</span>
+      <div className="flex-1 h-px bg-border" />
     </div>
   );
 }
@@ -49,7 +49,7 @@ export const mdxComponents: MDXComponents = {
 
   // Styled inline code
   code: ({ children }) => (
-    <code className="bg-zinc-100 border border-zinc-200 rounded px-1.5 py-0.5 text-[0.83em] font-mono text-fuchsia-700">
+    <code className="bg-surface-raised border border-border rounded px-1.5 py-0.5 text-[0.83em] font-mono text-fuchsia-700 dark:text-fuchsia-400">
       {children}
     </code>
   ),
@@ -59,7 +59,7 @@ export const mdxComponents: MDXComponents = {
     <h2 id={id} className="group relative">
       {children}
       {id && (
-        <a href={`#${id}`} className="ml-2 opacity-0 group-hover:opacity-40 text-zinc-400 no-underline text-sm" aria-hidden>
+        <a href={`#${id}`} className="ml-2 opacity-0 group-hover:opacity-40 text-fg-faint no-underline text-sm" aria-hidden>
           #
         </a>
       )}
@@ -69,7 +69,7 @@ export const mdxComponents: MDXComponents = {
     <h3 id={id} className="group relative">
       {children}
       {id && (
-        <a href={`#${id}`} className="ml-2 opacity-0 group-hover:opacity-40 text-zinc-400 no-underline text-sm" aria-hidden>
+        <a href={`#${id}`} className="ml-2 opacity-0 group-hover:opacity-40 text-fg-faint no-underline text-sm" aria-hidden>
           #
         </a>
       )}

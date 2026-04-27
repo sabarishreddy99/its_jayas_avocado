@@ -53,7 +53,7 @@ export default function LoadingGame() {
         </div>
 
         {/* Bubble — same shape/border as ChatMessage */}
-        <div className="max-w-[80%] sm:max-w-[75%] rounded-2xl rounded-tl-sm border border-zinc-200 bg-white px-4 py-2.5 shadow-sm">
+        <div className="max-w-[80%] sm:max-w-[75%] rounded-2xl rounded-tl-sm border border-border bg-surface px-4 py-2.5 shadow-sm">
           <div className="flex items-center gap-2.5">
             {/* Step icon animates in when it changes */}
             <span

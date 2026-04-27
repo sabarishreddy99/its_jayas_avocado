@@ -2,9 +2,9 @@ import type { MDXComponents } from "mdx/types";
 
 /* ── Status badge ──────────────────────────────────────────────────── */
 const STATUS_STYLES = {
-  active:  { dot: "bg-emerald-400", text: "text-emerald-700", bg: "bg-emerald-50 border-emerald-200", label: "Active" },
-  shipped: { dot: "bg-indigo-400",  text: "text-indigo-700",  bg: "bg-indigo-50 border-indigo-200",   label: "Shipped" },
-  paused:  { dot: "bg-amber-400",   text: "text-amber-700",   bg: "bg-amber-50 border-amber-200",     label: "Paused" },
+  active:  { dot: "bg-emerald-400", text: "text-emerald-700 dark:text-emerald-400", bg: "bg-emerald-50 dark:bg-emerald-950/50 border-emerald-200 dark:border-emerald-800", label: "Active" },
+  shipped: { dot: "bg-indigo-400",  text: "text-indigo-700 dark:text-indigo-400",   bg: "bg-indigo-50 dark:bg-indigo-950/50 border-indigo-200 dark:border-indigo-800",   label: "Shipped" },
+  paused:  { dot: "bg-amber-400",   text: "text-amber-700 dark:text-amber-400",     bg: "bg-amber-50 dark:bg-amber-950/50 border-amber-200 dark:border-amber-800",     label: "Paused" },
 };
 
 export function Status({ status }: { status: "active" | "shipped" | "paused" }) {
@@ -20,7 +20,7 @@ export function Status({ status }: { status: "active" | "shipped" | "paused" }) 
 /* ── Architecture block (used via ```arch fenced code blocks) ──────── */
 function ArchBlock({ children }: { children: React.ReactNode }) {
   return (
-    <div className="not-prose my-6 rounded-xl border border-zinc-200 bg-zinc-950 overflow-x-auto">
+    <div className="not-prose my-6 rounded-xl border border-border bg-zinc-950 overflow-x-auto">
       <div className="flex items-center gap-1.5 px-4 py-2.5 border-b border-zinc-800">
         <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
         <span className="w-2.5 h-2.5 rounded-full bg-zinc-700" />
@@ -40,14 +40,14 @@ export function Decision({ date, title, children }: { date: string; title: strin
     <div className="not-prose my-4 flex gap-4">
       <div className="flex flex-col items-center">
         <div className="w-2 h-2 rounded-full bg-indigo-500 mt-1 shrink-0" />
-        <div className="w-px flex-1 bg-zinc-200 mt-1" />
+        <div className="w-px flex-1 bg-border mt-1" />
       </div>
       <div className="pb-6 flex-1 min-w-0">
         <div className="flex flex-wrap items-baseline gap-2 mb-1.5">
-          <span className="text-[10px] font-mono text-zinc-400">{date}</span>
-          <span className="text-sm font-semibold text-zinc-900">{title}</span>
+          <span className="text-[10px] font-mono text-fg-faint">{date}</span>
+          <span className="text-sm font-semibold text-fg">{title}</span>
         </div>
-        <div className="text-sm text-zinc-600 leading-relaxed">{children}</div>
+        <div className="text-sm text-fg-muted leading-relaxed">{children}</div>
       </div>
     </div>
   );
@@ -58,12 +58,12 @@ export function Update({ date, children }: { date: string; children: React.React
   return (
     <div className="not-prose my-3 flex gap-4">
       <div className="flex flex-col items-center">
-        <div className="w-2 h-2 rounded-full bg-zinc-300 mt-1 shrink-0" />
-        <div className="w-px flex-1 bg-zinc-100 mt-1" />
+        <div className="w-2 h-2 rounded-full bg-border-strong mt-1 shrink-0" />
+        <div className="w-px flex-1 bg-border-subtle mt-1" />
       </div>
       <div className="pb-5 flex-1 min-w-0">
-        <span className="text-[10px] font-mono text-zinc-400 block mb-1">{date}</span>
-        <div className="text-sm text-zinc-600 leading-relaxed">{children}</div>
+        <span className="text-[10px] font-mono text-fg-faint block mb-1">{date}</span>
+        <div className="text-sm text-fg-muted leading-relaxed">{children}</div>
       </div>
     </div>
   );
@@ -75,7 +75,7 @@ export function Stack({ items }: { items: string[] }) {
   return (
     <div className="not-prose flex flex-wrap gap-1.5 my-4">
       {list.map((item) => (
-        <span key={item} className="px-2.5 py-1 rounded-md bg-zinc-100 text-zinc-600 text-[11px] font-mono font-medium border border-zinc-200">
+        <span key={item} className="px-2.5 py-1 rounded-md bg-surface-raised text-fg-muted text-[11px] font-mono font-medium border border-border">
           {item}
         </span>
       ))}
@@ -86,9 +86,9 @@ export function Stack({ items }: { items: string[] }) {
 /* ── Metric highlight ──────────────────────────────────────────────── */
 export function Metric({ value, label }: { value: string; label: string }) {
   return (
-    <div className="not-prose inline-flex flex-col items-center px-4 py-3 rounded-xl border border-zinc-200 bg-white text-center">
-      <span className="text-xl font-bold text-zinc-900 leading-none">{value}</span>
-      <span className="text-[10px] text-zinc-400 mt-1 font-medium uppercase tracking-wider">{label}</span>
+    <div className="not-prose inline-flex flex-col items-center px-4 py-3 rounded-xl border border-border bg-surface text-center">
+      <span className="text-xl font-bold text-fg leading-none">{value}</span>
+      <span className="text-[10px] text-fg-faint mt-1 font-medium uppercase tracking-wider">{label}</span>
     </div>
   );
 }
@@ -96,7 +96,7 @@ export function Metric({ value, label }: { value: string; label: string }) {
 /* ── Inline code override ──────────────────────────────────────────── */
 function InlineCode({ children }: { children?: React.ReactNode }) {
   return (
-    <code className="bg-zinc-100 border border-zinc-200 rounded px-1.5 py-0.5 text-[0.83em] font-mono text-fuchsia-700">
+    <code className="bg-surface-raised border border-border rounded px-1.5 py-0.5 text-[0.83em] font-mono text-fuchsia-700 dark:text-fuchsia-400">
       {children}
     </code>
   );
@@ -123,7 +123,7 @@ export const labMDXComponents: MDXComponents = {
     <h2 id={id} className="group relative">
       {children}
       {id && (
-        <a href={`#${id}`} className="ml-2 opacity-0 group-hover:opacity-40 text-zinc-400 no-underline text-sm" aria-hidden>#</a>
+        <a href={`#${id}`} className="ml-2 opacity-0 group-hover:opacity-40 text-fg-faint no-underline text-sm" aria-hidden>#</a>
       )}
     </h2>
   ),
@@ -131,7 +131,7 @@ export const labMDXComponents: MDXComponents = {
     <h3 id={id} className="group relative">
       {children}
       {id && (
-        <a href={`#${id}`} className="ml-2 opacity-0 group-hover:opacity-40 text-zinc-400 no-underline text-sm" aria-hidden>#</a>
+        <a href={`#${id}`} className="ml-2 opacity-0 group-hover:opacity-40 text-fg-faint no-underline text-sm" aria-hidden>#</a>
       )}
     </h3>
   ),

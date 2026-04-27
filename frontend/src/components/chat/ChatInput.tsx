@@ -87,12 +87,12 @@ export default function ChatInput({ onSend, disabled, prefill, onPrefillConsumed
   }
 
   return (
-    <div className="flex items-end gap-2 rounded-2xl border border-zinc-200 bg-white px-4 py-3 shadow-sm transition-shadow focus-within:shadow-md focus-within:border-indigo-300">
+    <div className="flex items-end gap-2 rounded-2xl border border-border bg-surface px-4 py-3 shadow-sm transition-shadow focus-within:shadow-md focus-within:border-indigo-400">
       <textarea
         ref={textareaRef}
         rows={1}
         placeholder={isListening ? "Listening…" : "Ask about experience, projects, skills…"}
-        className="flex-1 resize-none bg-transparent text-sm leading-relaxed text-zinc-900 placeholder:text-zinc-400 focus:outline-none"
+        className="flex-1 resize-none bg-transparent text-sm leading-relaxed text-fg placeholder:text-fg-faint focus:outline-none"
         onKeyDown={handleKeyDown}
         disabled={disabled}
         style={{ maxHeight: "120px" }}
