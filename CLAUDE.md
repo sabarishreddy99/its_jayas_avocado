@@ -104,10 +104,11 @@ docker compose -f infra/compose.yml up --build
 
 ### RAG flow for `/ai/chat`
 
-1. User message → embed with `all-MiniLM-L6-v2` (sentence-transformers)
+1. User message → embed with `all-MiniLM-L6-v2` (fastembed ONNX — no PyTorch)
 2. Query ChromaDB for top-5 relevant chunks + BM25 hybrid retrieval
-3. Inject chunks as context into Gemini system prompt
-4. Return `{ reply, sources }`
+3. RRF merge → top 5 by score
+4. Inject chunks as context into Gemini system prompt
+5. Return `{ reply, sources }`
 
 ---
 

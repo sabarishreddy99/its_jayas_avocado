@@ -40,9 +40,9 @@ Personal AI-assisted portfolio for **Jaya Sabarish Reddy Remala**. Two entry poi
 │  ┌──────────────────────────┐    ┌────────────────────────────────────────┐  │
 │  │      RAG Store           │    │              SQLite                    │  │
 │  │  ChromaDB (persistent)   │    │   analytics.db  (Railway volume)       │  │
-│  │  all-MiniLM-L6-v2 embed  │    │   ├─ interactions  (chat analytics)   │  │
-│  │  BM25 (rank_bm25)        │    │   ├─ blog_views   (unique / IP / post) │  │
-│  │  Cross-encoder reranker  │    │   └─ blog_claps   (≤50 / user / post) │  │
+│  │  fastembed ONNX embed    │    │   ├─ interactions  (chat analytics)   │  │
+│  │  all-MiniLM-L6-v2        │    │   ├─ blog_views   (unique / IP / post) │  │
+│  │  BM25 (rank_bm25)        │    │   └─ blog_claps   (≤50 / user / post) │  │
 │  │  RRF merge               │    └────────────────────────────────────────┘  │
 │  └──────────────────────────┘                                                │
 │                                                                              │
@@ -88,9 +88,9 @@ User message
 │ Stage 2a DENSE  │    │ Stage 2b LEXICAL          │
 │ ChromaDB query  │    │ BM25 (rank_bm25 Okapi)    │
 │ all-MiniLM-L6   │    │ Catches exact keyword     │
-│ HNSW cosine     │    │ matches: "3000 RPS",      │
-│ Batched encode  │    │ "Qualcomm", "SnapLog",    │
-│ ~1 forward pass │    │ company names, numbers    │
+│ fastembed ONNX  │    │ matches: "3000 RPS",      │
+│ HNSW cosine     │    │ "Qualcomm", "SnapLog",    │
+│ Batched encode  │    │ company names, numbers    │
 │ top-6 / query   │    │ top-15 results            │
 └────────┬────────┘    └────────────┬─────────────┘
          └──────────┬───────────────┘
@@ -103,11 +103,10 @@ User message
 └────────────────────┬───────────────────────────┘
                      ▼
 ┌────────────────────────────────────────────────┐
-│  Stage 4 — CROSS-ENCODER RERANK                │
-│  cross-encoder/ms-marco-MiniLM-L-6-v2          │
-│  Scores (query, passage) pairs jointly         │
-│  → top 5 final chunks                          │
-│  Falls back to RRF order if model not ready    │
+│  Stage 4 — TOP-N BY RRF SCORE                  │
+│  Returns top 5 chunks ordered by RRF score     │
+│  (cross-encoder removed — ~600MB RAM saving,   │
+│   ONNX fastembed replaces PyTorch/torch)        │
 └────────────────────┬───────────────────────────┘
                      ▼
          Chunks injected into Gemini
@@ -182,7 +181,7 @@ git push origin main
                     ├── analytics.init_db()   — CREATE TABLE IF NOT EXISTS
                     ├── blog_stats.init_db()  — CREATE TABLE IF NOT EXISTS
                     ├── run_ingest()          — hash check → skip or re-ingest
-                    └── warmup()              — pre-loads embedding model + cross-encoder
+                    └── warmup()              — pre-loads ONNX embedding model
 ```
 
 ---
@@ -309,7 +308,7 @@ itsjaya/
 │   │   ├── routers/ai.py                   /ai/* endpoints + RAG orchestration
 │   │   ├── routers/blog.py                 /blog/* engagement endpoints
 │   │   ├── routers/stats.py                /stats  /stats/overview
-│   │   ├── rag/store.py                    ChromaDB + BM25 + cross-encoder + RRF
+│   │   ├── rag/store.py                    ChromaDB + BM25 + RRF (fastembed ONNX)
 │   │   ├── rag/ingest.py                   Hash-based re-ingest + document builders
 │   │   └── db/analytics.py                 Chat analytics (period-aware)
 │   │   └── db/blog_stats.py                Blog views + claps (period-aware)

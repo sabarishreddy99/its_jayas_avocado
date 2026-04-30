@@ -5,11 +5,10 @@ import logging
 import re
 from concurrent.futures import ThreadPoolExecutor
 from functools import lru_cache
-from typing import List
 
 import chromadb
 from chromadb import EmbeddingFunction, Documents, Embeddings
-from sentence_transformers import CrossEncoder, SentenceTransformer
+from fastembed import TextEmbedding
 
 # rank_bm25 is optional — gracefully degrade to dense-only if not installed
 try:
@@ -27,7 +26,7 @@ _collection: chromadb.Collection | None = None
 _executor = ThreadPoolExecutor(max_workers=4)
 
 COLLECTION_NAME = "portfolio"
-EMBED_MODEL = "all-MiniLM-L6-v2"
+EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 # ── BM25 state (always in-memory, rebuilt from docs on every startup) ──────────
 _bm25_index = None  # BM25Okapi | None
@@ -35,24 +34,18 @@ _bm25_corpus: list[str] = []
 _bm25_ids: list[str] = []
 _bm25_types: list[str] = []
 
-# ── Cross-encoder state ────────────────────────────────────────────────────────
-_cross_encoder: CrossEncoder | None = None
-_cross_encoder_ready = False   # set True only after warmup succeeds
-CROSS_ENCODER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
-
 
 # ── Embedding function ─────────────────────────────────────────────────────────
 
 class _DirectSTEmbedding(EmbeddingFunction):
-    """Wraps SentenceTransformer directly — avoids the transformers AutoProcessor
-    issue that appears in transformers ≥ 5.x when using ChromaDB's built-in wrapper."""
+    """Wraps fastembed TextEmbedding (ONNX runtime) — same model weights as
+    sentence-transformers but without the PyTorch dependency (~600MB RAM savings)."""
 
     def __init__(self, model_name: str) -> None:
-        self._model = SentenceTransformer(model_name)
+        self._model = TextEmbedding(model_name)
 
     def __call__(self, input: Documents) -> Embeddings:
-        vecs: List[List[float]] = self._model.encode(list(input)).tolist()
-        return vecs
+        return [v.tolist() for v in self._model.embed(list(input))]
 
 
 # ── ChromaDB collection ────────────────────────────────────────────────────────
@@ -236,68 +229,30 @@ def rrf_merge(
     return [{**all_chunks[cid], "rrf_score": round(score, 6)} for cid, score in merged]
 
 
-# ── Cross-encoder reranker ─────────────────────────────────────────────────────
-
-def _get_cross_encoder() -> CrossEncoder:
-    global _cross_encoder
-    if _cross_encoder is None:
-        _cross_encoder = CrossEncoder(CROSS_ENCODER_MODEL)
-        logger.info("Cross-encoder loaded: %s", CROSS_ENCODER_MODEL)
-    return _cross_encoder
-
+# ── Reranker (RRF score ordering — cross-encoder removed to save RAM) ──────────
 
 def rerank_cross_encoder(query_text: str, chunks: list[dict], top_n: int = 5) -> list[dict]:
-    """Score (query, chunk) pairs with a cross-encoder.
-    If the model isn't warmed up yet, falls back to RRF/cosine ordering instantly.
-    """
-    if not chunks:
-        return []
-    if not _cross_encoder_ready:
-        # Model not loaded yet — return best chunks by existing score, never hang
-        return sorted(chunks, key=lambda c: c.get("rrf_score", c.get("score", 0)), reverse=True)[:top_n]
-    try:
-        ce = _get_cross_encoder()
-        pairs = [[query_text, c["text"]] for c in chunks]
-        scores = ce.predict(pairs)
-        for c, s in zip(chunks, scores):
-            c["ce_score"] = float(s)
-        return sorted(chunks, key=lambda c: c["ce_score"], reverse=True)[:top_n]
-    except Exception as exc:
-        logger.warning("Cross-encoder rerank failed, using score fallback: %s", exc)
-        return sorted(chunks, key=lambda c: c.get("rrf_score", c.get("score", 0)), reverse=True)[:top_n]
+    """Returns top_n chunks ordered by RRF/cosine score."""
+    return sorted(chunks, key=lambda c: c.get("rrf_score", c.get("score", 0)), reverse=True)[:top_n]
 
 
 async def rerank_cross_encoder_async(
     query_text: str, chunks: list[dict], top_n: int = 5
 ) -> list[dict]:
-    """Async wrapper — runs cross-encoder in thread pool (CPU-bound)."""
-    loop = asyncio.get_running_loop()
-    return await loop.run_in_executor(_executor, rerank_cross_encoder, query_text, chunks, top_n)
+    return rerank_cross_encoder(query_text, chunks, top_n)
 
 
 # ── Startup warmup ─────────────────────────────────────────────────────────────
 
 def warmup() -> None:
-    """Pre-load embedding model and cross-encoder at startup.
-    Embedding model is loaded first (critical — needed for every query).
-    Cross-encoder is loaded second and sets the ready flag only on success.
-    """
-    global _cross_encoder_ready
+    """Pre-load ONNX embedding model at startup so the first user request
+    doesn't pay the model-load latency penalty."""
     try:
-        logger.info("Pre-warming embedding model...")
+        logger.info("Pre-warming embedding model (ONNX)...")
         query("warmup", n_results=1)
         logger.info("Embedding model ready")
     except Exception as exc:
         logger.warning("Embedding warmup failed: %s", exc)
-
-    try:
-        logger.info("Pre-warming cross-encoder (downloading if needed)...")
-        ce = _get_cross_encoder()
-        ce.predict([["warmup query", "warmup document"]])
-        _cross_encoder_ready = True
-        logger.info("Cross-encoder ready")
-    except Exception as exc:
-        logger.warning("Cross-encoder warmup failed — will use RRF fallback: %s", exc)
 
 
 # ── Legacy helpers (kept for backward compat, not used in hot path) ───────────
