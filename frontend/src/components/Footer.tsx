@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import { profile } from "@/data/profile";
+import BlogGuideDrawer from "@/components/blog/BlogGuideDrawer";
 
 function MarqueeText({
   text,
@@ -55,6 +57,8 @@ function MarqueeText({
 
 export default function Footer() {
   const [paused, setPaused] = useState(false);
+  const pathname = usePathname();
+  const showGuide = pathname.startsWith("/blog") || pathname.startsWith("/lab");
 
   return (
     <footer className="mt-auto border-t border-border bg-surface">
@@ -138,6 +142,7 @@ export default function Footer() {
               className="text-xs font-medium text-fg-faint hover:text-fg transition-colors duration-300">
               Email
             </a>
+            {showGuide && <BlogGuideDrawer />}
             <Link href="/"
               className="text-xs font-medium text-accent hover:text-accent-hover transition-colors duration-300">
               Chat with Avocado 🥑

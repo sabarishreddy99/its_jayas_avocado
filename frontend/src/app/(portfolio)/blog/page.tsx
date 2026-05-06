@@ -1,5 +1,4 @@
 import { getAllPosts } from "@/lib/blog";
-import BlogGuideDrawer from "@/components/blog/BlogGuideDrawer";
 import { BlogIndexStats, BlogPostList } from "@/components/blog/BlogIndexStats";
 
 export const metadata = { title: "Blog — Jaya Sabarish Reddy Remala" };
@@ -27,7 +26,6 @@ export default function BlogIndexPage() {
         <BlogPostList posts={posts} />
       )}
 
-      <BlogGuideDrawer />
     </div>
   );
 }

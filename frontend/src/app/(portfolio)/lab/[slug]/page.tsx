@@ -3,7 +3,6 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import Link from "next/link";
 import { getAllLabSlugs, getLabEntryBySlug, LabStatus } from "@/lib/lab";
 import { labMDXComponents } from "@/components/lab/LabMDXComponents";
-import BlogGuideDrawer from "@/components/blog/BlogGuideDrawer";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -86,7 +85,6 @@ export default async function LabEntryPage({ params }: Props) {
         </Link>
       </div>
     </div>
-    <BlogGuideDrawer />
     </>
   );
 }

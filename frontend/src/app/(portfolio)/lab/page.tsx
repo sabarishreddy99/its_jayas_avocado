@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { getAllLabEntries, LabStatus } from "@/lib/lab";
-import BlogGuideDrawer from "@/components/blog/BlogGuideDrawer";
 
 export const metadata = { title: "Lab — Jaya Sabarish Reddy Remala" };
 
@@ -71,7 +70,6 @@ export default function LabPage() {
         </ol>
       )}
     </div>
-    <BlogGuideDrawer />
     </>
   );
 }

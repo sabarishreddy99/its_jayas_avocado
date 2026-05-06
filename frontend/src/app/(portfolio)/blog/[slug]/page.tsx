@@ -3,7 +3,6 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { getAllSlugs, getPostBySlug } from "@/lib/blog";
 import Link from "next/link";
 import { mdxComponents } from "@/components/blog/MDXComponents";
-import BlogGuideDrawer from "@/components/blog/BlogGuideDrawer";
 import BlogEngagement from "@/components/blog/BlogEngagement";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -69,7 +68,6 @@ export default async function BlogPostPage({ params }: Props) {
         </Link>
       </div>
 
-      <BlogGuideDrawer />
     </div>
   );
 }

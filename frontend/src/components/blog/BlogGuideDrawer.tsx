@@ -116,14 +116,13 @@ export default function BlogGuideDrawer() {
 
   return (
     <>
-      {/* Floating trigger */}
+      {/* Footer-inline trigger — rendered by Footer.tsx via pathname check */}
       <button
         onClick={() => setOpen(true)}
-        title="Blog writing guide"
-        className="fixed bottom-20 md:bottom-6 right-5 z-40 flex items-center gap-1.5 rounded-full border border-border bg-surface/80 backdrop-blur px-3 py-2 text-[10px] font-semibold text-fg-faint shadow-sm hover:text-accent hover:border-indigo-300 dark:hover:border-indigo-700 transition-all duration-300 select-none"
+        className="text-xs font-medium text-fg-faint hover:text-accent transition-colors duration-300 inline-flex items-center gap-1"
       >
-        <span className="text-[11px]">✦</span>
-        <span>Guide</span>
+        <span className="text-[10px]">✦</span>
+        Guide
       </button>
 
       {/* Backdrop */}
