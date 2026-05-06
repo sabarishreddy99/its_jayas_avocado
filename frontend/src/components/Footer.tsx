@@ -145,7 +145,7 @@ export default function Footer() {
             {showGuide && <BlogGuideDrawer />}
             <Link href="/"
               className="text-xs font-medium text-accent hover:text-accent-hover transition-colors duration-300">
-              Chat with Avocado 🥑
+              Avocado ✦
             </Link>
           </div>
         </div>
