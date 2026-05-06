@@ -231,6 +231,18 @@ body {
 }
 .animate-avo-glow { animation: avo-glow 3s ease-in-out infinite; }
 
+@keyframes spin-ccw {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(-360deg); }
+}
+.animate-spin-ccw { animation: spin-ccw 3s linear infinite; }
+
+@keyframes think-wave {
+  0%, 55%, 100% { transform: scaleY(0.28); }
+  27%            { transform: scaleY(1); }
+}
+.animate-think-wave { animation: think-wave 1.3s ease-in-out infinite; }
+
 @keyframes avo-3d-spin {
   0%   { transform: perspective(320px) rotateY(0deg)   scale(1);    }
   35%  { transform: perspective(320px) rotateY(180deg) scale(1.14); }

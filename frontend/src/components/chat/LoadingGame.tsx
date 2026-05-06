@@ -2,42 +2,36 @@
 
 import { useEffect, useState } from "react";
 
-const STEPS = [
-  { icon: "🥑", text: "Slicing open the avocado…" },
-  { icon: "🥄", text: "Mashing in Jaya's experience…" },
-  { icon: "🍞", text: "Toasting the context bread…" },
-  { icon: "🍋", text: "Squeezing in a dash of relevance…" },
-  { icon: "🌿", text: "Layering on the freshest insights…" },
-  { icon: "🧂", text: "Seasoning with precision…" },
-  { icon: "✨", text: "Almost ready to serve…" },
+const THOUGHTS = [
+  "Slicing through the knowledge base…",
+  "Mashing in Jaya's experience…",
+  "Squeezing out the best context…",
+  "Layering the freshest insights…",
+  "Almost ready to serve…",
 ];
 
 export default function LoadingGame() {
-  const [step, setStep] = useState(0);
+  const [thoughtIdx, setThoughtIdx] = useState(0);
   const [coldStart, setColdStart] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setStep((s) => (s < STEPS.length - 1 ? s + 1 : s));
-    }, 1800);
-    const coldTimer = setTimeout(() => setColdStart(true), 6000);
-    return () => {
-      clearInterval(interval);
-      clearTimeout(coldTimer);
-    };
+    const t = setInterval(() => setThoughtIdx((i) => (i + 1) % THOUGHTS.length), 2200);
+    const cold = setTimeout(() => setColdStart(true), 6000);
+    return () => { clearInterval(t); clearTimeout(cold); };
   }, []);
 
   return (
     <div className="space-y-2 animate-in fade-in duration-300">
 
+      {/* Cold-start warning */}
       {coldStart && (
         <div className="flex justify-start gap-3">
           <div className="w-7 shrink-0" />
-          <div className="animate-in fade-in duration-500 rounded-xl border border-amber-200 bg-amber-50 px-3 py-2 flex items-start gap-2 max-w-[80%] sm:max-w-[75%]">
+          <div className="animate-in fade-in duration-500 rounded-xl border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 px-3 py-2 flex items-start gap-2 max-w-[80%] sm:max-w-[75%]">
             <span className="text-sm shrink-0 mt-px">⏳</span>
             <div>
-              <p className="text-[11px] font-semibold text-amber-700">Avocado is waking up…</p>
-              <p className="text-[10px] text-amber-600 mt-0.5">
+              <p className="text-[11px] font-semibold text-amber-700 dark:text-amber-400">Avocado is waking up…</p>
+              <p className="text-[10px] text-amber-600 dark:text-amber-500 mt-0.5">
                 First response takes ~20–30 s on cold start. Subsequent ones are instant.
               </p>
             </div>
@@ -45,33 +39,79 @@ export default function LoadingGame() {
         </div>
       )}
 
-      {/* Matches the assistant ChatMessage layout exactly */}
+      {/* Main thinking row */}
       <div className="flex justify-start gap-3">
-        {/* Avatar — same as ChatMessage */}
-        <div className="flex-shrink-0 w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center text-base mt-0.5">
-          🥑
+
+        {/* Avatar with counter-rotating thinking rings */}
+        <div className="flex-shrink-0 relative mt-0.5" style={{ width: 28, height: 28 }}>
+
+          {/* Outer ring — clockwise, indigo */}
+          <svg
+            className="absolute animate-spin"
+            style={{ top: -7, left: -7, width: 42, height: 42, animationDuration: "2.8s" }}
+            viewBox="0 0 42 42"
+            aria-hidden
+          >
+            <circle
+              cx="21" cy="21" r="19"
+              fill="none"
+              stroke="#818cf8"
+              strokeWidth="1.5"
+              strokeDasharray="32 88"
+              strokeLinecap="round"
+              opacity="0.65"
+            />
+          </svg>
+
+          {/* Inner ring — counter-clockwise, green */}
+          <svg
+            className="absolute animate-spin-ccw"
+            style={{ top: -4, left: -4, width: 36, height: 36 }}
+            viewBox="0 0 36 36"
+            aria-hidden
+          >
+            <circle
+              cx="18" cy="18" r="15"
+              fill="none"
+              stroke="#4ade80"
+              strokeWidth="1.5"
+              strokeDasharray="14 80"
+              strokeLinecap="round"
+              opacity="0.55"
+            />
+          </svg>
+
+          {/* Avocado avatar */}
+          <div className="relative z-10 w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center text-base select-none">
+            🥑
+          </div>
         </div>
 
-        {/* Bubble — same shape/border as ChatMessage */}
-        <div className="max-w-[80%] sm:max-w-[75%] rounded-2xl rounded-tl-sm border border-border bg-surface px-4 py-2.5 shadow-sm">
-          <div className="flex items-center gap-2.5">
-            {/* Step icon animates in when it changes */}
-            <span
-              key={step}
-              className="text-base leading-none animate-in zoom-in duration-200 shrink-0"
-            >
-              {STEPS[step].icon}
-            </span>
-            <span className="text-sm text-zinc-500 leading-relaxed">
-              {STEPS[step].text}
-            </span>
-            {/* Bouncing dots — same style as ChatMessage streaming dots */}
-            <span className="inline-flex gap-1 items-center shrink-0 ml-0.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 animate-bounce [animation-delay:0ms]" />
-              <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 animate-bounce [animation-delay:150ms]" />
-              <span className="w-1.5 h-1.5 rounded-full bg-zinc-300 animate-bounce [animation-delay:300ms]" />
-            </span>
+        {/* Thinking bubble */}
+        <div className="max-w-[80%] sm:max-w-[75%] rounded-2xl rounded-tl-sm border border-border bg-surface px-4 py-3 shadow-sm">
+
+          {/* EQ wave bars */}
+          <div className="flex items-end gap-[3px] mb-2.5" style={{ height: 14 }}>
+            {[0, 1, 2, 3, 4, 5].map((i) => (
+              <div
+                key={i}
+                className="w-[3px] rounded-full bg-indigo-400/60 animate-think-wave"
+                style={{
+                  height: 14,
+                  animationDelay: `${i * 0.12}s`,
+                  transformOrigin: "bottom",
+                }}
+              />
+            ))}
           </div>
+
+          {/* Cycling thought text */}
+          <p
+            key={thoughtIdx}
+            className="text-sm text-fg-faint leading-snug animate-fade-up"
+          >
+            {THOUGHTS[thoughtIdx]}
+          </p>
         </div>
       </div>
 
