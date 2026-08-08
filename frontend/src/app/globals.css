@@ -1335,3 +1335,121 @@ figcaption[data-rehype-pretty-code-title] + pre {
   .hope-avo svg,
   .hope-panel:hover .hope-avo svg { transform: none; transition: none; }
 }
+
+/* ══════════════════════════════════════════════════════════════════════════
+   VRF BRICKS  ·  vrfbricks.jayaremala.com
+   ══════════════════════════════════════════════════════════════════════════
+
+   VRF Bricks inherits the whole site design system: the same semantic tokens
+   (bg / fg / accent / border), the same type scale, the same dark mode, the
+   same ScrollReveal + StackSection primitives, and the same Cormorant
+   editorial headline voice used across the portfolio and gradeVITian.
+
+   What it overrides is the accent, and only the accent.
+
+   That split is the point. The craft should feel continuous with the rest of
+   the site, but the page has to read as Govinda Reddy's business rather than
+   as an entry in somebody's portfolio, and the quickest way to own a design
+   system is to own its colour. Indigo becomes terracotta: the colour of the
+   kiln-fired clay brick this product replaces.
+   ────────────────────────────────────────────────────────────────────────── */
+.vrf {
+  --accent:           #a8481f;
+  --accent-hover:     #8a3a18;
+  --accent-light:     #f7ebe4;
+  --accent-fg:        #ffffff;
+  --accent-secondary: #7a6a54;
+
+  /* Telugu coverage.
+     This site is bilingual, and none of the site's Latin faces (Geist, Inter,
+     Cormorant) carry a single Telugu glyph. Appending Anek Telugu to the stack
+     lets the browser fall through PER GLYPH: Latin renders in the site face,
+     Telugu renders in Anek, and no conditional class is needed anywhere. Drop
+     this and every Telugu string becomes tofu boxes. */
+  font-family: var(--font-sans, system-ui), var(--font-vrf-telugu), sans-serif;
+}
+.dark .vrf {
+  /* Lifted well above the light-mode value: terracotta on near-black needs the
+     extra luminance to clear 4.5:1 for body-sized text. */
+  --accent:           #e58a5e;
+  --accent-hover:     #f2a985;
+  --accent-light:     #2a1811;
+  --accent-fg:        #17120e;
+  --accent-secondary: #c9ab86;
+}
+
+/* ── The stretcher bond ────────────────────────────────────────────────────
+   VRF's one piece of proprietary ornament, and the thing that makes the page
+   feel like a brick yard rather than a template.
+
+   A real wall in running bond: every other course offset by half a brick.
+   Drawn from the actual 11 x 7 inch face ratio (1.571) so the proportion on
+   screen is the proportion in the yard. Sits behind sections at low opacity. */
+.vrf-bond {
+  --u: 34px;                        /* brick width on screen, phones */
+  --h: calc(var(--u) / 1.571);      /* height, from the real 11:7 face */
+  background-image:
+    linear-gradient(var(--border-subtle) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-subtle) 1px, transparent 1px);
+  background-size: var(--u) var(--h), var(--u) var(--h);
+  /* The half-brick offset that makes it a bond rather than a grid */
+  background-position: 0 0, calc(var(--u) / 2) var(--h);
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 20%, transparent 82%);
+          mask-image: radial-gradient(ellipse 80% 70% at 50% 45%, #000 20%, transparent 82%);
+}
+/* Scale the course with the viewport so the wall keeps a believable brick
+   size from a 360px phone up to a desktop, instead of looking like graph
+   paper on one and wallpaper on the other. */
+@media (min-width: 640px)  { .vrf-bond { --u: 42px; } }
+@media (min-width: 1024px) { .vrf-bond { --u: 50px; } }
+
+/* A single brick face, used as an eyebrow marker. */
+.vrf-chip {
+  display: inline-block;
+  width: 1.05em;
+  height: calc(1.05em / 1.571);
+  background: var(--accent);
+  border-radius: 1px;
+  flex-shrink: 0;
+}
+
+/* A hairline that reads as a mortar joint rather than a UI divider. */
+.vrf-joint {
+  height: 3px;
+  background: repeating-linear-gradient(
+    90deg,
+    var(--border-strong) 0 7px,
+    transparent 7px 11px
+  );
+}
+
+/* ── Buttons ───────────────────────────────────────────────────────────────
+   Hover lives in CSS, not React handlers, so the button components stay
+   server-rendered rather than going client-side just to darken a background.
+
+   WhatsApp keeps its own green in both themes. It is the single most important
+   affordance on the site and it has to be instantly recognisable as "this
+   opens WhatsApp", which the accent colour cannot do for it. */
+.vrf-btn-wa  { background: #1ea952; color: #fff; }
+.vrf-btn-wa:hover { background: #17823f; }
+.dark .vrf-btn-wa { background: #25c063; color: #0a0a0a; }
+.dark .vrf-btn-wa:hover { background: #3ad176; }
+
+
+/* ── Photo treatment ───────────────────────────────────────────────────────
+   Sourced editorial photography is warmed very slightly so a set drawn from
+   several photographers reads as one set. The single real photograph of the
+   yard is exempt (.vrf-photo-true): it is shown exactly as it was taken. */
+.vrf-photo      { filter: saturate(0.94) contrast(1.03); }
+.vrf-photo-true { filter: none; }
+
+/* Ken-Burns drift on the hero photograph. Slow enough to be felt, not seen. */
+@keyframes vrf-drift {
+  from { transform: scale(1.05) translate3d(0, 0, 0); }
+  to   { transform: scale(1.13) translate3d(-1.2%, -1%, 0); }
+}
+.vrf-drift { animation: vrf-drift 30s ease-in-out infinite alternate; }
+
+@media (prefers-reduced-motion: reduce) {
+  .vrf-drift { animation: none; }
+}

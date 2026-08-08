@@ -7,13 +7,8 @@ import GVServiceWorker from "@/components/gradevitian/GVServiceWorker";
 import GVIntroScreen from "@/components/gradevitian/GVIntroScreen";
 import GVCanonicalRedirect from "@/components/gradevitian/GVCanonicalRedirect";
 import GVJsonLd from "@/components/gradevitian/GVJsonLd";
-import { gvSiteLd } from "@/lib/gradevitian/seo";
+import { gvSiteLd, GV_OG_CARD, GV_URL, GV_TITLE, GV_DESC } from "@/lib/gradevitian/seo";
 import ScrollProgress from "@/components/ScrollProgress";
-
-const GV_URL = "https://gradevitian.jayaremala.com";
-const GV_TITLE = "gradeVITian, GPA, CGPA, Grade & Attendance calculators for VITians";
-const GV_DESC =
-  "Free online grading tools for VIT students: compute your GPA, CGPA, predict your grades, estimate the GPA you need, and track attendance, fast, mobile-first, and accurate.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(GV_URL),
@@ -23,6 +18,17 @@ export const metadata: Metadata = {
   },
   description: GV_DESC,
   applicationName: "gradeVITian",
+  category: "education",
+  authors: [{ name: "Jaya Sabarish Reddy Remala", url: "https://jayaremala.com" }],
+  creator: "Jaya Sabarish Reddy Remala",
+  publisher: "gradeVITian",
+  // Stops iOS Safari from turning credit counts and GPA numbers into phone links.
+  formatDetection: { telephone: false, address: false, email: false },
+  // Set NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION to the token from Search Console
+  // ("HTML tag" method) to verify the property without uploading a file.
+  verification: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION
+    ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }
+    : undefined,
   keywords: [
     "VIT", "VITian", "VIT Vellore", "GPA calculator", "CGPA calculator",
     "VIT GPA", "VIT CGPA", "grade predictor", "CGPA estimator",
@@ -51,19 +57,35 @@ export const metadata: Metadata = {
     title: GV_TITLE,
     description: GV_DESC,
     locale: "en_US",
-    images: [{ url: "/gradevitian/LOGO-512px.png", width: 512, height: 512, alt: "gradeVITian" }],
+    images: [GV_OG_CARD],
   },
   twitter: {
-    card: "summary",
+    card: "summary_large_image",
     title: GV_TITLE,
     description: GV_DESC,
-    images: ["/gradevitian/LOGO-512px.png"],
+    images: [GV_OG_CARD.url],
   },
 };
+
+// Every gradeVITian page calls the API on mount (visit counter, saved calcs, stats),
+// so warm the connection during HTML parse instead of after hydration.
+const API_ORIGIN = (() => {
+  try {
+    return new URL(process.env.NEXT_PUBLIC_API_BASE_URL ?? "").origin;
+  } catch {
+    return null;
+  }
+})();
 
 export default function GradeVITianLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
+      {API_ORIGIN && (
+        <>
+          <link rel="preconnect" href={API_ORIGIN} crossOrigin="" />
+          <link rel="dns-prefetch" href={API_ORIGIN} />
+        </>
+      )}
       <GVJsonLd data={gvSiteLd()} />
       <GVCanonicalRedirect />
       <GVAuthProvider>

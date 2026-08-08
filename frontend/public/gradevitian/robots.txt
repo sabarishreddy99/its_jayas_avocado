@@ -1,7 +1,18 @@
+# gradeVITian — served at https://gradevitian.jayaremala.com/robots.txt
+# (nginx maps the root path to this file; see infra/nginx/gradevitian.conf)
+
 User-agent: *
 Allow: /
+
+# Account-only or single-use flows: nothing to rank, and crawling them just burns
+# crawl budget on pages that render the same shell for everyone.
 Disallow: /account/
 Disallow: /forgot-password/
 Disallow: /reset-password/
+Disallow: /google-callback/
+
+# ?q=… (the home search box) is deliberately left crawlable: the home's
+# <link rel="canonical"> already points every variant back at "/", and blocking
+# the URL would stop Google from ever reading that canonical.
 
 Sitemap: https://gradevitian.jayaremala.com/sitemap.xml

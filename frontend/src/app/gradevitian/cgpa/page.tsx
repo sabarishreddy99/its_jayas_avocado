@@ -28,7 +28,7 @@ export default function CgpaPage() {
       <GVJsonLd data={[breadcrumbLd("/cgpa", "VIT CGPA Calculator"), toolLd({ path: "/cgpa", name: "VIT CGPA Calculator", description: DESC })]} />
       <GVPageHeader
         eyebrow="Cumulative"
-        title="CGPA Calculator"
+        title="VIT CGPA Calculator"
         subtitle="Watch your CGPA come together semester by semester, and see where this one takes it."
       />
       <ScrollReveal delay={80} className="mt-10">

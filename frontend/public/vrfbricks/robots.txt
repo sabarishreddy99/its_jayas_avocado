@@ -1,0 +1,12 @@
+# VRF Bricks — served at https://vrfbricks.jayaremala.com/robots.txt
+# (nginx maps the root path to this file; see infra/nginx/vrfbricks.conf)
+
+User-agent: *
+Allow: /
+
+# The 404 body is exported as a real route so nginx can serve it as the
+# error_page. It answers 200 at this path, so keep crawlers off it — every
+# page it lists is already in the sitemap.
+Disallow: /404/
+
+Sitemap: https://vrfbricks.jayaremala.com/sitemap.xml

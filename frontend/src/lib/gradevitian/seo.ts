@@ -10,7 +10,32 @@ import type { Metadata } from "next";
  */
 
 export const GV_URL = "https://gradevitian.jayaremala.com";
+/**
+ * Site title, kept under ~60 characters so Google shows it whole: brand first
+ * (it's the query most visitors actually type), then the two head keywords.
+ * The home page must apply it as `title.absolute` — a bare `title.default` on the
+ * gradeVITian layout still gets wrapped by the ROOT layout's
+ * "%s | Jaya Sabarish Reddy Remala" template, which pushes it past truncation.
+ */
+export const GV_TITLE = "gradeVITian, VIT GPA, CGPA & Attendance Calculator";
+/** Under ~155 characters so the SERP snippet isn't cut mid-sentence. */
+export const GV_DESC =
+  "Free VIT GPA and CGPA calculators, grade predictor and attendance tracker on VIT's 10-point scale. Instant, mobile-first, no sign-up needed.";
+/** Square logo — used as the Organization `logo` in JSON-LD, which wants a mark. */
 export const GV_OG_IMAGE = `${GV_URL}/gradevitian/LOGO-512px.png`;
+/**
+ * The 1200x630 social card built by app/gradevitian/opengraph-image.tsx. Named
+ * explicitly (rather than relying on the file convention to cascade) because a
+ * child route that exports its own `openGraph` replaces the parent's resolved
+ * one, images included — so every page has to name the card itself.
+ * Extension-less by design; nginx sets the PNG content type for this exact path.
+ */
+export const GV_OG_CARD = {
+  url: `${GV_URL}/gradevitian/opengraph-image`,
+  width: 1200,
+  height: 630,
+  alt: "gradeVITian, free VIT GPA, CGPA, grade and attendance calculators",
+} as const;
 export const GV_AUTHOR = { "@type": "Person", name: "Jaya Sabarish Reddy Remala", url: "https://jayaremala.com" } as const;
 
 /** Absolute, trailing-slash URL for a route — matches the deployed URLs + sitemap. */
@@ -45,9 +70,9 @@ export function gvMetadata({ path, title, description, keywords, noindex }: Page
       url,
       title: ogTitle,
       description,
-      images: [{ url: GV_OG_IMAGE, width: 512, height: 512, alt: "gradeVITian" }],
+      images: [GV_OG_CARD],
     },
-    twitter: { card: "summary", title: ogTitle, description, images: [GV_OG_IMAGE] },
+    twitter: { card: "summary_large_image", title: ogTitle, description, images: [GV_OG_CARD.url] },
     ...(noindex
       ? { robots: { index: false, follow: true, googleBot: { index: false, follow: true } } }
       : {}),
@@ -84,6 +109,27 @@ export function toolLd({ path, name, description }: { path: string; name: string
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     publisher: { "@type": "Organization", name: "gradeVITian", url: gvUrl("/") },
     author: GV_AUTHOR,
+  };
+}
+
+/**
+ * ItemList of the site's tools, rendered on the home page. Gives Google an explicit,
+ * ordered map of the pages worth surfacing as sitelinks under the brand result.
+ */
+export function toolListLd(items: { path: string; name: string; description: string }[]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: "gradeVITian tools",
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    numberOfItems: items.length,
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.name,
+      description: it.description,
+      url: gvUrl(it.path),
+    })),
   };
 }
 

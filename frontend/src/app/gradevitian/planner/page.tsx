@@ -26,7 +26,7 @@ export default function PlannerPage() {
       <GVJsonLd data={[breadcrumbLd("/planner", "VIT Semester Planner"), toolLd({ path: "/planner", name: "VIT Semester Planner", description: DESC })]} />
       <GVPageHeader
         eyebrow="Plan"
-        title="Semester Planner"
+        title="VIT Semester Planner"
         subtitle="Your whole semester on one screen. Enter each course once (credits, grade and attendance) and your GPA, credits and attendance stay live. Sign in and it follows you to every device."
       />
       <ScrollReveal delay={80} className="mt-10">

@@ -2,6 +2,7 @@ import GVPageHeader from "@/components/gradevitian/GVPageHeader";
 import GVExploreMore from "@/components/gradevitian/GVExploreMore";
 import AskRulebook from "@/components/gradevitian/AskRulebook";
 import GVJsonLd from "@/components/gradevitian/GVJsonLd";
+import GVFaq, { type FaqItem } from "@/components/gradevitian/GVFaq";
 import ScrollReveal from "@/components/ScrollReveal";
 import { gvMetadata, breadcrumbLd, toolLd } from "@/lib/gradevitian/seo";
 
@@ -39,13 +40,20 @@ const BENEFITS = [
   },
 ];
 
+const FAQ: FaqItem[] = [
+  { q: "What can I ask the VIT rulebook?", a: "Anything covered by VIT's academic regulations and student code of conduct: attendance and debarment, the grade scale, CGPA and academic standing, Re-FAT eligibility, malpractice, ragging, hostel and exam conduct." },
+  { q: "Where do the answers come from?", a: "Only from VIT's official academic regulations and code of conduct. Every answer cites the clause it came from, so you can check it yourself." },
+  { q: "Do I need an account to ask?", a: "Yes, a free gradeVITian account unlocks it, with up to 5 questions an hour on any device. The calculators stay free and need no sign-up." },
+  { q: "Is this an official VIT service?", a: "No. gradeVITian is built by a VITian and is not affiliated with VIT. It quotes the published regulations, but for anything that affects your record, confirm with your faculty advisor or the exam section." },
+];
+
 export default function AskPage() {
   return (
     <section className="mx-auto max-w-3xl px-5 py-16 sm:py-24">
       <GVJsonLd data={[breadcrumbLd("/ask", "Ask the Rulebook"), toolLd({ path: "/ask", name: "Ask the Rulebook, VIT Rules Q&A", description: DESC })]} />
       <GVPageHeader
         eyebrow="Rulebook"
-        title="Ask the Rulebook"
+        title="Ask the VIT Rulebook"
         subtitle="Attendance, grading, CGPA, Re-FAT, malpractice, ragging, ask in plain English and get an answer grounded in VIT's official academic regulations and student code of conduct, with the clause to back it up."
       />
 
@@ -72,6 +80,7 @@ export default function AskPage() {
         </p>
       </ScrollReveal>
 
+      <GVFaq items={FAQ} />
       <GVExploreMore current="/ask" />
     </section>
   );

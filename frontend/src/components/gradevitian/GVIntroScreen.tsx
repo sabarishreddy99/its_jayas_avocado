@@ -8,12 +8,13 @@ import GVLink from "@/components/gradevitian/GVLink";
 
 const STORAGE_KEY = "gradevitian_intro_seen";
 
-// Routes where a welcome curtain would interrupt a task — don't show it there.
-// Paths are compared after stripping the /gradevitian mount-point prefix.
-const SKIP = new Set([
-  "/login", "/signup", "/forgot-password", "/reset-password",
-  "/privacy", "/terms", "/account", "/google-callback",
-]);
+// The curtain is a front-door welcome, so it only belongs on the front door.
+// On any other route the visitor arrived with intent — usually straight from a
+// Google result for "VIT GPA calculator" — and a full-screen overlay in front of
+// the tool they came for is both a worse experience and exactly the intrusive
+// interstitial pattern search engines discount on mobile.
+// Path is compared after stripping the /gradevitian mount-point prefix.
+const INTRO_PATH = "/";
 
 const TOOLS = [
   { label: "GPA", href: "/gpa" },
@@ -51,7 +52,7 @@ export default function GVIntroScreen() {
   useEffect(() => {
     setMounted(true);
     const path = (pathname || "/").replace(/^\/gradevitian/, "").replace(/\/+$/, "") || "/";
-    if (SKIP.has(path)) return;
+    if (path !== INTRO_PATH) return;
 
     const preview = new URLSearchParams(window.location.search).has("intro");
     if (preview || !localStorage.getItem(STORAGE_KEY)) {

@@ -28,7 +28,7 @@ export default function GradePredictorPage() {
       <GVJsonLd data={[breadcrumbLd("/grade-predictor", "VIT Grade Predictor"), toolLd({ path: "/grade-predictor", name: "VIT Grade Predictor", description: DESC })]} />
       <GVPageHeader
         eyebrow="Forecast"
-        title="Grade Predictor"
+        title="VIT Grade Predictor"
         subtitle="See the grade you're heading for across theory, lab and J-component, before VTOP ever posts it."
       />
       <ScrollReveal delay={80} className="mt-10">

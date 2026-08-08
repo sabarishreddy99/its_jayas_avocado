@@ -1,0 +1,1795 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=yes">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<script src="https://kit.fontawesome.com/ffe6cad6cd.js" crossorigin="anonymous"></script>
+<link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Alatsi' rel='stylesheet'>
+
+<link href='https://fonts.googleapis.com/css?family=Concert One' rel='stylesheet'>
+<link href='https://fonts.googleapis.com/css?family=Rhodium Libre' rel='stylesheet'>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<style>
+  * {
+  box-sizing: border-box;
+}
+
+iframe {
+  width:100%; height:600px;
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,500,300,700);
+footer{
+  font-family: Open Sans;
+}
+
+#logofont{
+   font:45px sans-serif;
+}
+.footer-distributed{
+  background: black;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.12);
+  box-sizing: border-box;
+  width: 100%;
+  text-align: left;
+  font: bold 16px sans-serif;
+  padding: 55px 50px;
+}
+
+.footer-distributed .footer-left,
+.footer-distributed .footer-center,
+.footer-distributed .footer-right{
+  display: inline-block;
+  vertical-align: top;
+}
+
+/* Footer left */
+
+.footer-distributed .footer-left{
+  width: 40%;
+}
+
+/* The company logo */
+
+.footer-distributed h3{
+  color:  #ffffff;
+  font: normal 36px 'Open Sans', cursive;
+  margin: 0;
+}
+
+.footer-distributed h3 span{
+  color:  lightseagreen;
+}
+
+/* Footer links */
+
+.footer-distributed .footer-links{
+  color:  #ffffff;
+  margin: 20px 0 12px;
+  padding: 0;
+}
+
+.footer-distributed .footer-links a{
+  display:inline-block;
+  line-height: 1.8;
+  font-weight:400;
+  text-decoration: none;
+  color:  inherit;
+}
+
+.footer-distributed .footer-company-name{
+  color:  #222;
+  font-size: 14px;
+  font-weight: normal;
+  margin: 0;
+}
+
+/* Footer Center */
+
+.footer-distributed .footer-center{
+  width: 35%;
+}
+
+.footer-distributed .footer-center i{
+  background-color:  #33383b;
+  color: #ffffff;
+  font-size: 25px;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 42px;
+  margin: 10px 15px;
+  vertical-align: middle;
+}
+
+.footer-distributed .footer-center i.fa-envelope{
+  font-size: 17px;
+  line-height: 38px;
+}
+
+.footer-distributed .footer-center p{
+  display: inline-block;
+  color: #ffffff;
+  font-weight:400;
+  vertical-align: middle;
+  margin:0;
+}
+
+.footer-distributed .footer-center p span{
+  display:block;
+  font-weight: normal;
+  font-size:14px;
+  line-height:2;
+}
+
+.footer-distributed .footer-center p a{
+  color:  lightseagreen;
+  text-decoration: none;;
+}
+
+.footer-distributed .footer-links a:before {
+  content: "|";
+  font-weight:300;
+  font-size: 20px;
+  left: 0;
+  color: #fff;
+  display: inline-block;
+  padding-right: 5px;
+}
+
+.footer-distributed .footer-links .link-1:before {
+  content: none;
+}
+
+/* Footer Right */
+
+.footer-distributed .footer-right{
+  width: 20%;
+}
+
+.footer-distributed .footer-company-about{
+  line-height: 20px;
+  color:  #92999f;
+  font-size: 13px;
+  font-weight: normal;
+  margin: 0;
+}
+
+.footer-distributed .footer-company-about span{
+  display: block;
+  color:  #ffffff;
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.footer-distributed .footer-icons{
+  margin-top: 25px;
+}
+
+.footer-distributed .footer-icons a{
+  display: inline-block;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+  background-color:  #33383b;
+  border-radius: 2px;
+
+  font-size: 20px;
+  color: #ffffff;
+  text-align: center;
+  line-height: 35px;
+
+  margin-right: 3px;
+  margin-bottom: 5px;
+}
+
+
+
+@media (max-width: 880px) {
+
+  .footer-distributed{
+    font: bold 14px sans-serif;
+  }
+
+  .footer-distributed .footer-left,
+  .footer-distributed .footer-center,
+  .footer-distributed .footer-right{
+    display: block;
+    width: 100%;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .footer-distributed .footer-center i{
+    margin-left: 0;
+  }
+
+  
+
+}
+/*-scroll top button---------------------------------------------------------------------------------------------------------------------*/
+
+
+#button1 {
+  
+  position:fixed;
+  bottom: 20px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+ color:white;
+  background-color: black;
+  cursor: pointer;
+  width:30px;
+  height:30px;
+  transition: height 0.5s;
+  border-radius:10px;
+
+ 
+}
+
+
+
+#button1:hover {
+  color: #1abc9c;
+   height: 50px;
+}
+
+
+#mycall {
+  
+  position:fixed;
+  bottom: 73px;
+  right: 30px;
+  z-index: 99;
+  font-size: 25px;
+  border: none;
+  outline: none;
+ color:white;
+  background-color: black;
+  text-align: center;
+  width:32px;
+  height:32px;
+  transition:color 0.5s;
+  border-radius:10px;
+
+ 
+}
+
+
+
+#mycall:hover {
+  text-align: center;
+  color:#1abc9c;
+   
+}
+/*----------------------------------------------------------------------------------------------------------------------*/
+
+#detai{
+
+font-family: 'Aclonica';font-size: 17px;
+}
+
+#detai:hover{
+
+  
+  color:#004d4d;
+  
+  
+}
+#del{
+
+font-family: 'Aclonica';font-size: 30px;
+}
+#del:hover{
+
+  text-align:center;
+  color:#004d4d;
+  
+  cursor: pointer;
+}
+
+#delmat{
+  text-align:center;
+  font-family: 'ABeeZee';font-size: 22px;
+}
+#truck {
+  width:0px;
+  font-size:60px;
+ display: inline-block;
+  position: relative;
+  animation-name: example;
+  animation-duration: 10s;
+  animation-iteration-count:infinite;
+}
+#truckroad{
+  border:solid 5px black;
+}
+
+
+@keyframes example {
+  0%   {color:black;font-size:60px; left:0px; top:0px;}
+ 
+  100% {color:red;font-size:30px; left:1100px; top:0px;}
+}
+
+/*------contact form----------------------------------------------------------------------------------------------------------------*/
+#cont{font-family: 'Aclonica';font-size: 30px;}
+#cont:hover{text-align:center;
+  color:#004d4d;
+  
+  cursor: pointer;
+
+}
+
+#conthead{
+  font-family: 'Alatsi';font-size: 20px;
+}
+input[type=text],input[type=number], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+  
+}
+
+label{font-family: 'ABeeZee';font-size: 22px;}
+button[type=submit] {
+  background-color: black;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'ABeeZee';font-size: 22px;
+}
+
+button[type=submit]:hover {
+  background-color: #ff9999;
+  color:black;
+  font-family: 'ABeeZee';font-size: 22px;
+}
+
+.contain {
+  border-radius: 5px;
+  background-color:#1abc9c;
+  padding: 20px;
+}
+/*-----------------------------------------------------------------------------------------------*/
+/*-----------------------------------------------------------------------------------------------*/
+  
+
+
+ul.topnav {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: #333;
+
+}
+
+ul.topnav li {float: left;}
+
+ul.topnav li a{
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+ul.topnav li a.homebut{
+  display: block;
+  color: white;
+  text-align: center;
+  padding:0px;
+  text-decoration: none;
+}
+
+ul.topnav li i{
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 5px 16px;
+  text-decoration: none;
+}
+
+ul.topnav li a:hover:not(#active) {background-color:black;}
+
+ul.topnav li i:hover {background-color: #ff9999;}
+
+ul.topnav li.right {float: right;background-color: #ff9999;}
+
+
+/*header---------------------------------------------------------------------------------*/
+.hea1{
+  padding: 20px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+.hea2{
+text-align:right;
+
+}
+#hea3{
+  text-align: center;
+
+   display:inline;
+
+  width: 350px;
+  box-sizing: border-box;
+  border: 3px solid black;
+  border-radius: 4px;
+  font-size: 36px;
+  
+ 
+  -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+  
+  padding: 12px 20px 12px 40px;
+ 
+}
+#hea3:hover{
+ 
+  text-align:left;
+  color:#004d4d;
+  width:600px;
+  cursor: pointer;
+ 
+}
+}
+/*pricing---------------------------------------------------------------------------------*/
+/* Create two equal columns that floats next to each other */
+.column1 {
+  float: left;
+  width: 33.3%;
+  padding: 10px;
+  height: 400px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row1:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.zoom {
+  
+  
+  transition: transform .2s;
+  width: 33.3%;
+  height: 400px;
+  margin: 0 auto ;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.16); /* IE 9 */
+  -webkit-transform: scale(1.16); /* Safari 3-8 */
+  transform: scale(1.16); 
+}
+
+
+
+/*pricing---------------------------------------------------------------------------------*/
+
+
+
+
+.ml11 {
+  font-weight: 700;
+  font-size: 3.5em;
+}
+
+.ml11 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.1em;
+  padding-right: 0.05em;
+  padding-bottom: 0.15em;
+}
+
+.ml11 .line {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 3px;
+  background-color: #fff;
+  transform-origin: 0 50%;
+}
+
+.ml11 .line1 { 
+  top: 0; 
+  left: 0;
+}
+
+.ml11 .letter {
+  display: inline-block;
+  line-height: 1em;
+}
+/*----------------------------------------------------------------------------------------------------------------------------------------*/
+.cl1{
+  margin:1px;
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------------------------*/
+#ga1:hover{
+
+font-size:30px;
+text-align: center;
+}
+.container {
+  position: relative;
+  max-width: auto;
+  margin: 0 ;
+}
+
+.container picture {vertical-align: middle;}
+
+.container .content {
+  position: absolute;
+  top: 0;
+  background: rgb(0, 0, 0); /* Fallback color */
+  background: rgba(0, 0, 0, 0.5); /* Black background with 0.5 opacity */
+  color: #f1f1f1;
+  width: 100%;
+  padding: 20px;
+}
+/*----------------------------------------------------------------------------------------------------------------------------------------*/
+img.a1 {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+  width:33.1%;
+opacity:0.7;}
+
+ img.a1:hover {
+  opacity:1;
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+img.a2{
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  width: 150px;
+   width:100%;height:350px;
+ opacity:0.7;}
+ img.a2:hover {
+  opacity:1;
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+
+/*----------------------------------------------------------------------------------------------------------------------------------------*/
+
+/* Column container */
+.row {  
+  display: -ms-flexbox; /* IE10 */
+  display: flex;
+  -ms-flex-wrap: wrap; /* IE10 */
+  flex-wrap: wrap;
+}
+
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.side {
+  -ms-flex: 30%; /* IE10 */
+  flex: 30%;
+  background-color:white;
+  padding: 20px;
+}
+
+
+
+
+/*----------------------------------------------------------------------------------------------------------------------------------------*/
+
+@media (min-width: 669px) and (max-width: 1024px){
+   html,body{
+    overflow-x: hidden;
+}
+
+
+#detai{
+
+font-family: 'Aclonica';font-size: 15px;
+}
+
+#detai:hover{
+
+  
+  color:#004d4d;
+  
+  
+}
+
+.ml11 {
+  font-weight: 500;
+  font-size: 2.3em;
+}
+
+.ml11 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.1em;
+  padding-right: 0.05em;
+  padding-bottom: 0.15em;
+}
+
+.ml11 .line {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 3px;
+  background-color: #fff;
+  transform-origin: 0 50%;
+}
+
+.ml11 .line1 { 
+  top: 0; 
+  left: 0;
+}
+
+.ml11 .letter {
+  display: inline-block;
+  line-height: 0.5em;
+}
+
+
+
+
+
+
+
+img.a1 {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  display:inline-block;
+  width:32.8%;
+opacity:1;}
+img.a1:hover {
+  opacity:1;
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.column1 {
+  
+  width: 100%;
+  padding: 2px;
+  height: 400px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row1:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.zoom {
+  
+  
+  transition: transform .2s;
+  width: 100%;
+  height: 400px;
+  margin: 0 auto ;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.1); /* IE 9 */
+  -webkit-transform: scale(1.1); /* Safari 3-8 */
+  transform: scale(1.1); 
+}
+
+
+iframe {
+  width:100%; height:500px;
+}
+
+
+
+}
+
+@media (min-width: 640px) and (max-width: 668px){
+
+
+ html,body{
+    overflow-x: hidden;
+}
+
+
+
+.ml11 {
+  font-weight: 450;
+  font-size: 2.0em;
+}
+
+.ml11 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.1em;
+  padding-right: 0.05em;
+  padding-bottom: 0.15em;
+}
+
+.ml11 .line {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 3px;
+  background-color: #fff;
+  transform-origin: 0 50%;
+}
+
+.ml11 .line1 { 
+  top: 0; 
+  left: 0;
+}
+
+.ml11 .letter {
+  display: inline-block;
+  line-height: 0.5em;
+}
+
+
+
+
+
+
+
+img.a1 {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 5px;
+  display:inline-block;
+  width:32.8%;
+opacity:1;}
+img.a1:hover {
+  opacity:1;
+  box-shadow: 0 0 2px 1px rgba(0, 140, 186, 0.5);
+}
+
+.column1 {
+  
+  width: 100%;
+  padding: 2px;
+  height: 400px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row1:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.zoom {
+  
+  
+  transition: transform .2s;
+  width: 100%;
+  height: 400px;
+  margin: 0 auto ;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.1); /* IE 9 */
+  -webkit-transform: scale(1.1); /* Safari 3-8 */
+  transform: scale(1.1); 
+}
+
+
+iframe {
+  width:100%; height:500px;
+}
+
+
+
+
+
+
+}
+
+@media only screen and (max-width:379px) {
+html,body{
+    overflow-x: hidden;
+}
+
+
+
+#detai{
+
+font-family: 'Aclonica';font-size: 14px;
+}
+
+#detai:hover{
+
+  
+  color:#004d4d;
+  
+  
+} 
+
+
+#mycall {
+  
+  position:fixed;
+  bottom: 90px;
+  right: 30px;
+  z-index: 99;
+  font-size: 25px;
+  border: none;
+  outline: none;
+ color:white;
+  background-color: black;
+  text-align: center;
+  width:32px;
+  height:32px;
+  transition:color 0.5s;
+  border-radius:10px;
+
+ 
+}
+
+
+
+#mycall:hover {
+  text-align: center;
+  color:#1abc9c;
+   
+}
+
+
+
+iframe {
+  width:100%; height:400px;
+}
+
+ 
+
+
+
+.ml11 {
+  font-weight: 500;
+  font-size: 1.1em;
+}
+
+.ml11 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.1em;
+  padding-right: 0.05em;
+  padding-bottom: 0.15em;
+}
+
+.ml11 .line {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 3px;
+  background-color: #fff;
+  transform-origin: 0 50%;
+}
+
+.ml11 .line1 { 
+  top: 0; 
+  left: 0;
+}
+
+.ml11 .letter {
+  display: inline-block;
+  line-height: 0.5em;
+}
+
+
+
+.hea1{
+  padding: 5px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+.hea2{
+  font-size: 20px;
+}
+.letters{
+  font-size:35px;
+}
+#logofont{
+   font:30px sans-serif;
+}
+
+#truck {
+  width:0px;
+  font-size:60px;
+ display: inline-block;
+  position: relative;
+  animation-name: example;
+  animation-duration: 5s;
+  animation-iteration-count:infinite;
+}
+#truckroad{
+  border:solid 5px black;
+}  
+
+
+
+@keyframes example {
+  0%   {color:black;font-size:60px; left:0px; top:0px;}
+ 
+  100% {color:red;font-size:60px; left:550px; top:0px;}
+}
+
+#conthead{
+  font-family: 'Alatsi';font-size: 15px;
+}
+
+
+
+
+#div2{
+  background-color:black;
+  height:70px;
+  width:100%;
+}
+#div3{
+  background-color: grey;
+  height:10px;
+width:100%;
+}
+  ul.topnav li.right,
+  ul.topnav li{float:none;} 
+
+
+
+  
+  img.a1 {
+width:49%;  
+opacity:1;
+}
+img.a2{
+  display:none;
+  width:49%;
+}
+
+
+/*pricing---------------------------------------------------------------------------------*/
+/* Create two equal columns that floats next to each other */
+.column1 {
+  
+  width: 100%;
+  padding: 2px;
+  height: 500px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row1:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.zoom {
+  
+  
+  transition: transform .2s;
+  width: 100%;
+  height: 500px;
+  margin: 0 auto ;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.1); /* IE 9 */
+  -webkit-transform: scale(1.1); /* Safari 3-8 */
+  transform: scale(1.1); 
+}
+
+
+
+
+#button1 {
+  
+  position:fixed;
+  float:right;
+  bottom:30px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+ color:white;
+  background-color: black;
+  cursor: pointer;
+  width:30px;
+  height:30px;
+  transition: height 0.5s;
+  border-radius:10px;
+
+ 
+}
+
+#button1:hover {
+  color: #1abc9c;
+   height: 50px;
+}
+
+
+/*pricing---------------------------------------------------------------------------------*/
+
+#hea3{
+  margin:1px;
+  text-align: center;
+  border: 2px solid black;
+  padding:5px;
+  width:200px;
+   border-radius:3px;
+   display: inline;
+   font-size:22px;
+    -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+ 
+}
+#hea3:hover{
+  padding:5px 70px 5px 5px;
+   font-size:18px;
+  text-align:left;
+  color:#004d4d;
+  width:100%;
+  
+  
+}
+
+
+
+
+
+
+
+}
+
+
+@media (min-width:380px) and (max-width: 550px) {
+
+  html,body{
+    overflow-x: hidden;
+}
+
+
+#detai{
+
+font-family: 'Aclonica';font-size: 16px;
+}
+
+#detai:hover{
+
+  
+  color:#004d4d;
+  
+  
+} 
+
+#mycall {
+  
+  position:fixed;
+  bottom: 90px;
+  right: 30px;
+  z-index: 99;
+  font-size: 25px;
+  border: none;
+  outline: none;
+ color:white;
+  background-color: black;
+  text-align: center;
+  width:32px;
+  height:32px;
+  transition:color 0.5s;
+  border-radius:10px;
+
+ 
+}
+
+
+
+#mycall:hover {
+  text-align: center;
+  color:#1abc9c;
+   
+}
+
+
+
+iframe {
+  width:100%; height:400px;
+}
+
+ 
+
+
+
+.ml11 {
+  font-weight: 500px;
+  font-size: 2.5em;
+}
+
+.ml11 .text-wrapper {
+  position: relative;
+  display: inline-block;
+  padding-top: 0.1em;
+  letter-spacing: 0.03em;
+  padding-right: 0.005em;
+  padding-bottom: 0.15em;
+}
+
+.ml11 .line {
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 3px;
+  background-color: #fff;
+  transform-origin: 0 50%;
+}
+
+.ml11 .line1 { 
+  top: 0; 
+  left: 0;
+}
+
+.ml11 .letter {
+  display: inline-block;
+  line-height: 0.5em;
+}
+
+
+
+.hea1{
+  padding: 5px;
+  text-align: center;
+  background: #1abc9c;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+}
+.hea2{
+  font-size: 20px;
+}
+.letters{
+  font-size:35px;
+}
+#logofont{
+   font:30px sans-serif;
+}
+
+#truck {
+  width:0px;
+  font-size:60px;
+ display: inline-block;
+  position: relative;
+  animation-name: example;
+  animation-duration: 5s;
+  animation-iteration-count:infinite;
+}
+#truckroad{
+  border:solid 5px black;
+}  
+
+
+
+@keyframes example {
+  0%   {color:black;font-size:60px; left:0px; top:0px;}
+ 
+  100% {color:red;font-size:60px; left:550px; top:0px;}
+}
+
+#conthead{
+  font-family: 'Alatsi';font-size: 15px;
+}
+
+
+
+
+#div2{
+  background-color:black;
+  height:70px;
+  width:100%;
+}
+#div3{
+  background-color: grey;
+  height:10px;
+width:100%;
+}
+  ul.topnav li.right,
+  ul.topnav li{float:none;} 
+
+
+
+  
+  img.a1 {
+width:49%;  
+opacity:1;
+}
+img.a2{
+  display:none;
+  width:49%;
+}
+
+
+/*pricing---------------------------------------------------------------------------------*/
+/* Create two equal columns that floats next to each other */
+.column1 {
+  
+  width: 100%;
+  padding: 2px;
+  height: 500px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row1:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.zoom {
+  
+  
+  transition: transform .2s;
+  width: 100%;
+  height: 500px;
+  margin: 0 auto ;
+}
+
+.zoom:hover {
+  -ms-transform: scale(1.1); /* IE 9 */
+  -webkit-transform: scale(1.1); /* Safari 3-8 */
+  transform: scale(1.1); 
+}
+
+
+
+
+#button1 {
+  
+  position:fixed;
+  float:right;
+  bottom:30px;
+  right: 30px;
+  z-index: 99;
+  font-size: 18px;
+  border: none;
+  outline: none;
+ color:white;
+  background-color: black;
+  cursor: pointer;
+  width:30px;
+  height:30px;
+  transition: height 0.5s;
+  border-radius:10px;
+
+ 
+}
+
+#button1:hover {
+  color: #1abc9c;
+   height: 50px;
+}
+
+/*pricing---------------------------------------------------------------------------------*/
+
+#hea3{
+  margin:1px;
+  text-align: center;
+  border: 2px solid black;
+  padding:5px;
+  width:200px;
+   border-radius:3px;
+   display: inline;
+   font-size:22px;
+    -webkit-transition: width 0.4s ease-in-out;
+  transition: width 0.4s ease-in-out;
+ 
+}
+#hea3:hover{
+  padding:5px 70px 5px 5px;
+   font-size:18px;
+  text-align:left;
+  color:#004d4d;
+  width:100%;
+  
+  
+}
+}
+
+
+</style>
+</head>
+<body>
+
+
+<button onclick="topFunction()" id="button1" title="Go to top"><i class="fas fa-angle-double-up"></i></button>
+<a href="tel:9912763863" id="mycall"><i class="fas fa-phone-square"></i></a>
+<script>
+//Get the button
+var mybutton = document.getElementById("button1");
+
+// When the user scrolls down 20px from the top of the document, show the button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+
+// When the user clicks on the button, scroll to the top of the document
+function topFunction() {
+  document.body.scrollTop = 0;
+  document.documentElement.scrollTop = 0;
+}
+</script>
+
+
+
+
+
+
+
+  <header class="hea1" id="start">
+   
+    <h1 class="ml11">
+  <span class="text-wrapper">
+    <span class="line line1"></span>
+    <span class="letters" style="text-align: center;">Venkata Ramana Fly Ash Cement Bricks</span>
+  </span>
+</h1>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <h3 class="hea2" style="font-family: 'Aclonica';color:black;"><i>- Standard for Strength</i></h3>
+  </header>
+
+
+<script>
+ var textWrapper = document.querySelector('.ml11 .letters');
+textWrapper.innerHTML = textWrapper.textContent.replace(/([^\x00-\x80]|\w)/g, "<span class='letter'>$&</span>");
+
+anime.timeline({loop: true})
+  .add({
+    targets: '.ml11 .line',
+    scaleY: [0,1],
+    opacity: [0.5,1],
+    easing: "easeOutExpo",
+    duration: 700
+  })
+  .add({
+    targets: '.ml11 .line',
+    translateX: [0, document.querySelector('.ml11 .letters').getBoundingClientRect().width + 10],
+    easing: "easeOutExpo",
+    duration: 700,
+    delay: 100
+  }).add({
+    targets: '.ml11 .letter',
+    opacity: [0,1],
+    easing: "easeOutExpo",
+    duration: 600,
+    offset: '-=775',
+    delay: (el, i) => 34 * (i+1)
+  }).add({
+    targets: '.ml11',
+    opacity: 0,
+    duration: 1000,
+    easing: "easeOutExpo",
+    delay: 1000
+  });</script>
+
+
+
+
+
+
+
+
+
+<ul class="topnav" id="nav1">
+  <li><a class="homebut" href="#start"><i class="fas fa-home" id="active" style="font-size:36px;"></i></a></li>
+    <li><a href="#pricedirec">Pricing</a></li>
+  <li><a href="#delivery">Delivery</a></li>
+<li><a href="#locateus">Locate Us</a></li>
+
+  <li><a href="#galdirec">Gallery</a></li>
+  <li><a href="#aboutus">About Us</a></li>
+    <li class="right"></i><a href="#contactus"> Contact Us</a></li>
+ 
+</ul>
+
+
+<div id="detai" style="padding: 10px 10px 10px 25px;">
+<h3 >Proprietor: Remala Govinda Reddy</h3>
+  <h4 ><a href="tel:9912763863"><i class="fa fa-phone" aria-hidden="true" style="font-size:30px;"></i></a> (+91) <a href="tel:9912763863" style="text-decoration: none;color: black;">9912763863</a></h4>
+</div>
+
+
+
+
+
+<div class="row" id="pricedirec">
+  <div class="side">
+   <section class="cl1">
+
+  <h1 id="del" style="padding: 10px 10px;"><i class='fas fa-dice-d6'> </i> Dimensions & <i class='fas fa-rupee-sign' ></i> Pricing:</h1>
+</section>
+  </div>
+</div>
+
+
+
+<div class="row1">
+  <div class="zoom column1" style="background-color:black;color:white;text-align:center;font-family: 'Concert One';font-size: 22px;float: left;">
+    <h3>Solid Brick</h3>
+    <h4>#Type 1</h4>
+    <p style="color:yellow">Length:<i style="color:#1abc9c">0.917 ft or 11inch or 27.94cm</i></p>
+    <p style="color:yellow">Width:<i style="color:#1abc9c">0.458 ft or 5.5inch or 13.97cm</i></p>
+    <p style="color:yellow">Height:<i style="color:#1abc9c">0.583 ft or 7inch or 17.78cm</i></p><br>
+    <p style="color:yellow">COST: <i style="color:#1abc9c"><i class='fas fa-rupee-sign' style='font-size:20px;display:inline'></i> 15 INR/piece</i></p>
+  </div>
+  
+  
+  
+  
+  <div class="zoom column1" style="background-color:white;color:black;text-align:center;font-family: 'Rhodium Libre';font-size: 22px;float:left;">
+   <h3>Mega Solid Brick</h3>
+    <p >LENGTH:<i style="color: #331a00"> 0.917 ft or 11inch or 27.94cm</i></p>
+    <p style="color:black">WIDTH:<i style="color: #331a00"> 0.458 ft or 5.5inch or 13.97cm</i></p>
+    <p style="color:black">HEIGHT:<i style="color: #331a00"> 0.75 ft or 9inch or 22.86cm</i></p>
+   <p style="color:blue">COST: <i style="color:#1abc9c"><i class='fas fa-rupee-sign' style='font-size:20px;display:inline'></i> 22 INR/piece</i></p>
+    <p style="color:#1abc9c;font-family: 'Concert One';">These bricks will be manufactured on special request from our beloved customers.</p> 
+  </div>
+    
+    
+    
+    <div class="zoom column1" style="background-color:black;color:white;text-align:center;font-family: 'Concert One';font-size: 22px;float:left;">
+    <h3>Solid Brick</h3>
+    <p>#Type 2</p>
+    <p style="color:yellow">Length:<i style="color:#1abc9c">0.917 ft or 11inch or 27.94cm</i></p>
+    <p style="color:yellow">Width:<i style="color:#1abc9c">0.34 ft or 4inch or 10.16cm</i></p>
+    <p style="color:yellow">Height:<i style="color:#1abc9c">0.583 ft or 7inch or 17.78cm</i></p><br>
+    <p style="color:yellow">COST: <i style="color:#1abc9c"><i class='fas fa-rupee-sign' style='font-size:20px;display:inline'></i> 12 INR/piece</i></p>
+  </div>
+</div>
+
+
+
+
+
+<div class="delpor" id="delivery">
+
+<h3 id="del" style="padding: 10px 10px 10px 25px;">Delivery:</h3>
+
+
+<div id="truck"><i class="fas fa-truck"></i></div>
+<div id="truckroad"></div>
+
+<p id="delmat"> It is purely your choice to decide wether we have to deliver or take away.Currently we are delivering solid bricks of <b>#type1</b> about <b>400 bricks/truck</b> and <b>#type2</b> about <b>500 bricks/truck</b>.<b>Delivery Charges</b> may apply based on your location and we try our best to reach you with in 1-2 days from the date of your request.</p>
+
+
+</div>
+
+
+
+<div style="background-color:#ff9999 ;border-radius: 5px;padding: 5px; "  id="locateus">
+
+  
+  <h3 id="del" style="padding: 10px 10px 10px 25px;"> <i class="fas fa-map-marker-alt"></i> Locate Us:</h3>
+  <iframe src="https://www.google.co.in/maps/d/u/0/embed?mid=1MlG0aJHeUXx0H1Ev_Kq2g5Uw5f2jE_6C" ></iframe> 
+ 
+  <h3 style="font-family: 'Aclonica';font-size: 22px;padding-left: 25px;"><i class="far fa-address-card"> </i> Address:</h3>
+  <div style="font-family: 'ABeeZee';font-size: 22px;padding-left: 25px;">
+  <h4>Thummalapenta Beach Road, near Kolkota-Chennai Highway Crossing, Kavali, Nellore Dst.</h4>
+  <h4><b>Pin Code:</b> 524201.</h4>
+</div>
+<h3 style="font-family: 'Aclonica';font-size: 22px;padding-left: 25px;"><i class="far fa-clock"></i> Working Hours:</h3>
+ <div style="font-family: 'ABeeZee';font-size: 22px;padding-left: 25px;">
+
+<h4> Monday - Sunday || 6.00am to 9.00pm</h4>
+  </div>
+</div>
+
+</div>
+
+
+
+
+<div id="contactus">
+<h3 id="del" style="padding: 10px 10px 10px 25px;"><i class="fas fa-user-friends"></i> Contact Us:</h3>
+
+<div class="contain" >
+  <div id="conthead">
+  <h3 >Proprietor: Remala Govinda Reddy</h3>
+  <h4><a href="tel:9912763863"><i class="fa fa-phone" aria-hidden="true" style="font-size:30px;"></i></a> (+91) <a href="tel:9912763863" style="text-decoration: none;color: black;">9912763863</a></h4>
+</div> 
+
+  <form action="https://docs.google.com/forms/u/0/d/e/1FAIpQLSc9tPKxqSIIWRyWIEq2gvFbZFrR0ScoKmq-gQts2QTYWFvr6Q/formResponse" method="post" target="hidden_iframe" onsubmit="return validateForm();">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="entry.1103051127" required="required" placeholder="Your name..">
+
+    <label for="phone">Mobile Number:</label>
+    <input type="number" id="phone" name="entry.1069286282" placeholder="Your Mobile Number.." required="required">
+
+
+     <label for="email">Email (optional):</label>
+    <input type="text" id="email" name="entry.847431085"  placeholder="Your Email Id..">
+
+
+
+    
+<label for="btype">Brick Type:</label>
+    
+  
+    <select id="btype" name="entry.113983772" size="3" required="required">
+      <option style="font:ABeeZee;font-size:15px" value="Big Brick"><b>Big Brick</b> (#type1)</option>
+      <option style="font:ABeeZee;font-size:15px" value="Thin Brick"><b>Thin Brick</b> (#type2)</option>
+      <option style="font:ABeeZee;font-size:15px" value="Other Dimensions"><b>Other Dimensions</b></option>
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+     <label for="bricksno">Number of Bricks:</label>
+    <input type="number" id="bricksno" name="entry.719468843" placeholder="Quantity of Bricks" required="required">
+
+    <label for="address">Address:</label>
+    <textarea id="address" name="entry.967569197" placeholder="Your Delivery Location.." style="height:200px" required="required"></textarea>
+
+    <button type="submit" >Submit</button>
+  </form>
+</div>
+
+<!--Update the URL for thank you page on form submit -->
+    <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"      
+    onload="if(submitted) {window.location='https://vrfbricks.github.io/';}"></iframe> 
+
+ <script type="text/javascript">var submitted=false;</script>
+  
+<script type="text/javascript">
+  function validateName() {
+            var name = document.getElementById('name').value;
+            if(name.length == 0) {
+              swal("Name can't be blank") ;
+              return false;
+
+            }
+            if (!name.match(/^[a-zA-Z]{3,}(?: [a-zA-Z]+){0,2}$/)) {
+              swal("Please enter your correct name") ;//Validation Message
+              return false;
+            }
+            return true;
+          }
+
+          function validatePhone() {
+            var phone = document.getElementById('phone').value;
+            if(phone.length == 0) {
+              swal("Phone number can't be blank") ;//Validation Message
+              return false;
+            }
+
+            if(!phone.match(/^[0]?[789]\d{9}$/)) {
+             swal("Please enter a correct phone number") ;//Validation Message
+             return false;
+           }
+
+           return true;
+
+         }
+
+          function validateEmail() {
+
+          var email = document.getElementById('email').value;
+         
+
+          if(!email.match(/^[A-Za-z\._\-[0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)) {
+            swal("Please enter a correct email address") ;//Validation Message
+            return false;
+
+          }
+
+          return true;
+
+        }
+
+
+   function validateForm() {
+          if (!validateName() || !validatePhone()) {
+            swal("Check your details", "VRF Bricks Contact Form not submitted");
+
+            //Validation Message
+            return false;
+          }
+          else {
+            submitted=true;
+            swal("ThankYou for choosing VRF Bricks....We will reach you soon..", "Have a great day!", "success");
+           
+            return true;
+          }
+        }
+</script>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+
+<div class="container" id="galdirec">
+<picture>
+  <source media="(max-width: 550px)" srcset="foo/brickwall.jpg">
+     <source media="(max-width: 550px)" srcset="foo/brickwall1.jpg">
+
+      
+    <img src="foo/brickwallbig.jpg" media="(min-width: 550px) " alt="Cement brick" style="width:100%;">
+    <img src="foo/brickwallbig.jpg" media="(min-width: 550px)" alt="Cement brick" style="width:100%;">
+
+
+</picture>
+<div class="content">
+<h1 id="ga1">GALLERY</h1>
+<h3 style="border-bottom:2px solid white;">Materials and Machinery</h3>
+ <div id="div1">
+ <a target="_blank" href="foo/b1L.jpg">
+  <img class="a1" src="foo/b1L.jpg"  title="Vaccum Fly Ash Bricks" alt="bricks" >
+</a>
+ <a target="_blank" href="foo/b2L.jpg">
+  <img class="a1" src="foo/b2L.jpg"  title="Solid Fly Ash Bricks" alt="bricks" >
+</a>
+ <a target="_blank" href="foo/b4L.jpg">
+  <img class="a1" src="foo/b4L.jpg"  title="Hydraulic pressing and Vibrator" alt="bricks" >
+</a>
+ <a target="_blank" href="foo/b5L.jpg">
+  <img class="a1" src="foo/b5L.jpg"  title="Concrete Mixer" alt="bricks">
+</a>
+ <a target="_blank" href="foo/b6L.jpg">
+  <img class="a1" src="foo/b6L.jpg"  title="Trolly" alt="bricks" >
+</a>
+ <a target="_blank" href="foo/b7L.jpg">
+  <img class="a1" src="foo/b7L.jpg"  title="Fly Ash" alt="bricks" >
+</a>
+ <a target="_blank" href="foo/b8L.jpg">
+  <img class="a1" src="foo/b8L.jpg"  title="Gypsum" alt="bricks" >
+</a>
+ <a target="_blank" href="foo/b9L.jpg">
+  <img class="a1" src="foo/b9L.jpg"  title="Cement" alt="bricks" >
+</a>
+ <a target="_blank" href="foo/b10L.jpg">
+  <img class="a1" src="foo/b10L.jpeg"  title="Concrete Chips" alt="bricks" >
+</a>
+
+ <a target="_blank" href="foo/b13L.jpg">
+  <img class="a1" src="foo/b13L.jpg"  title="Product Delivery" alt="bricks" >
+</a>
+ <a target="_blank" href="foo/b14L.jpg">
+  <img class="a1" src="foo/b14L.jpg"  title="Vector Mason" alt="bricks" >
+</a>
+ <a target="_blank" href="foo/b15L.jpg">
+  <img class="a1" src="foo/b15L.jpg"  title="Constructing" alt="bricks" >
+</a>
+
+
+ </div>
+
+ 
+  </div>
+</div>
+<div id=div2>
+
+  </div>
+<div id="div3"></div>
+
+
+
+
+<footer class="footer-distributed" id="aboutus">
+  
+
+      <div class="footer-left">
+                       <br><br>
+        <h3 id="logofont">vrfbricks<span>.github.io</span></h3>
+
+        <p class="footer-links">
+          <a href="#start" class="link-1">Home</a>
+          <a href="#pricedirec">Pricing</a>
+          <a href="#delivery">Delivery</a>
+         <a href="#locateus">Locate Us</a>
+          
+          <a href="#contactus">Contact Us</a>
+          <a href="#galdirec">Gallery</a>
+          
+          
+          
+          
+        
+        </p>
+
+    <p class="footer-company-name" style="color:#1abc9c">Venkata Ramana Fly-Ash Cement Bricks © 2014</p>
+      </div>
+
+      <div class="footer-center">
+<br><br>
+        <div>
+          <a href="#locateus"><i class="fa fa-map-marker"></i></a>
+          <p><span>Thummalapenta Beach Road,kavali</span>524201, Andhra Pradesh.</p>
+        </div>
+
+        <div>
+          <a  href="tel:9912763863"><i class="fa fa-phone"></i></a>
+          
+
+
+          <p> (+91)<a href="tel:9912763863"> 9912763863</a></p>
+        </div>
+
+        <div>
+          <a href="mailto:sabarirjsr@gmail.com" ><i class="fa fa-envelope"></i>
+          <p id="mailid"><a href="mailto:govindareddyremala@gmail.com">govindareddyremala@gmail.com</a></p>
+        </div>
+
+      </div>
+
+      <div class="footer-right">
+                 <h4 style="color:white">About Us</h4>
+        <p class="footer-company-about">
+          
+          
+          We have been delivering our products since 6 years with extraordinary customer satisfaction and top quality.We are very greatful to our beloved customers who are with us in this long successful journey and wishing that your support remains the same.Kindly send your feedback for better experience.
+        </p>
+
+        <p style="color:white;font: 'Aclonica';font-size: 12px;color:#004d4d;">-Designed by Sabarish Reddy Remala</p>
+
+      </div>
+
+    </footer>
+
+
+</body>
+</html>

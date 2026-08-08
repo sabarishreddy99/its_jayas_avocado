@@ -26,7 +26,7 @@ export default function CgpaGoalPage() {
       <GVJsonLd data={[breadcrumbLd("/cgpa-goal", "VIT CGPA Goal Tracker"), toolLd({ path: "/cgpa-goal", name: "VIT CGPA Goal Tracker", description: DESC })]} />
       <GVPageHeader
         eyebrow="Goal"
-        title="CGPA Goal Tracker"
+        title="VIT CGPA Goal Tracker"
         subtitle="Name the CGPA you're chasing. We'll map the GPA you need every remaining semester to land it, and show you semester by semester whether you're on track."
       />
       <ScrollReveal delay={80} className="mt-10">

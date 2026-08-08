@@ -5,6 +5,24 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   images: { unoptimized: true },
   allowedDevOrigins: ["192.168.1.166"],
+
+  /**
+   * The build year, inlined as a literal into both the HTML and the client
+   * bundle.
+   *
+   * `new Date()` inside a client component is a hydration hazard on a static
+   * export: the HTML is rendered once at build time, but the component runs
+   * again in the browser whenever someone visits. The two agree until the year
+   * rolls over, and then every visitor gets a mismatch on "© 2026" and on any
+   * "N years in business" counter.
+   *
+   * NEXT_PUBLIC_* values are substituted at build time, so both sides read the
+   * same literal and the copy means "as of the last deploy", which is the
+   * honest reading for a statically exported site anyway.
+   */
+  env: {
+    NEXT_PUBLIC_BUILD_YEAR: String(new Date().getFullYear()),
+  },
 };
 
 export default nextConfig;

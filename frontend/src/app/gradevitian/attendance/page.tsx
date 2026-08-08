@@ -28,7 +28,7 @@ export default function AttendancePage() {
       <GVJsonLd data={[breadcrumbLd("/attendance", "VIT Attendance Calculator"), toolLd({ path: "/attendance", name: "VIT Attendance Calculator", description: DESC })]} />
       <GVPageHeader
         eyebrow="Attendance"
-        title="Attendance Calculator"
+        title="VIT Attendance Calculator"
         subtitle="Know exactly how many classes you can afford to miss, and stay safely above the 75% line."
       />
       <ScrollReveal delay={80} className="mt-10">

@@ -27,7 +27,7 @@ export default function CgpaEstimatorPage() {
       <GVJsonLd data={[breadcrumbLd("/cgpa-estimator", "VIT CGPA Estimator"), toolLd({ path: "/cgpa-estimator", name: "VIT CGPA Estimator", description: DESC })]} />
       <GVPageHeader
         eyebrow="Planning"
-        title="CGPA Estimator"
+        title="VIT CGPA Estimator"
         subtitle="Set your dream CGPA, and find out exactly what next semester needs to look like."
       />
       <ScrollReveal delay={80} className="mt-10">

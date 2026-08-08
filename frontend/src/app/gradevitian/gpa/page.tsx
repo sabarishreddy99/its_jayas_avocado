@@ -28,7 +28,7 @@ export default function GpaPage() {
       <GVJsonLd data={[breadcrumbLd("/gpa", "VIT GPA Calculator"), toolLd({ path: "/gpa", name: "VIT GPA Calculator", description: DESC })]} />
       <GVPageHeader
         eyebrow="Semester"
-        title="GPA Calculator"
+        title="VIT GPA Calculator"
         subtitle="Drop in your grades and credits. Your semester GPA lands the moment you stop typing."
       />
       <ScrollReveal delay={80} className="mt-10">

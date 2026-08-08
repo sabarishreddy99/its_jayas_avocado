@@ -3,7 +3,7 @@
     "title": "Home",
     "href": "/",
     "category": "Page",
-    "description": "gradeVITian — grade forecasting for VIT.",
+    "description": "gradeVITian, grade forecasting for VIT.",
     "keywords": [
       "start",
       "landing",
@@ -201,7 +201,7 @@
     "title": "Semester Planner",
     "href": "/planner",
     "category": "Tool",
-    "description": "Plan your whole semester — courses, credits, grades and attendance in one place, with live GPA.",
+    "description": "Plan your whole semester, courses, credits, grades and attendance in one place, with live GPA.",
     "keywords": [
       "planner",
       "semester",
