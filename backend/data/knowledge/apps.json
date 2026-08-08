@@ -18,5 +18,25 @@
     ],
     "featured": true,
     "launchedAt": "2021"
+  },
+  {
+    "slug": "vrfbricks",
+    "name": "VRF Bricks",
+    "url": "https://vrfbricks.jayaremala.com",
+    "tagline": "Fly ash cement bricks from my father's yard in Kavali",
+    "description": "Venkata Ramana Fly Ash Cement Bricks has been run by my father, Remala Govinda Reddy, in Kavali, Nellore district since 2014. I built the first version of this site as a student and rebuilt it in 2026. Bilingual in English and Telugu, WhatsApp-first enquiries rather than a form, generated dimension drawings and a wall-area calculator in place of stock photography, and LocalBusiness structured data so the yard is findable at all. Served as a static export from the same build as this site, with nginx mapping the subdomain onto its route segment.",
+    "status": "live",
+    "category": "Business Website",
+    "tech": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind",
+      "Static Export",
+      "nginx",
+      "Schema.org"
+    ],
+    "featured": true,
+    "launchedAt": "2020"
   }
 ]

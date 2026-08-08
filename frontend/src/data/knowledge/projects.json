@@ -175,20 +175,26 @@
   },
   {
     "title": "VRF Bricks",
-    "description": "A simple online web application that helped people find my dad's business in a mid-sized town in India.",
+    "description": "The website for my father's fly ash brick yard in Kavali, Andhra Pradesh. First built during COVID to help people find the business, and rebuilt in 2026: bilingual in English and Telugu, WhatsApp-first enquiries, and local SEO so a customer twenty kilometres away can find the yard at all.",
     "tags": [
-      "HTML",
-      "JavaScript",
-      "CSS",
-      "SEO"
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind",
+      "Local SEO",
+      "i18n"
     ],
-    "featured": false,
+    "featured": true,
     "sourceLinks": [
       {
-        "label": "GitHub",
+        "label": "Live",
+        "url": "https://vrfbricks.jayaremala.com"
+      },
+      {
+        "label": "Original (2020)",
         "url": "https://github.com/sabarishreddy99/vrfbricks.github.io"
       }
     ],
-    "note": "At its heart, this was a project of purpose: an online gateway built to help people navigate my father's new business within our town. Seeing a simple web application drive real-world sales and provide stability for my family during the COVID-era was a transformative experience. It taught me that engineering is most powerful when it serves a personal and communal need."
+    "note": "At its heart, this was a project of purpose: an online gateway built to help people navigate my father's new business within our town. Seeing a simple web application drive real-world sales and provide stability for my family during the COVID-era was a transformative experience. It taught me that engineering is most powerful when it serves a personal and communal need. Six years on, it has been rebuilt from the ground up and relaunched at vrfbricks.jayaremala.com. Bilingual in English and Telugu, because Kavali is a Telugu market. WhatsApp instead of a contact form, because that is how the construction trade actually talks. And the one real photograph of the yard is finally the first thing you see."
   }
 ]

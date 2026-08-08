@@ -40,7 +40,7 @@
     "artifact": {
       "projectTitle": "VRF Bricks",
       "year": "2020",
-      "caption": "Still the site that mattered most."
+      "caption": "Still the site that mattered most. Rebuilt and back online in 2026."
     }
   },
   "hopeMolecules": {
@@ -66,12 +66,12 @@
     },
     {
       "name": "VRF Bricks",
-      "what": "my father's brick business, one page",
+      "what": "my father's brick yard, rebuilt",
       "who": "customers in our town",
       "shippedAt": "2020-06-01",
-      "sinceLabel": "2020 · archived",
-      "url": "https://github.com/sabarishreddy99/vrfbricks.github.io",
-      "status": "archived"
+      "sinceLabel": "since Jun 2020",
+      "url": "https://vrfbricks.jayaremala.com",
+      "status": "live"
     },
     {
       "name": "jayaremala.com",

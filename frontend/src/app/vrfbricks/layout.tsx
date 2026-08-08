@@ -3,7 +3,7 @@ import { Anek_Telugu } from "next/font/google";
 import { VRFLangProvider } from "@/components/vrfbricks/VRFLang";
 import VRFNav from "@/components/vrfbricks/VRFNav";
 import VRFFooter from "@/components/vrfbricks/VRFFooter";
-import VRFStickyBar from "@/components/vrfbricks/VRFStickyBar";
+import VRFContactFab from "@/components/vrfbricks/VRFContactFab";
 import VRFJsonLd from "@/components/vrfbricks/VRFJsonLd";
 import VRFCanonicalRedirect from "@/components/vrfbricks/VRFCanonicalRedirect";
 import { localBusinessLd, webSiteLd, VRF_URL, VRF_TITLE, VRF_DESC, VRF_OG_CARD } from "@/lib/vrfbricks/seo";
@@ -79,7 +79,7 @@ export default function VRFLayout({ children }: { children: React.ReactNode }) {
           <main className="flex-1">{children}</main>
           <VRFFooter />
         </div>
-        <VRFStickyBar />
+        <VRFContactFab />
       </VRFLangProvider>
     </div>
   );
