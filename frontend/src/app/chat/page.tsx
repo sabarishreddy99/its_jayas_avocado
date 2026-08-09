@@ -11,7 +11,10 @@ export const metadata = {
 
 export default function ChatPage() {
   return (
-    <div className="relative flex flex-col h-[100dvh] bg-bg overflow-hidden">
+    // `portfolio` scopes the deepened indigo accent (globals.css) so Avocado
+    // matches the homepage it is reached from. This route sits outside the
+    // (portfolio) group, so it needs the class explicitly.
+    <div className="portfolio relative flex flex-col h-[100dvh] bg-bg overflow-hidden">
       <AvocadoBg />
 
       {/* ── Header ─────────────────────────────────────────────── */}

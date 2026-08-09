@@ -174,7 +174,7 @@ export default function IntroScreen() {
         aria-hidden
         className="pointer-events-none absolute inset-0 opacity-[0.03] dark:opacity-[0.055]"
         style={{
-          backgroundImage: "radial-gradient(circle, rgb(99 102 241) 1px, transparent 1px)",
+          backgroundImage: "radial-gradient(circle, var(--accent) 1px, transparent 1px)",
           backgroundSize: "28px 28px",
         }}
       />

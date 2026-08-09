@@ -36,6 +36,12 @@ export interface WhyArtifact {
   projectTitle: string;
   year: string;
   caption: string;
+  /**
+   * Who the business actually belongs to. The origin story is about a real
+   * family business, and naming it is the difference between an anecdote and
+   * a fact. Kept here rather than parsed out of the apps.json prose.
+   */
+  attribution?: string;
 }
 
 /** Chapter 01 — the origin story. */
@@ -55,6 +61,24 @@ export interface HopeMolecules {
   belief: string;
   closing?: string;
   footnote?: string;
+}
+
+/** One stance in the opinions chapter. `term` is the claim, `line` the evidence.
+ *  Every line is quoted from work already shipped, never written as a slogan. */
+export interface Opinion {
+  term: string;
+  line: string;
+}
+
+/** Chapter 05 — the love/hate block. The hinge between what was shipped and how
+ *  it gets built. Kept in data so the stances stay editable via /admin. */
+export interface OpinionsBlock {
+  label: string;
+  deck?: string;
+  forLabel: string;
+  againstLabel: string;
+  for: Opinion[];
+  against: Opinion[];
 }
 
 /** One row of the "Still running" ledger. */
@@ -106,6 +130,7 @@ export interface Profile {
   hero?: HeroCopy;
   hopeMolecules?: HopeMolecules;
   why?: WhyBlock;
+  opinions?: OpinionsBlock;
   shipped?: ShippedThing[];
   shippedLabel?: string;
   shippedNote?: string;

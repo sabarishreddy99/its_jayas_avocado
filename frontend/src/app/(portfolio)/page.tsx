@@ -10,7 +10,8 @@ import HeroName from "@/components/portfolio/HeroName";
 import HeroStats from "@/components/portfolio/HeroStats";
 import Parallax from "@/components/ui/Parallax";
 import RagPipelineCard from "@/components/portfolio/RagPipelineCard";
-import StackSection from "@/components/ui/StackSection";
+import Chapter, { Inner } from "@/components/portfolio/Chapter";
+import Opinions from "@/components/portfolio/Opinions";
 import SkillsSection from "@/components/portfolio/SkillsSection";
 import SkillsConstellation from "@/components/portfolio/SkillsConstellation";
 import MobileNoBg from "@/components/ui/MobileNoBg";
@@ -23,7 +24,6 @@ import StillRunning from "@/components/portfolio/StillRunning";
 import OriginStory from "@/components/portfolio/OriginStory";
 import Signature from "@/components/portfolio/Signature";
 import HopeMolecules from "@/components/portfolio/HopeMolecules";
-import AvocadoMark from "@/components/portfolio/AvocadoMark";
 import { experience } from "@/data/experience";
 
 export const metadata = {
@@ -71,15 +71,6 @@ const jsonLd = {
   award: "Qualcomm Edge AI Hackathon Winner",
   address: { "@type": "PostalAddress", addressLocality: "New York", addressRegion: "NY", addressCountry: "US" },
 };
-
-/** Shared inner-content constraint */
-function Inner({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return (
-    <div className={`mx-auto w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[90rem] px-4 sm:px-6 xl:px-8 ${className}`}>
-      {children}
-    </div>
-  );
-}
 
 /** Wrap standalone numbers (optionally with unit suffix) in mono-bold spans */
 function HighlightNumbers({ text }: { text: string }) {
@@ -209,81 +200,6 @@ function careerPath() {
   return path;
 }
 
-/** A numbered chapter — ghost numeral, micro-heading, hairline rule, and the
- *  closing "next section" link. Kept local: this is page composition, not a
- *  reusable widget. */
-function Chapter({
-  n,
-  label,
-  deck,
-  id,
-  z,
-  seamless = false,
-  className = "",
-  nextHref,
-  nextLabel,
-  children,
-}: {
-  n: string;
-  label: string;
-  /** One line of scent: what this chapter argues. Improves scan-ability and
-   *  gives a reason to keep reading. */
-  deck?: string;
-  id: string;
-  z: number;
-  seamless?: boolean;
-  className?: string;
-  nextHref?: string;
-  nextLabel?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <StackSection z={z} seamless={seamless} id={id} className={className}>
-      <Inner className="py-14 sm:py-20 md:py-24 lg:py-28 relative">
-        <span
-          aria-hidden
-          className="chapter-ghost pointer-events-none absolute -top-4 right-0 select-none font-black text-fg/[0.03] dark:text-fg/[0.04] leading-none"
-          style={{ fontSize: "clamp(6rem,17vw,14rem)" }}
-        >
-          {n}
-        </span>
-
-        {/* Three-step header: number, label, deck. Real hierarchy instead of
-            one whispered micro-label. */}
-        <header className="mb-8 sm:mb-10 md:mb-12">
-          <div className="flex items-baseline gap-3">
-            <AvocadoMark className="chapter-avo h-[15px] w-[15px] translate-y-[2px]" />
-            <span className="font-mono text-[11px] font-bold tabular-nums text-accent shrink-0">{n}</span>
-            <h2 className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] text-fg-faint shrink-0">
-              {label}
-            </h2>
-            <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" aria-hidden />
-          </div>
-          {deck && (
-            <p className="mt-3 max-w-[52ch] text-sm leading-relaxed text-fg-subtle text-pretty">
-              {deck}
-            </p>
-          )}
-        </header>
-
-        {children}
-
-        {nextHref && (
-          <div className="mt-10 pt-5 border-t border-border flex items-center justify-end">
-            <a
-              href={nextHref}
-              className="group inline-flex items-center gap-1.5 rounded-chip px-3 py-2.5 -mr-3 text-[11px] text-fg-faint hover:text-fg transition-colors"
-            >
-              {nextLabel}
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="transition-transform duration-200 group-hover:translate-y-0.5"><path d="M6 9l6 6 6-6"/></svg>
-            </a>
-          </div>
-        )}
-      </Inner>
-    </StackSection>
-  );
-}
-
 /** Masked word-rise — the same reveal the gradeVITian hero uses. */
 function RisingWords({ text, className = "", style, baseDelay = 0 }: {
   text: string;
@@ -311,6 +227,7 @@ export default function PortfolioHome() {
   const hero = profile.hero;
   const hope = profile.hopeMolecules;
   const shipped = profile.shipped ?? [];
+  const gradevitianNote = projects.find((p) => p.title === "gradeVITian")?.note;
 
   return (
     <div className="w-full">
@@ -321,7 +238,13 @@ export default function PortfolioHome() {
       />
 
       {/* ── Hero — full-viewport, scrolls away naturally ──────────── */}
-      <section id="hero" className="relative overflow-x-clip scroll-mt-[50px] hero-section-bg sm:min-h-[calc(100dvh-50px)] flex flex-col">
+      {/* svh rather than dvh: on mobile Safari a dvh hero resizes as the URL
+          bar hides, which reflows the whole first screen mid-scroll. svh is
+          the stable small-viewport height. */}
+      <section
+        id="hero"
+        className="chapter relative flex flex-col overflow-x-clip hero-section-bg sm:min-h-[calc(100svh-var(--nav-h))]"
+      >
 
         <Parallax speed={0.18} className="pointer-events-none absolute inset-0">
           <div aria-hidden className="absolute bottom-0 left-0 right-0 h-2/3 bg-gradient-to-t from-accent/[0.05] via-transparent to-transparent" />
@@ -331,7 +254,10 @@ export default function PortfolioHome() {
         <div className="relative z-[1] flex-1 flex flex-col">
 
           <Inner className="pt-8 sm:pt-12 md:pt-14 lg:pt-16">
-            <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_minmax(0,19rem)] lg:gap-12 xl:grid-cols-[minmax(0,1fr)_minmax(0,22rem)] xl:gap-16 2xl:grid-cols-[minmax(0,1fr)_minmax(0,25rem)]">
+            {/* Single column. The belief panel that used to sit on the right
+                now owns chapter 01, where it can be read at every width
+                instead of being hidden below lg. */}
+            <div className="max-w-[62ch]">
             <div className="flex flex-col gap-5 sm:gap-6 md:gap-7 min-w-0">
 
               {/* 1 · Status */}
@@ -351,16 +277,14 @@ export default function PortfolioHome() {
                 );
               })()}
 
-              {/* 2 · Headline — a person, not a metric */}
+              {/* 2 · Headline — a person, not a metric.
+                  Garamond via .display-serif rather than the grotesque
+                  --font-display: at this size the serif is the whole voice of
+                  the page, and it is also the one face that survives every
+                  theme (midnight swaps --font-display to Roboto). */}
               <RisingWords
                 text={hero?.headline ?? profile.bio.split(". ")[0] + "."}
-                className="font-bold text-fg text-balance max-w-[19ch]"
-                style={{
-                  fontFamily: "var(--font-display), 'Helvetica Neue', Arial, sans-serif",
-                  fontSize: "clamp(1.9rem, 3.2vw + 0.6rem, 3.4rem)",
-                  lineHeight: 1.1,
-                  letterSpacing: "-0.022em",
-                }}
+                className="display-serif display-xl max-w-[24ch] text-fg"
                 baseDelay={120}
               />
 
@@ -441,17 +365,6 @@ export default function PortfolioHome() {
                 </div>
               )}
             </div>
-
-            {/* Right column — the belief. On wide screens this is the area
-                that used to sit empty beside the measure-capped headline. */}
-            {hope && (
-              <div
-                className="animate-fade-up lg:pt-1"
-                style={{ animationDelay: "440ms" }}
-              >
-                <HopeMolecules data={hope} />
-              </div>
-            )}
             </div>
           </Inner>
 
@@ -485,15 +398,30 @@ export default function PortfolioHome() {
         </div>
       </section>
 
-      {/* ── 01 · Why I build ── z-[2] ─────────────────────────────── */}
-      {profile.why && (
+      {/* ── 01 · The creed ────────────────────────────────────────────
+          Opens the story rather than decorating the hero. This is the claim
+          the rest of the page is evidence for, so it goes first and it goes
+          in full at every viewport. */}
+      {hope && (
         <Chapter
           n="01"
+          label={hope.eyebrow ?? "What I optimize for"}
+          deck="The reason the rest of this page exists."
+          id="creed"
+          nextHref="#why"
+          nextLabel="Where it started"
+        >
+          <HopeMolecules data={hope} variant="chapter" />
+        </Chapter>
+      )}
+
+      {/* ── 02 · Why I build ──────────────────────────────────────── */}
+      {profile.why && (
+        <Chapter
+          n="02"
           label={profile.why.label}
           deck="Where this started, and why it still decides what I pick up."
           id="why"
-          z={2}
-          seamless
           nextHref="#still-running"
           nextLabel="What's still up"
         >
@@ -501,14 +429,13 @@ export default function PortfolioHome() {
         </Chapter>
       )}
 
-      {/* ── 02 · Still running ── z-[3] — the signature moment ────── */}
+      {/* ── 03 · Still running ── the signature moment ────────────── */}
       {shipped.length > 0 && (
         <Chapter
-          n="02"
+          n="03"
           label={profile.shippedLabel ?? "Still running"}
           deck="Things I shipped that are still in production. The counters are live."
           id="still-running"
-          z={3}
           nextHref="#gradevitian"
           nextLabel="The oldest one"
         >
@@ -519,27 +446,57 @@ export default function PortfolioHome() {
         </Chapter>
       )}
 
-      {/* ── 03 · gradeVITian ── z-[4] ─────────────────────────────── */}
+      {/* ── 04 · gradeVITian ──────────────────────────────────────── */}
       <Chapter
-        n="03"
+        n="04"
         label="gradeVITian"
         deck="Built as an undergrad, still on call. Six years live and five graduating classes later."
         id="gradevitian"
-        z={4}
-        nextHref="#projects"
-        nextLabel="The rest of the work"
+        nextHref="#opinions"
+        nextLabel="Where I stand"
       >
         <SpotlightSection hideEyebrow />
+
+        {/* The thank-you letter to the VIT community. It has been sitting in
+            projects.json unrendered, and it is the most human paragraph in
+            the whole dataset. */}
+        {gradevitianNote && (
+          <ScrollReveal>
+            <div className="mt-10 border-t border-border pt-8">
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.18em] text-fg-faint">
+                Postscript, 2026
+              </p>
+              <p className="voice-serif hanging-quote max-w-[62ch] border-l border-border-strong pl-5 text-[15px] leading-[1.75] text-fg-muted">
+                {gradevitianNote}
+              </p>
+            </div>
+          </ScrollReveal>
+        )}
       </Chapter>
 
-      {/* ── 04 · The work ── z-[5] ────────────────────────────────── */}
+      {/* ── 05 · Where I stand ────────────────────────────────────────
+          The hinge: the page turns here from a record of what shipped into
+          an argument about how it gets built. */}
+      {profile.opinions && (
+        <Chapter
+          n="05"
+          label={profile.opinions.label}
+          deck={profile.opinions.deck}
+          id="opinions"
+          nextHref="#projects"
+          nextLabel="The work itself"
+        >
+          <Opinions data={profile.opinions} />
+        </Chapter>
+      )}
+
+      {/* ── 06 · The work ─────────────────────────────────────────── */}
       {featured.length > 0 && (
         <Chapter
-          n="04"
+          n="06"
           label="The work"
           deck="Production systems, and the numbers they hold up under."
           id="projects"
-          z={5}
           nextHref="#skills"
           nextLabel="How I work"
         >
@@ -550,6 +507,22 @@ export default function PortfolioHome() {
             </p>
           </ScrollReveal>
 
+          {/* The same career in resume voice. The bio above is how he
+              talks; this is what a recruiter is scanning for, and it was
+              already written and sitting unused in profile.json. */}
+          {profile.summary && (
+            <ScrollReveal delay={80}>
+              <div className="mt-7 border-l border-border pl-5">
+                <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-fg-faint">
+                  The resume version
+                </p>
+                <p className="max-w-[62ch] text-sm leading-relaxed text-fg-subtle">
+                  <HighlightNumbers text={profile.summary} />
+                </p>
+              </div>
+            </ScrollReveal>
+          )}
+
           {/* The metrics — evidence, not an introduction */}
           {profile.heroStats && profile.heroStats.length > 0 && (
             <div className="mt-10">
@@ -558,11 +531,14 @@ export default function PortfolioHome() {
                   {profile.heroStatsLabel}
                 </p>
               )}
-              {/* 4-up crushes the labels below ~900px, so 2x2 until there is room */}
-              <div className="hidden md:block">
+              {/* 4-up crushes the labels below ~900px, so 2x2 until there is
+                  room. The switch is at lg, not md: at 768–1023 the four
+                  labels still do not fit, which is exactly the tablet band
+                  this layout used to ignore. */}
+              <div className="hidden lg:block">
                 <HeroStats stats={profile.heroStats} startOnView />
               </div>
-              <div className="md:hidden">
+              <div className="lg:hidden">
                 <HeroStats stats={profile.heroStats} cols={2} startOnView />
               </div>
             </div>
@@ -636,13 +612,15 @@ export default function PortfolioHome() {
         </Chapter>
       )}
 
-      {/* ── 05 · How I work ── z-[6] ──────────────────────────────── */}
+      {/* ── 07 · How I work ───────────────────────────────────────── */}
       <Chapter
-        n="05"
+        n="07"
         label="How I work"
-        deck="The stack I reach for, and where I am pointing it next."
+        /* profile.currently is literally a "what I'm into right now"
+           sentence, which is what a deck is. It replaces a hardcoded
+           string and was previously rendered nowhere. */
+        deck={profile.currently ? `Currently pointed at ${profile.currently}` : "The stack I reach for, and where I am pointing it next."}
         id="skills"
-        z={6}
         nextHref="#testimonials"
         nextLabel="What colleagues say"
       >
@@ -659,7 +637,16 @@ export default function PortfolioHome() {
         {/* Where he's been, and where he's headed */}
         <div className="mt-12 pt-10 border-t border-border grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
           <div>
+            {/* The label said "Previously" over a row of industries, which
+                reads as companies. Name the companies (profile.previous was
+                populated and rendered nowhere) and label the chips honestly. */}
             <p className="text-[10px] font-bold uppercase tracking-widest text-fg-faint mb-3">Previously</p>
+            {profile.previous && (
+              <p className="mb-3 font-mono text-[11px] leading-relaxed text-fg-muted">
+                {profile.previous}
+              </p>
+            )}
+            <p className="mb-2 text-[10px] uppercase tracking-widest text-fg-faint/70">Domains</p>
             <div className="flex flex-wrap gap-2">
               {profile.prev_domain.split(",").map((d) => (
                 <span key={d} className="rounded-md border border-border bg-surface-raised px-3 py-1 text-xs font-medium text-fg-subtle">
@@ -711,36 +698,41 @@ export default function PortfolioHome() {
           </div>
         </div>
 
-        {/* Interactive skills ↔ projects constellation — desktop only */}
-        <div className="hidden lg:block mt-12 pt-10 border-t border-border">
+        {/* Interactive skills ↔ projects constellation. No longer desktop-only:
+            the component now scrolls horizontally below lg instead of being
+            withheld from every phone and tablet visitor. */}
+        <div className="mt-12 pt-10 border-t border-border">
           <div className="flex items-center gap-4 mb-6">
             <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-fg-faint shrink-0">Skills in Action</h3>
             <div className="flex-1 h-px bg-border" aria-hidden />
+            <span className="shrink-0 text-[10px] text-fg-faint lg:hidden">scroll →</span>
           </div>
           <SkillsConstellation />
         </div>
       </Chapter>
 
-      {/* ── 06 · Kind words ── z-[7] ──────────────────────────────── */}
+      {/* ── 08 · Kind words ───────────────────────────────────────── */}
+      {/* rail={false}: the carousel is already a full-width composition and
+          reads badly squeezed into the body column beside a rail. */}
       <Chapter
-        n="06"
+        n="08"
         label="Kind words"
         deck="What the people I actually worked with said, unprompted."
         id="testimonials"
-        z={7}
+        rail={false}
         nextHref="#contact"
         nextLabel="Let's connect"
       >
         <TestimonialsCarousel />
       </Chapter>
 
-      {/* ── 07 · Connect ── z-[8] ─────────────────────────────────── */}
+      {/* ── 09 · Connect ──────────────────────────────────────────── */}
       <Chapter
-        n="07"
+        n="09"
         label="Connect"
         deck="Open to full-time roles, remote or hybrid. This is the fastest way to reach me."
         id="contact"
-        z={8}
+        rail={false}
         className="pb-16 sm:pb-24"
       >
         <ContactForm />
@@ -751,7 +743,7 @@ export default function PortfolioHome() {
             <p className="text-[10px] font-bold uppercase tracking-widest text-fg-faint shrink-0">Quick Explore</p>
             <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" aria-hidden />
           </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-8 gap-2">
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8">
             {EXPLORE_PAGES.map(({ href, label, desc, accent, icon }) => (
               <Link
                 key={href}

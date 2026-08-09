@@ -45,8 +45,26 @@ const SIGNAL_PERIOD = 5.2; // seconds for one satellite-to-core trip
  * structure stays physically connected while it drifts. Signals travel inward
  * along the core bonds. Pauses entirely when scrolled out of view.
  */
-export default function HopeMolecules({ data }: { data: HopeMoleculesData }) {
+export default function HopeMolecules({
+  data,
+  variant = "aside",
+}: {
+  data: HopeMoleculesData;
+  /**
+   * `aside` is the original narrow hero column: the molecule and term inline,
+   * the argument held back until `lg` so a phone hero stayed short.
+   *
+   * `chapter` is the full panel. It exists because the argument IS the point —
+   * the definition and belief are the whole reason the rest of the page
+   * matters — and hiding them below `lg` meant every phone visitor read the
+   * label without ever reading the claim. Now that this owns a chapter rather
+   * than sharing the hero, there is no height budget to protect, so nothing
+   * is withheld at any width.
+   */
+  variant?: "aside" | "chapter";
+}) {
   const svgRef = useRef<SVGSVGElement>(null);
+  const isChapter = variant === "chapter";
 
   useEffect(() => {
     const svg = svgRef.current;
@@ -124,27 +142,51 @@ export default function HopeMolecules({ data }: { data: HopeMoleculesData }) {
   }, []);
 
   return (
-    <aside className="hope-panel relative pt-7 lg:pt-0 lg:pl-10">
+    <aside
+      className={
+        isChapter
+          ? "hope-panel relative"
+          : "hope-panel relative pt-7 lg:pt-0 lg:pl-10"
+      }
+    >
       {/* Divider: a dotted chain with an avocado riding on it. The glyph
           punches a bg-coloured hole in the dots, so the chain reads as passing
-          behind it rather than colliding with it. */}
-      <span className="hope-rule hope-rule-h lg:hidden" aria-hidden />
-      <span className="hope-avo hope-avo-h lg:hidden" aria-hidden>
-        <AvocadoMark className="h-full w-full" />
-      </span>
+          behind it rather than colliding with it.
+          Omitted in the chapter variant — the Chapter rail already carries an
+          AvocadoMark and its own rule, and two would read as clutter. */}
+      {!isChapter && (
+        <>
+          <span className="hope-rule hope-rule-h lg:hidden" aria-hidden />
+          <span className="hope-avo hope-avo-h lg:hidden" aria-hidden>
+            <AvocadoMark className="h-full w-full" />
+          </span>
 
-      <span className="hope-rule hope-rule-v hidden lg:block" aria-hidden />
-      <span className="hope-avo hope-avo-v hidden lg:block" aria-hidden>
-        <AvocadoMark className="h-full w-full" />
-      </span>
+          <span className="hope-rule hope-rule-v hidden lg:block" aria-hidden />
+          <span className="hope-avo hope-avo-v hidden lg:block" aria-hidden>
+            <AvocadoMark className="h-full w-full" />
+          </span>
+        </>
+      )}
 
       {/* Molecule sits inline with the title on small screens, above it on large. */}
-      <div className="flex items-center gap-4 sm:gap-5 lg:block">
+      <div
+        className={
+          isChapter
+            // Stacks on phones: at 390px the molecule and a display-size term
+            // side by side leaves the term about 14 characters of measure.
+            ? "flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-7"
+            : "flex items-center gap-4 sm:gap-5 lg:block"
+        }
+      >
         <svg
           ref={svgRef}
           viewBox="0 0 204 136"
           aria-hidden
-          className="w-[84px] shrink-0 text-accent sm:w-[96px] lg:mb-7 lg:w-full lg:max-w-[15rem]"
+          className={
+            isChapter
+              ? "w-[96px] shrink-0 text-accent sm:w-[128px] lg:w-[150px]"
+              : "w-[84px] shrink-0 text-accent sm:w-[96px] lg:mb-7 lg:w-full lg:max-w-[15rem]"
+          }
           fill="none"
         >
           <g stroke="currentColor" strokeWidth="1" strokeLinecap="round" opacity="0.3">
@@ -177,28 +219,59 @@ export default function HopeMolecules({ data }: { data: HopeMoleculesData }) {
               {data.eyebrow}
             </p>
           )}
-          <p
-            className="signature-mark text-fg"
-            style={{ fontSize: "clamp(1.45rem, 1.1vw + 1.05rem, 2rem)" }}
-          >
-            {data.term}
-          </p>
+          {isChapter ? (
+            <p className="display-serif display-lg text-fg">{data.term}</p>
+          ) : (
+            <p
+              className="signature-mark text-fg"
+              style={{ fontSize: "clamp(1.45rem, 1.1vw + 1.05rem, 2rem)" }}
+            >
+              {data.term}
+            </p>
+          )}
         </div>
       </div>
 
-      {/* The full argument is a wide-screen affordance; small screens get the
-          term and the closing line, so an already tall phone hero stays short. */}
-      <div className="hidden lg:block space-y-3.5 max-w-[34ch] mt-5">
-        <p className="voice-serif text-[15px] leading-[1.7] text-fg-muted">{data.definition}</p>
-        <p className="voice-serif text-[15px] leading-[1.7] text-fg-muted">{data.belief}</p>
+      {/* The argument. In the `aside` variant this stays a wide-screen
+          affordance so the hero it shares does not grow unreadable on a phone.
+          In the `chapter` variant it is always shown at every width: this claim
+          is the reason the rest of the page exists, and a visitor who only ever
+          saw the label read none of it. */}
+      <div
+        className={
+          isChapter
+            ? "mt-7 grid gap-x-10 gap-y-4 sm:grid-cols-2 lg:mt-9 lg:gap-x-16"
+            : "hidden lg:block space-y-3.5 max-w-[34ch] mt-5"
+        }
+      >
+        <p className="voice-serif text-[15px] leading-[1.7] text-fg-muted sm:text-base">
+          {data.definition}
+        </p>
+        <p className="voice-serif text-[15px] leading-[1.7] text-fg-muted sm:text-base">
+          {data.belief}
+        </p>
       </div>
 
       {data.closing && (
-        <p className="mt-3.5 text-[13px] font-medium text-accent lg:mt-5">{data.closing}</p>
+        <p
+          className={
+            isChapter
+              ? "mt-7 text-[15px] font-medium text-accent lg:mt-9"
+              : "mt-3.5 text-[13px] font-medium text-accent lg:mt-5"
+          }
+        >
+          {data.closing}
+        </p>
       )}
 
       {data.footnote && (
-        <p className="hidden lg:block mt-5 pt-4 border-t border-border/60 text-[11px] leading-relaxed text-fg-faint max-w-[34ch]">
+        <p
+          className={
+            isChapter
+              ? "mt-6 max-w-[52ch] border-t border-border/60 pt-4 text-[12px] leading-relaxed text-fg-faint"
+              : "hidden lg:block mt-5 pt-4 border-t border-border/60 text-[11px] leading-relaxed text-fg-faint max-w-[34ch]"
+          }
+        >
           {data.footnote}
         </p>
       )}

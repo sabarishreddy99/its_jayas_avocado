@@ -15,7 +15,12 @@ import { webSiteLd } from "@/lib/portfolio/seo";
 
 export default function PortfolioLayout({ children }: { children: React.ReactNode }) {
   return (
-    <>
+    // `portfolio` scopes the deepened indigo accent (see globals.css) to this
+    // route group; gradeVITian and VRF Bricks keep their own accents.
+    // `contents` generates no box, so <main> stays a direct flex child of
+    // <body> and the fixed/sticky children below still position against the
+    // viewport rather than against a new containing block.
+    <div className="portfolio contents">
       <JsonLd data={webSiteLd()} />
       <ScrollProgress />
       <IntroScreen />
@@ -30,6 +35,6 @@ export default function PortfolioLayout({ children }: { children: React.ReactNod
       <Footer />
       <AvocadoChatButton />
       <ScrollToTop />
-    </>
+    </div>
   );
 }

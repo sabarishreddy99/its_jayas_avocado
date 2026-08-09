@@ -2,7 +2,7 @@
   "name": "Jaya Sabarish Reddy Remala",
   "tagline": "Software Engineer · Qualcomm Edge AI Hackathon Winner · Agentic AI & Distributed Infra at Scale",
   "bio": "I build AI systems that work under real production pressure. At NYU, I cut RAG query latency by 78% on a Multi-Agent research engine serving 3K+ RPS, and pushed LLM inference to 15ms on Snapdragon NPUs via QLoRA + AWQ quantization. Before that, I kept Shell's maritime telemetry alive 115GB/day, 200+ offshore stations, zero data loss.",
-  "summary": "Software Engineer with 3+ years of experience building production-grade AI infrastructure at the intersection of Distributed Systems and Agentic AI. Designed high-throughput microservices sustaining 3K+ RPS at 99.9% uptime, cut P99 RAG latency by 78% on enterprise research pipelines, and pushed LLM inference to 15ms on Edge NPUs. Proven across Fortune 500 energy infrastructure (Shell PLC) and research-scale AI systems (NYU IT). Qualcomm Edge AI Hackathon Winner.",
+  "summary": "Software Engineer with 5+ years of experience building production-grade AI infrastructure at the intersection of Distributed Systems and Agentic AI. Designed high-throughput microservices sustaining 3K+ RPS at 99.9% uptime, cut P99 RAG latency by 78% on enterprise research pipelines, and pushed LLM inference to 15ms on Edge NPUs. Proven across Fortune 500 energy infrastructure (Shell PLC) and research-scale AI systems (NYU IT). Qualcomm Edge AI Hackathon Winner.",
   "obsession": "Currently, I'm obsessed with recommendation systems and the search technology at scale, where it powers the way humans think and behave with intention and responsibility.",
   "currently": "recommendation systems and search at scale & how they shape the way people discover information.",
   "previous": "NYU IT High-Speed Research Network, Shell, Wipro",
@@ -15,10 +15,10 @@
   "linkedin": "https://linkedin.com/in/jayasabarishreddyr",
   "resume": "https://drive.google.com/drive/u/0/folders/1vm35z-6VQjtO9A8ZBgCvvSP_7_POPTrV",
   "booking_url": "https://calendar.app.google/3sScGpHpeSpvPjpSA",
-  "page_experience": "3+ years building production AI & distributed systems.",
+  "page_experience": "5+ years building production AI & distributed systems.",
   "page_education": "Academic foundations that underpin the systems I build.",
   "page_projects": "Things I've built: production systems, hackathon winners, and side projects.",
-  "contact_description": "Open to software engineering roles in AI/ML infrastructure, distributed systems, and full-stack. Healthcare, frontier research, and energy tech are my focus but excited by any hard problem.",
+  "contact_description": "Open to software engineering roles in AI/ML infrastructure, distributed systems, and full-stack. Healthcare, finance, and consumer products are where I'm most curious right now, but any hard problem will do.",
   "page_blog": "Notes on building AI systems, Machine Learning, distributed infrastructure, software craft, navigating life, chaos and more.",
   "page_lab": "Live system designs, technical decisions, and progress logs for projects I'm actively working on. Updated as things evolve. Not a polished writeup, a working document.",
   "page_gallery": "A visual log of achievements, events, and milestones along the way.",
@@ -40,7 +40,8 @@
     "artifact": {
       "projectTitle": "VRF Bricks",
       "year": "2020",
-      "caption": "Still the site that mattered most. Rebuilt and back online in 2026."
+      "caption": "Still the site that mattered most. Rebuilt and back online in 2026.",
+      "attribution": "Venkata Ramana Fly Ash Cement Bricks, run by Remala Govinda Reddy in Kavali, Nellore district since 2014."
     }
   },
   "hopeMolecules": {
@@ -51,9 +52,59 @@
     "closing": "Make them. Share them. Thrive on them.",
     "footnote": "Six years of gradeVITian, one brick site, and this page are all the same reaction."
   },
+  "opinions": {
+    "label": "Where I stand",
+    "deck": "Opinions held loudly enough to put on the page. Every line here is something already shipped, not a slogan.",
+    "forLabel": "What I'm for",
+    "againstLabel": "What I won't do",
+    "for": [
+      {
+        "term": "Things that stay up",
+        "line": "Two of these shipped in 2020 and are still in production. Neither one is a portfolio piece."
+      },
+      {
+        "term": "Meeting people in their own language",
+        "line": "A Telugu market gets a Telugu site. That is the baseline, not a feature."
+      },
+      {
+        "term": "Deterministic where it can be",
+        "line": "Plain Python handles the mechanical eighty percent. The model is only asked to author."
+      },
+      {
+        "term": "Being on call for what you shipped",
+        "line": "Six years on, the calculators still answer during every exam season."
+      },
+      {
+        "term": "One real user before any of the rest",
+        "line": "The first site had exactly one person in mind, and it worked because of that."
+      }
+    ],
+    "against": [
+      {
+        "term": "Padding a poor fit",
+        "line": "Roles that don't match get dropped with a reason, instead of stretched until they do."
+      },
+      {
+        "term": "Guessing when a person should decide",
+        "line": "Some calls genuinely need a human, so the agent parks them instead of guessing."
+      },
+      {
+        "term": "Reinventing what already works",
+        "line": "Tailorbird wraps an existing skill in automation rather than rebuilding it from scratch."
+      },
+      {
+        "term": "A contact form where the trade uses WhatsApp",
+        "line": "WhatsApp instead, because that is how the construction trade actually talks."
+      },
+      {
+        "term": "Stock photography standing in for the real thing",
+        "line": "If the photograph is not of the actual yard, it does not go on the page."
+      }
+    ]
+  },
   "heroStatsLabel": "When it has to hold.",
   "shippedLabel": "Still running",
-  "shippedNote": "Two of these are still up. The third did its job.",
+  "shippedNote": "All three are still up. The oldest has been on call since 2020.",
   "shipped": [
     {
       "name": "gradeVITian",

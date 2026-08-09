@@ -3,10 +3,13 @@ import { projects } from "@/data/projects";
 import type { WhyBlock } from "@/data/profile";
 
 /**
- * Chapter 01 — why he builds. Three declarative sentences and a technical
- * conclusion; the emotion is carried by the artifact card's tag list, not by
- * adjectives. Deliberately short — it must fit the viewport so the pinned
- * section renders no scrub spacer.
+ * The origin chapter — why he builds. Three declarative sentences and a
+ * technical conclusion; the emotion is carried by the artifact card's tag list
+ * and its attribution line, not by adjectives.
+ *
+ * (It used to be constrained to one viewport so the pinned StackSection
+ * rendered no scrub spacer. The homepage is a continuous scroll now, so the
+ * length constraint is gone, but the restraint is still the point.)
  */
 export default function OriginStory({ why }: { why: WhyBlock }) {
   const artifact = why.artifact;
@@ -79,6 +82,15 @@ export default function OriginStory({ why }: { why: WhyBlock }) {
               </a>
             )}
           </div>
+
+          {/* The business is real and predates the website by six years. Naming
+              the owner and the town is what separates this from an anecdote,
+              and it appeared nowhere on the homepage before. */}
+          {artifact.attribution && (
+            <p className="mt-3 px-1 text-[11px] leading-relaxed text-fg-faint">
+              {artifact.attribution}
+            </p>
+          )}
         </aside>
       )}
     </div>

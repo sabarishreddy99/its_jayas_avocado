@@ -7,9 +7,11 @@ import { usePathname } from "next/navigation";
 // a mismatch renders a rail that never activates, with no error.
 const SECTIONS = [
   { id: "hero",          label: "Intro"         },
+  { id: "creed",         label: "Creed"         },
   { id: "why",           label: "Why"           },
   { id: "still-running", label: "Still Running" },
   { id: "gradevitian",   label: "gradeVITian"   },
+  { id: "opinions",      label: "Where I Stand" },
   { id: "projects",      label: "Work"          },
   { id: "skills",        label: "Craft"         },
   { id: "testimonials",  label: "Kind Words"    },
@@ -30,13 +32,25 @@ export default function SectionIndicator() {
     const onScroll = () => setVisible(window.scrollY > 300);
     window.addEventListener("scroll", onScroll, { passive: true });
 
+    // A centre band rather than a ratio.
+    //
+    // This used to be `threshold: 0.35`, which only ever worked by accident:
+    // the ids sat on StackSection's zero-height sentinel div, and a zero-area
+    // element reports intersectionRatio 1 the moment it intersects at all. Now
+    // that the ids live on real <section>s that run two to four viewports tall,
+    // a 0.35 ratio is unreachable and the rail would never activate — silently,
+    // because a missing match looks identical to "nothing is in view".
+    //
+    // Collapsing the viewport to a thin band through its middle makes the
+    // trigger independent of section height: whichever section crosses the
+    // centre line is the active one.
     const obs = new IntersectionObserver(
       (entries) => {
         for (const e of entries) {
           if (e.isIntersecting) setActive(e.target.id);
         }
       },
-      { threshold: 0.35 }
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
     );
     SECTIONS.forEach(({ id }) => {
       const el = document.getElementById(id);

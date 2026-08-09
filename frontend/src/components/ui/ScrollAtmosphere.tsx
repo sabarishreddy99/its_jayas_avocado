@@ -2,16 +2,43 @@
 
 import { useEffect, useRef } from "react";
 
-const SECTIONS = ["hero", "about", "projects", "skills", "testimonials", "contact"];
+// Must stay in lockstep with the chapter ids in app/(portfolio)/page.tsx.
+// (This list had drifted: it still expected an `about` section that no longer
+// exists, and had no entry for three of the chapters, so those simply held the
+// previous chapter's tint.)
+const SECTIONS = [
+  "hero",
+  "creed",
+  "why",
+  "still-running",
+  "gradevitian",
+  "opinions",
+  "projects",
+  "skills",
+  "testimonials",
+  "contact",
+];
 
-// Each section gets a subtle radial gradient at a different anchor point + hue
+// Each section gets a subtle radial wash at a different anchor point.
+//
+// Anchored on var(--accent) via color-mix rather than hardcoded rgb() values.
+// Those literals were the old :root indigo, so once the portfolio scope
+// deepened its accent the atmosphere would have been washing the page in a
+// colour the page no longer uses. This follows whatever scope it renders in.
+const wash = (shape: string, strength: number) =>
+  `radial-gradient(${shape}, color-mix(in srgb, var(--accent) ${strength}%, transparent) 0%, transparent 65%)`;
+
 const GRADIENTS: Record<string, string> = {
-  hero:         "radial-gradient(ellipse 80% 55% at 60% 0%,   rgba(99,102,241,0.09) 0%, transparent 65%)",
-  about:        "radial-gradient(ellipse 70% 55% at 20% 35%,  rgba(59,130,246,0.07)  0%, transparent 65%)",
-  projects:     "radial-gradient(ellipse 75% 55% at 80% 40%,  rgba(139,92,246,0.08)  0%, transparent 65%)",
-  skills:       "radial-gradient(ellipse 70% 50% at 50% 55%,  rgba(168,85,247,0.07)  0%, transparent 65%)",
-  testimonials: "radial-gradient(ellipse 65% 50% at 30% 50%,  rgba(99,102,241,0.08)  0%, transparent 65%)",
-  contact:      "radial-gradient(ellipse 70% 60% at 50% 80%,  rgba(16,185,129,0.07)  0%, transparent 65%)",
+  hero:           wash("ellipse 80% 55% at 60% 0%", 9),
+  creed:          wash("ellipse 70% 55% at 25% 20%", 8),
+  why:            wash("ellipse 70% 55% at 20% 35%", 7),
+  "still-running": wash("ellipse 72% 50% at 70% 30%", 7),
+  gradevitian:    wash("ellipse 75% 55% at 80% 40%", 8),
+  opinions:       wash("ellipse 68% 50% at 40% 45%", 7),
+  projects:       wash("ellipse 75% 55% at 80% 40%", 8),
+  skills:         wash("ellipse 70% 50% at 50% 55%", 7),
+  testimonials:   wash("ellipse 65% 50% at 30% 50%", 8),
+  contact:        wash("ellipse 70% 60% at 50% 80%", 7),
 };
 
 export default function ScrollAtmosphere() {
@@ -30,7 +57,10 @@ export default function ScrollAtmosphere() {
           }
         }
       },
-      { threshold: 0.25 }
+      // Centre band, not a ratio — see the same change in SectionIndicator.
+      // The old `threshold: 0.25` only worked because the ids sat on a
+      // zero-height sentinel; on real full-height sections it is unreachable.
+      { rootMargin: "-45% 0px -45% 0px", threshold: 0 }
     );
 
     SECTIONS.forEach((id) => {

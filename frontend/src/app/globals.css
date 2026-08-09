@@ -1025,13 +1025,27 @@ figcaption[data-rehype-pretty-code-title] + pre {
 
 /* ── Reduced motion — disable ambient animations ────────── */
 @media (prefers-reduced-motion: reduce) {
+  /* Smooth scrolling is motion too. Without this, every in-page anchor
+     (the chapter "next ↓" links, the section rail) animates the whole
+     viewport, which is the largest movement on the page. */
+  html { scroll-behavior: auto; }
+
   .animate-blob,
   .animate-avo-float,
   .animate-avo-glow,
   .animate-float,
   .lw-path,
   .animate-spin-ccw,
-  .animate-think-wave {
+  .animate-think-wave,
+  /* Safe to kill: all three are entrance animations declared with `both`
+     and no base opacity, so with the animation gone the element simply
+     renders at its natural, fully-visible end state.
+     NOT listed: .animate-float-up, which animates opacity 1 → 0 as an EXIT.
+     Disabling that one would strand the element on screen forever. */
+  .animate-fade-up,
+  .animate-slide-right,
+  .animate-slide-left,
+  .chapter-ghost {
     animation: none !important;
   }
   .animate-pulse { animation: none !important; opacity: 0.8; }
@@ -1185,6 +1199,43 @@ figcaption[data-rehype-pretty-code-title] + pre {
   text-wrap: pretty;
 }
 
+/* ── Display voice ────────────────────────────────────────────────────────
+   .voice-serif is Jaya talking. .display-serif is Jaya announcing: the same
+   Garamond promoted to headline duty for the hero and chapter labels.
+
+   Deliberately a CLASS, never a --font-display override. That variable is
+   the escape hatch [data-theme="midnight"] uses to swap the whole site to
+   Roboto (see the block near the top of this file), and midnight is the
+   DEFAULT theme, so overriding --font-display would silently break the one
+   experience most visitors actually get. gradeVITian and VRF headings also
+   have to stay grotesque, and they inherit that variable.
+
+   Garamond's x-height runs noticeably smaller than a grotesque at the same
+   nominal size, so every step below is set larger and leaded tighter than
+   its sans equivalent would be. */
+.display-serif {
+  font-family: var(--font-garamond), Georgia, "Times New Roman", serif;
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.016em;
+  text-wrap: balance;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+.display-serif em,
+.display-serif .em {
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.008em;
+}
+
+/* The vw factor and ceiling are deliberately modest. At 6.6vw/6rem the hero
+   headline alone filled a 1440px viewport and pushed the CTAs, the name
+   marquee and the signature below the fold. This keeps the type unmistakably
+   oversized while leaving the hero a hero. */
+.display-xl { font-size: clamp(2.65rem, 4.4vw, 4.25rem); line-height: 1.0; }
+.display-lg { font-size: clamp(2rem,    4.4vw, 3.5rem);                    }
+.display-md { font-size: clamp(1.5rem,  2.4vw, 2.1rem); line-height: 1.12; }
+
 /* The signature — a fine-nib italic standing in for a handwritten mark. */
 .signature-mark {
   font-family: var(--font-cormorant), var(--font-garamond), Georgia, serif;
@@ -1205,26 +1256,64 @@ figcaption[data-rehype-pretty-code-title] + pre {
   animation: ink-rule 900ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-/* Ghost chapter numerals — tabular so 01–07 never drift in width at 14rem. */
+/* ── Long-scroll chapters ─────────────────────────────────────────────────
+   The homepage reads as one continuous column at every viewport. Each
+   chapter is a plain <section> with a rail that goes sticky at lg and is a
+   normal stacked block below it, so there is a single DOM tree and no
+   JS-driven layout branch. (StackSection still exists and is still used by
+   gradeVITian's GVHome, which is why none of its CSS was removed.)
+
+   --nav-h is the sticky Nav height. StackSection hard-codes 50px in JS, so
+   the two must agree; this variable is the source of truth for CSS. */
+:root { --nav-h: 50px; }
+
+/* Anchor offset so a jump never parks a heading under the nav. */
+.chapter { scroll-margin-top: calc(var(--nav-h) + 0.875rem); }
+
+/* Extra breathing room beyond the nav so the rail's ghost numeral does not
+   kiss the chrome.
+   MUST stay inside this media query. The rail also carries `relative` (it is
+   the positioning context for the absolutely-placed ghost numeral), and `top`
+   offsets a relatively-positioned box just as readily as a sticky one — so an
+   unscoped `top` pushed the header down ~78px at every width and dropped it on
+   top of the chapter body on phones. It may only apply where lg:sticky does. */
+@media (min-width: 1024px) {
+  .chapter-rail { top: calc(var(--nav-h) + 1.75rem); }
+}
+
+/* A column rule, not a UI divider: heavy at the spine where the eye enters,
+   gone before it reaches the margin. */
+.chapter-rule {
+  height: 1px;
+  background: linear-gradient(90deg,
+    var(--border-strong) 0%,
+    var(--border) 34%,
+    transparent 100%);
+}
+
+/* The "won't do" register in the opinions chapter. Struck on the TERM only.
+   Striking the explanation as well costs more legibility than the tone is
+   worth, and screen readers announce long struck passages badly. */
+.opinion-against {
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  text-decoration-color: color-mix(in srgb, var(--fg-faint) 55%, transparent);
+}
+
+/* Ghost chapter numerals — the chapter's typographic anchor in the rail.
+   EB Garamond ships oldstyle figures by default, which gives 01–09 a
+   descending zero and uneven widths at display size. Force lining +
+   tabular so the numerals sit on the baseline and never drift. */
 .chapter-ghost {
-  font-variant-numeric: tabular-nums;
+  font-family: var(--font-garamond), Georgia, serif;
+  font-weight: 500;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings: "lnum" 1, "tnum" 1;
+  line-height: 0.78;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .ink-rule { animation: none; transform: scaleX(1); }
-}
-
-/* ── Hope molecules: the hero belief panel ─────────────────────
-   The molecule itself is driven by rAF in HopeMolecules.tsx (bonds
-   have to follow their nodes, which CSS alone cannot express). What
-   lives here is the core's breathing and the separator. */
-
-@keyframes hm-breathe {
-  0%, 100% { opacity: 0.92; }
-  50%      { opacity: 0.58; }
-}
-.hm-core {
-  animation: hm-breathe 5.5s ease-in-out infinite;
 }
 
 /* ── Hope molecules: the hero belief panel ─────────────────────
@@ -1334,6 +1423,43 @@ figcaption[data-rehype-pretty-code-title] + pre {
   .hope-avo { animation: none; transform: none; }
   .hope-avo svg,
   .hope-panel:hover .hope-avo svg { transform: none; transition: none; }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   PORTFOLIO  ·  jayaremala.com
+   ══════════════════════════════════════════════════════════════════════════
+
+   Same override mechanism as .vrf below: `--color-accent: var(--accent)` in
+   the @theme block is left unresolved, so redefining --accent on an ancestor
+   re-resolves every text-accent / bg-accent / border-accent inside it. No
+   @theme edit is needed, and nothing outside this scope is touched.
+
+   The portfolio deepens the shared indigo rather than leaving it. gradeVITian
+   keeps :root's #4f46e5 / #818cf8 so a product with ~17K monthly users is not
+   re-skinned as a side effect of a portfolio redesign; VRF keeps terracotta.
+
+   Light goes indigo-600 → indigo-800, closer to the deep blue-black ink the
+   newsprint palette is already built around, so the accent reads as a second
+   ink rather than a UI highlight. Dark goes more saturated instead of lighter,
+   because on true black chroma is what "deeper" can mean.
+
+   Contrast against the page background, computed not eyeballed:
+     #3730a3 on #fefefb = 9.86:1   #6f7bf7 on #000000 = 5.85:1
+   Both clear AA for the 10–11px text-accent micro-labels this page is full of.
+   ────────────────────────────────────────────────────────────────────────── */
+.portfolio {
+  --accent:           #3730a3;
+  --accent-hover:     #312e81;
+  --accent-light:     #e9e8f7;
+  --accent-fg:        #ffffff;
+  --accent-secondary: #6d28d9;
+}
+.dark .portfolio {
+  --accent:           #6f7bf7;
+  --accent-hover:     #93a0fb;
+  --accent-light:     #14142b;
+  --accent-fg:        #ffffff;
+  --accent-secondary: #8b7cf6;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════

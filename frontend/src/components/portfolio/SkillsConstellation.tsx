@@ -109,14 +109,26 @@ export default function SkillsConstellation() {
     (hoverSkill && e.skill === hoverSkill) || (hoverNode && e.node === hoverNode);
 
   return (
-    <div className="w-full overflow-hidden">
-      <svg viewBox={`0 0 1000 ${height}`} className="w-full h-auto" style={{ maxHeight: height }}>
+    // The diagram is authored in a 1000-unit viewBox. Scaled to a 375px phone
+    // that puts its 12.5px labels at roughly 4px, which is why this used to be
+    // hidden below `lg` — real content, invisible to every phone visitor.
+    // A horizontal scroller keeps it legible instead: the SVG holds a usable
+    // minimum width and the reader pans, rather than being shown nothing.
+    // Bleeds to the viewport edge on phones so the scroll affordance is obvious.
+    <div className="-mx-4 overflow-x-auto px-4 pb-2 sm:mx-0 sm:px-0 lg:overflow-x-visible">
+      <svg
+        viewBox={`0 0 1000 ${height}`}
+        className="h-auto w-full min-w-[820px] lg:min-w-0"
+        style={{ maxHeight: height }}
+        role="img"
+        aria-label="Constellation diagram linking skills to the projects and roles that used them."
+      >
         {/* Edges */}
         {edges.map((e, i) => {
           const on = edgeOn(e);
           return (
             <path key={i} d={e.d} fill="none"
-              stroke={on ? "rgb(99 102 241)" : "currentColor"}
+              stroke={on ? "var(--accent)" : "currentColor"}
               strokeWidth={on ? 1.6 : 1} className="text-border"
               style={{ opacity: anyHover ? (on ? 0.9 : 0.05) : 0.16, transition: "opacity 0.25s ease, stroke-width 0.25s ease" }} />
           );
@@ -130,7 +142,7 @@ export default function SkillsConstellation() {
             <g key={s.key} transform={`translate(${s.x}, ${s.y})`}
               onMouseEnter={() => setHoverSkill(s.key)} onMouseLeave={() => setHoverSkill(null)}
               style={{ cursor: "default", opacity: dim ? 0.3 : 1, transition: "opacity 0.25s ease" }}>
-              <circle r={on ? 5 : 3.5} fill={on ? "rgb(99 102 241)" : "currentColor"} className="text-fg-faint" style={{ transition: "all 0.2s ease" }} />
+              <circle r={on ? 5 : 3.5} fill={on ? "var(--accent)" : "currentColor"} className="text-fg-faint" style={{ transition: "all 0.2s ease" }} />
               <text x={-12} y={4} textAnchor="end" className={`text-[12.5px] font-medium ${on ? "fill-accent" : "fill-fg-muted"}`} style={{ transition: "fill 0.2s ease" }}>
                 {s.label}
               </text>
@@ -142,7 +154,7 @@ export default function SkillsConstellation() {
         {nodeNodes.map((n) => {
           const on = hoverNode === n.id || (hoverSkill && skillNodes.find((s) => s.key === hoverSkill)?.nodeIds.includes(n.id));
           const dim = anyHover && !on;
-          const dot = on ? (n.award ? "rgb(245 158 11)" : n.kind === "experience" ? "rgb(99 102 241)" : "rgb(139 92 246)") : "currentColor";
+          const dot = on ? (n.award ? "rgb(245 158 11)" : n.kind === "experience" ? "var(--accent)" : "rgb(139 92 246)") : "currentColor";
           return (
             <g key={n.id} transform={`translate(${n.x}, ${n.y})`}
               onMouseEnter={() => setHoverNode(n.id)} onMouseLeave={() => setHoverNode(null)}
