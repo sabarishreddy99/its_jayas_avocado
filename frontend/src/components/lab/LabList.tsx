@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import type { LabMeta, LabStatus } from "@/lib/lab";
+import type { LabMeta, LabStatus } from "@/lib/content/lab";
 
 function Reveal({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const ref = useRef<HTMLDivElement>(null);

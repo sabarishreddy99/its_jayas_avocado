@@ -8,7 +8,7 @@ import remarkGfm from "remark-gfm";
 import BlogEngagement from "@/components/blog/BlogEngagement";
 import ShareButtons from "@/components/blog/ShareButtons";
 import { fetchBlogPost, fetchLabEntry } from "@/lib/api/content";
-import { siteGroups } from "@/lib/site-nav";
+import { siteGroups } from "@/lib/portfolio/site-nav";
 
 // ── Icons ─────────────────────────────────────────────────────────────────────
 // All 18×18, stroke-based, theme-aware via currentColor

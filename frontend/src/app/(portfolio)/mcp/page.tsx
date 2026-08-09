@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import McpExplorer from "@/components/McpExplorer";
+import McpExplorer from "@/components/portfolio/McpExplorer";
 
 const SITE_URL = "https://jayaremala.com";
 

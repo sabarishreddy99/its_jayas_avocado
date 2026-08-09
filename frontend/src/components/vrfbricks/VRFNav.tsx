@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import ThemeToggle from "@/components/ThemeToggle";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import VRFLink from "./VRFLink";
 import { useLang } from "./VRFLang";
 import { WhatsAppIcon, PhoneIcon } from "./VRFUi";

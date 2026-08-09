@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import RagPipelineModal from "@/components/RagPipelineModal";
+import RagPipelineModal from "@/components/portfolio/RagPipelineModal";
 
 interface SourceLink { label: string; url: string; }
 interface Props {

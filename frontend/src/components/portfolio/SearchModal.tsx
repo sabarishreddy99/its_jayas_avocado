@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useTheme } from "next-themes";
 import { profile } from "@/data/profile";
-import type { SearchItem } from "@/lib/searchIndex";
+import type { SearchItem } from "@/lib/portfolio/searchIndex";
 
 // Re-export so callers don't need a separate import
 export type { SearchItem };

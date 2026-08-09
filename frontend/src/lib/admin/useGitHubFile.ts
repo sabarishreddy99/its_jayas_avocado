@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useGitHubStaging } from "@/lib/githubStaging";
+import { useGitHubStaging } from "@/lib/admin/githubStaging";
 
 const REPO    = "sabarishreddy99/jayaremala";
 const PAT_KEY = "avocado_github_pat";

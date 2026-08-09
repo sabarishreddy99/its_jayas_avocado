@@ -1,6 +1,6 @@
 "use client";
 
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { COPY, COMPARISON, FIELD_TESTS } from "@/data/vrfbricks/copy";
 import { IS_STANDARD } from "@/data/vrfbricks/business";
 import { useLang } from "./VRFLang";

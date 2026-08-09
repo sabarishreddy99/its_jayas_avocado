@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import AvocadoMark from "@/components/AvocadoMark";
+import AvocadoMark from "@/components/portfolio/AvocadoMark";
 import type { HopeMolecules as HopeMoleculesData } from "@/data/profile";
 
 /**

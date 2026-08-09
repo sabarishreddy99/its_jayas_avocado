@@ -1,6 +1,6 @@
 import { projects } from "@/data/projects";
 import { profile } from "@/data/profile";
-import ProjectsGrid from "@/components/ProjectsGrid";
+import ProjectsGrid from "@/components/portfolio/ProjectsGrid";
 
 export const metadata = {
   title: "Projects",

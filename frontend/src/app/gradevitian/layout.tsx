@@ -8,7 +8,7 @@ import GVIntroScreen from "@/components/gradevitian/GVIntroScreen";
 import GVCanonicalRedirect from "@/components/gradevitian/GVCanonicalRedirect";
 import GVJsonLd from "@/components/gradevitian/GVJsonLd";
 import { gvSiteLd, GV_OG_CARD, GV_URL, GV_TITLE, GV_DESC } from "@/lib/gradevitian/seo";
-import ScrollProgress from "@/components/ScrollProgress";
+import ScrollProgress from "@/components/ui/ScrollProgress";
 
 export const metadata: Metadata = {
   metadataBase: new URL(GV_URL),

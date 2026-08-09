@@ -1,4 +1,4 @@
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 // Same editorial display face as the gradeVITian home — Cormorant Garamond — so
 // every tool/content page speaks in one calm, premium voice.

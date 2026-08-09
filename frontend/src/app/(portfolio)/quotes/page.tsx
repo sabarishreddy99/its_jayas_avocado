@@ -1,4 +1,4 @@
-import QuotesFeed from "@/components/QuotesFeed";
+import QuotesFeed from "@/components/portfolio/QuotesFeed";
 import { quotes as staticQuotes } from "@/data/quotes";
 
 export const metadata = {

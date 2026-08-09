@@ -1,4 +1,4 @@
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import GVLink from "@/components/gradevitian/GVLink";
 
 // The five core tools, with a one-line tease that nudges students to the next one.

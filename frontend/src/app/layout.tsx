@@ -1,9 +1,9 @@
 import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono, Source_Serif_4, Playfair_Display, EB_Garamond, Roboto, Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
-import ThemeProvider from "@/components/ThemeProvider";
-import SiteTracker from "@/components/SiteTracker";
-import PWARegister from "@/components/PWARegister";
+import ThemeProvider from "@/components/ui/ThemeProvider";
+import SiteTracker from "@/components/portfolio/SiteTracker";
+import PWARegister from "@/components/ui/PWARegister";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });

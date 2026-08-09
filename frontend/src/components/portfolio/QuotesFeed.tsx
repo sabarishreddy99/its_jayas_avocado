@@ -1,7 +1,7 @@
 "use client";
 
 import useSWR from "swr";
-import QuotesClient from "@/components/QuotesClient";
+import QuotesClient from "@/components/portfolio/QuotesClient";
 import type { Quote } from "@/data/quotes";
 import { QUOTES_KEY, fetchQuotes, normalizeQuote, type ApiQuote } from "@/lib/api/content";
 

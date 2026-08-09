@@ -170,7 +170,8 @@ def summarize_signals(signals: list[dict]) -> dict:
 
     try:
         raw = _generate("", prompt)
-        import json, re
+        import json
+        import re
         # Extract JSON from response (Gemini sometimes wraps in ```json)
         match = re.search(r"\{.*\}", raw, re.DOTALL)
         if match:

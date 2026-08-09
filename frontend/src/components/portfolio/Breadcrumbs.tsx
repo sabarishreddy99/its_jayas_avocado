@@ -5,8 +5,8 @@ import { usePathname } from "next/navigation";
 import blogData from "@/data/knowledge/blog.json";
 import labData from "@/data/knowledge/lab.json";
 import { playClick } from "@/lib/sound";
-import JsonLd from "@/components/JsonLd";
-import { SITE_URL } from "@/lib/seo";
+import JsonLd from "@/components/ui/JsonLd";
+import { SITE_URL } from "@/lib/portfolio/seo";
 
 type Section = { group: string; label: string };
 

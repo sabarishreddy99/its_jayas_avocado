@@ -202,7 +202,6 @@ def export_doc_as_text(doc_id: str) -> str:
     """Export a Google Doc as plain text."""
     service = _drive_service()
     try:
-        import io
         content = service.files().export_media(
             fileId=doc_id,
             mimeType="text/plain",

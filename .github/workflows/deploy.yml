@@ -29,21 +29,31 @@ jobs:
       - uses: dorny/paths-filter@v3
         id: filter
         with:
+          # Keep these in step with what each job actually consumes. A missing
+          # entry means an edit silently deploys nothing.
+          #   - Tailwind 4 has no tailwind.config.*; its config lives in
+          #     frontend/src/app/globals.css, covered by 'frontend/src/**'.
+          #   - backend/data/gradevitian/regulations.json is copied into the
+          #     frontend bundle by scripts/sync-knowledge.mjs, so it is a
+          #     frontend input as well as a backend one.
           filters: |
             frontend:
               - 'frontend/src/**'
               - 'frontend/public/**'
               - 'frontend/package*.json'
               - 'frontend/next.config.*'
-              - 'frontend/tailwind.config.*'
+              - 'frontend/tsconfig.json'
               - 'scripts/**'
               - 'backend/data/knowledge/*.json'
+              - 'backend/data/gradevitian/regulations.json'
             backend:
               - 'backend/src/**'
               - 'backend/Dockerfile'
+              - 'backend/.dockerignore'
               - 'backend/pyproject.toml'
               - 'infra/**'
               - 'backend/data/knowledge/*.json'
+              - 'backend/data/gradevitian/*.json'
 
   build:
     needs: detect-changes

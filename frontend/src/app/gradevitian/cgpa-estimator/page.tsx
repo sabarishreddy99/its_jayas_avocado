@@ -3,7 +3,7 @@ import GVPageHeader from "@/components/gradevitian/GVPageHeader";
 import GVExploreMore from "@/components/gradevitian/GVExploreMore";
 import GVJsonLd from "@/components/gradevitian/GVJsonLd";
 import GVFaq, { type FaqItem } from "@/components/gradevitian/GVFaq";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { gvMetadata, breadcrumbLd, toolLd } from "@/lib/gradevitian/seo";
 
 const DESC = "Find the exact GPA you need next semester to hit your target CGPA at VIT. Set your goal and gradeVITian works out what it takes, free and instant.";

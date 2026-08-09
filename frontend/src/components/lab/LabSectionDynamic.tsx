@@ -1,14 +1,14 @@
 "use client";
 
 import useSWR from "swr";
-import LabList from "@/components/LabList";
+import LabList from "@/components/lab/LabList";
 import {
   LAB_ENTRIES_KEY,
   fetchLabEntries,
   normalizeLabEntry,
   type ApiLabEntry,
 } from "@/lib/api/content";
-import type { LabMeta } from "@/lib/lab";
+import type { LabMeta } from "@/lib/content/lab";
 
 interface Props {
   staticEntries: LabMeta[];

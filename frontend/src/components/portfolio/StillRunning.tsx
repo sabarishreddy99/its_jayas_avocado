@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import type { ShippedThing } from "@/data/profile";
 
 /** Placeholder rendered before mount — same glyph count as a live counter, so

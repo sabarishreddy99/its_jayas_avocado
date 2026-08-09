@@ -17,8 +17,8 @@
 import fs   from "fs";
 import path from "path";
 import { getAllPages }      from "./pages";
-import { getAllPosts }      from "./blog";
-import { getAllLabEntries } from "./lab";
+import { getAllPosts }      from "../content/blog";
+import { getAllLabEntries } from "../content/lab";
 
 // ── Public types ──────────────────────────────────────────────────────────────
 

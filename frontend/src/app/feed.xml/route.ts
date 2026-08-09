@@ -1,4 +1,4 @@
-import { getAllPosts } from "@/lib/blog";
+import { getAllPosts } from "@/lib/content/blog";
 
 // Revalidate hourly — picks up admin-published posts without a rebuild
 export const revalidate = 3600;

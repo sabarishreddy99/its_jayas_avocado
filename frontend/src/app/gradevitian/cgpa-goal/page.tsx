@@ -3,7 +3,7 @@ import GVExploreMore from "@/components/gradevitian/GVExploreMore";
 import CgpaGoalTracker from "@/components/gradevitian/CgpaGoalTracker";
 import GVJsonLd from "@/components/gradevitian/GVJsonLd";
 import GVFaq, { type FaqItem } from "@/components/gradevitian/GVFaq";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { gvMetadata, breadcrumbLd, toolLd } from "@/lib/gradevitian/seo";
 
 const DESC = "Set a target CGPA at VIT and see the GPA you need each remaining semester to get there, with a clear on-track read on your trajectory. Free, saves to your account.";

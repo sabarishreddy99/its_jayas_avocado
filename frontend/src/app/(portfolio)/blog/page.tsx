@@ -1,4 +1,4 @@
-import { getAllPosts } from "@/lib/blog";
+import { getAllPosts } from "@/lib/content/blog";
 import BlogSectionDynamic from "@/components/blog/BlogSectionDynamic";
 import BlogSwitcher from "@/components/blog/BlogSwitcher";
 import { profile } from "@/data/profile";

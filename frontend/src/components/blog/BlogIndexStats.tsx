@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState, useCallback, useRef } from "react";
-import ParallaxImage from "@/components/ParallaxImage";
+import ParallaxImage from "@/components/ui/ParallaxImage";
 
 const SITE_URL = "https://jayaremala.com";
 

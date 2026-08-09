@@ -3,7 +3,7 @@ import GVExploreMore from "@/components/gradevitian/GVExploreMore";
 import RulesReference from "@/components/gradevitian/RulesReference";
 import GVJsonLd from "@/components/gradevitian/GVJsonLd";
 import GVFaq, { type FaqItem } from "@/components/gradevitian/GVFaq";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { gvMetadata, breadcrumbLd } from "@/lib/gradevitian/seo";
 
 const DESC = "VIT's academic rules at a glance, grade scale, the 75% attendance rule, GPA/CGPA, academic standing, Re-FAT and FFCS, straight from the official regulations.";

@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { getPostBySlug, getAllSlugs } from "@/lib/blog";
+import { getPostBySlug, getAllSlugs } from "@/lib/content/blog";
 
 export const dynamic = "force-static";
 

@@ -1,5 +1,5 @@
 import { ImageResponse } from "next/og";
-import { getLabEntryBySlug, getAllLabSlugs } from "@/lib/lab";
+import { getLabEntryBySlug, getAllLabSlugs } from "@/lib/content/lab";
 
 export const dynamic = "force-static";
 

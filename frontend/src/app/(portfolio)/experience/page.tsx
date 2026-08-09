@@ -1,6 +1,6 @@
 import { experience } from "@/data/experience";
 import { profile } from "@/data/profile";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 export const metadata = {
   title: "Experience",

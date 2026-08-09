@@ -18,4 +18,4 @@ does not make. None of them depicted this business, none are used in the
 rebuild, and keeping 3.4 MB of another company's marketing images in the repo
 served no purpose. They were removed.
 
-See `frontend/VRFBRICKS.md` for the photography rules the rebuild follows.
+See `docs/VRFBRICKS.md` for the photography rules the rebuild follows.

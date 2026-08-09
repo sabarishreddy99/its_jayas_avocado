@@ -1,6 +1,6 @@
 import CommentsWall from "@/components/gradevitian/CommentsWall";
 import GVPageHeader from "@/components/gradevitian/GVPageHeader";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { gvMetadata } from "@/lib/gradevitian/seo";
 
 export const metadata = gvMetadata({

@@ -1,0 +1,16 @@
+# Build context is `frontend/` (see infra/compose.yml).
+
+# Critical: the Dockerfile runs `npm ci` and then `COPY . .`. Without this line a
+# host node_modules would overwrite the one just installed for the image platform.
+node_modules/
+
+# Build output — regenerated inside the container.
+.next/
+out/
+
+# Local secrets — must never enter the build context.
+.env
+.env.*
+
+*.tsbuildinfo
+.vercel

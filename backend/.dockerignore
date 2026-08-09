@@ -1,0 +1,29 @@
+# Build context is `backend/` (see infra/compose.yml and .github/workflows/deploy.yml).
+# Everything here is excluded before the context is sent to the Docker daemon.
+
+# Virtualenv — several hundred MB, and Linux-incompatible if built on macOS.
+.venv/
+venv/
+
+# Python caches / build artefacts
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+*.egg-info/
+
+# Local secrets — must never enter the build context.
+.env
+.env.*
+
+# Local vector store + SQLite DBs. Prod mounts these from the /data volume and
+# the collection is re-ingested at startup, so a stale copy is worse than none.
+chroma_db/
+
+# Regenerable scrape intermediates for the gradeVITian rulebook. The curated
+# regulations.json / regulation_chunks.json ARE needed at runtime and stay.
+data/gradevitian/_*
+
+# Tests aren't run inside the image.
+tests/

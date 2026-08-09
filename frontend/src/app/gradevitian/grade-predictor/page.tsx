@@ -3,7 +3,7 @@ import GVPageHeader from "@/components/gradevitian/GVPageHeader";
 import GVExploreMore from "@/components/gradevitian/GVExploreMore";
 import GVJsonLd from "@/components/gradevitian/GVJsonLd";
 import GVFaq, { type FaqItem } from "@/components/gradevitian/GVFaq";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { gvMetadata, breadcrumbLd, toolLd } from "@/lib/gradevitian/seo";
 
 const DESC = "Predict your final VIT grade from CAT, DA, FAT, lab and J-component marks, see the grade you're heading for before VTOP posts results. Free, no sign-up.";

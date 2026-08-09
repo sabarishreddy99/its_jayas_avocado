@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import GVLink from "@/components/gradevitian/GVLink";
 import GVInstall from "@/components/gradevitian/GVInstall";
-import LiquidWave from "@/components/LiquidWave";
+import LiquidWave from "@/components/ui/LiquidWave";
 import { GV_GROUPS, GV_FOOTER_LINKS } from "@/lib/gradevitian/nav";
 
 // Feature columns are derived from the shared nav config, so adding a page there

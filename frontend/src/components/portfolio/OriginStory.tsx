@@ -1,4 +1,4 @@
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { projects } from "@/data/projects";
 import type { WhyBlock } from "@/data/profile";
 

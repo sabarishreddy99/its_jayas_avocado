@@ -16,7 +16,7 @@ Avocado is also **agentic**: an opt-in "Agent mode" lets the model pick tools pe
 │                                                                             │
 │  ┌────────────────────────┐        ┌────────────────────────────────────┐   │
 │  │   Avocado Chatbot      │        │  Portfolio + Blog + Lab + Quotes   │   │
-│  │   /  and  /chat        │        │  /portfolio  /blog  /experience    │   │
+│  │   /chat                │        │  /  /blog  /experience             │   │
 │  │                        │        │  /education  /projects  /lab       │   │
 │  │  ChatInterface (SSE)   │        │  /quotes                           │   │
 │  │  ChatMessage (md)      │        │  BlogEngagement  BlogGuideDrawer   │   │
@@ -366,7 +366,7 @@ The database is seeded from existing JSON files on first startup — no manual m
 | **Search** | Command palette (⌘K + mobile FAB) over a single source list (`data/gradevitian/pages.json`) that also generates the subdomain sitemap. |
 | **SEO** | Own `metadataBase`, OG/Twitter, JSON-LD `WebApplication`, plus `robots.txt` + a `sitemap.xml` generated from `pages.json` (`scripts/gen-gv-sitemap.mjs`, runs on prebuild). |
 
-Data lives in `gradevitian.db` (SQLite on the `/data` volume, S3-backed via `backup.sh`). All endpoints are under `POST/GET /gv/*` (`routers/gradevitian.py`). Welcome/reset/referral emails reuse the connected Gmail account — best-effort, so signup/reset never block. See `frontend/GRADEVITIAN.md` for the deploy specifics.
+Data lives in `gradevitian.db` (SQLite on the `/data` volume, S3-backed via `backup.sh`). All endpoints are under `POST/GET /gv/*` (`routers/gradevitian.py`). Welcome/reset/referral emails reuse the connected Gmail account — best-effort, so signup/reset never block. See `docs/GRADEVITIAN.md` for the deploy specifics.
 
 ---
 
@@ -434,7 +434,7 @@ All engagement data lives in `analytics.db`. Content lives in `content.db`. IPs 
 │
 ├── site_visits
 │   ├── ip_hash     TEXT
-│   ├── page        TEXT       e.g. "/portfolio", "/blog/my-post"
+│   ├── page        TEXT       e.g. "/", "/blog/my-post"
 │   ├── country     TEXT       resolved async via geo API
 │   ├── city        TEXT
 │   └── created_at  TIMESTAMP
@@ -485,9 +485,8 @@ Daily S3 backup → s3://itsjaya-backups-analytics/analytics_db/
 
 | Route | Notes |
 |---|---|
-| `/` | Avocado — full-screen chatbot, no nav/footer |
-| `/chat` | Same chatbot, accessible from portfolio nav |
-| `/portfolio` | Hero with domain chips, featured projects, skills, testimonials, contact |
+| `/` | Portfolio home — hero with domain chips, featured projects, skills, testimonials, contact |
+| `/chat` | Avocado — full-screen chatbot, no nav/footer |
 | `/experience` | Work history timeline |
 | `/education` | Education cards |
 | `/projects` | Project grid with source link pill tag buttons |

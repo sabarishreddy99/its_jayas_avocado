@@ -16,7 +16,7 @@ import {
 import { Card } from "@/components/gradevitian/ui";
 import GVNotes from "@/components/gradevitian/GVNotes";
 import Badges from "@/components/gradevitian/Badges";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 
 const CALC_LABELS: Record<string, string> = {
   gpa: "GPA", cgpa: "CGPA", instant_cgpa: "Instant CGPA", cgpa_estimator: "CGPA Estimator",

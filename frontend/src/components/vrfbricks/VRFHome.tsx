@@ -1,6 +1,6 @@
 "use client";
 
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { BUSINESS, BRICKS, FOUNDED_YEAR, yearsInBusiness, fmtHour } from "@/data/vrfbricks/business";
 import { COPY, PROCESS } from "@/data/vrfbricks/copy";
 import { useLang } from "./VRFLang";

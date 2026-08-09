@@ -1,6 +1,6 @@
 "use client";
 
-import { useGitHubStaging } from "@/lib/githubStaging";
+import { useGitHubStaging } from "@/lib/admin/githubStaging";
 
 /** Sticky bottom toolbar: shows everything staged across editors and publishes it all
  *  in a single GitHub commit (→ one CI deploy). */

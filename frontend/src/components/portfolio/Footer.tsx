@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { profile } from "@/data/profile";
-import LiquidWave from "@/components/LiquidWave";
-import InstallPWA from "@/components/InstallPWA";
-import { footerColumns as COLUMNS } from "@/lib/site-nav";
+import LiquidWave from "@/components/ui/LiquidWave";
+import InstallPWA from "@/components/ui/InstallPWA";
+import { footerColumns as COLUMNS } from "@/lib/portfolio/site-nav";
 
 function IconLink({ href, label, children }: { href: string; label: string; children: React.ReactNode }) {
   return (

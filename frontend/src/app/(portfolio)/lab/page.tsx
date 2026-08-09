@@ -1,4 +1,4 @@
-import { getAllLabEntries } from "@/lib/lab";
+import { getAllLabEntries } from "@/lib/content/lab";
 import LabSectionDynamic from "@/components/lab/LabSectionDynamic";
 import BlogSwitcher from "@/components/blog/BlogSwitcher";
 import { profile } from "@/data/profile";

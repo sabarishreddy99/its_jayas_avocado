@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import GVLink from "@/components/gradevitian/GVLink";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { apiListComments, type GVComment } from "@/lib/gradevitian/auth";
 
 const fmtDate = (iso: string) =>

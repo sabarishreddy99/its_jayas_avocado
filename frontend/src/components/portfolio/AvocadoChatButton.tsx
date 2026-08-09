@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import SparkleIcon from "@/components/SparkleIcon";
+import SparkleIcon from "@/components/ui/SparkleIcon";
 
 const SESSION_KEY = "avocado_popup_shown";
 const SNOOZE_KEY  = "avocado_popup_snoozed";

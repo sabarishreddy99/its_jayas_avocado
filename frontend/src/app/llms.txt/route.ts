@@ -1,7 +1,7 @@
-import { getAllPosts } from "@/lib/blog";
-import { getAllLabEntries } from "@/lib/lab";
+import { getAllPosts } from "@/lib/content/blog";
+import { getAllLabEntries } from "@/lib/content/lab";
 import { profile } from "@/data/profile";
-import { siteGroups } from "@/lib/site-nav";
+import { siteGroups } from "@/lib/portfolio/site-nav";
 
 // Revalidate hourly — picks up admin-published content without a rebuild.
 // Mirrors the sitemap / feed.xml cadence.

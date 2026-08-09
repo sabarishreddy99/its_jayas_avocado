@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import SystemDashboard from "@/components/SystemDashboard";
+import SystemDashboard from "@/components/system/SystemDashboard";
 
 const SITE_URL = "https://jayaremala.com";
 

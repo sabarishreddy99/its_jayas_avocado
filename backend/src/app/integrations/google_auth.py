@@ -6,9 +6,7 @@ Auto-refresh handled by google-auth library on each API call.
 """
 from __future__ import annotations
 
-import json
 import logging
-import urllib.error
 from pathlib import Path
 
 logger = logging.getLogger(__name__)

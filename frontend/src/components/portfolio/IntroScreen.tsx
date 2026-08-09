@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { profile } from "@/data/profile";
 import { API_BASE_URL } from "@/lib/api/client";
-import SparkleIcon from "@/components/SparkleIcon";
+import SparkleIcon from "@/components/ui/SparkleIcon";
 
 // ─── constants ────────────────────────────────────────────────────────────────
 

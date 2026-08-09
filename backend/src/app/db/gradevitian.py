@@ -143,12 +143,12 @@ def init_db() -> None:
 def seed_legacy_comments() -> int:
     """One-time, idempotent import of feedback from the previous gradeVITian version.
 
-    Reads data/gv_legacy_comments.json and inserts each comment (approved) only when a
+    Reads data/gradevitian/gv_legacy_comments.json and inserts each comment (approved) only when a
     comment with the same name+body doesn't already exist in ANY status — so an admin
     removing one won't be undone on the next deploy, and re-runs never duplicate.
     Backdates created_at so they read as older entries.
     """
-    path = Path(__file__).parents[3] / "data" / "gv_legacy_comments.json"
+    path = Path(__file__).parents[3] / "data" / "gradevitian" / "gv_legacy_comments.json"
     try:
         items = json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError:

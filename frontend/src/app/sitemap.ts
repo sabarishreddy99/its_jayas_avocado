@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
-import { getAllPosts } from "@/lib/blog";
-import { getAllLabEntries } from "@/lib/lab";
-import { siteGroups } from "@/lib/site-nav";
+import { getAllPosts } from "@/lib/content/blog";
+import { getAllLabEntries } from "@/lib/content/lab";
+import { siteGroups } from "@/lib/portfolio/site-nav";
 
 // Revalidate every hour so admin-published content appears without a rebuild
 export const revalidate = 3600;

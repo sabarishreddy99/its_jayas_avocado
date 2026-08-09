@@ -3,7 +3,7 @@ import GVExploreMore from "@/components/gradevitian/GVExploreMore";
 import AskRulebook from "@/components/gradevitian/AskRulebook";
 import GVJsonLd from "@/components/gradevitian/GVJsonLd";
 import GVFaq, { type FaqItem } from "@/components/gradevitian/GVFaq";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { gvMetadata, breadcrumbLd, toolLd } from "@/lib/gradevitian/seo";
 
 const DESC = "Ask any question about VIT's academic regulations and student code of conduct, attendance, grading, CGPA, Re-FAT, malpractice, ragging and more, answered in plain English, straight from the official rules.";

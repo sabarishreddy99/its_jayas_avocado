@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import ThemeToggle from "@/components/ThemeToggle";
+import ThemeToggle from "@/components/ui/ThemeToggle";
 import GVLink from "@/components/gradevitian/GVLink";
 import GVSearchModal from "@/components/gradevitian/GVSearchModal";
 import GVInstall from "@/components/gradevitian/GVInstall";

@@ -3,7 +3,7 @@ import GVExploreMore from "@/components/gradevitian/GVExploreMore";
 import SemesterPlanner from "@/components/gradevitian/SemesterPlanner";
 import GVJsonLd from "@/components/gradevitian/GVJsonLd";
 import GVFaq, { type FaqItem } from "@/components/gradevitian/GVFaq";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { gvMetadata, breadcrumbLd, toolLd } from "@/lib/gradevitian/seo";
 
 const DESC = "Plan your whole VIT semester in one place, courses, credits, expected grades and attendance with a live GPA. Saves to your free account and syncs across devices.";

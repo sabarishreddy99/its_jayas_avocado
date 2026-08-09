@@ -4,13 +4,13 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef } from "react";
 import { profile } from "@/data/profile";
-import ThemeToggle from "@/components/ThemeToggle";
-import SoundToggle from "@/components/SoundToggle";
-import SparkleIcon from "@/components/SparkleIcon";
-import InstallPWA from "@/components/InstallPWA";
+import ThemeToggle from "@/components/ui/ThemeToggle";
+import SoundToggle from "@/components/ui/SoundToggle";
+import SparkleIcon from "@/components/ui/SparkleIcon";
+import InstallPWA from "@/components/ui/InstallPWA";
 import ReadingProgress from "@/components/blog/ReadingProgress";
 import { playClick } from "@/lib/sound";
-import { siteGroups as groups } from "@/lib/site-nav";
+import { siteGroups as groups } from "@/lib/portfolio/site-nav";
 
 const Chevron = ({ open }: { open: boolean }) => (
   <svg

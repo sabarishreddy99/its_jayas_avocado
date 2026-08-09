@@ -3,7 +3,7 @@ import GVPageHeader from "@/components/gradevitian/GVPageHeader";
 import GVExploreMore from "@/components/gradevitian/GVExploreMore";
 import GVJsonLd from "@/components/gradevitian/GVJsonLd";
 import GVFaq, { type FaqItem } from "@/components/gradevitian/GVFaq";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { gvMetadata, breadcrumbLd, toolLd } from "@/lib/gradevitian/seo";
 
 const DESC = "Check your VIT attendance percentage and how many classes you can skip while staying above the mandatory 75%. Free, instant, no sign-up.";

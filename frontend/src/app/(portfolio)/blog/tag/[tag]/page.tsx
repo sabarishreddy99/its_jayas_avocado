@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAllPosts } from "@/lib/blog";
+import { getAllPosts } from "@/lib/content/blog";
 import { notFound } from "next/navigation";
 
 type Props = { params: Promise<{ tag: string }> };

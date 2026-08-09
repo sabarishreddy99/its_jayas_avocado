@@ -2,14 +2,14 @@
 
 import { useEffect, useState } from "react";
 import { API_BASE_URL } from "@/lib/api/client";
-import type { Period, SystemData } from "./system/types";
-import Stat, { SectionTitle } from "./system/Stat";
-import PeriodToggle from "./system/PeriodToggle";
-import ReliabilityStrip from "./system/ReliabilityStrip";
-import LatencyPanel from "./system/LatencyPanel";
-import CostPanel from "./system/CostPanel";
-import QualityPanel from "./system/QualityPanel";
-import TraceWaterfall from "./system/TraceWaterfall";
+import type { Period, SystemData } from "./types";
+import Stat, { SectionTitle } from "./Stat";
+import PeriodToggle from "./PeriodToggle";
+import ReliabilityStrip from "./ReliabilityStrip";
+import LatencyPanel from "./LatencyPanel";
+import CostPanel from "./CostPanel";
+import QualityPanel from "./QualityPanel";
+import TraceWaterfall from "./TraceWaterfall";
 
 const REFRESH_MS = 20_000;
 

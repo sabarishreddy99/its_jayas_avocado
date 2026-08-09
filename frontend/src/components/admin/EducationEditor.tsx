@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useGitHubFile } from "@/lib/useGitHubFile";
+import { useGitHubFile } from "@/lib/admin/useGitHubFile";
 import { FieldLabel, TextInput, TextArea, GithubPATRow, SaveRow, ResultBanner, DirtyBadge, MoveButtons, triggerReingest } from "./AdminShared";
 
 const FILE = "backend/data/knowledge/education.json";

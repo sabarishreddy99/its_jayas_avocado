@@ -696,7 +696,7 @@ def _build_documents() -> list[tuple[str, str, str]]:
         currently = p.get("currently", "")
         if obsession or currently:
             docs.append(("profile_focus", (
-                f"What Jaya is currently focused on and passionate about: "
+                "What Jaya is currently focused on and passionate about: "
                 + (f"{obsession} " if obsession else "")
                 + (f"He is currently experimenting with: {currently}." if currently else "")
             ), "profile"))

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { spotlights, type Spotlight, type SpotlightCta } from "@/data/spotlights";
 
 const isInternal = (url: string) => url.startsWith("/") && !url.startsWith("//");

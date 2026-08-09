@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { GitHubStagingProvider } from "@/lib/githubStaging";
+import { GitHubStagingProvider } from "@/lib/admin/githubStaging";
 import PublishBar from "@/components/admin/PublishBar";
 
 export const metadata: Metadata = {

@@ -3,7 +3,7 @@ import GVPageHeader from "@/components/gradevitian/GVPageHeader";
 import GVExploreMore from "@/components/gradevitian/GVExploreMore";
 import GVJsonLd from "@/components/gradevitian/GVJsonLd";
 import GVFaq, { type FaqItem } from "@/components/gradevitian/GVFaq";
-import ScrollReveal from "@/components/ScrollReveal";
+import ScrollReveal from "@/components/ui/ScrollReveal";
 import { gvMetadata, breadcrumbLd, toolLd } from "@/lib/gradevitian/seo";
 
 const DESC = "Free VIT CGPA calculator, add each semester's GPA and credits to get your cumulative CGPA, or project this semester instantly. Built on VIT's 10-point scale.";

@@ -1,4 +1,4 @@
-import GalleryGrid from "@/components/GalleryGrid";
+import GalleryGrid from "@/components/portfolio/GalleryGrid";
 import { gallery } from "@/data/gallery";
 import { profile } from "@/data/profile";
 

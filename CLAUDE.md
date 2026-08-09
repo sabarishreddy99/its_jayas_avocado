@@ -1,47 +1,122 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code (claude.ai/code) when working in this repository.
+
+For the full human-facing tour (system diagram, deployment topology, design
+notes) read the root [`README.md`](README.md). This file is the working map.
+
+---
 
 ## What this project is
 
-Personal AI-assisted portfolio for Jaya Sabarish Reddy Remala (`itsjaya.com`). The site has two entry points:
+Personal AI-assisted portfolio for Jaya Sabarish Reddy Remala (`jayaremala.com`),
+plus two additional sites that ship from the same static export. Three surfaces:
 
-- `/` — Full-screen RAG-powered recruiter chatbot ("Avocado") powered by Gemini via Google AI API + ChromaDB
-- `/portfolio` — Portfolio home with hero, featured projects, domain interests, skills, testimonials carousel, and contact
+| Surface | Where | What |
+|---|---|---|
+| Portfolio + Avocado chatbot | `jayaremala.com` | The main site |
+| gradeVITian | `gradevitian.jayaremala.com` | VIT student-tools app |
+| VRF Bricks | `vrfbricks.jayaremala.com` | A real brick-yard business site |
 
-From the portfolio visitors navigate to Experience, Education, Projects, and Blog.
+The frontend is a **Next.js static export** (`output: "export"`). There is no
+Node server in production — GitHub Pages serves the apex domain and nginx on a
+Lightsail box serves the two subdomains from the same `out/` directory.
+
+The backend is a **FastAPI** app on the same Lightsail box behind
+`api.jayaremala.com`, deployed as a Docker image from GHCR.
+
+---
+
+## Repository layout
+
+```
+backend/          FastAPI service (RAG chatbot, analytics, gradeVITian, admin)
+  data/knowledge/   ← SINGLE SOURCE OF TRUTH for all portfolio content
+  data/gradevitian/ curated VIT regulations + rulebook retrieval corpus
+  src/app/          application package (installed editable, src layout)
+  Dockerfile        the image CI builds and ships
+frontend/         Next.js 16 static export — all three sites
+docs/             long-form docs and reference material
+infra/            compose file, nginx vhosts, deploy/rollback scripts
+scripts/          repo-level codegen (knowledge sync, sitemap generation)
+```
+
+Each service owns its own `Dockerfile` and `.dockerignore`. `infra/compose.yml`
+builds from those same files so the local image matches what CI builds.
 
 ---
 
 ## Routing
 
+`/` is the **portfolio home**, not the chatbot. There is no `/portfolio` route —
+the `(portfolio)` route group adds no URL segment.
+
 | Route | Purpose |
 |---|---|
-| `/` | Avocado — AI chatbot landing (full-screen, no nav) |
-| `/chat` | Same chatbot, accessible from portfolio nav |
-| `/portfolio` | Portfolio home — hero, featured projects, skills, testimonials, contact |
-| `/experience` | Work history timeline |
-| `/education` | Education cards |
-| `/projects` | Projects grid with source link tag buttons |
-| `/blog` | Blog index sorted by `publishedAt` |
-| `/blog/[slug]` | Blog post rendered in Source Serif 4 font |
+| `/` | Portfolio home — hero, featured work, skills, testimonials, contact |
+| `/chat` | Avocado — full-screen RAG chatbot (no nav/footer) |
+| `/experience` `/education` `/projects` `/apps` | Career + work surfaces |
+| `/blog`, `/blog/[slug]`, `/blog/tag/[tag]` | Blog index, post, tag index |
+| `/lab`, `/lab/[slug]` | Living build logs (MDX, same loader shape as blog) |
+| `/gallery` `/quotes` `/now` `/system` `/mcp` | Supporting pages |
+| `/admin`, `/admin/google-callback` | Token-gated content admin (no-index) |
+| `/gradevitian/*` | gradeVITian (served at its subdomain root) |
+| `/vrfbricks/*` | VRF Bricks (served at its subdomain root) |
 
-All portfolio routes live inside `frontend/src/app/(portfolio)/` route group sharing a `Nav` + `Footer` layout. The chatbot (`/`) is outside this group — no nav or footer.
+Portfolio routes live in `frontend/src/app/(portfolio)/` and share a
+`Nav` + `Footer` layout. `/chat`, `/admin`, `/gradevitian` and `/vrfbricks` sit
+outside that group and bring their own chrome.
 
-A mobile FAB (fixed bottom-right) appears on all portfolio pages linking to `/chat`.
+A mobile FAB on portfolio pages links to `/chat`.
+
+---
+
+## Frontend structure
+
+`frontend/src` is organised by **feature vertical**. Everything that belongs to
+one product lives together; only genuinely cross-cutting code sits at a root.
+
+```
+components/
+  ui/           generic primitives — no product content
+                (theme, scroll/reveal, parallax, PWA, JsonLd, StackSection)
+  portfolio/    the portfolio's own sections and chrome (Nav, Footer, Hero*, …)
+  chat/         Avocado chatbot
+  blog/  lab/   content surfaces
+  system/       the /system observability dashboard
+  admin/        the token-gated editor UI
+  gradevitian/  vrfbricks/    the two subdomain sites
+
+lib/
+  api/          backend client (`apiPost`, content API)
+  content/      MDX loaders — blog.ts, lab.ts
+  portfolio/    seo.ts, searchIndex.ts, site-nav.tsx, pages.ts
+  admin/        GitHub staging + file hooks
+  gradevitian/  vrfbricks/    per-site helpers (nav, seo, base-path hooks)
+  session.ts sound.ts visitor.ts    small cross-cutting utilities
+
+data/
+  knowledge/    synced copies of backend JSON — GENERATED, never edit
+  *.ts          typed re-exports of the above
+  gradevitian/  vrfbricks/    per-site data
+```
+
+**Rule of thumb when adding a component:** if it renders product-specific
+content it goes in that product's folder. It only belongs in `components/ui/`
+if it is content-free and at least two verticals could use it.
 
 ---
 
 ## Subdomains
 
-Two separate sites ship from the **same static export** as the portfolio. Both live
-as route segments under `frontend/src/app/`, and nginx on the Lightsail box maps
-each subdomain's root onto its segment so visitors see clean URLs.
+Both subdomain sites ship from the **same static export** as the portfolio. Each
+lives as a route segment under `frontend/src/app/`, and nginx maps the
+subdomain's root onto that segment so visitors see clean URLs.
 
 | Subdomain | Segment | nginx vhost | Docs |
 |---|---|---|---|
-| `gradevitian.jayaremala.com` | `app/gradevitian/` | `infra/nginx/gradevitian.conf` | `frontend/GRADEVITIAN.md` |
-| `vrfbricks.jayaremala.com` | `app/vrfbricks/` | `infra/nginx/vrfbricks.conf` | `frontend/VRFBRICKS.md` |
+| `gradevitian.jayaremala.com` | `app/gradevitian/` | `infra/nginx/gradevitian.conf` | `docs/GRADEVITIAN.md` |
+| `vrfbricks.jayaremala.com` | `app/vrfbricks/` | `infra/nginx/vrfbricks.conf` | `docs/VRFBRICKS.md` |
 
 Shared conventions for both:
 
@@ -63,7 +138,7 @@ Shared conventions for both:
 `business.ts` ends with a `NEEDS_CONFIRMATION` block — unverified facts are
 skipped at render time rather than guessed. Do not invent details about it, and
 do not caption sourced stock photography as if it documents that yard. See
-`frontend/VRFBRICKS.md`.
+`docs/VRFBRICKS.md`.
 
 ---
 
@@ -75,33 +150,43 @@ do not caption sourced stock photography as if it documents that yard. See
 cd frontend
 npm install
 npm run dev        # runs sync first, then http://localhost:3000
-npm run build      # runs sync first, then builds
-npm run sync       # manually sync backend JSON → frontend (run after editing any backend JSON)
+npm run build      # runs sync first, then static export → out/
+npm run sync       # sync backend JSON → frontend (run after editing backend JSON)
 npm run lint
+npx tsc --noEmit   # typecheck
 ```
 
 ### Backend (FastAPI, Python 3.11+)
+
+Run everything from `backend/` — the package is installed editable (src layout),
+so `app` imports fine from there. **Do not run from `backend/src/`**: the DB
+paths below default to cwd-relative `./chroma_db`, so a different cwd silently
+creates a second, empty vector store.
 
 ```bash
 cd backend
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 uvicorn app.main:app --app-dir src --reload   # http://localhost:8000
-# Auto-ingests knowledge base at startup; re-ingests only if content hash changed
-python -m app.rag.ingest   # manual re-ingest (from backend/src/)
+python -m app.rag.ingest                       # manual re-ingest
 pytest
 ruff check src
 ```
 
-### Sync script (repo root)
+Ingest runs automatically at startup and re-ingests only when the SHA256 of the
+knowledge JSON has changed (hash cached at `chroma_db/.ingest_hash`).
+
+### Codegen (repo root)
 
 ```bash
-node scripts/sync-knowledge.mjs
-# Generates backend/data/knowledge/blog.json from MDX posts
-# Copies all backend/data/knowledge/*.json → frontend/src/data/knowledge/
+node scripts/sync-knowledge.mjs   # MDX → blog.json/lab.json; backend JSON → frontend
+node scripts/gen-gv-sitemap.mjs
+node scripts/gen-vrf-sitemap.mjs
 ```
 
-### Docker
+All three run automatically via the frontend `predev` / `prebuild` hooks.
+
+### Docker (local full stack)
 
 ```bash
 cp .env.example .env   # fill in GOOGLE_API_KEY
@@ -110,143 +195,146 @@ docker compose -f infra/compose.yml up --build
 
 ---
 
-## Architecture
+## Backend architecture (`backend/src/app/`)
 
-### Frontend (`frontend/src/`)
+- `main.py` — FastAPI app; runs `run_ingest()` via lifespan, mounts the public
+  MCP server at `/mcp`, applies path-aware CORS (permissive for `/mcp`, strict
+  elsewhere)
+- `routers/` — `admin.py` `ai.py` `blog.py` `content.py` `gradevitian.py`
+  `stats.py` `tools.py`
+- `rag/` — `store.py` (Chroma + embeddings), `ingest.py` (hash-gated ingest),
+  `graph.py`, `gv_rulebook.py` (gradeVITian regulation retrieval)
+- `db/` — SQLite access: `analytics.py` `blog_stats.py` `content.py` `gradevitian.py`
+- `integrations/` — Google `calendar` / `drive` / `gmail` / `google_auth`, `digest`
+- `agent/tools.py` — the read-only tool surface shared by Agent mode and MCP
+- `obs/trace.py` — per-request tracing feeding the `/system` dashboard
+- `core/` — `settings.py`, `limiter.py`, `gv_auth.py`, `gv_moderation.py`
 
-- `app/page.tsx` — Chatbot landing (full-screen, outside portfolio layout)
-- `app/(portfolio)/layout.tsx` — Shared Nav + Footer + mobile Avocado FAB
-- `app/(portfolio)/page.tsx` — Portfolio home: hero with domain chips, featured projects, skills, testimonials, contact
-- `components/chat/` — `ChatInterface`, `ChatMessage`, `ChatInput`, `LoadingGame` (all client components)
-- `components/Nav.tsx` — Portfolio navigation (client, uses `usePathname`)
-- `components/Footer.tsx` — Animated marquee footer; shows "Updated [date]" baked at build time
-- `components/TestimonialsCarousel.tsx` — Auto-advancing carousel (5s), pause on hover, dots + arrows
-- `components/blog/BlogGuideDrawer.tsx` — Floating guide drawer on blog pages; includes MDX syntax reference + **Appendix: data reference table** (where to edit each data type)
-- `components/blog/MDXComponents.tsx` — Auto-imported MDX components: `Callout`, `BlogImage`, `Divider`
-- `data/*.ts` — Typed re-exports from `data/knowledge/*.json` (do not hardcode values here)
-- `data/knowledge/` — Synced copies of backend JSON (auto-generated by sync script, do not edit directly)
-- `lib/blog.ts` — MDX blog loader; sorts by `publishedAt` field (stable publish date), falls back to `date`
-- `lib/api/client.ts` — `apiPost<T>()` helper pointing to backend
-- `content/blog/*.mdx` — Blog posts; frontmatter: `title`, `date`, `publishedAt`, `description`, `tags[]`
+### API surface
 
-### Backend (`backend/src/app/`)
-
-- `main.py` — FastAPI app; triggers `run_ingest()` at startup via lifespan
-- `routers/ai.py` — AI endpoints: `POST /ai/chat`, `/ai/summarize`, `/ai/draft`, `/ai/rewrite`
-- `rag/store.py` — ChromaDB persistent client + `query()` function
-- `rag/ingest.py` — Hash-based ingest: computes SHA256 of all knowledge JSON files; skips re-ingest if hash unchanged; includes blog documents from `blog.json`
-- `core/settings.py` — Pydantic settings: `frontend_origin`, `google_api_key`, `gemini_model`
+| Prefix | Router | Notes |
+|---|---|---|
+| `/ai` | `ai.py` | `/chat`, `/chat/stream` (SSE), `/chat/agentic`, `/summarize`, `/draft`, `/rewrite`, `/followups`, `/lead-capture`, `/feedback`, `/warmup` |
+| `/blog` | `blog.py` | `/{slug}/view`, `/{slug}/clap`, `/{slug}/stats`, `/stats/summary` |
+| `/content` | `content.py` | CRUD for blog / lab / quotes (admin-authored, DB-backed) |
+| `/gv` | `gradevitian.py` | auth, calculators, comments, rulebook `/ask`, metrics |
+| `/stats` | `stats.py` | `/overview`, `/system`, `/system/traces`, `/visit` |
+| `/tools` | `tools.py` | agent tool listing + invocation |
+| `/admin` | `admin.py` | reingest, Google OAuth, Drive/Gmail sync, digest |
+| `/mcp/` | mounted | public read-only MCP server (`fastmcp`) |
 
 ### RAG flow for `/ai/chat`
 
-1. User message → embed with `all-MiniLM-L6-v2` (fastembed ONNX — no PyTorch)
-2. Query ChromaDB for top-5 relevant chunks + BM25 hybrid retrieval
+1. Embed the message with `BAAI/bge-base-en-v1.5` (fastembed ONNX — no PyTorch)
+2. Query ChromaDB for top-k chunks, plus BM25 hybrid retrieval
 3. RRF merge → top 5 by score
-4. Inject chunks as context into Gemini system prompt
+4. Inject as context into the model system prompt
 5. Return `{ reply, sources }`
+
+### Model fallback chain
+
+Configured in `core/settings.py` as `provider:model` entries, tried in order and
+deduped. Gemini first, then Groq, then OpenRouter — each included only when its
+API key is set, so behaviour is unchanged when they are absent.
+
+| Env var | Default |
+|---|---|
+| `GEMINI_MODEL` | `gemini-2.0-flash` |
+| `GEMINI_FALLBACK_MODELS` | `gemini-2.5-flash,gemini-2.0-flash-lite,gemini-flash-latest` |
+| `GROQ_API_KEY` / `GROQ_MODELS` | optional free tier |
+| `OPENROUTER_API_KEY` / `OPENROUTER_MODELS` | optional free tier |
 
 ---
 
 ## Knowledge base — single source of truth
 
-**Always edit files in `backend/data/knowledge/`. Never edit `frontend/src/data/knowledge/` directly** — those are auto-overwritten by the sync script.
+**Always edit `backend/data/knowledge/`. Never edit `frontend/src/data/knowledge/`**
+— it is overwritten by the sync script.
 
 | File | Controls |
 |---|---|
-| `profile.json` | name, tagline, bio, obsession, previous, `prev_domain`, `interested_domain`, location, email, phone, github, linkedin, resume |
-| `experience.json` | Work history roles, companies, bullet points |
-| `education.json` | Degrees, institutions, GPA, highlights |
+| `profile.json` | name, tagline, bio, obsession, `prev_domain`, `interested_domain`, location, contact links, resume |
+| `experience.json` | roles, companies, bullets |
+| `education.json` | degrees, institutions, GPA, highlights |
 | `projects.json` | title, description, tags[], featured, award, `sourceLinks[{label,url}]`, note |
-| `skills.json` | Skill categories and items |
+| `skills.json` | skill categories and items |
 | `testimonials.json` | name, designation, company, linkedin, description, givenAt, source |
-| `blog.json` | Auto-generated from MDX posts by sync script — do not edit |
+| `apps.json` | live apps listed on `/apps` |
+| `gallery.json` | `/gallery` images and captions |
+| `quotes.json` | `/quotes` entries |
+| `spotlights.json` | homepage spotlight cards |
+| `inbox_signals.json` | weekly-digest inputs |
+| `blog.json` / `lab.json` | **generated** from MDX by the sync script — do not edit |
 
-After editing any JSON: run `npm run sync` from `frontend/`, or just restart `npm run dev`.
-
----
-
-## Blog posts
-
-- Files live at `frontend/src/content/blog/[slug].mdx`
-- Filename becomes the URL slug: `my-post.mdx` → `/blog/my-post`
-- Frontmatter fields: `title`, `date` (display), `publishedAt` (sort key — set once, never change), `description`, `tags[]`
-- Images go in `frontend/public/blog/`, referenced as `/blog/filename.jpg`
-- MDX components (`Callout`, `BlogImage`, `Divider`) are auto-imported — no import statement needed
-- Blog posts are indexed into ChromaDB automatically via the sync script + Railway redeploy
+After editing any JSON run `npm run sync` from `frontend/`, or just restart `npm run dev`.
 
 ---
 
-## Blog engagement (views + claps)
+## Blog and lab posts
 
-Tracked per-post in `chroma_db/analytics.db` (same Railway persistent volume as ChromaDB).
-
-| Endpoint | Behaviour |
-|---|---|
-| `POST /blog/{slug}/view` | Records unique view per IP (idempotent) |
-| `POST /blog/{slug}/clap` | Adds claps, max 50 per IP per post, body: `{ count: 1–10 }` |
-| `GET /blog/{slug}/stats` | Returns `{ views, claps, user_claps }` |
-| `GET /blog/stats/summary` | Returns `{ total_claps, total_views, posts[] }` for blog index |
-
-Frontend components:
-- `components/blog/BlogEngagement.tsx` — clap button + view count on each post page; claps batched with 1.5s debounce before sending; IPs hashed SHA-256, never stored raw
-- `components/blog/BlogIndexStats.tsx` — total claps + views in blog header; per-post stats on each index card
-
-## Avocado analytics
-
-Tracked in `chroma_db/analytics.db`:
-- Every completed stream response records the visitor's hashed IP
-- `GET /stats` returns `{ total_responses, unique_visitors }` — displayed in chatbot footer
-- Active model shown as a pill badge after first response; updates if a fallback model was used
-
-### Gemini model fallback chain
-
-| Env var | Purpose |
-|---|---|
-| `GEMINI_MODEL` | Primary model (default: `gemini-2.5-flash`) |
-| `GEMINI_FALLBACK_MODELS` | Comma-separated fallbacks tried on 503/429 (default: `gemini-2.0-flash,gemini-2.0-flash-lite,gemini-flash-latest`) |
+- Blog: `frontend/src/content/blog/[slug].mdx` → `/blog/[slug]`
+- Lab: `frontend/src/content/lab/[slug].mdx` → `/lab/[slug]`
+- Blog frontmatter: `title`, `date` (display), `publishedAt` (sort key — set once,
+  never change), `description`, `tags[]`
+- Images live in `frontend/public/blog/`, referenced as `/blog/filename.jpg`
+- `Callout`, `BlogImage`, `Divider` are auto-injected MDX components — no import needed
+- Posts are indexed into ChromaDB via the sync script on the next backend deploy
 
 ---
 
-## Auto-sync pipeline
+## Blog engagement + analytics
 
-```
-Edit backend JSON  →  npm run sync  →  frontend/src/data/knowledge/ updated
-Write MDX post     →  git push      →  GH Actions runs sync, commits blog.json
-                                        Railway redeploys → hash changed → re-ingest
-```
+SQLite, on the same persistent volume as ChromaDB. Visitor IPs are hashed
+SHA-256 and never stored raw.
 
-GH Actions workflow (`.github/workflows/deploy.yml`) has `contents: write` permission and auto-commits synced files with `[skip ci]` to avoid infinite loops.
+- `POST /blog/{slug}/view` — unique per IP, idempotent
+- `POST /blog/{slug}/clap` — max 50 per IP per post, body `{ count: 1–10 }`
+- `GET /blog/{slug}/stats` — `{ views, claps, user_claps }`
+- `GET /blog/stats/summary` — totals for the blog index
+
+Frontend: `components/blog/BlogEngagement.tsx` (claps debounced 1.5s before
+sending) and `components/blog/BlogIndexStats.tsx`.
+
+Avocado analytics: every completed stream records a hashed IP; `/stats` exposes
+totals shown in the chatbot footer, and the active model appears as a pill badge
+(updating if a fallback was used).
 
 ---
 
-## Environment variables
+## Deploy pipeline
+
+`.github/workflows/deploy.yml`, triggered on push to `main`:
 
 ```
-# Frontend
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
-NEXT_PUBLIC_BLOG_FONT=Source_Serif_4      # blog reading font (static import in layout.tsx)
-
-# Backend
-APP_ENV=dev
-FRONTEND_ORIGIN=http://localhost:3000
-GOOGLE_API_KEY=                           # required for AI endpoints
-GEMINI_MODEL=gemini-2.5-flash            # swap model here without code changes
+detect-changes (paths-filter)
+├─ frontend → build static export
+│             ├─ upload to GitHub Pages  (jayaremala.com)
+│             └─ rsync out/ to Lightsail (the two subdomains)
+│             └─ sync-knowledge job commits generated JSON with [skip ci]
+└─ backend  → build image → push to GHCR → ssh Lightsail → infra/scripts/deploy.sh
+              (blue-green: health-check on :8001, then swap to :8000)
 ```
+
+The `paths-filter` block decides what deploys. **Keep it in step with what each
+job actually reads** — a missing entry means an edit silently ships nothing.
 
 ---
 
 ## Key conventions
 
-- **Single source of truth**: edit `backend/data/knowledge/*.json` for all portfolio data
-- **Blog font**: `NEXT_PUBLIC_BLOG_FONT` documents the choice; actual font imported statically in `layout.tsx` as `Source_Serif_4`; applied via `--font-blog` CSS variable in `globals.css`
-- **Tailwind 4**: config lives in `globals.css` via `@theme inline` — no `tailwind.config.js`
-- **Blog sort**: ordered by `publishedAt` (immutable), not `date` (editable display date)
-- **Source links on projects**: render as indigo pill tag buttons (`sourceLinks[{label, url}]`)
-- **Domain chips on hero**: `prev_domain` and `interested_domain` in `profile.json` are comma-separated strings; split and rendered as chips on the portfolio home
-- **`(portfolio)` route group**: adds no URL segment — `/experience` not `/(portfolio)/experience`
-- **ChromaDB**: persists to `backend/chroma_db/` (git-ignored); hash file at `chroma_db/.ingest_hash`
-- **Backend module path**: uvicorn must use `--app-dir backend/src`
-- **Favicon**: `src/app/icon.png` (Next.js App Router auto-detects)
+- **Single source of truth**: edit `backend/data/knowledge/*.json`
+- **Feature-first layout**: co-locate by product; `components/ui` and the small
+  `lib/` root utilities are the only shared buckets
+- **Tailwind 4**: configured in `src/app/globals.css` via `@theme inline` — there
+  is no `tailwind.config.js`
+- **Static export**: no server components with runtime data, no route handlers
+  that need a Node runtime in production. `new Date()` in a client component is a
+  hydration hazard — use `NEXT_PUBLIC_BUILD_YEAR` (see `next.config.ts`)
+- **Blog sort**: by `publishedAt` (immutable), not `date` (editable display date)
+- **Backend cwd**: run from `backend/`, never `backend/src/` (see Commands)
+- **DB paths**: default cwd-relative; production overrides them to absolute
+  `/data/…` paths via env
+- **Favicon**: `src/app/icon.png` (App Router auto-detects)
 
 ---
 
@@ -259,4 +347,3 @@ GEMINI_MODEL=gemini-2.5-flash            # swap model here without code changes
   ```
 - **Web browsing**: use the `/browse` skill from gstack for all web browsing. **Never** use `mcp__claude-in-chrome__*` tools.
 - **Available gstack skills**: `/office-hours`, `/plan-ceo-review`, `/plan-eng-review`, `/plan-design-review`, `/design-consultation`, `/design-shotgun`, `/design-html`, `/review`, `/ship`, `/land-and-deploy`, `/canary`, `/benchmark`, `/browse`, `/connect-chrome`, `/qa`, `/qa-only`, `/design-review`, `/setup-browser-cookies`, `/setup-deploy`, `/setup-gbrain`, `/retro`, `/investigate`, `/document-release`, `/document-generate`, `/codex`, `/cso`, `/autoplan`, `/plan-devex-review`, `/devex-review`, `/careful`, `/freeze`, `/guard`, `/unfreeze`, `/gstack-upgrade`, `/learn`
-
