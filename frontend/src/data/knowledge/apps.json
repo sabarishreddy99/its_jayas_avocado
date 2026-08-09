@@ -38,5 +38,26 @@
     ],
     "featured": true,
     "launchedAt": "2020"
+  },
+  {
+    "slug": "tailorbird",
+    "name": "Tailorbird",
+    "url": "https://github.com/sabarishreddy99/tailorbird",
+    "tagline": "Bird that stitches leaves into a nest, this one stitches your experience to fit each role with groundedness.",
+    "description": "To eliminate the trade-off between generic mass applications and tedious manual tailoring, I engineered an autonomous, end-to-end agentic pipeline that turns raw job-posting URLs into factually verified, single-page PDF and DOCX resumes at scale. Powered by headless Chrome scraping for dynamic JS-heavy sites, a scheduled background orchestration engine, and an LLM pipeline strictly bound to a source-of-truth career database, the system parses job descriptions, evaluates alignment, and restructures bullet points for maximum ATS optimization with zero factual hallucinations. To optimize compute and application quality, the agent acts as an autonomous triage engine dropping mismatched roles with logged reasoning while escalating ambiguous, high-stakes decisions to a lightweight human-in-the-loop dashboard. This project highlights my expertise in building non-hallucinating AI systems, background task orchestration, intelligent agentic decision-making, and full-stack software architecture designed around real-world operational leverage.",
+    "status": "wip",
+    "category": "",
+    "tech": [
+      "ClaudeCodeCLI",
+      "Python",
+      "FastAPI",
+      "Agents",
+      "Node JS",
+      "Claude Skills",
+      "JavaScript",
+      "AsyncIO"
+    ],
+    "featured": true,
+    "launchedAt": "2026"
   }
 ]
