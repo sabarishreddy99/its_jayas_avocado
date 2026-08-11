@@ -79,7 +79,23 @@ export default function HeroDotGrid() {
       draw();
     }
 
+    // Set while a HeroDoodleField token is in hand. Two reasons to stand down:
+    // the accent glow chasing the cursor competes for attention with the word
+    // being dragged, and a full ~2.5k-arc repaint plus a getComputedStyle per
+    // mousemove is the most expensive thing on a frame the drag loop needs.
+    // Park the glow once, then stay out of the way until the drag ends.
+    let suppressed = false;
+
     function onMove(e: MouseEvent) {
+      if (document.documentElement.hasAttribute("data-doodle-drag")) {
+        if (!suppressed) {
+          suppressed = true;
+          onLeave();
+        }
+        return;
+      }
+      suppressed = false;
+
       const rect = canvas!.getBoundingClientRect();
       const x    = e.clientX - rect.left;
       const y    = e.clientY - rect.top;

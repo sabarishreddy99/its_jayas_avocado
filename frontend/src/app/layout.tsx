@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Geist, Geist_Mono, Source_Serif_4, Playfair_Display, EB_Garamond, Roboto, Cormorant_Garamond, Inter } from "next/font/google";
+import { Geist, Geist_Mono, Source_Serif_4, Playfair_Display, EB_Garamond, Roboto, Cormorant_Garamond, Inter, Caveat } from "next/font/google";
 import "./globals.css";
 import ThemeProvider from "@/components/ui/ThemeProvider";
 import SiteTracker from "@/components/portfolio/SiteTracker";
@@ -45,6 +45,20 @@ const inter = Inter({
   variable: "--font-display",
   subsets: ["latin"],
   weight: ["500", "600", "700", "800", "900"],
+});
+// Caveat — the marginalia hand. One consumer: the hero doodle field.
+//
+// It gets its OWN variable rather than hanging off --font-display, because
+// [data-theme="midnight"] re-points that variable at Roboto (globals.css ~180)
+// and midnight is the DEFAULT theme. Routing the handwriting through it would
+// silently turn every doodle into a grotesque for most visitors.
+//
+// No `weight` array on purpose: Caveat ships a variable wght axis (400–700),
+// so omitting it fetches ONE woff2 covering the whole range instead of four
+// static instances, and lets the field use in-between weights.
+const caveat = Caveat({
+  variable: "--font-caveat",
+  subsets: ["latin"],
 });
 
 const SITE_URL = "https://jayaremala.com";
@@ -119,7 +133,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${playfair.variable} ${ebGaramond.variable} ${roboto.variable} ${cormorant.variable} ${inter.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${sourceSerif.variable} ${playfair.variable} ${ebGaramond.variable} ${roboto.variable} ${cormorant.variable} ${inter.variable} ${caveat.variable} h-full antialiased`}
     >
       <head>
         {/* Anti-FOUC: apply data-theme + dark class before first paint so bg never flashes white */}

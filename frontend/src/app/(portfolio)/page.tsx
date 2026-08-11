@@ -24,6 +24,7 @@ import StillRunning from "@/components/portfolio/StillRunning";
 import OriginStory from "@/components/portfolio/OriginStory";
 import Signature from "@/components/portfolio/Signature";
 import HopeMolecules from "@/components/portfolio/HopeMolecules";
+import HeroDoodleField from "@/components/portfolio/HeroDoodleField";
 import { experience } from "@/data/experience";
 
 export const metadata = {
@@ -254,9 +255,19 @@ export default function PortfolioHome() {
         <div className="relative z-[1] flex-1 flex flex-col">
 
           <Inner className="pt-8 sm:pt-12 md:pt-14 lg:pt-16">
-            {/* Single column. The belief panel that used to sit on the right
-                now owns chapter 01, where it can be read at every width
-                instead of being hidden below lg. */}
+            {/* One column up to xl. At xl the measure is pinned to the same 62ch
+                it always had and the leftover width becomes a real grid track,
+                so the doodle field is IN FLOW: every token inside it is
+                absolutely positioned, so it contributes no content height and
+                simply stretches to this column's height. It therefore cannot
+                change the hero's height or overlap the copy, and below xl the
+                track does not exist at all.
+
+                The field deliberately does NOT live in the <Parallax> above:
+                that layer is pointer-events-none, and its transform makes it a
+                containing block and a stacking context, so a draggable child of
+                it would be both un-grabbable and mis-anchored. */}
+            <div className="xl:grid xl:grid-cols-[minmax(0,62ch)_minmax(0,1fr)] xl:gap-10">
             <div className="max-w-[62ch]">
             <div className="flex flex-col gap-5 sm:gap-6 md:gap-7 min-w-0">
 
@@ -365,6 +376,19 @@ export default function PortfolioHome() {
                 </div>
               )}
             </div>
+            </div>
+
+            {/* The five stances from chapter 05 plus the signature — copy that
+                is already on the page, so this is reinforcement and never the
+                only place something is said. That is also what makes the
+                field's aria-hidden honest. */}
+            <HeroDoodleField
+              className="hidden xl:block"
+              tokens={[
+                ...(profile.opinions?.for.map((o) => o.term) ?? []),
+                hero?.signature ?? "Do hard things!",
+              ]}
+            />
             </div>
           </Inner>
 
