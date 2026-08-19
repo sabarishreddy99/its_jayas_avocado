@@ -1,0 +1,972 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>itsjaya Repo Atlas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@400;500;700&display=swap">
+
+<style>
+:root{
+  --paper:#f6f7f5;
+  --surface:#ffffff;
+  --surface-2:#eef1ee;
+  --ink:#1a211d;
+  --ink-2:#3c4a43;
+  --muted:#68776f;
+  --rule:#dde3de;
+  --rule-strong:#c3cdc6;
+  --accent:#2f6f52;
+  --accent-soft:#e4efe8;
+  --warn:#b8762a;
+  --warn-soft:#f7eddd;
+
+  --v-portfolio:#2f6f52;
+  --v-gv:#3a5f9e;
+  --v-vrf:#a8552c;
+  --v-shared:#6b6f7a;
+  --v-backend:#5c4a86;
+
+  --f-display:"Fraunces","Iowan Old Style",Georgia,serif;
+  --f-body:"Source Sans 3","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --f-mono:"JetBrains Mono","SF Mono",Menlo,Consolas,monospace;
+
+  --max:1500px;
+  --rail:236px;
+}
+/* Deliberately single-theme: this page commits to the light palette above and
+   renders the same for every reader. The :root block paints background and
+   every color explicitly, so it holds regardless of the host's own theme. */
+
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:16.5px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid color-mix(in srgb,var(--accent) 35%,transparent)}
+a:hover{border-bottom-color:var(--accent)}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+
+/* ── shell ───────────────────────────────────────────── */
+.wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
+.shell{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);gap:52px;align-items:start}
+@media (max-width:1000px){
+  .shell{grid-template-columns:1fr;gap:0}
+  nav.rail{position:static;max-height:none;margin-bottom:40px;border-right:0;border-bottom:1px solid var(--rule);padding-bottom:24px}
+}
+
+/* ── masthead ────────────────────────────────────────── */
+header.mast{border-bottom:1px solid var(--rule);background:var(--surface)}
+.mast-in{max-width:var(--max);margin:0 auto;padding:52px 28px 40px}
+.kicker{
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--muted);margin:0 0 16px
+}
+h1.title{
+  font-family:var(--f-display);font-optical-sizing:auto;font-weight:600;
+  font-size:clamp(2.5rem,5.2vw,4rem);line-height:1.02;letter-spacing:-.022em;
+  margin:0 0 18px;text-wrap:balance;
+}
+h1.title em{font-style:italic;color:var(--accent);font-weight:600}
+.standfirst{
+  font-size:1.12rem;color:var(--ink-2);max-width:66ch;margin:0 0 30px;
+}
+.facts{display:flex;flex-wrap:wrap;gap:0;border:1px solid var(--rule);border-radius:3px;overflow:hidden;width:fit-content;max-width:100%}
+.fact{padding:12px 22px;border-right:1px solid var(--rule);min-width:112px}
+.fact:last-child{border-right:0}
+.fact b{display:block;font-family:var(--f-mono);font-weight:700;font-size:1.28rem;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.fact span{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:1px}
+
+/* ── rail ────────────────────────────────────────────── */
+nav.rail{
+  position:sticky;top:0;max-height:100vh;overflow-y:auto;
+  padding:44px 20px 44px 0;border-right:1px solid var(--rule);
+  font-size:14px;
+}
+nav.rail .grp{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.15em;text-transform:uppercase;
+  color:var(--muted);margin:22px 0 8px;
+}
+nav.rail .grp:first-child{margin-top:0}
+nav.rail a{
+  display:block;padding:4px 0 4px 11px;color:var(--ink-2);border-bottom:0;
+  border-left:2px solid var(--rule);line-height:1.4;
+}
+nav.rail a:hover{color:var(--accent);border-left-color:var(--accent);background:none}
+
+/* ── content ─────────────────────────────────────────── */
+main{padding:44px 0 100px;min-width:0}
+section{scroll-margin-top:20px;margin-bottom:64px}
+h2{
+  font-family:var(--f-display);font-weight:600;font-size:clamp(1.6rem,2.6vw,2.1rem);
+  letter-spacing:-.018em;line-height:1.15;margin:0 0 6px;text-wrap:balance;
+  display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;
+}
+h2 .path{font-family:var(--f-mono);font-size:.55em;font-weight:500;color:var(--muted);letter-spacing:0}
+h3{
+  font-family:var(--f-body);font-weight:700;font-size:1.02rem;letter-spacing:.005em;
+  margin:34px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--rule);
+  display:flex;align-items:center;gap:10px;
+}
+h3 code{font-size:.95em}
+h4{font-family:var(--f-body);font-weight:700;font-size:.9rem;margin:24px 0 8px;color:var(--ink-2)}
+p{margin:0 0 14px;max-width:74ch}
+p.lede{color:var(--ink-2);margin-bottom:20px}
+code{font-family:var(--f-mono);font-size:.875em;background:var(--surface-2);padding:1px 5px;border-radius:3px}
+h2 code,h3 code,td code,.k code{background:none;padding:0}
+strong{font-weight:700}
+ul{margin:0 0 14px;padding-left:20px;max-width:74ch}
+li{margin-bottom:5px}
+
+.divider{height:1px;background:var(--rule);margin:0 0 44px;border:0}
+
+/* ── vertical stripe on sections ─────────────────────── */
+.stripe{border-left:3px solid var(--v-shared);padding-left:22px}
+.stripe.portfolio{border-left-color:var(--v-portfolio)}
+.stripe.gv{border-left-color:var(--v-gv)}
+.stripe.vrf{border-left-color:var(--v-vrf)}
+.stripe.backend{border-left-color:var(--v-backend)}
+
+/* ── file tables ─────────────────────────────────────── */
+.tbl-wrap{overflow-x:auto;margin:0 0 18px;border:1px solid var(--rule);border-radius:3px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:640px}
+th{
+  text-align:left;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;padding:10px 16px;border-bottom:1px solid var(--rule-strong);
+  background:var(--surface-2);white-space:nowrap;
+}
+td{padding:9px 16px;border-bottom:1px solid var(--rule);vertical-align:top;color:var(--ink-2)}
+tr:last-child td{border-bottom:0}
+td.k{font-family:var(--f-mono);font-size:13px;color:var(--ink);white-space:nowrap;font-weight:500}
+td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;text-align:right;color:var(--muted);font-size:13px;white-space:nowrap}
+th.n{text-align:right}
+
+/* ── tags ────────────────────────────────────────────── */
+.tag{
+  display:inline-block;font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;background:var(--surface-2);color:var(--muted);
+  border:1px solid var(--rule);vertical-align:middle;white-space:nowrap;font-weight:500;
+}
+.tag.gen{background:var(--warn-soft);color:var(--warn);border-color:color-mix(in srgb,var(--warn) 30%,transparent)}
+.tag.src{background:var(--accent-soft);color:var(--accent);border-color:color-mix(in srgb,var(--accent) 30%,transparent)}
+
+/* ── callout ─────────────────────────────────────────── */
+.note{
+  background:var(--surface);border:1px solid var(--rule);border-left:3px solid var(--warn);
+  padding:14px 18px;margin:0 0 20px;border-radius:0 3px 3px 0;font-size:15px;
+}
+.note.ok{border-left-color:var(--accent)}
+.note p{margin:0}
+.note p + p{margin-top:8px}
+.note .lbl{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--warn);display:block;margin-bottom:4px;font-weight:500;
+}
+.note.ok .lbl{color:var(--accent)}
+
+/* ── tree ────────────────────────────────────────────── */
+pre.tree{
+  font-family:var(--f-mono);font-size:13px;line-height:1.65;background:var(--surface);
+  border:1px solid var(--rule);border-radius:3px;padding:18px 20px;overflow-x:auto;margin:0 0 20px;
+  color:var(--ink-2);
+}
+pre.tree b{color:var(--ink);font-weight:700}
+pre.tree i{color:var(--muted);font-style:normal}
+
+/* ── pipeline ────────────────────────────────────────── */
+.pipe{
+  display:flex;flex-wrap:wrap;align-items:stretch;gap:0;margin:0 0 20px;
+  border:1px solid var(--rule);border-radius:3px;overflow:hidden;background:var(--surface);
+}
+.pipe .step{
+  flex:1 1 148px;min-width:148px;padding:14px 16px;border-right:1px solid var(--rule);
+}
+.pipe .step:last-child{border-right:0}
+.pipe .step .num{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;color:var(--accent);
+  display:block;margin-bottom:5px;font-weight:500;
+}
+.pipe .step .ttl{font-weight:700;font-size:14.5px;display:block;margin-bottom:3px;color:var(--ink)}
+.pipe .step .sub{font-size:13px;color:var(--muted);line-height:1.45}
+
+/* ── surface cards ───────────────────────────────────── */
+.surfaces{display:grid;grid-template-columns:repeat(auto-fit,minmax(232px,1fr));gap:16px;margin:0 0 24px}
+.surf{
+  background:var(--surface);border:1px solid var(--rule);border-top:3px solid var(--v-shared);
+  border-radius:0 0 3px 3px;padding:16px 18px;
+}
+.surf.portfolio{border-top-color:var(--v-portfolio)}
+.surf.gv{border-top-color:var(--v-gv)}
+.surf.vrf{border-top-color:var(--v-vrf)}
+.surf h4{margin:0 0 3px;font-size:1rem;color:var(--ink)}
+.surf .dom{font-family:var(--f-mono);font-size:12px;color:var(--muted);display:block;margin-bottom:9px;word-break:break-all}
+.surf p{font-size:14px;margin:0;color:var(--ink-2)}
+
+footer{border-top:1px solid var(--rule);padding:28px 0 44px;color:var(--muted);font-size:13.5px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<header class="mast">
+  <div class="mast-in">
+    <p class="kicker">Repository walkthrough · 470 tracked files · main @ fd189ef</p>
+    <h1 class="title">Three websites, <em>one</em> static export, one FastAPI box.</h1>
+    <p class="standfirst">A file-by-file map of <code>itsjaya</code> — the monorepo behind jayaremala.com, gradeVITian and VRF Bricks. What every folder owns, which files are hand-written versus generated, and how content flows from one JSON directory out to all three surfaces.</p>
+    <div class="facts">
+      <div class="fact"><b>470</b><span>files</span></div>
+      <div class="fact"><b>8.5k</b><span>py lines</span></div>
+      <div class="fact"><b>46k</b><span>ts/tsx lines</span></div>
+      <div class="fact"><b>3</b><span>surfaces</span></div>
+      <div class="fact"><b>1</b><span>source of truth</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+<div class="shell">
+
+<nav class="rail">
+  <div class="grp">Orientation</div>
+  <a href="#big-picture">The big picture</a>
+  <a href="#root">Repository root</a>
+  <a href="#flows">Two flows that matter</a>
+
+  <div class="grp">Backend</div>
+  <a href="#be-overview">backend/ overview</a>
+  <a href="#be-data">data/ — knowledge base</a>
+  <a href="#be-core">core, obs, db</a>
+  <a href="#be-rag">rag/ — retrieval</a>
+  <a href="#be-routers">routers/ — the API</a>
+  <a href="#be-integrations">integrations, agent, mcp</a>
+  <a href="#be-tests">tests + build</a>
+
+  <div class="grp">Frontend</div>
+  <a href="#fe-overview">frontend/ overview</a>
+  <a href="#fe-config">Build config</a>
+  <a href="#fe-app">app/ — routes</a>
+  <a href="#fe-data">data/ + content/</a>
+  <a href="#fe-lib">lib/ — logic</a>
+  <a href="#fe-ui">components/ui</a>
+  <a href="#fe-portfolio">components/portfolio</a>
+  <a href="#fe-chat">components/chat</a>
+  <a href="#fe-blog">components/blog + lab</a>
+  <a href="#fe-system">components/system</a>
+  <a href="#fe-admin">components/admin</a>
+  <a href="#fe-gv">components/gradevitian</a>
+  <a href="#fe-vrf">components/vrfbricks</a>
+  <a href="#fe-public">public/</a>
+
+  <div class="grp">Operations</div>
+  <a href="#scripts">scripts/ — codegen</a>
+  <a href="#infra">infra/</a>
+  <a href="#ci">.github/ — CI</a>
+  <a href="#docs">docs/</a>
+
+  <div class="grp">Reference</div>
+  <a href="#rules">Rules that bite</a>
+</nav>
+
+<main>
+
+<!-- ══════════════════════════════════════════════════ -->
+<section id="big-picture">
+<h2>The big picture</h2>
+<p class="lede">This is a personal portfolio that grew two extra products. All three ship from a single Next.js static export; a single FastAPI container serves all of their dynamic needs.</p>
+
+<div class="surfaces">
+  <div class="surf portfolio">
+    <h4>Portfolio + Avocado</h4>
+    <span class="dom">jayaremala.com</span>
+    <p>The main site: career pages, blog, lab logs, gallery, plus <b>Avocado</b> — a RAG chatbot at <code>/chat</code> that answers questions about Jaya from the knowledge base.</p>
+  </div>
+  <div class="surf gv">
+    <h4>gradeVITian</h4>
+    <span class="dom">gradevitian.jayaremala.com</span>
+    <p>A student-tools app for VIT: GPA/CGPA calculators, attendance and grade predictors, a semester planner, plus accounts, badges and a rulebook Q&amp;A over the academic regulations PDF.</p>
+  </div>
+  <div class="surf vrf">
+    <h4>VRF Bricks</h4>
+    <span class="dom">vrfbricks.jayaremala.com</span>
+    <p>A real fly-ash brick yard in Kavali (the owner's father's business). Bilingual English/Telugu, WhatsApp-first conversion, a brick-quantity calculator.</p>
+  </div>
+</div>
+
+<h3>How the pieces connect</h3>
+<pre class="tree"><b>GitHub Pages</b>  ──serves──▶  jayaremala.com          ┐
+                                                     │  same <b>out/</b> folder,
+<b>nginx @ Lightsail</b> ─┬─▶ gradevitian.jayaremala.com │  built once by CI
+                     └─▶ vrfbricks.jayaremala.com   ┘
+                     │
+                     └─▶ api.jayaremala.com ──▶ <b>Docker</b> :8000 (FastAPI)
+                                                  │
+                                     <b>/data</b> volume ├── chroma_db/      (vectors)
+                                                  ├── analytics.db
+                                                  ├── content.db
+                                                  └── gradevitian.db
+                                                        ↑ nightly S3 backup</pre>
+
+<p>There is <strong>no Node server in production</strong>. Next.js runs with <code>output: "export"</code>, so every page is pre-rendered HTML. Anything dynamic — chat, analytics, logins, saved calculators — is a client-side <code>fetch</code> to the FastAPI box.</p>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════════════════════════ -->
+<section id="root">
+<h2>Repository root</h2>
+
+<div class="tbl-wrap"><table>
+<thead><tr><th>Path</th><th>What it is</th></tr></thead>
+<tbody>
+<tr><td class="k">README.md</td><td>The human-facing tour — 715 lines. System diagram, deployment topology, design notes. The most complete narrative document in the repo.</td></tr>
+<tr><td class="k">CLAUDE.md</td><td>The working map for AI agents: layout rules, commands, conventions, "never edit this" warnings. Shorter and more prescriptive than the README.</td></tr>
+<tr><td class="k">.env.example</td><td>Template for the real <code>.env</code>. Documents every knob: API base URL, Gemini model chain, DB paths, the fastmcp host allow-list, Search Console token.</td></tr>
+<tr><td class="k">.env</td><td><span class="tag">gitignored</span> Real secrets. Read by <code>infra/compose.yml</code> for local runs.</td></tr>
+<tr><td class="k">.gitignore</td><td>Standard Node + Python ignores, plus <code>out/</code>, <code>.next/</code> and the regenerable PDF-scrape intermediates under <code>backend/data/gradevitian/_*</code>.</td></tr>
+<tr><td class="k">.claude/</td><td>Claude Code project settings (<code>settings.local.json</code> — permission allowlist).</td></tr>
+<tr><td class="k">.cursor/ .superpowers/</td><td>Editor/agent scratch dirs, untracked. <code>.superpowers/sdd</code> holds spec-driven-development working files.</td></tr>
+<tr><td class="k">backend/ frontend/</td><td>The two deployables. Each owns its own <code>Dockerfile</code> and <code>.dockerignore</code>.</td></tr>
+<tr><td class="k">scripts/ infra/ docs/ .github/</td><td>Codegen, deployment, prose, CI. Covered below.</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════════════════════════ -->
+<section id="flows">
+<h2>Two flows that matter</h2>
+<p class="lede">Almost every "why is this file here?" question resolves into one of these two pipelines. Learn them and the layout stops being surprising.</p>
+
+<h3>1 · Knowledge sync — how content reaches all three surfaces</h3>
+<div class="pipe">
+  <div class="step"><span class="num">SOURCE</span><span class="ttl">backend/data/knowledge/*.json</span><span class="sub">Hand-edited. Profile, experience, projects, skills, testimonials, apps, gallery, quotes, spotlights.</span></div>
+  <div class="step"><span class="num">+ MDX</span><span class="ttl">frontend/src/content/</span><span class="sub">Blog and lab posts, hand-written with frontmatter.</span></div>
+  <div class="step"><span class="num">RUN</span><span class="ttl">sync-knowledge.mjs</span><span class="sub">MDX → blog.json / lab.json, then copies all knowledge JSON into the frontend.</span></div>
+  <div class="step"><span class="num">OUT A</span><span class="ttl">frontend/src/data/knowledge/</span><span class="sub">Typed by <code>data/*.ts</code>, imported by pages at build time.</span></div>
+  <div class="step"><span class="num">OUT B</span><span class="ttl">Chroma vectors</span><span class="sub">Backend re-ingests at startup when the JSON hash changed — powers Avocado.</span></div>
+</div>
+<div class="note">
+  <span class="lbl">Never edit downstream</span>
+  <p><code>frontend/src/data/knowledge/</code> is <strong>overwritten on every build</strong>. So are <code>blog.json</code> and <code>lab.json</code> in the backend. Edit <code>backend/data/knowledge/*.json</code> (or the MDX) and re-run <code>npm run sync</code>.</p>
+</div>
+
+<h3>2 · Deploy — what ships where</h3>
+<div class="pipe">
+  <div class="step"><span class="num">TRIGGER</span><span class="ttl">push to main</span><span class="sub"><code>detect-changes</code> runs paths-filter to decide which halves deploy.</span></div>
+  <div class="step"><span class="num">FRONTEND</span><span class="ttl">build → out/</span><span class="sub">Static export, uploaded to GitHub Pages <em>and</em> rsynced to Lightsail for the subdomains.</span></div>
+  <div class="step"><span class="num">FRONTEND</span><span class="ttl">sync-knowledge</span><span class="sub">Commits regenerated JSON back to main with <code>[skip ci]</code>.</span></div>
+  <div class="step"><span class="num">BACKEND</span><span class="ttl">image → GHCR</span><span class="sub">Docker build and push.</span></div>
+  <div class="step"><span class="num">BACKEND</span><span class="ttl">blue-green swap</span><span class="sub"><code>deploy.sh</code> health-checks the new container on :8001, then swaps it onto :8000.</span></div>
+</div>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════════════════════════ -->
+<section id="be-overview" class="stripe backend">
+<h2>backend/ <span class="path">FastAPI · Python 3.11 · 8,486 lines</span></h2>
+<p class="lede">A single FastAPI app behind <code>api.jayaremala.com</code>. It serves the RAG chatbot, all three surfaces' analytics, the gradeVITian product API, the content CMS, and a public MCP server — from one container.</p>
+
+<pre class="tree">backend/
+├── <b>data/</b>
+│   ├── <b>knowledge/</b>          <i>← SINGLE SOURCE OF TRUTH for portfolio content</i>
+│   └── <b>gradevitian/</b>        <i>VIT regulations corpus + legacy comments</i>
+├── <b>src/app/</b>               <i>the package (src layout, installed editable)</i>
+│   ├── main.py             <i>app assembly, lifespan, CORS, MCP mount</i>
+│   ├── mcp_server.py       <i>public read-only MCP</i>
+│   ├── agent/  core/  db/  integrations/  obs/  rag/  routers/
+├── <b>scripts/</b>parse_regulations.py
+├── <b>tests/</b>
+├── Dockerfile · pyproject.toml · runtime.txt</pre>
+
+<div class="note ok">
+  <span class="lbl">Working directory matters</span>
+  <p>Run everything from <code>backend/</code>, never <code>backend/src/</code>. DB paths default to cwd-relative (<code>./chroma_db</code>), so a different cwd silently creates a second, empty vector store and Avocado goes blank.</p>
+</div>
+</section>
+
+<section id="be-data" class="stripe backend">
+<h3>backend/data/ — the knowledge base</h3>
+<p>Fifteen JSON files. Twelve are hand-edited and authoritative; two are generated; one directory is a separate corpus for gradeVITian.</p>
+
+<div class="tbl-wrap"><table>
+<thead><tr><th>File</th><th>Controls</th><th class="n">Status</th></tr></thead>
+<tbody>
+<tr><td class="k">knowledge/profile.json</td><td>Name, tagline, bio, obsession, previous/interested domain, location, contact links, resume URL, availability.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">knowledge/experience.json</td><td>Roles, companies, dates, bullet points.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">knowledge/education.json</td><td>Degrees, institutions, GPA, highlights.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">knowledge/projects.json</td><td>Title, description, tags, featured flag, award, source links, notes.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">knowledge/skills.json</td><td>Skill categories and their items.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">knowledge/testimonials.json</td><td>Name, designation, company, LinkedIn, quote, date, source.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">knowledge/apps.json</td><td>Live apps listed on <code>/apps</code>, with status (live/beta/wip/archived).</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">knowledge/gallery.json</td><td>Images and captions for <code>/gallery</code>.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">knowledge/quotes.json</td><td><code>/quotes</code> entries, categorised (Work / Life / Technology / Philosophy / Creativity / Mindset).</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">knowledge/spotlights.json</td><td>Homepage spotlight cards with CTAs.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">knowledge/inbox_signals.json</td><td>Inputs for the weekly digest email.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">knowledge/blog.json</td><td>Blog index — built from the MDX files by the sync script.</td><td class="n"><span class="tag gen">generated</span></td></tr>
+<tr><td class="k">knowledge/lab.json</td><td>Lab index — same, from <code>content/lab/*.mdx</code>.</td><td class="n"><span class="tag gen">generated</span></td></tr>
+<tr><td class="k">gradevitian/regulations.json</td><td>Curated, citable VIT academic rules. Also copied into the frontend bundle by the sync script, so it counts as a <em>frontend</em> input in CI too.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">gradevitian/regulation_chunks.json</td><td>1,273-line retrieval corpus chunked from the regulations PDF, queried by <code>rag/gv_rulebook.py</code>.</td><td class="n"><span class="tag gen">derived</span></td></tr>
+<tr><td class="k">gradevitian/gv_legacy_comments.json</td><td>Comments carried over from the pre-rewrite gradeVITian site; seeded into SQLite on first boot.</td><td class="n"><span class="tag src">edit</span></td></tr>
+</tbody>
+</table></div>
+
+<h4>backend/scripts/parse_regulations.py</h4>
+<p>Regenerates the two gradeVITian regulation files from <code>docs/gradevitian/Academic-Regulations.pdf</code>. Needs the optional <code>[scrape]</code> extra (PyMuPDF) — it is never imported at runtime.</p>
+</section>
+
+<section id="be-core" class="stripe backend">
+<h3>core/ · obs/ · db/</h3>
+
+<div class="tbl-wrap"><table>
+<thead><tr><th>File</th><th>Responsibility</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">core/settings.py</td><td>The pydantic-settings singleton. Holds API keys, DB paths, CORS origins, and the <code>provider:model</code> fallback chain (Gemini → Groq → OpenRouter, each included only if its key is set).</td><td class="n">101</td></tr>
+<tr><td class="k">core/limiter.py</td><td>SlowAPI rate limiter keyed on the real client IP (unwraps proxy headers).</td><td class="n">13</td></tr>
+<tr><td class="k">core/gv_auth.py</td><td>gradeVITian auth using <strong>stdlib only</strong> — no PyJWT, no bcrypt. Hand-rolled HMAC token sign/verify, PBKDF-style password hashing, password-reset tokens, and the <code>current_user</code>/<code>optional_user</code> FastAPI dependencies.</td><td class="n">130</td></tr>
+<tr><td class="k">core/gv_moderation.py</td><td>Dependency-free moderation for student comments. Normalises obfuscation (l33tspeak, repeated chars), detects links and shouting, and escalates borderline cases to an LLM classifier.</td><td class="n">152</td></tr>
+<tr><td class="k">obs/trace.py</td><td>A tiny context-manager tracer. Each request accumulates named stage timings, which feed the waterfall on the <code>/system</code> dashboard.</td><td class="n">40</td></tr>
+</tbody>
+</table></div>
+
+<h4>db/ — three SQLite stores on the persistent volume</h4>
+<div class="tbl-wrap"><table>
+<thead><tr><th>File</th><th>Owns</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">db/analytics.py</td><td>The biggest DB module. Unique visitors (SHA-256 hashed IPs, never raw), geo lookup, per-model breakdowns, latency percentiles, stage timings, error records, top questions, feedback and experience ratings, page stats, lead captures, reliability. Everything the <code>/system</code> dashboard renders.</td><td class="n">772</td></tr>
+<tr><td class="k">db/content.py</td><td>The admin CMS store — blog posts, lab entries, quotes. Seeds itself from JSON when empty, and can regenerate <code>blog.json</code>/<code>lab.json</code> back out so admin-authored posts reach the RAG index.</td><td class="n">763</td></tr>
+<tr><td class="k">db/gradevitian.py</td><td>Student accounts, saved calculations, per-calculator persisted state, badges, streaks, comments with moderation status, notifications, referrals, traffic counters, admin metrics.</td><td class="n">605</td></tr>
+<tr><td class="k">db/blog_stats.py</td><td>Blog engagement: views (unique per IP, idempotent) and claps (max 50 per IP per post). Prunes orphaned rows when a post is deleted.</td><td class="n">264</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<section id="be-rag" class="stripe backend">
+<h3>rag/ — retrieval</h3>
+
+<div class="tbl-wrap"><table>
+<thead><tr><th>File</th><th>Responsibility</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">rag/ingest.py</td><td>Builds the vector store from the knowledge JSON. Has a <code>_build_*_documents</code> function per content type (blog, testimonials, quotes, gallery, lab, apps, FAQ, system FAQ, inbox signals, Drive résumé). Hash-gated: re-ingests only when the JSON SHA-256 changed, cached at <code>chroma_db/.ingest_hash</code>.</td><td class="n">954</td></tr>
+<tr><td class="k">rag/store.py</td><td>The retrieval engine. ChromaDB client, fastembed ONNX embeddings (<code>BAAI/bge-base-en-v1.5</code> — no PyTorch), a BM25 index, RRF merge of dense + sparse results, an optional cross-encoder rerank, an LRU query cache and a warmup path.</td><td class="n">289</td></tr>
+<tr><td class="k">rag/graph.py</td><td>A lightweight static knowledge graph. Given retrieved chunks, pulls in related skill and experience documents so an answer about a project also knows the stack and the role it came from.</td><td class="n">192</td></tr>
+<tr><td class="k">rag/gv_rulebook.py</td><td>Completely separate retrieval over the VIT regulations — its own tokenizer and index, isolated from the portfolio corpus so a student question never retrieves Jaya's résumé.</td><td class="n">80</td></tr>
+</tbody>
+</table></div>
+
+<h4>What <code>/ai/chat</code> actually does</h4>
+<div class="pipe">
+  <div class="step"><span class="num">1</span><span class="ttl">Expand</span><span class="sub">Optional HyDE; builds several query variants from the message + history.</span></div>
+  <div class="step"><span class="num">2</span><span class="ttl">Retrieve</span><span class="sub">Dense Chroma query + BM25, batched across variants.</span></div>
+  <div class="step"><span class="num">3</span><span class="ttl">Merge</span><span class="sub">RRF fusion, then rerank, then top 5.</span></div>
+  <div class="step"><span class="num">4</span><span class="ttl">Expand graph</span><span class="sub">Pull adjacent skill/experience docs.</span></div>
+  <div class="step"><span class="num">5</span><span class="ttl">Generate</span><span class="sub">Inject as context; walk the provider fallback chain on 429/503.</span></div>
+</div>
+</section>
+
+<section id="be-routers" class="stripe backend">
+<h3>routers/ — the HTTP surface</h3>
+
+<div class="tbl-wrap"><table>
+<thead><tr><th>Router</th><th>Prefix</th><th>Endpoints</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">ai.py</td><td class="k">/ai</td><td>The heart of Avocado. <code>/chat</code> (non-streaming fallback), <code>/chat/stream</code> (SSE), <code>/chat/agentic</code> (visible tool-calling agent with per-step trace), <code>/summarize</code>, <code>/draft</code>, <code>/rewrite</code>, <code>/followups</code>, <code>/lead-capture</code>, <code>/feedback</code>, <code>/warmup</code>. Also owns HyDE, prompt assembly, capacity-error detection and the provider fallback loop.</td><td class="n">1205</td></tr>
+<tr><td class="k">gradevitian.py</td><td class="k">/gv</td><td>Signup/login/me, forgot- and reset-password, saved calcs, per-calculator state, page-load and visit counters, public stats, admin metrics, referrals, comments (+ moderation queue), notifications, rulebook <code>/ask</code>, achievements.</td><td class="n">437</td></tr>
+<tr><td class="k">admin.py</td><td class="k">/admin</td><td>All bearer-token gated: force re-ingest and its status, sync status, Google OAuth init/callback/revoke, Gmail digest, Calendar status and preview, Drive résumé sync, Google Docs draft import, digest preview/send, analytics pruning.</td><td class="n">372</td></tr>
+<tr><td class="k">content.py</td><td class="k">/content</td><td>CRUD for blog, lab and quotes. Reads are public; writes and the drafts list require the admin token. This is what the <code>/admin</code> editors talk to.</td><td class="n">294</td></tr>
+<tr><td class="k">stats.py</td><td class="k">/stats</td><td><code>/overview</code>, <code>/system</code> (the dashboard payload), <code>/system/traces</code>, <code>/visit</code>, <code>/experience-rating</code>, <code>/admin</code>.</td><td class="n">213</td></tr>
+<tr><td class="k">blog.py</td><td class="k">/blog</td><td>Four endpoints: record view, record clap, per-post stats, index summary. Thin — all logic is in <code>db/blog_stats.py</code>.</td><td class="n">48</td></tr>
+<tr><td class="k">tools.py</td><td class="k">/tools</td><td>Lists and invokes the agent tool registry over HTTP. Powers the <code>/mcp</code> explorer page on the site.</td><td class="n">49</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<section id="be-integrations" class="stripe backend">
+<h3>integrations/ · agent/ · main.py</h3>
+
+<div class="tbl-wrap"><table>
+<thead><tr><th>File</th><th>Responsibility</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">main.py</td><td>App assembly. Lifespan runs <code>run_ingest()</code> on a background thread so startup isn't blocked; mounts the MCP server at <code>/mcp</code>; applies <strong>path-aware CORS</strong> via a custom <code>ScopedCORSMiddleware</code> (permissive for <code>/mcp</code>, strict everywhere else); a <code>MCPTrailingSlashShim</code> fixes client path quirks; exposes <code>/health</code>.</td><td class="n">207</td></tr>
+<tr><td class="k">agent/tools.py</td><td>The read-only tool registry, shared by Agent mode <em>and</em> MCP so both expose exactly the same surface: <code>search_knowledge</code>, <code>get_profile</code>, <code>get_experience</code>, <code>get_projects</code>, <code>get_project</code>, <code>get_skills</code>, <code>get_education</code>, <code>get_now</code>, <code>get_resume</code>, <code>get_blog</code>, <code>get_lab</code>, <code>get_apps</code>, <code>get_app</code>, <code>check_availability</code>, <code>get_booking_link</code>.</td><td class="n">320</td></tr>
+<tr><td class="k">mcp_server.py</td><td>Wraps that registry as a public read-only <code>fastmcp</code> app. Small, because <code>agent/tools.py</code> already did the work.</td><td class="n">49</td></tr>
+<tr><td class="k">integrations/google_auth.py</td><td>Shared OAuth2 token lifecycle — auth URL, code exchange, refresh, persistence, revoke. Gmail, Calendar and Drive all go through it.</td><td class="n">160</td></tr>
+<tr><td class="k">integrations/calendar.py</td><td>Real free/busy lookup so Avocado can answer "when is he free?" honestly. Computed on a thread pool with a timeout and cached, so a slow Google call never stalls a chat reply.</td><td class="n">238</td></tr>
+<tr><td class="k">integrations/gmail.py</td><td>Sends recruiter lead-capture intros and gradeVITian transactional mail; parses inbox recruiter signals for the digest.</td><td class="n">192</td></tr>
+<tr><td class="k">integrations/drive.py</td><td>Syncs the résumé from Drive (so the RAG index tracks the real document) and imports Google Docs drafts into the blog editor.</td><td class="n">212</td></tr>
+<tr><td class="k">integrations/digest.py</td><td>Builds the weekly HTML digest from analytics and decides whether it's worth sending at all.</td><td class="n">134</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<section id="be-tests" class="stripe backend">
+<h3>tests/ + build files</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>File</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td class="k">tests/conftest.py</td><td>Puts <code>src/</code> on the path and points <code>GV_DB_PATH</code> at a temp DB <em>before</em> the settings singleton is constructed. An autouse fixture blocks external calls.</td></tr>
+<tr><td class="k">tests/test_gradevitian.py</td><td>17 tests — the only tested subsystem. Signup/login/me, duplicate rejection, auth gating, saved calcs, persisted calc state, traffic counters, referrals, comment moderation (integration + unit + LLM escalation), the password-reset flow, and admin-metrics token gating.</td></tr>
+<tr><td class="k">pyproject.toml</td><td>Deps and the ruff config (100-col). Note the deliberate <code>fastmcp&gt;=3.4.3,&lt;3.5</code> pin — 3.4.3 added Host allow-list enforcement, and an unpinned drift once broke the deployed MCP server.</td></tr>
+<tr><td class="k">Dockerfile</td><td>python:3.11-slim. <strong>Pre-downloads the embedding model at build time</strong> so container startup needs no network call. Keep that model string in step with <code>EMBED_MODEL</code> in <code>rag/store.py</code>.</td></tr>
+<tr><td class="k">runtime.txt</td><td>Pins <code>python-3.11.9</code>.</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════════════════════════ -->
+<section id="fe-overview">
+<h2>frontend/ <span class="path">Next.js 16 · React 19 · Tailwind 4 · ~46k lines</span></h2>
+<p class="lede">One app, three products. The organising principle is the <strong>feature vertical</strong>: everything belonging to one product lives together, and only genuinely content-free code sits in a shared bucket.</p>
+
+<pre class="tree">frontend/src/
+├── <b>app/</b>          routes — (portfolio) group, chat, admin, gradevitian, vrfbricks
+├── <b>components/</b>
+│   ├── ui/         <i>generic primitives — no product content</i>
+│   ├── portfolio/  chat/  blog/  lab/  system/  admin/
+│   └── gradevitian/  vrfbricks/
+├── <b>lib/</b>          api/ content/ portfolio/ admin/ gradevitian/ vrfbricks/ + root utils
+├── <b>data/</b>         knowledge/ <i>(generated)</i> + typed *.ts re-exports + per-site data
+├── <b>content/</b>      blog/*.mdx  lab/*.mdx
+└── proxy.ts        <i>dev-only subdomain rewrite</i></pre>
+
+<div class="note ok">
+  <span class="lbl">The placement rule</span>
+  <p>If a component renders product-specific content, it goes in that product's folder. It belongs in <code>components/ui/</code> only if it is content-free <em>and</em> at least two verticals could use it.</p>
+</div>
+</section>
+
+<section id="fe-config">
+<h3>Build configuration</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>File</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td class="k">next.config.ts</td><td>Sets <code>output: "export"</code>, <code>trailingSlash</code>, unoptimized images — and inlines <code>NEXT_PUBLIC_BUILD_YEAR</code>. That last one exists because <code>new Date()</code> in a client component is a hydration hazard on a static export: the HTML is rendered once at build, but reruns in every browser, so "© 2026" mismatches the moment the year rolls over.</td></tr>
+<tr><td class="k">package.json</td><td>Scripts, and the key detail: <code>predev</code> and <code>prebuild</code> both run the three codegen scripts. You never have to remember to sync — <code>npm run dev</code> does it.</td></tr>
+<tr><td class="k">postcss.config.mjs</td><td>Loads <code>@tailwindcss/postcss</code>. There is <strong>no</strong> <code>tailwind.config.js</code> — Tailwind 4 config lives in <code>src/app/globals.css</code> under <code>@theme inline</code>.</td></tr>
+<tr><td class="k">tsconfig.json</td><td>Strict TS, the <code>@/*</code> path alias to <code>src/</code>.</td></tr>
+<tr><td class="k">eslint.config.mjs</td><td>Flat config extending <code>eslint-config-next</code>.</td></tr>
+<tr><td class="k">Dockerfile / .dockerignore</td><td>Used only by <code>infra/compose.yml</code> for the local full stack. Production never runs a Node server.</td></tr>
+<tr><td class="k">CLAUDE.md / AGENTS.md / README.md</td><td>Frontend-scoped agent notes (1 and 5 lines — they defer to the root) and the Next.js starter README.</td></tr>
+<tr><td class="k">scripts/gen-pwa-icons.mjs</td><td>Generates the portfolio PWA icon set from <code>src/app/icon.png</code> — 192/512 "any", a padded 512 maskable, and a 180px apple-touch-icon. Run by hand; needs <code>sharp</code>.</td></tr>
+<tr><td class="k">scripts/gen-gv-icons.mjs</td><td>Same for gradeVITian — draws a mortarboard on the brand accent, keeping content inside the maskable safe zone.</td></tr>
+<tr><td class="k">src/proxy.ts</td><td>Next 16 renamed Middleware → Proxy. Rewrites <code>gradevitian.localhost/gpa</code> → <code>/gradevitian/gpa</code> so you can preview clean subdomain URLs locally. <strong>Dev only</strong> — a static export disables proxies, and nginx does this job in production.</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<section id="fe-app">
+<h3>src/app/ — routes <span class="path">12,641 lines</span></h3>
+
+<h4>Root-level files (apply to every surface)</h4>
+<div class="tbl-wrap"><table>
+<thead><tr><th>File</th><th>What it does</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">layout.tsx</td><td>The root HTML shell. Loads nine Google fonts (Geist, Geist Mono, Source Serif 4, Playfair, EB Garamond, Roboto, Cormorant, Inter, Caveat), mounts <code>ThemeProvider</code>, <code>SiteTracker</code> and <code>PWARegister</code>.</td><td class="n">151</td></tr>
+<tr><td class="k">globals.css</td><td>The design system. Tailwind 4's <code>@theme inline</code> block plus every custom animation and prose rule — 1,689 lines, and the single largest non-generated source file in the repo.</td><td class="n">1689</td></tr>
+<tr><td class="k">icon.png</td><td>The favicon. App Router auto-detects it; no <code>&lt;link&gt;</code> needed.</td><td class="n">—</td></tr>
+<tr><td class="k">not-found.tsx</td><td>The portfolio 404 — an interactive page, not a stub.</td><td class="n">252</td></tr>
+<tr><td class="k">loading.tsx</td><td>Full-screen <code>AvocadoLoader</code>.</td><td class="n">5</td></tr>
+<tr><td class="k">sitemap.ts / robots.ts</td><td>Metadata routes for the apex domain. The subdomains get their own static files instead.</td><td class="n">125 / 23</td></tr>
+<tr><td class="k">feed.xml/route.ts</td><td>RSS for the blog, revalidated hourly so admin-published posts appear without a rebuild.</td><td class="n">112</td></tr>
+<tr><td class="k">llms.txt/route.ts</td><td>A machine-readable site summary for LLM crawlers — profile, page list, blog and lab entries. Same hourly cadence as the sitemap and feed.</td><td class="n">153</td></tr>
+</tbody>
+</table></div>
+
+<h4><code>(portfolio)/</code> — the route group</h4>
+<p>Parentheses mean the folder adds <strong>no URL segment</strong>. So <code>(portfolio)/page.tsx</code> is <code>/</code>, not <code>/portfolio</code> — that route does not exist. Everything in here shares a <code>Nav</code> + <code>Footer</code> layout.</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Route</th><th>Page</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">/</td><td>The homepage — a long-scroll editorial narrative composing ~25 components: hero name, doodle field, dot grid, origin story, spotlights, featured work, skills constellation, opinions, RAG pipeline card, site vitals, testimonials, contact form, signature.</td><td class="n">803</td></tr>
+<tr><td class="k">/experience /education<br>/projects /apps</td><td>Career and work surfaces, rendered from the knowledge JSON.</td><td class="n">—</td></tr>
+<tr><td class="k">/blog · /blog/[slug]<br>/blog/tag/[tag]</td><td>Index, post and tag index. The <code>[slug]</code> folder also holds <code>opengraph-image.tsx</code>, which generates a per-post social card at build time.</td><td class="n">—</td></tr>
+<tr><td class="k">/lab · /lab/[slug]</td><td>Living build logs. Same loader shape and OG-image pattern as the blog, different voice.</td><td class="n">—</td></tr>
+<tr><td class="k">/gallery /quotes /now</td><td>Supporting pages.</td><td class="n">—</td></tr>
+<tr><td class="k">/system</td><td>The public observability dashboard — latency percentiles, cost, quality, reliability, trace waterfalls.</td><td class="n">—</td></tr>
+<tr><td class="k">/mcp</td><td>An explorer for the public MCP server: lists the tools and lets you invoke them live.</td><td class="n">—</td></tr>
+<tr><td class="k">layout.tsx / loading.tsx</td><td>The shared portfolio chrome and its loading state.</td><td class="n">—</td></tr>
+</tbody>
+</table></div>
+
+<h4>Routes outside the group</h4>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Route</th><th>What it is</th></tr></thead>
+<tbody>
+<tr><td class="k">/chat</td><td>Avocado, full-screen. Deliberately outside <code>(portfolio)</code> so it gets no nav and no footer. A mobile FAB on portfolio pages links here.</td></tr>
+<tr><td class="k">/admin</td><td>The token-gated content editor. <code>page.tsx</code> is 4,395 lines — the largest source file in the repo — and orchestrates every editor component. <code>layout.tsx</code> marks it no-index; <code>google-callback/</code> completes the OAuth handshake.</td></tr>
+<tr><td class="k">/gradevitian/*</td><td>19 routes: home, the seven calculators, <code>/ask</code>, rules, account, login/signup, forgot- and reset-password, feedback, privacy, terms, plus <code>404/</code>, <code>not-found.tsx</code> and <code>opengraph-image.tsx</code>.</td></tr>
+<tr><td class="k">/vrfbricks/*</td><td>7 routes: home, bricks, delivery, visit, why-fly-ash, plus <code>404/</code> and its own OG image.</td></tr>
+</tbody>
+</table></div>
+
+<div class="note">
+  <span class="lbl">Why each subdomain has a 404/ folder</span>
+  <p>A static export never emits a segment's <code>not-found.tsx</code> as a real file. So each site also has a literal <code>404/page.tsx</code> route, and nginx points <code>error_page 404</code> at the HTML it produces. Similarly, <code>opengraph-image.tsx</code> exports <em>extension-less</em>, so each vhost must set <code>default_type image/png</code> for that exact path or no scraper renders the card.</p>
+</div>
+</section>
+
+<section id="fe-data">
+<h3>src/data/ and src/content/</h3>
+
+<div class="tbl-wrap"><table>
+<thead><tr><th>Path</th><th>What it holds</th><th class="n">Status</th></tr></thead>
+<tbody>
+<tr><td class="k">data/knowledge/*.json</td><td>Twelve files copied verbatim from the backend by the sync script.</td><td class="n"><span class="tag gen">generated</span></td></tr>
+<tr><td class="k">data/*.ts</td><td>Thin typed wrappers — <code>profile.ts</code>, <code>projects.ts</code>, <code>skills.ts</code>, <code>experience.ts</code>, <code>education.ts</code>, <code>apps.ts</code>, <code>gallery.ts</code>, <code>quotes.ts</code>, <code>spotlights.ts</code>, <code>testimonials.ts</code>. Each imports its JSON, declares the interface, and re-exports. This is where the untyped JSON becomes typed.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">data/gradevitian/pages.json</td><td>The single page list gradeVITian's nav, search modal <em>and</em> sitemap generator all read.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">data/gradevitian/regulations.json</td><td>Copy of the backend's curated regulations.</td><td class="n"><span class="tag gen">generated</span></td></tr>
+<tr><td class="k">data/vrfbricks/business.ts</td><td><strong>Verified business facts only.</strong> Ends with a <code>NEEDS_CONFIRMATION</code> block; unverified fields are skipped at render time rather than guessed.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">data/vrfbricks/copy.ts</td><td>Every rendered string, in English <em>and</em> Telugu. Kavali is a Telugu market, so the site is genuinely bilingual, not translated as an afterthought.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">data/vrfbricks/testimonials.ts</td><td>Customer quotes, typed against the bilingual copy shape.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">content/blog/*.mdx</td><td>Three posts. Frontmatter: <code>title</code>, <code>date</code> (display), <code>publishedAt</code> (the sort key — set once, never changed), <code>description</code>, <code>tags[]</code>.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">content/blog/BLOGGING_GUIDE.md</td><td>The house style guide for writing posts.</td><td class="n"><span class="tag src">edit</span></td></tr>
+<tr><td class="k">content/lab/itsjaya.mdx</td><td>A 918-line living build log for this very repo.</td><td class="n"><span class="tag src">edit</span></td></tr>
+</tbody>
+</table></div>
+<p><code>Callout</code>, <code>BlogImage</code> and <code>Divider</code> are auto-injected into MDX — no import line needed in a post.</p>
+</section>
+
+<section id="fe-lib">
+<h3>src/lib/ — logic without JSX <span class="path">2,570 lines</span></h3>
+
+<div class="tbl-wrap"><table>
+<thead><tr><th>File</th><th>Responsibility</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">api/client.ts</td><td>The backend fetch wrapper (<code>apiPost</code> and friends) — base URL, headers, error shape.</td><td class="n">79</td></tr>
+<tr><td class="k">api/content.ts</td><td>Typed calls against <code>/content/*</code>. Used by SWR hooks in client components <em>and</em> by <code>generateStaticParams</code> at build time.</td><td class="n">138</td></tr>
+<tr><td class="k">content/blog.ts</td><td>The MDX loader — reads the files, parses frontmatter with gray-matter, sorts by <code>publishedAt</code>.</td><td class="n">86</td></tr>
+<tr><td class="k">content/lab.ts</td><td>Same shape for lab entries.</td><td class="n">81</td></tr>
+<tr><td class="k">portfolio/site-nav.tsx</td><td>Single source of truth for the site's navigable pages. Nav, footer, search and sitemap all derive from it.</td><td class="n">93</td></tr>
+<tr><td class="k">portfolio/searchIndex.ts</td><td>Builds the ⌘K search index across pages, posts, projects and lab entries, with scoring.</td><td class="n">233</td></tr>
+<tr><td class="k">portfolio/seo.ts</td><td>Canonical URLs plus the sitewide WebSite JSON-LD entity and per-section breadcrumbs.</td><td class="n">42</td></tr>
+<tr><td class="k">portfolio/pages.ts</td><td>Page metadata used by breadcrumbs and nav.</td><td class="n">92</td></tr>
+<tr><td class="k">admin/githubStaging.tsx</td><td>Stages knowledge-JSON edits as GitHub commits from the admin UI.</td><td class="n">119</td></tr>
+<tr><td class="k">admin/useGitHubFile.ts</td><td>Hook to read and write one file through the GitHub API.</td><td class="n">63</td></tr>
+<tr><td class="k">gradevitian/calc.ts</td><td><strong>All calculator maths</strong> — pure typed ports of the original site's client-side JS. Given inputs, returns results; no state, no DOM.</td><td class="n">403</td></tr>
+<tr><td class="k">gradevitian/seo.ts</td><td>Canonicals, per-page metadata, JSON-LD for the subdomain.</td><td class="n">178</td></tr>
+<tr><td class="k">gradevitian/auth.ts</td><td>Auth API calls and Bearer-token storage in localStorage.</td><td class="n">158</td></tr>
+<tr><td class="k">gradevitian/nav.tsx</td><td>The feature-page list the nav dropdowns, footer columns and home toolkit all derive from.</td><td class="n">71</td></tr>
+<tr><td class="k">gradevitian/usePersistentCalc.ts</td><td>A <code>useState</code>-shaped hook that autosaves a logged-in user's calculator fields to the backend.</td><td class="n">53</td></tr>
+<tr><td class="k">gradevitian/searchIndex.ts</td><td>Search types and scoring over <code>pages.json</code>.</td><td class="n">47</td></tr>
+<tr><td class="k">gradevitian/regulations.ts</td><td>Typed access to the curated VIT rules, so calculators cite real numbers.</td><td class="n">37</td></tr>
+<tr><td class="k">gradevitian/useGvBase.ts</td><td>The mount-point hook — returns <code>""</code> on the subdomain, <code>"/gradevitian"</code> on the main domain.</td><td class="n">32</td></tr>
+<tr><td class="k">gradevitian/badges.tsx</td><td>Badge definitions and their icons.</td><td class="n">50</td></tr>
+<tr><td class="k">vrfbricks/seo.ts</td><td>Canonicals, metadata and JSON-LD — including the LocalBusiness entity.</td><td class="n">213</td></tr>
+<tr><td class="k">vrfbricks/nav.tsx</td><td>Single source of truth for VRF navigation.</td><td class="n">96</td></tr>
+<tr><td class="k">vrfbricks/useVrfBase.ts</td><td>The VRF mount-point hook.</td><td class="n">35</td></tr>
+<tr><td class="k">session.ts</td><td>Chat session persistence — messages survive a reload via a JSON round-trip.</td><td class="n">74</td></tr>
+<tr><td class="k">sound.ts</td><td>UI sound effects with a user-toggleable mute.</td><td class="n">77</td></tr>
+<tr><td class="k">visitor.ts</td><td>A stable per-device UUID in localStorage (<code>jaya_vid</code>), so stats count devices rather than shared-IP networks.</td><td class="n">20</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<section id="fe-ui">
+<h3>components/ui/ — shared primitives <span class="path">19 files, no product content</span></h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Component</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td class="k">ThemeProvider · ThemeToggle</td><td><code>next-themes</code> wrapper and the light/dark control.</td></tr>
+<tr><td class="k">ScrollReveal · ScrollProgress<br>ScrollToTop · ScrollAtmosphere</td><td>The scroll toolkit: reveal-on-enter, a progress bar, a back-to-top control, and an ambient background that responds to scroll position.</td></tr>
+<tr><td class="k">Parallax · ParallaxImage</td><td>Apple-style vertical parallax; the image variant pre-scales so no gap appears at the edges.</td></tr>
+<tr><td class="k">StackSection</td><td>Sticky card-stacking scroll with content scrubbing — the homepage's signature scroll mechanic.</td></tr>
+<tr><td class="k">SectionIndicator · PageTransition</td><td>A scroll-position indicator, and page transitions using the native View Transitions API when available.</td></tr>
+<tr><td class="k">HeroDotGrid · LiquidWave · SparkleIcon</td><td>Decorative primitives. The sparkle is the site's AI glyph — a four-point star with a small companion.</td></tr>
+<tr><td class="k">PWARegister · InstallPWA</td><td>Registers the portfolio service worker at root scope; <code>InstallPWA</code> is the install prompt UI.</td></tr>
+<tr><td class="k">JsonLd</td><td>16 lines. Emits a structured-data script tag server-side so crawlers see it without running JS.</td></tr>
+<tr><td class="k">SoundToggle · MobileNoBg</td><td>The mute control, and a helper that drops heavy backgrounds on phones.</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<section id="fe-portfolio" class="stripe portfolio">
+<h3>components/portfolio/ — the main site <span class="path">33 files, ~6,300 lines</span></h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Component</th><th>What it does</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">Nav.tsx</td><td>The site header — dropdowns, mobile drawer, search trigger, theme toggle.</td><td class="n">449</td></tr>
+<tr><td class="k">HeroDoodleField.tsx</td><td>The hero's margin: hand-written stances you can pick up and throw. The most physical piece of interaction on the site.</td><td class="n">533</td></tr>
+<tr><td class="k">IntroScreen.tsx</td><td>The first-visit opening sequence.</td><td class="n">343</td></tr>
+<tr><td class="k">RagPipelineModal.tsx</td><td>An explainer of how Avocado retrieves — opened from <code>RagPipelineCard</code> on the homepage.</td><td class="n">321</td></tr>
+<tr><td class="k">QuotesClient.tsx</td><td>The interactive <code>/quotes</code> surface: filtering, categories, layout. <code>QuotesFeed</code> is its 30-line server shell.</td><td class="n">303</td></tr>
+<tr><td class="k">SearchModal.tsx</td><td>⌘K search over the index built in <code>lib/portfolio/searchIndex.ts</code>.</td><td class="n">301</td></tr>
+<tr><td class="k">ContactForm.tsx</td><td>The contact form, sent via EmailJS from the browser (no server needed).</td><td class="n">292</td></tr>
+<tr><td class="k">HopeMolecules.tsx</td><td>An ambient node field with per-axis drift parameters.</td><td class="n">280</td></tr>
+<tr><td class="k">AvocadoChatButton.tsx</td><td>The mobile FAB that opens <code>/chat</code>.</td><td class="n">270</td></tr>
+<tr><td class="k">ProjectsGrid · GalleryGrid<br>TestimonialsCarousel</td><td>The three content grids, each driven by its knowledge JSON.</td><td class="n">231 · 229 · 223</td></tr>
+<tr><td class="k">SkillsSection · SkillsConstellation</td><td>Two views of the same skills data — a structured list and a constellation graph.</td><td class="n">203 · 184</td></tr>
+<tr><td class="k">McpExplorer.tsx</td><td>Powers <code>/mcp</code> — lists the public MCP tools and invokes them live against <code>/tools</code>.</td><td class="n">206</td></tr>
+<tr><td class="k">StillRunning · SpotlightSection<br>Chapter · Breadcrumbs · HeroName</td><td>Homepage narrative sections and the shared content-width constraint.</td><td class="n">186 · 161 · 183 · 121 · 120</td></tr>
+<tr><td class="k">HeroStats · SiteVitals · SiteTracker</td><td>Live numbers from <code>/stats</code>; <code>SiteTracker</code> is the invisible component that <em>records</em> the visit.</td><td class="n">124 · 68 · 27</td></tr>
+<tr><td class="k">OriginStory · Opinions</td><td>Two editorial chapters — why he builds, and what the work refuses to do.</td><td class="n">98 · 77</td></tr>
+<tr><td class="k">AvocadoMark · AvocadoLoader<br>Signature</td><td>Brand marks. The avocado is an emerald body with an amber pit; the signature draws its own rule.</td><td class="n">22 · 52 · 30</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<section id="fe-chat" class="stripe portfolio">
+<h3>components/chat/ — Avocado <span class="path">15 files, ~2,700 lines</span></h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Component</th><th>What it does</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">ChatInterface.tsx</td><td>The orchestrator: SSE stream consumption, message state, session persistence, model-badge updates when a fallback fires, analytics pings, agent-mode switching.</td><td class="n">838</td></tr>
+<tr><td class="k">ChatMessage.tsx</td><td>One message — markdown rendering, source citations, feedback controls.</td><td class="n">270</td></tr>
+<tr><td class="k">NavSuggestions.tsx</td><td>Turns a reply into "go here next" links, so the chatbot routes people into the site.</td><td class="n">239</td></tr>
+<tr><td class="k">ChatLanding.tsx</td><td>The empty state — suggested openers before the first message.</td><td class="n">198</td></tr>
+<tr><td class="k">ChatCloseButton · ChatInput<br>ChatToolbar</td><td>The chrome: exit control, composer, and mode/settings bar.</td><td class="n">172 · 166 · 133</td></tr>
+<tr><td class="k">LeadCaptureCard.tsx</td><td>The recruiter capture card — posts to <code>/ai/lead-capture</code>, which emails an intro.</td><td class="n">156</td></tr>
+<tr><td class="k">Tile.tsx · RichCards.tsx</td><td>The card canon as a reusable primitive, and the rich results that render inside replies.</td><td class="n">107 · 96</td></tr>
+<tr><td class="k">LoadingGame.tsx</td><td>A small game to play while a slow reply generates.</td><td class="n">103</td></tr>
+<tr><td class="k">AnswerTrace · AgentSteps</td><td>The transparency layer: which chunks were retrieved, and which tools the agent called.</td><td class="n">100 · 78</td></tr>
+<tr><td class="k">BookingCard · AvocadoBg</td><td>Real calendar slots from <code>/admin/calendar</code>, and a single barely-there gradient wash.</td><td class="n">87 · 16</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<section id="fe-blog" class="stripe portfolio">
+<h3>components/blog/ and components/lab/</h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Component</th><th>What it does</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">BlogGuideDrawer.tsx</td><td>An in-app authoring guide surfaced beside the editor.</td><td class="n">659</td></tr>
+<tr><td class="k">BlogIndexStats.tsx</td><td>Aggregate views and claps on the blog index, from <code>/blog/stats/summary</code>.</td><td class="n">624</td></tr>
+<tr><td class="k">BlogEngagement.tsx</td><td>The per-post view/clap widget. Claps are debounced 1.5 s before sending, so holding the button costs one request, not fifty.</td><td class="n">238</td></tr>
+<tr><td class="k">BlogImage.tsx</td><td>Auto-injected MDX image with captions and lightbox.</td><td class="n">196</td></tr>
+<tr><td class="k">MDXComponents.tsx</td><td>The MDX component map — where <code>Callout</code>, <code>BlogImage</code> and <code>Divider</code> get auto-injected.</td><td class="n">109</td></tr>
+<tr><td class="k">BlogSwitcher · TableOfContents<br>ReadingProgress · ReadingMode<br>FontSizeControl · ProseReveal</td><td>The reading experience: post switcher, sticky TOC, progress bar, distraction-free mode, type-size control, paragraph reveal.</td><td class="n">96 · 74 · 64 · 64 · 74 · 62</td></tr>
+<tr><td class="k">CodeBlock · ShareButtons<br>BlogViewCount</td><td>Shiki-highlighted code, share links, and the small view counter.</td><td class="n">61 · 70 · 28</td></tr>
+<tr><td class="k">BlogSectionDynamic<br>BlogPostMarkdown</td><td>The path for <em>admin-published</em> posts, which live in <code>content.db</code> as plain Markdown rather than as MDX files.</td><td class="n">67 · 20</td></tr>
+<tr><td class="k">lab/LabList · LabMDXComponents<br>lab/LabSectionDynamic</td><td>The lab's three components, mirroring the blog's shape with its own MDX map.</td><td class="n">187 · 156 · 35</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<section id="fe-system" class="stripe portfolio">
+<h3>components/system/ — the /system dashboard</h3>
+<p>Nine files, ~620 lines. <code>SystemDashboard.tsx</code> fetches <code>/stats/system</code> and composes the panels; <code>types.ts</code> defines the payload contract.</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Panel</th><th>Shows</th></tr></thead>
+<tbody>
+<tr><td class="k">LatencyPanel</td><td>p50/p95/p99 and per-stage timings.</td></tr>
+<tr><td class="k">TraceWaterfall</td><td>Individual request traces from <code>obs/trace.py</code>, drawn as a waterfall.</td></tr>
+<tr><td class="k">QualityPanel</td><td>Feedback ratings and answer quality signals.</td></tr>
+<tr><td class="k">ReliabilityStrip</td><td>Error rate and fallback frequency across the model chain.</td></tr>
+<tr><td class="k">CostPanel</td><td>Token spend by model.</td></tr>
+<tr><td class="k">PeriodToggle · Stat</td><td>The time-range control and the shared stat tile.</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<section id="fe-admin" class="stripe portfolio">
+<h3>components/admin/ — the editor <span class="path">22 files, ~7,000 lines</span></h3>
+<p class="lede">Two distinct groups, and the difference matters: some editors write to <strong>GitHub</strong> (they edit the knowledge JSON, which is version-controlled), others write to the <strong>backend database</strong> (blog, lab and quotes authored in-app).</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Component</th><th>Writes to</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">LabEditor.tsx</td><td>Full-featured authoring view for living system docs — the largest editor.</td><td class="n">1485</td></tr>
+<tr><td class="k">ContentLabEditor · ContentBlogEditor<br>ContentQuotesEditor</td><td><code>content.db</code> via <code>/content/*</code>. Drafts, publish, delete.</td><td class="n">811 · 758 · 372</td></tr>
+<tr><td class="k">GalleryEditor.tsx</td><td>Images and captions, with upload handling.</td><td class="n">484</td></tr>
+<tr><td class="k">AdminShared.tsx</td><td>The shared editor primitives — field types, list reordering, save state — used by every other editor.</td><td class="n">424</td></tr>
+<tr><td class="k">AvailabilityEditor · NowEditor</td><td>Availability windows and the <code>/now</code> page.</td><td class="n">277 · 240</td></tr>
+<tr><td class="k">SpotlightsEditor · KnowledgeBaseEditor<br>AppsEditor · SkillsEditor<br>KnowledgeDataView · ProjectsEditor<br>ProfileEditor · ExperienceEditor<br>TestimonialsEditor · EducationEditor<br>HeroStatsEditor</td><td>The knowledge JSON, staged as GitHub commits through <code>lib/admin/githubStaging.tsx</code>.</td><td class="n">242 · 220<br>209 · 187<br>191 · 170<br>166 · 139<br>137 · 135<br>114</td></tr>
+<tr><td class="k">GradevitianPanel.tsx</td><td>gradeVITian admin: metrics and the comment moderation queue.</td><td class="n">136</td></tr>
+<tr><td class="k">PublishBar · StatCard</td><td>The save/publish control strip and a small metric tile.</td><td class="n">51 · 22</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<section id="fe-gv" class="stripe gv">
+<h3>components/gradevitian/ <span class="path">43 files, ~5,600 lines</span></h3>
+
+<h4>The tools</h4>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Component</th><th>What it calculates</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">SemesterPlanner</td><td>Plans a full semester's course load against credit rules.</td><td class="n">187</td></tr>
+<tr><td class="k">GradePredictor</td><td>What you need on the final to land a target grade.</td><td class="n">149</td></tr>
+<tr><td class="k">AskRulebook</td><td>The Q&amp;A surface over the regulations — posts to <code>/gv/ask</code>, shows cited clauses.</td><td class="n">143</td></tr>
+<tr><td class="k">CgpaCalculator · CgpaGoalTracker<br>CgpaEstimator</td><td>Current CGPA, the GPA needed to hit a goal, and forward projection.</td><td class="n">105 · 103 · 38</td></tr>
+<tr><td class="k">RulesReference</td><td>Browsable view of the curated regulations.</td><td class="n">96</td></tr>
+<tr><td class="k">GpaCalculator · AttendanceCalculator<br>AttendanceBar</td><td>Single-semester GPA, attendance percentage, and its visual bar.</td><td class="n">80 · 79 · 18</td></tr>
+</tbody>
+</table></div>
+<p>None of these hold the maths — every formula lives in <code>lib/gradevitian/calc.ts</code> as a pure function, so it is testable and shared.</p>
+
+<h4>Shell, accounts and growth</h4>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Component</th><th>What it does</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">GVHome</td><td>The landing page — hero, grouped toolkit, social proof.</td><td class="n">516</td></tr>
+<tr><td class="k">GVNav</td><td>Categorical dropdown nav, derived from <code>lib/gradevitian/nav.tsx</code>.</td><td class="n">454</td></tr>
+<tr><td class="k">GVIntroScreen · GVInstall</td><td>First-visit sequence and the PWA install flow.</td><td class="n">281 · 272</td></tr>
+<tr><td class="k">AuthForms · GVAuthProvider<br>AccountDashboard</td><td>Login/signup/reset forms, the auth context, and the account view with saved calcs and badges.</td><td class="n">214 · 97 · 182</td></tr>
+<tr><td class="k">GVWallOfLove · CommentsWall<br>GVRefer</td><td>Social proof, the moderated comments wall, and the referral flow.</td><td class="n">136 · 90 · 110</td></tr>
+<tr><td class="k">GVFooter · GVSearchModal<br>GVStats · GVNotes · GVStats</td><td>Footer link columns, search, live usage counters, per-user notes.</td><td class="n">113 · 111 · 93 · 89</td></tr>
+<tr><td class="k">GVLink</td><td><strong>14 lines, and load-bearing.</strong> Prepends the mount-point prefix to internal hrefs. Always use this, never <code>next/link</code> directly.</td><td class="n">14</td></tr>
+<tr><td class="k">GVCanonicalRedirect</td><td>Bounces the path form on the main domain over to the subdomain.</td><td class="n">21</td></tr>
+<tr><td class="k">GVFaq · GVJsonLd</td><td>A native <code>&lt;details&gt;</code> accordion that <em>also</em> emits matching FAQPage structured data — so what Google reads is what the visitor sees.</td><td class="n">46 · 16</td></tr>
+<tr><td class="k">GVServiceWorker · SaveCalcButton<br>Badges · GVResultModal · ui.tsx</td><td>PWA registration, the save-this-calculation control, badge display, result modal, and the shared UI primitives.</td><td class="n">30 · 58<br>56 · 72 · 108</td></tr>
+<tr><td class="k">GVHeroTitle · GVPageHeader<br>GVExploreMore · GVScrollTop<br>GVSearch · GVVisits<br>GVRedditEmbed · GVLinkedInEmbed</td><td>Presentation and cross-linking pieces.</td><td class="n">63 · 33<br>62 · 29<br>54 · 55<br>43 · 20</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<section id="fe-vrf" class="stripe vrf">
+<h3>components/vrfbricks/ <span class="path">19 files, ~2,900 lines</span></h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Component</th><th>What it does</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">VRFHome</td><td>The landing page. Chaptered long-scroll, bilingual throughout.</td><td class="n">411</td></tr>
+<tr><td class="k">VRFNav</td><td>Header with the language switch.</td><td class="n">414</td></tr>
+<tr><td class="k">VRFField · VRFUi</td><td>Form primitives and shared UI — Section, Inner, Chapter, Headline, Eyebrow, WhatsAppButton, CallButton, TextLink.</td><td class="n">258 · 225</td></tr>
+<tr><td class="k">VRFWhyPage · VRFBricksPage<br>VRFDeliveryPage · VRFVisitPage</td><td>The four content pages: why fly-ash, the product range, delivery terms, and how to visit the yard.</td><td class="n">215 · 212<br>153 · 146</td></tr>
+<tr><td class="k">BrickDiagram</td><td>A dimensioned axonometric drawing generated from the brick's real measurements — not an illustration, a derived drawing.</td><td class="n">162</td></tr>
+<tr><td class="k">BrickCalculator</td><td>How many bricks a wall needs. The original site answered this nowhere, so homeowners had to guess or phone up.</td><td class="n">131</td></tr>
+<tr><td class="k">QuoteComposer</td><td>The enquiry form is a <strong>WhatsApp message composer</strong>, not a form submission — it opens WhatsApp with the message pre-filled.</td><td class="n">116</td></tr>
+<tr><td class="k">whatsapp.ts</td><td>Deep-link construction. WhatsApp is the primary conversion path on this site.</td><td class="n">70</td></tr>
+<tr><td class="k">VRFLang</td><td>Language state (English ⇄ Telugu) for the whole site.</td><td class="n">81</td></tr>
+<tr><td class="k">VRFPhoto</td><td>Photographs at their true proportions, with honest sourcing.</td><td class="n">109</td></tr>
+<tr><td class="k">VRFFaq · VRFJsonLd</td><td>Same accordion-plus-FAQPage discipline as gradeVITian, plus the LocalBusiness entity.</td><td class="n">77 · 20</td></tr>
+<tr><td class="k">VRFLink · VRFCanonicalRedirect</td><td>The mount-point link wrapper and the subdomain canonicaliser.</td><td class="n">20 · 22</td></tr>
+<tr><td class="k">VRFFooter · VRFContactFab<br>VRFTestimonials</td><td>Footer, the floating contact control on phones, and customer quotes.</td><td class="n">130 · 83 · 105</td></tr>
+</tbody>
+</table></div>
+<div class="note">
+  <span class="lbl">This one is a real business</span>
+  <p>VRF Bricks is the owner's father's brick yard. Do not invent details about it, and do not caption sourced stock photography as if it documents that specific yard. Unverified facts belong in the <code>NEEDS_CONFIRMATION</code> block in <code>business.ts</code>, where they are skipped at render time.</p>
+</div>
+</section>
+
+<section id="fe-public">
+<h3>public/ — static assets <span class="path">73 files</span></h3>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Path</th><th>What it holds</th></tr></thead>
+<tbody>
+<tr><td class="k">CNAME</td><td>Tells GitHub Pages the custom apex domain.</td></tr>
+<tr><td class="k">manifest.webmanifest · sw.js<br>icon-192/512/maskable · apple-touch-icon</td><td>The portfolio PWA set, generated by <code>scripts/gen-pwa-icons.mjs</code>.</td></tr>
+<tr><td class="k">blog/</td><td>15 images referenced from MDX as <code>/blog/filename.png</code>.</td></tr>
+<tr><td class="k">gallery/</td><td>22 photos for <code>/gallery</code> — NYU IT, Wipro, VIT, Tailorbird, plus the system-architecture diagram.</td></tr>
+<tr><td class="k">gradevitian/</td><td>The subdomain's own icon set, manifest, service worker, illustration SVGs, and <code>robots.txt</code> + <code>sitemap.xml</code> (the latter <span class="tag gen">generated</span>). nginx serves the last two at the subdomain root, because Google only reads robots.txt from an origin root.</td></tr>
+<tr><td class="k">vrfbricks/</td><td>Five yard and masonry photos, plus its own <code>robots.txt</code> and <span class="tag gen">generated</span> <code>sitemap.xml</code>.</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<hr class="divider">
+
+<!-- ══════════════════════════════════════════════════ -->
+<section id="scripts">
+<h2>scripts/ <span class="path">repo-level codegen · 366 lines</span></h2>
+<p class="lede">All three run automatically from the frontend's <code>predev</code> and <code>prebuild</code> hooks. You rarely invoke them by hand.</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Script</th><th>What it generates</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">sync-knowledge.mjs</td><td>The important one. Converts blog and lab MDX into <code>backend/data/knowledge/blog.json</code> and <code>lab.json</code>, then copies all knowledge JSON into <code>frontend/src/data/knowledge/</code>. Also copies the gradeVITian regulations across — which is why that file counts as a frontend CI input.</td><td class="n">137</td></tr>
+<tr><td class="k">gen-gv-sitemap.mjs</td><td>Builds <code>public/gradevitian/sitemap.xml</code> from <code>data/gradevitian/pages.json</code>. <code>&lt;lastmod&gt;</code> comes from the last commit touching each route's page file; if git can't answer, the entry ships <em>without</em> a lastmod rather than claiming "modified today" — the signal Google learns to distrust.</td><td class="n">91</td></tr>
+<tr><td class="k">gen-vrf-sitemap.mjs</td><td>Same discipline for VRF Bricks.</td><td class="n">72</td></tr>
+<tr><td class="k">sync-blog.mjs</td><td>The earlier, blog-only version of the sync. Superseded by <code>sync-knowledge.mjs</code>, which handles blog and lab together.</td><td class="n">66</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<hr class="divider">
+
+<section id="infra">
+<h2>infra/ <span class="path">compose · nginx · deploy scripts</span></h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>File</th><th>What it does</th></tr></thead>
+<tbody>
+<tr><td class="k">compose.yml</td><td>The local full stack. Builds from the same Dockerfiles CI uses, so your local image matches production. Mounts <code>backend/src</code> and <code>backend/data</code> over the baked-in copies so <code>--reload</code> works, and uses an anonymous volume to stop the host bind-mount shadowing the image's <code>node_modules</code>.</td></tr>
+<tr><td class="k">nginx/api.jayaremala.com.conf</td><td>TLS termination for the API, proxying to <code>127.0.0.1:8000</code>. Includes the ACME challenge location for cert renewal.</td></tr>
+<tr><td class="k">nginx/gradevitian.conf</td><td>Points the subdomain at <code>/var/www/gv-site</code> (the whole static export) but exposes only the <code>/gradevitian/</code> segment — the portfolio's routes 404 here. Maps <code>robots.txt</code>, <code>sitemap.xml</code> and <code>manifest.webmanifest</code> onto the segment's copies, and sets <code>default_type image/png</code> for the extension-less OG image. Note the comment about <code>add_header</code>: nginx does <em>not</em> merge headers, so any location with its own <code>add_header</code> must repeat all of them.</td></tr>
+<tr><td class="k">nginx/vrfbricks.conf</td><td>The same pattern for VRF Bricks, from the same document root.</td></tr>
+<tr><td class="k">scripts/deploy.sh</td><td>Blue-green rollout. Restores any missing DB from S3 first, pulls the new GHCR image, starts it on <code>:8001</code>, health-checks it, and only then swaps it onto <code>:8000</code>. Tags the outgoing image <code>:previous</code>.</td></tr>
+<tr><td class="k">scripts/rollback.sh</td><td>Swaps <code>:previous</code> back in. Fails loudly if no previous image exists.</td></tr>
+<tr><td class="k">scripts/backup.sh</td><td>Nightly cron. Ships the three SQLite DBs to S3 and prunes anything older than 7 days.</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<hr class="divider">
+
+<section id="ci">
+<h2>.github/workflows/</h2>
+
+<h4>deploy.yml — five jobs, on push to main</h4>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Job</th><th>Does</th></tr></thead>
+<tbody>
+<tr><td class="k">detect-changes</td><td>Runs <code>dorny/paths-filter</code> and outputs two booleans, <code>frontend</code> and <code>backend</code>.</td></tr>
+<tr><td class="k">build</td><td>Static export. Checks out with <code>fetch-depth: 0</code> so the sitemap generators can read git history for <code>&lt;lastmod&gt;</code>.</td></tr>
+<tr><td class="k">deploy</td><td>Uploads to GitHub Pages and rsyncs <code>out/</code> to Lightsail for the two subdomains.</td></tr>
+<tr><td class="k">sync-knowledge</td><td>Commits the regenerated JSON back to main with <code>[skip ci]</code>, so it doesn't retrigger itself.</td></tr>
+<tr><td class="k">build-backend / deploy-backend</td><td>Build → push to GHCR → SSH to Lightsail → run <code>infra/scripts/deploy.sh</code>.</td></tr>
+</tbody>
+</table></div>
+
+<div class="note">
+  <span class="lbl">The paths-filter is load-bearing</span>
+  <p>It decides what deploys, so <strong>a missing entry means an edit silently ships nothing</strong>. Two entries exist for non-obvious reasons: Tailwind 4 has no config file, so its config is covered by <code>frontend/src/**</code>; and <code>backend/data/gradevitian/regulations.json</code> is listed under <em>both</em> filters, because the sync script copies it into the frontend bundle.</p>
+</div>
+
+<h4>weekly-digest.yml</h4>
+<p>Cron at 13:00 UTC every Monday. A single <code>curl</code> to <code>/admin/digest/send</code> with the admin bearer token — the workflow holds no logic, only the schedule and the credential.</p>
+</section>
+
+<hr class="divider">
+
+<section id="docs">
+<h2>docs/</h2>
+<div class="tbl-wrap"><table>
+<thead><tr><th>File</th><th>What it covers</th><th class="n">Lines</th></tr></thead>
+<tbody>
+<tr><td class="k">VRFBRICKS.md</td><td>The fullest subdomain doc: business context, the sourcing and honesty rules, bilingual copy strategy, nginx details.</td><td class="n">351</td></tr>
+<tr><td class="k">GRADEVITIAN.md</td><td>The subdomain's architecture, mount-point mechanics, and local preview instructions.</td><td class="n">90</td></tr>
+<tr><td class="k">gradevitian/Academic-Regulations.pdf</td><td>The source PDF <code>backend/scripts/parse_regulations.py</code> chunks. Kept so the corpus is reproducible.</td><td class="n">—</td></tr>
+<tr><td class="k">vrfbricks-original/</td><td>The original single-file brick-yard site, preserved as the fact-check reference for everything in <code>business.ts</code>.</td><td class="n">1816</td></tr>
+<tr><td class="k">superpowers/plans/<br>superpowers/specs/</td><td>Spec-driven-development artifacts from two features: the gradeVITian admin metrics work (a 568-line plan plus its design spec) and the scroll-reactive hero wordmark.</td><td class="n">750</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<hr class="divider">
+
+<section id="rules">
+<h2>Rules that bite</h2>
+<p class="lede">The conventions where getting it wrong fails silently rather than loudly — worth knowing before your first change.</p>
+<div class="tbl-wrap"><table>
+<thead><tr><th>Rule</th><th>What happens if you don't</th></tr></thead>
+<tbody>
+<tr><td class="k">Edit backend knowledge JSON</td><td>Edits to <code>frontend/src/data/knowledge/</code> are wiped by the next build. Same for <code>blog.json</code> and <code>lab.json</code> anywhere.</td></tr>
+<tr><td class="k">Run the backend from <code>backend/</code></td><td>Running from <code>backend/src/</code> creates a second, empty <code>./chroma_db</code>. No error — Avocado just knows nothing.</td></tr>
+<tr><td class="k">Keep paths-filter in step</td><td>Your change deploys nothing, and CI reports success.</td></tr>
+<tr><td class="k">Link via <code>GVLink</code> / <code>VRFLink</code></td><td>A raw <code>next/link</code> breaks on whichever mount point you didn't test — subdomain or path form.</td></tr>
+<tr><td class="k">Sort blog by <code>publishedAt</code></td><td><code>date</code> is an editable display string; editing it to fix a typo would silently reorder the index.</td></tr>
+<tr><td class="k">No <code>new Date()</code> in client components</td><td>Hydration mismatch on a static export the moment the year rolls over. Use <code>NEXT_PUBLIC_BUILD_YEAR</code>.</td></tr>
+<tr><td class="k">Tailwind config is in globals.css</td><td>Creating a <code>tailwind.config.js</code> won't be read — Tailwind 4 uses <code>@theme inline</code>.</td></tr>
+<tr><td class="k">Bump <code>fastmcp</code> deliberately</td><td>3.4.3 added Host allow-list enforcement; an implicit bump once broke the deployed MCP server. It is pinned <code>&gt;=3.4.3,&lt;3.5</code> on purpose.</td></tr>
+<tr><td class="k">Keep the Dockerfile's embed model in step with <code>rag/store.py</code></td><td>The image pre-downloads the model at build time. A drift means a network fetch on every cold start.</td></tr>
+<tr><td class="k">Don't invent VRF Bricks facts</td><td>It's a real business. Unverified details go in <code>NEEDS_CONFIRMATION</code>, where render skips them.</td></tr>
+</tbody>
+</table></div>
+</section>
+
+<footer>
+  <p>Mapped from <code>main</code> at commit <code>fd189ef</code> · 470 tracked files · Generated by walking the tree, not from the README.</p>
+</footer>
+
+</main>
+</div>
+</div>
+
+</body>
+</html>

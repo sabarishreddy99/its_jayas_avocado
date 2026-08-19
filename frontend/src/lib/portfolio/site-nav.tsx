@@ -62,6 +62,10 @@ export const siteGroups: NavGroup[] = [
     label: "Developers",
     items: [
       {
+        href: "/atlas", label: "Atlas", desc: "Every folder, file & why",
+        icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 6.5 9 4l6 2.5L21 4v13.5L15 20l-6-2.5L3 20z"/><path d="M9 4v13.5M15 6.5V20"/></svg>,
+      },
+      {
         href: "/mcp", label: "MCP", desc: "Connect your LLM to my work",
         icon: <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22v-5"/><path d="M9 8V5a3 3 0 0 1 6 0v3"/><rect x="6" y="8" width="12" height="6" rx="2"/><path d="M9 14v3M15 14v3"/></svg>,
       },

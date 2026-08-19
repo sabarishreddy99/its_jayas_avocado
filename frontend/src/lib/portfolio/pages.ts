@@ -21,6 +21,7 @@ const ROUTE_CONFIG: Record<string, { title: string; description: string }> = {
   "/quotes":     { title: "Quotes",       description: "Collected wisdom, favourite quotes" },
   "/now":        { title: "Now",          description: "What I'm currently working on" },
   "/gallery":    { title: "Gallery",      description: "Photos and moments" },
+  "/atlas":      { title: "Atlas",        description: "How this site is built, folder by folder" },
   "/chat":       { title: "Ask Avocado",  description: "AI assistant, ask anything about Jaya" },
 };
 
