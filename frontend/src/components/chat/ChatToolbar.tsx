@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { profile } from "@/data/profile";
+import { formatModel } from "@/lib/chat-model";
 import { INTERNAL_LINKS, type PersonaOption } from "./ChatLanding";
 
 type ChatToolbarProps = {
@@ -108,7 +109,7 @@ export default function ChatToolbar({ personas, persona, onChoosePersona, onBook
                 role="menuitem"
                 className="flex items-center gap-2 rounded-chip px-2.5 py-2 text-[12px] text-fg-muted hover:bg-surface-raised hover:text-accent transition-colors"
               >
-                <span className="text-fg-faint" aria-hidden>{l.glyph}</span>
+                <span className="text-fg-faint" aria-hidden>{l.icon}</span>
                 {l.label}
               </a>
             ))}
@@ -125,8 +126,8 @@ export default function ChatToolbar({ personas, persona, onChoosePersona, onBook
 
       {/* Model status (display) */}
       <span className={`${chip} border-border/60 bg-surface/40 text-fg-faint cursor-default`}>
-        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 inline-block" aria-hidden />
-        <span className="font-mono">{activeModel || "Gemini"}</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-accent inline-block" aria-hidden />
+        <span>{formatModel(activeModel)}</span>
       </span>
     </div>
   );

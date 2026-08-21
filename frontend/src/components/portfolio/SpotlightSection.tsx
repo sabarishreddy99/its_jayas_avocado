@@ -80,7 +80,7 @@ function SpotlightCard({ s, hideEyebrow = false }: { s: Spotlight; hideEyebrow?:
       )}
 
       <ScrollReveal>
-        <div className="group relative overflow-hidden rounded-3xl border border-border bg-surface">
+        <div className="group relative overflow-hidden rounded-card border border-border bg-surface">
           {/* Ambient brand glow */}
           <div aria-hidden
             className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-accent/10 blur-3xl transition-opacity duration-500 group-hover:opacity-80" />
@@ -92,14 +92,16 @@ function SpotlightCard({ s, hideEyebrow = false }: { s: Spotlight; hideEyebrow?:
             <div>
               <div className="flex items-center gap-3.5">
                 {s.logo && (
-                  <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-xl border border-border bg-bg p-1.5">
+                  <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-panel border border-border bg-bg p-1.5">
                     <Image src={s.logo} alt={`${s.name} logo`} width={48} height={48} className="h-full w-full object-contain" />
                   </div>
                 )}
                 <div>
-                  <h2 className="text-xl font-bold tracking-tight text-fg sm:text-2xl">{s.name}</h2>
-                  {s.subtitle && (
-                    <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-fg-faint">{s.subtitle}</p>
+                  {!hideEyebrow && (
+                    <h2 className="text-xl font-bold tracking-tight text-fg sm:text-2xl">{s.name}</h2>
+                  )}
+                  {s.subtitle && !hideEyebrow && (
+                    <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-fg-subtle">{s.subtitle}</p>
                   )}
                 </div>
               </div>
@@ -122,17 +124,19 @@ function SpotlightCard({ s, hideEyebrow = false }: { s: Spotlight; hideEyebrow?:
                 </div>
               )}
 
-              {s.footnote && <p className="mt-3 text-[11px] text-fg-faint">{s.footnote}</p>}
+              {s.footnote && <p className="mt-3 text-[11px] text-fg-subtle">{s.footnote}</p>}
             </div>
 
             {/* ── Right: credibility metrics ── */}
             {s.metrics.length > 0 && (
-              <div className="grid grid-cols-2 gap-3">
+              /* Ruled cells rather than four cards nested inside this card.
+                 Same measurements, one less container, and the rules line the
+                 numbers up with each other instead of floating them. */
+              <div className="grid grid-cols-2 divide-x divide-y divide-border border-y border-border">
                 {s.metrics.map((m) => (
-                  <div key={m.label}
-                    className="rounded-2xl border border-border bg-bg/60 p-4 backdrop-blur-sm transition-colors group-hover:border-border-strong">
+                  <div key={m.label} className="px-4 py-4">
                     <p className="font-mono text-2xl font-bold tabular-nums text-fg sm:text-3xl">{m.value}</p>
-                    <p className="mt-1 text-[11px] leading-tight text-fg-faint">{m.label}</p>
+                    <p className="mt-1.5 text-[11px] leading-tight text-fg-subtle">{m.label}</p>
                   </div>
                 ))}
               </div>

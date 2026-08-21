@@ -1053,6 +1053,9 @@ figcaption[data-rehype-pretty-code-title] + pre {
   }
   .animate-pulse { animation: none !important; opacity: 0.8; }
   .animate-bounce { animation: none !important; }
+  /* Infinite accent halo behind the live dots (StillRunning, SpotlightSection,
+     BookingRail). Killing the animation leaves the solid dot beneath it. */
+  .animate-ping { animation: none !important; opacity: 0; }
 }
 
 /* ── Print stylesheet ───────────────────────────────────── */

@@ -321,7 +321,7 @@ export default function IntroScreen() {
             fill="none" stroke="currentColor" strokeWidth="2"
             strokeLinecap="round" strokeLinejoin="round"
             aria-hidden
-            className="text-fg-faint animate-bounce"
+            className="text-fg-faint animate-float"
           >
             <path d="M6 9l6 6 6-6" />
           </svg>

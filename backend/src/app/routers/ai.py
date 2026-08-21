@@ -1058,6 +1058,37 @@ async def ai_warmup() -> dict:
     return {"status": "warm"}
 
 
+# ── /ai/booking ───────────────────────────────────────────────────────────────
+
+@router.get("/booking")
+@limiter.limit("30/minute")
+async def ai_booking(request: Request) -> dict:
+    """Open call slots + booking link for the contact surface.
+
+    The same payload the chat's booking card uses, exposed as a plain read so the
+    static portfolio can render real times instead of a bare calendar link. Slots
+    are already cached ~3 min in the calendar integration; this adds no fetching
+    of its own. Read-only and public: it exposes free/busy-derived openings and
+    `booking_url`, never event content.
+
+    Always 200s with a usable payload — an unconnected or failing calendar yields
+    an empty `slots` list, and the booking link still works.
+    """
+    payload = {"booking_url": "", "open": True, "slots": []}
+    try:
+        from app.integrations.calendar import get_booking_card
+
+        loop = asyncio.get_running_loop()
+        card = await asyncio.wait_for(
+            loop.run_in_executor(None, get_booking_card), timeout=4.0
+        )
+        if isinstance(card, dict):
+            payload.update(card)
+    except Exception as exc:  # noqa: BLE001
+        logger.debug("booking card unavailable: %s", exc)
+    return payload
+
+
 # ── /ai/feedback ──────────────────────────────────────────────────────────────
 
 class FeedbackRequest(BaseModel):

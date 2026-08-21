@@ -38,7 +38,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
         <path d="M0 24V14.4C0 6.4 5.12 1.6 15.36 0l1.28 2.56C11.52 3.84 8.96 6.4 8.32 10.24H14.4V24H0zm17.6 0V14.4C17.6 6.4 22.72 1.6 32.96 0l1.28 2.56C29.12 3.84 26.56 6.4 25.92 10.24H32V24H17.6z" />
       </svg>
 
-      <p className="text-sm leading-7 text-fg-muted flex-1">{item.description}</p>
+      <p className="max-w-[68ch] text-sm leading-7 text-fg-muted flex-1">{item.description}</p>
 
       <div className="mt-5 pt-4 border-t border-border-subtle">
         <div className="flex items-start justify-between gap-4">
@@ -67,7 +67,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
                 {item.source}
               </span>
             )}
-            {item.givenAt && <p className="mt-1.5 text-[10px] text-fg-faint">{formatDate(item.givenAt)}</p>}
+            {item.givenAt && <p className="mt-1.5 text-[10px] text-fg-subtle">{formatDate(item.givenAt)}</p>}
           </div>
         </div>
       </div>
@@ -121,26 +121,24 @@ export default function TestimonialsCarousel() {
       {/* ── Mobile: header + inline nav arrows (always visible at top, never clipped) */}
       <div className="flex items-center justify-between mb-4 sm:hidden">
         <div className="flex items-center gap-2.5 flex-1 min-w-0">
-          <div className="w-[3px] h-5 rounded-full bg-gradient-to-b from-emerald-500 to-teal-500 shrink-0" />
-          <h2 className="text-sm font-bold uppercase tracking-wider text-fg-faint">Testimonials</h2>
-          <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" aria-hidden />
+          <div className="flex-1 h-px bg-linear-to-r from-border to-transparent" aria-hidden />
         </div>
         {total > 1 && (
           <div className="flex items-center gap-2">
             <button
               onClick={prev}
               aria-label="Previous testimonial"
-              className="w-11 h-11 rounded-full border border-border bg-surface flex items-center justify-center text-fg-subtle hover:text-fg hover:border-border-strong transition-all"
+              className="w-11 h-11 rounded-full border border-border bg-surface flex items-center justify-center text-fg-subtle hover:text-fg hover:border-border-strong transition-colors"
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M15 18l-6-6 6-6" />
               </svg>
             </button>
-            <span className="text-[11px] text-fg-faint w-8 text-center tabular-nums">{current + 1} / {total}</span>
+            <span className="text-[11px] text-fg-subtle w-8 text-center tabular-nums">{current + 1} / {total}</span>
             <button
               onClick={next}
               aria-label="Next testimonial"
-              className="w-11 h-11 rounded-full border border-border bg-surface flex items-center justify-center text-fg-subtle hover:text-fg hover:border-border-strong transition-all"
+              className="w-11 h-11 rounded-full border border-border bg-surface flex items-center justify-center text-fg-subtle hover:text-fg hover:border-border-strong transition-colors"
             >
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
                 <path d="M9 18l6-6-6-6" />
@@ -152,10 +150,8 @@ export default function TestimonialsCarousel() {
 
       {/* ── Desktop: header */}
       <div className="hidden sm:flex items-center gap-2.5 mb-5">
-        <div className="w-[3px] h-5 rounded-full bg-gradient-to-b from-emerald-500 to-teal-500 shrink-0" />
-        <h2 className="text-sm font-bold uppercase tracking-wider text-fg-faint">Testimonials</h2>
-        <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" aria-hidden />
-        <span className="text-[11px] text-fg-faint shrink-0">{total} recommendation{total !== 1 ? "s" : ""}</span>
+        <div className="flex-1 h-px bg-linear-to-r from-border to-transparent" aria-hidden />
+        <span className="text-[11px] text-fg-subtle shrink-0">{total} recommendation{total !== 1 ? "s" : ""}</span>
       </div>
 
       {/* ── Mobile: carousel cards ───────────────────────────── */}
@@ -185,7 +181,7 @@ export default function TestimonialsCarousel() {
                 className="group/dot inline-flex items-center justify-center min-h-11 px-1.5"
               >
                 <span
-                  className={`rounded-full transition-all duration-200 ${
+                  className={`rounded-full transition-colors duration-200 ${
                     i === current ? "w-5 h-2 bg-accent" : "w-2 h-2 bg-border-strong group-hover/dot:bg-fg-subtle"
                   }`}
                 />
@@ -210,11 +206,11 @@ export default function TestimonialsCarousel() {
         </div>
 
         <div
-          className="absolute top-0 inset-x-0 h-10 pointer-events-none"
+          className="absolute top-0 inset-x-0 h-5 pointer-events-none"
           style={{ background: "linear-gradient(to bottom, var(--color-bg, white) 0%, transparent 100%)" }}
         />
         <div
-          className="absolute bottom-0 inset-x-0 h-14 pointer-events-none"
+          className="absolute bottom-0 inset-x-0 h-10 pointer-events-none"
           style={{ background: "linear-gradient(to top, var(--color-bg, white) 0%, transparent 100%)" }}
         />
       </div>

@@ -509,9 +509,9 @@ export default function ChatInterface() {
       {backendStatus === "warming" && (
         <div className="shrink-0 px-3 sm:px-10 pt-2">
           <div className="mx-auto max-w-2xl lg:max-w-3xl">
-            <div className="flex items-center gap-2 rounded-lg border border-amber-200 dark:border-amber-800 bg-amber-50 dark:bg-amber-950/40 px-3 py-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse shrink-0" />
-              <p className="text-[11px] text-amber-700 dark:text-amber-400">
+            <div className="flex items-center gap-2 rounded-lg border border-border bg-surface-raised px-3 py-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-fg-faint animate-pulse shrink-0" />
+              <p className="text-[11px] text-fg-muted">
                 Avocado is waking up, first response may take ~30 seconds.
               </p>
             </div>
@@ -586,9 +586,9 @@ export default function ChatInterface() {
         aria-hidden
         className={`shrink-0 h-0.5 w-full transition-all duration-700 ${
           streaming
-            ? "opacity-80 bg-gradient-to-r from-accent via-accent/60 to-accent"
+            ? "opacity-80 bg-accent"
             : backendStatus === "warming"
-            ? "opacity-50 bg-amber-400"
+            ? "opacity-50 bg-fg-faint"
             : "opacity-0"
         }`}
       />
@@ -656,27 +656,22 @@ export default function ChatInterface() {
                   <p className="text-[9px] font-semibold uppercase tracking-[0.16em] text-fg-faint mb-2">
                     Ask next
                   </p>
-                  <div className="flex flex-col gap-1.5">
+                  <div className="flex flex-col items-start gap-1.5">
                     {followUpsLoading && dynamicFollowUps.length === 0 ? (
-                      /* Shimmer skeleton while Gemini generates */
-                      [45, 60, 52].map((w, idx) => (
-                        <div
-                          key={idx}
-                          className="h-8 rounded-lg bg-surface-raised animate-pulse"
-                          style={{ width: `${w}%` }}
-                        />
-                      ))
+                      <p className="text-[11px] text-fg-subtle" aria-live="polite">
+                        Thinking of what to ask next…
+                      </p>
                     ) : (
                       dynamicFollowUps.map((q, idx) => (
                         <button
                           key={q}
                           onClick={() => setPrefill(q)}
                           style={{ animationDelay: `${idx * 60}ms` }}
-                          className="w-full text-left rounded-lg border border-border bg-surface/70
-                                     px-3 py-2 text-[11px] text-fg-muted
-                                     hover:border-accent/50 hover:text-accent
-                                     hover:bg-surface transition-all duration-150
-                                     opacity-0 animate-[fadeUp_0.4s_ease_forwards]"
+                          className="max-w-full self-start truncate rounded-chip border border-border
+                                     bg-surface/70 px-3 py-2 text-left text-[12px] text-fg-muted
+                                     transition-colors duration-150 hover:border-accent/50
+                                     hover:bg-surface hover:text-accent
+                                     opacity-0 animate-[fadeUp_0.4s_cubic-bezier(0.22,1,0.36,1)_forwards]"
                         >
                           {q}
                         </button>
@@ -768,15 +763,8 @@ export default function ChatInterface() {
 
           {/* Minimal meta row — model status · clear */}
           <div className="flex items-center justify-between px-1 min-h-[16px]">
-            <span className="inline-flex items-center gap-1 text-[10px] text-fg-faint/60">
-              {activeModel ? (
-                <>
-                  <span className="w-1.5 h-1.5 rounded-full bg-green-400 inline-block" />
-                  {activeModel}
-                </>
-              ) : (
-                "Powered by Gemini"
-              )}
+            <span className="inline-flex items-center gap-1 text-[10px] text-fg-subtle">
+              {activeModel ? "" : "Powered by Gemini"}
             </span>
             <div className="flex items-center gap-2.5">
               {messages.length > 1 && (
@@ -803,7 +791,7 @@ export default function ChatInterface() {
                     onMouseLeave={() => setRatingHover(0)}
                     aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
                     className={`text-sm leading-none transition-colors ${
-                      star <= (ratingHover || 0) ? "text-amber-400" : "text-border hover:text-amber-300"
+                      star <= (ratingHover || 0) ? "text-accent" : "text-border hover:text-accent/50"
                     }`}
                   >
                     ★
@@ -824,7 +812,7 @@ export default function ChatInterface() {
               <span className="text-[10px] text-fg-faint">Thanks for rating!</span>
               <span className="text-xs leading-none">
                 {[1,2,3,4,5].map((s) => (
-                  <span key={s} className={s <= experienceRating ? "text-amber-400" : "text-border"}>★</span>
+                  <span key={s} className={s <= experienceRating ? "text-accent" : "text-border"}>★</span>
                 ))}
               </span>
             </div>

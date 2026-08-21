@@ -53,7 +53,7 @@ export default function SiteVitals() {
         <>
           <span className="text-border text-[10px] hidden sm:inline">·</span>
           <div className="flex items-center gap-1.5 text-[11px] text-fg-faint">
-            <span className="w-1.5 h-1.5 rounded-full bg-green-500 shrink-0" />
+            <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
             <span>
               <span className="font-semibold text-fg-subtle tabular-nums">
                 {stats.total_responses.toLocaleString()}

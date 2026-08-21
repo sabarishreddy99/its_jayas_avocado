@@ -136,7 +136,7 @@ export default function Chapter({
 
   return (
     <section id={id} className={`chapter relative ${className}`}>
-      <Inner className="py-16 sm:py-20 md:py-24 lg:py-32 xl:py-36">
+      <Inner className="pt-16 pb-12 sm:pt-20 sm:pb-14 md:pt-24 md:pb-16 lg:pt-32 lg:pb-20 xl:pt-36 xl:pb-24">
         {rail ? (
           <div
             className="grid gap-8 md:gap-10

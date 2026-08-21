@@ -93,9 +93,9 @@ export default function ChatInput({ onSend, disabled, prefill, onPrefillConsumed
   return (
     <div
       className={`
-        flex items-center gap-2 rounded-full border bg-surface px-3 py-2
+        flex items-center gap-2 rounded-full border bg-bg px-3.5 py-2.5 shadow-none
         transition-all duration-200 shadow-sm
-        ${disabled ? "border-border opacity-60" : "border-border focus-within:[box-shadow:0_0_0_3px_var(--bg),0_0_0_5px_color-mix(in_srgb,var(--accent)_45%,transparent)]"}
+        ${disabled ? "border-border opacity-60" : "border-border hover:border-border-strong focus-within:[box-shadow:0_0_0_3px_var(--bg),0_0_0_5px_color-mix(in_srgb,var(--accent)_45%,transparent)]"}
       `}
     >
       {/* Voice button */}
@@ -116,7 +116,7 @@ export default function ChatInput({ onSend, disabled, prefill, onPrefillConsumed
         >
           {isListening ? (
             <span className="relative flex h-2.5 w-2.5">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
+              <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75" />
               <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-red-500" />
             </span>
           ) : (
@@ -134,8 +134,8 @@ export default function ChatInput({ onSend, disabled, prefill, onPrefillConsumed
       <textarea
         ref={textareaRef}
         rows={1}
-        placeholder={isListening ? "Listening…" : "Ask about experience, projects, skills…"}
-        className="flex-1 resize-none bg-transparent text-sm text-fg placeholder:text-fg-faint focus:outline-none focus-visible:outline-none focus:ring-0 py-1.5 leading-5 chat-textarea"
+        placeholder={isListening ? "Listening…" : "Ask about his experience, projects, skills…"}
+        className="flex-1 resize-none truncate bg-transparent text-sm text-fg placeholder:text-fg-subtle focus:outline-none focus-visible:outline-none focus:ring-0 py-1.5 leading-5 chat-textarea"
         onKeyDown={handleKeyDown}
         onInput={handleInput}
         disabled={disabled}

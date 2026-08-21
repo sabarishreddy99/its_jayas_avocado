@@ -73,7 +73,7 @@ export default function AvocadoChatButton() {
 
   return (
     <div className="fixed bottom-6 right-5 sm:bottom-8 sm:right-8 z-50 flex flex-col items-end gap-3
-      transition-[opacity,transform] duration-300 ease-out">
+      transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
 
       {/* ── Popup card ─────────────────────────────────────────────── */}
       {show && (
@@ -162,14 +162,10 @@ export default function AvocadoChatButton() {
               <Link
                 href="/chat"
                 onClick={closeCard}
-                className="group flex items-center justify-between w-full rounded-xl
-                           px-4 py-2.5 text-[12px] font-semibold text-accent-fg
-                           transition-opacity duration-150 hover:opacity-90
-                           active:scale-[0.98] transition-transform"
-                style={{
-                  background:
-                    "linear-gradient(135deg, var(--accent) 0%, var(--accent-secondary) 100%)",
-                }}
+                className="group flex w-full items-center justify-between rounded-panel
+                           bg-fg px-4 py-2.5 text-[12px] font-semibold text-bg
+                           transition-[opacity,transform] duration-150
+                           hover:opacity-75 active:scale-[0.98]"
               >
                 <span className="flex items-center gap-1.5">
                   <SparkleIcon size={13} className="shrink-0" />
@@ -215,7 +211,7 @@ export default function AvocadoChatButton() {
                      hover:border-accent/40
                      hover:shadow-[0_6px_28px_-6px_rgba(0,0,0,0.18)]
                      dark:hover:shadow-[0_6px_28px_-6px_rgba(0,0,0,0.55)]
-                     transition-all duration-200 hover:scale-105 active:scale-95"
+                     transition-[transform,colors] duration-200 ease-[cubic-bezier(0.16,1,0.3,1)] hover:scale-105 active:scale-95"
         >
           {/* ── Layer 1: slowly rotating dot grid (footer texture) ── */}
           <div

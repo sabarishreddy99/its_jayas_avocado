@@ -32,3 +32,4 @@ build/
 # gradeVITian regulations scrape intermediates (regenerable)
 backend/data/gradevitian/_*.pdf
 backend/data/gradevitian/_*_raw.txt
+.gstack/

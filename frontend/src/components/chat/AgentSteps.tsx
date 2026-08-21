@@ -56,9 +56,9 @@ export default function AgentSteps({ steps }: { steps: StepEvent[] }) {
             <span className={running ? "text-fg-muted" : "text-fg-faint"}>{m.label}</span>
             {running ? (
               <span className="flex gap-0.5" aria-label="running">
-                <span className="w-1 h-1 rounded-full bg-accent animate-bounce [animation-delay:0ms]" />
-                <span className="w-1 h-1 rounded-full bg-accent animate-bounce [animation-delay:150ms]" />
-                <span className="w-1 h-1 rounded-full bg-accent animate-bounce [animation-delay:300ms]" />
+                <span className="w-1 h-1 rounded-full bg-accent animate-think-wave [animation-delay:0ms]" />
+                <span className="w-1 h-1 rounded-full bg-accent animate-think-wave [animation-delay:150ms]" />
+                <span className="w-1 h-1 rounded-full bg-accent animate-think-wave [animation-delay:300ms]" />
               </span>
             ) : (
               <span className="inline-flex items-center gap-1 text-emerald-500">

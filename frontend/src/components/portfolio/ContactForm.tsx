@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import emailjs from "@emailjs/browser";
 import Link from "next/link";
 import { profile } from "@/data/profile";
+import BookingRail from "@/components/portfolio/BookingRail";
 
 type ToastType = "success" | "warning" | "error";
 
@@ -133,96 +134,108 @@ export default function ContactForm() {
         ))}
       </div>
 
-      <section className="rounded border border-border bg-surface-raised p-6 sm:p-8">
-        <div className="flex items-center gap-2.5 mb-3">
-          <div className="w-[3px] h-5 rounded-full bg-border-strong shrink-0" />
-          <h2 className="text-sm font-bold uppercase tracking-wider text-fg-faint">Get in Touch</h2>
-          <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" aria-hidden />
-        </div>
-
-        {submitted ? (
-          <div className="flex flex-col items-center gap-4 py-10 text-center">
-            <div className="w-12 h-12 rounded-full bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 flex items-center justify-center text-emerald-600 dark:text-emerald-400">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M20 6L9 17l-5-5"/>
-              </svg>
-            </div>
-            <h3 className="font-semibold text-fg">Message received!</h3>
-            <p className="text-sm text-fg-subtle max-w-xs leading-relaxed">
-              Thanks for reaching out, I&apos;ll get back to you soon. In the meantime, feel free to explore.
-            </p>
-            <div className="flex gap-4 mt-1">
-              <Link href="/blog" className="text-xs text-accent hover:text-accent-hover transition-colors">Read the blog →</Link>
-              <Link href="/projects" className="text-xs text-accent hover:text-accent-hover transition-colors">See projects →</Link>
-            </div>
-          </div>
-        ) : (
-          <>
+      <section aria-label="Contact">
+        {/* The chapter deck already states availability; repeating it here as a
+            status line was a third restatement of the same fact. This paragraph
+            is the one that adds something — the domains. */}
         {profile.contact_description && (
-          <p className="text-sm text-fg-subtle mb-6 max-w-md">{profile.contact_description}</p>
+          <p className="max-w-[62ch] text-sm leading-relaxed text-fg-subtle">
+            {profile.contact_description}
+          </p>
         )}
 
-        {/* Book a call CTA */}
-        <a
-          href={profile.booking_url ?? "https://calendar.app.google/3sScGpHpeSpvPjpSA"}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2.5 rounded-xl border border-border bg-surface hover:border-border-strong hover:shadow-sm px-5 py-3.5 mb-8 transition-all duration-200 group w-full sm:w-auto"
-        >
-          <span className="flex items-center justify-center w-8 h-8 rounded-lg bg-surface-raised text-fg-muted shrink-0 group-hover:bg-surface-sunken transition-colors">
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>
-            </svg>
-          </span>
-          <div>
-            <p className="text-sm font-semibold text-fg">Book a call</p>
-            <p className="text-[11px] text-fg-faint">Schedule a 30-min intro on Google Calendar</p>
+        {/* Two rails of equal standing, split by a column rule. Booking leads on
+            mobile: it is the shorter thing to read, and the form's four fields
+            would otherwise push the calendar below the fold. */}
+        <div className="mt-10 grid gap-10 md:grid-cols-2 md:gap-0">
+          <div className="md:pr-10 lg:pr-14">
+            <BookingRail />
           </div>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-auto text-fg-faint group-hover:text-fg-subtle transition-colors shrink-0">
-            <path d="M7 17L17 7M17 7H7M17 7v10"/>
-          </svg>
-        </a>
 
-        <form onSubmit={handleSubmit} className="space-y-4 mb-6">
+          <div aria-hidden className="chapter-rule md:hidden" />
+
+          <div className="relative md:pl-10 lg:pl-14">
+            <span
+              aria-hidden
+              className="absolute left-0 top-0 hidden h-full w-px bg-linear-to-b from-border-strong via-border to-transparent md:block"
+            />
+            {submitted ? (
+              /* Confirmation lands inside this rail only. The booking rail
+                 beside it stays live — someone who just wrote to me can still
+                 take a slot in the same breath. */
+              <div className="flex h-full flex-col">
+                <h3 className="text-base font-semibold text-fg">Message sent</h3>
+                <p className="mt-1.5 max-w-[46ch] text-sm leading-relaxed text-fg-subtle">
+                  Thanks for reaching out — I&apos;ll get back to you soon. If you
+                  would rather just talk, the calendar on the left is open.
+                </p>
+                <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+                  <Link
+                    href="/blog"
+                    className="text-[13px] font-medium text-accent transition-colors hover:text-accent-hover"
+                  >
+                    Read the blog →
+                  </Link>
+                  <Link
+                    href="/projects"
+                    className="text-[13px] font-medium text-accent transition-colors hover:text-accent-hover"
+                  >
+                    See projects →
+                  </Link>
+                </div>
+              </div>
+            ) : (
+          <>
+        <h3 className="text-base font-semibold text-fg">Send a message</h3>
+        <p className="mt-1.5 max-w-[46ch] text-sm leading-relaxed text-fg-subtle">
+          Not ready for a call, or have a question first? This goes straight to
+          my inbox.
+        </p>
+        <form onSubmit={handleSubmit} className="mt-5 space-y-4">
           <div className="grid gap-4 sm:grid-cols-2">
             <div>
-              <label className="text-xs font-medium text-fg-subtle mb-1.5 block">Name</label>
-              <div className="rounded border border-border bg-surface-raised px-4 py-3 focus-within:border-accent focus-within:bg-surface focus-within:shadow-sm transition-all">
+              <label htmlFor="contact-name" className="mb-1.5 block text-xs font-medium text-fg-subtle">Name</label>
+              <div className="rounded-chip border border-border bg-bg px-3.5 py-2.5 transition-colors focus-within:border-accent">
                 <input
+                  id="contact-name"
                   required
                   type="text"
+                  autoComplete="name"
                   placeholder="Your name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-transparent text-base sm:text-sm text-fg placeholder:text-fg-faint focus:outline-none"
+                  className="w-full bg-transparent text-base text-fg placeholder:text-fg-faint focus:outline-none sm:text-sm"
                 />
               </div>
             </div>
             <div>
-              <label className="text-xs font-medium text-fg-subtle mb-1.5 block">Email</label>
-              <div className="rounded border border-border bg-surface-raised px-4 py-3 focus-within:border-accent focus-within:bg-surface focus-within:shadow-sm transition-all">
+              <label htmlFor="contact-email" className="mb-1.5 block text-xs font-medium text-fg-subtle">Email</label>
+              <div className="rounded-chip border border-border bg-bg px-3.5 py-2.5 transition-colors focus-within:border-accent">
                 <input
+                  id="contact-email"
                   required
                   type="email"
+                  autoComplete="email"
                   placeholder="you@company.com"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-transparent text-base sm:text-sm text-fg placeholder:text-fg-faint focus:outline-none"
+                  className="w-full bg-transparent text-base text-fg placeholder:text-fg-faint focus:outline-none sm:text-sm"
                 />
               </div>
             </div>
           </div>
 
           <div>
-            <label className="text-xs font-medium text-fg-subtle mb-1.5 block">Message</label>
-            <div className="rounded-xl border border-border bg-surface-raised px-4 py-3 focus-within:border-accent focus-within:bg-surface focus-within:shadow-sm transition-all">
+            <label htmlFor="contact-message" className="mb-1.5 block text-xs font-medium text-fg-subtle">Message</label>
+            <div className="rounded-chip border border-border bg-bg px-3.5 py-2.5 transition-colors focus-within:border-accent">
               <textarea
+                id="contact-message"
                 required
                 rows={4}
                 placeholder="What's on your mind?"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                className="w-full resize-none bg-transparent text-base sm:text-sm text-fg placeholder:text-fg-faint focus:outline-none leading-relaxed"
+                className="w-full resize-none bg-transparent text-base leading-relaxed text-fg placeholder:text-fg-faint focus:outline-none sm:text-sm"
               />
             </div>
           </div>
@@ -230,25 +243,32 @@ export default function ContactForm() {
           <button
             type="submit"
             disabled={sending}
-            className="rounded bg-fg text-bg px-6 py-2.5 text-sm font-semibold hover:opacity-80 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
+            className="inline-flex items-center gap-2 rounded-full bg-fg px-5 py-2.5 text-sm font-medium text-bg transition-opacity duration-200 hover:opacity-75 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {sending ? (
               <>
-                <svg className="w-3.5 h-3.5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <svg className="h-3.5 w-3.5 animate-spin" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
                   <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" strokeLinecap="round" />
                 </svg>
                 Sending…
               </>
             ) : (
-              "Send Message"
+              "Send message"
             )}
           </button>
         </form>
 
-        <div className="border-t border-border-subtle pt-5 flex flex-wrap gap-3">
+          </>
+            )}
+          </div>
+        </div>
+
+        {/* Everything else that counts as reaching me. Spans both rails, so it
+            survives either rail's success state. */}
+        <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 border-t border-border-subtle pt-5">
           <a
             href={`mailto:${profile.email}`}
-            className="rounded border-2 border-fg bg-fg px-5 py-2 text-sm font-semibold text-bg hover:opacity-80 transition-opacity"
+            className="text-[13px] font-medium text-fg-muted underline decoration-border underline-offset-4 transition-colors hover:text-fg hover:decoration-accent"
           >
             {profile.email}
           </a>
@@ -257,7 +277,7 @@ export default function ContactForm() {
               href={profile.linkedin}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded border-2 border-border px-5 py-2 text-sm font-semibold text-fg-muted hover:border-fg hover:text-fg transition-colors"
+              className="text-[13px] font-medium text-fg-muted transition-colors hover:text-fg"
             >
               LinkedIn
             </a>
@@ -267,7 +287,7 @@ export default function ContactForm() {
               href={profile.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="rounded border-2 border-border px-5 py-2 text-sm font-semibold text-fg-muted hover:border-fg hover:text-fg transition-colors"
+              className="text-[13px] font-medium text-fg-muted transition-colors hover:text-fg"
             >
               GitHub
             </a>
@@ -276,16 +296,14 @@ export default function ContactForm() {
             href={profile.resume}
             target="_blank"
             rel="noopener noreferrer"
-            className="rounded-full border border-border px-5 py-2 text-sm font-semibold text-accent hover:border-accent/60 transition-all inline-flex items-center gap-1.5"
+            className="inline-flex items-center gap-1.5 text-[13px] font-medium text-accent transition-colors hover:text-accent-hover"
           >
-            Download Resume
-            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+            Resume
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden>
               <path d="M7 17L17 7M17 7H7M17 7v10" />
             </svg>
           </a>
         </div>
-          </>
-        )}
       </section>
     </>
   );

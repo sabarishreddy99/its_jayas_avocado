@@ -191,9 +191,9 @@ export default function ChatMessage({ message, streaming }: Props) {
         <div className="text-[15px] leading-[1.7] text-fg pt-0.5">
           {streaming && !message.content ? (
             <span className="inline-flex gap-1 items-center h-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-fg-faint animate-bounce [animation-delay:0ms]" />
-              <span className="w-1.5 h-1.5 rounded-full bg-fg-faint animate-bounce [animation-delay:150ms]" />
-              <span className="w-1.5 h-1.5 rounded-full bg-fg-faint animate-bounce [animation-delay:300ms]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-fg-faint animate-think-wave [animation-delay:0ms]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-fg-faint animate-think-wave [animation-delay:150ms]" />
+              <span className="w-1.5 h-1.5 rounded-full bg-fg-faint animate-think-wave [animation-delay:300ms]" />
             </span>
           ) : (
             <>

@@ -85,7 +85,7 @@ export default function SkillsSection({ skills, featuredProjects }: Props) {
                   <span className="display-serif display-md min-w-0 flex-1 text-fg transition-colors group-hover:text-accent">
                     {group.category}
                   </span>
-                  <span className="shrink-0 font-mono text-[11px] tabular-nums text-fg-faint">
+                  <span className="shrink-0 self-center font-mono text-[11px] tabular-nums text-fg-faint">
                     {group.items.length}
                   </span>
                   {/* Plus that becomes a minus. One bar rotates, the other holds. */}

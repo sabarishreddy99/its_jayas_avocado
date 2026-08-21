@@ -130,7 +130,7 @@ export default function SkillsConstellation() {
             <path key={i} d={e.d} fill="none"
               stroke={on ? "var(--accent)" : "currentColor"}
               strokeWidth={on ? 1.6 : 1} className="text-border"
-              style={{ opacity: anyHover ? (on ? 0.9 : 0.05) : 0.16, transition: "opacity 0.25s ease, stroke-width 0.25s ease" }} />
+              style={{ opacity: anyHover ? (on ? 0.9 : 0.05) : 0.16, transition: "opacity 0.25s cubic-bezier(0.16,1,0.3,1), stroke-width 0.25s cubic-bezier(0.16,1,0.3,1)" }} />
           );
         })}
 
@@ -141,9 +141,9 @@ export default function SkillsConstellation() {
           return (
             <g key={s.key} transform={`translate(${s.x}, ${s.y})`}
               onMouseEnter={() => setHoverSkill(s.key)} onMouseLeave={() => setHoverSkill(null)}
-              style={{ cursor: "default", opacity: dim ? 0.3 : 1, transition: "opacity 0.25s ease" }}>
-              <circle r={on ? 5 : 3.5} fill={on ? "var(--accent)" : "currentColor"} className="text-fg-faint" style={{ transition: "all 0.2s ease" }} />
-              <text x={-12} y={4} textAnchor="end" className={`text-[12.5px] font-medium ${on ? "fill-accent" : "fill-fg-muted"}`} style={{ transition: "fill 0.2s ease" }}>
+              style={{ cursor: "default", opacity: dim ? 0.3 : 1, transition: "opacity 0.25s cubic-bezier(0.16,1,0.3,1)" }}>
+              <circle r={on ? 5 : 3.5} fill={on ? "var(--accent)" : "currentColor"} className="text-fg-faint" style={{ transition: "r 0.2s cubic-bezier(0.16,1,0.3,1), fill 0.2s cubic-bezier(0.16,1,0.3,1)" }} />
+              <text x={-12} y={4} textAnchor="end" className={`text-[12.5px] font-medium ${on ? "fill-accent" : "fill-fg-muted"}`} style={{ transition: "fill 0.2s cubic-bezier(0.16,1,0.3,1)" }}>
                 {s.label}
               </text>
             </g>
@@ -154,13 +154,19 @@ export default function SkillsConstellation() {
         {nodeNodes.map((n) => {
           const on = hoverNode === n.id || (hoverSkill && skillNodes.find((s) => s.key === hoverSkill)?.nodeIds.includes(n.id));
           const dim = anyHover && !on;
-          const dot = on ? (n.award ? "rgb(245 158 11)" : n.kind === "experience" ? "var(--accent)" : "rgb(139 92 246)") : "currentColor";
+          const dot = on
+            ? n.award
+              ? "var(--fg)"
+              : n.kind === "experience"
+                ? "var(--accent)"
+                : "color-mix(in srgb, var(--accent) 60%, transparent)"
+            : "currentColor";
           return (
             <g key={n.id} transform={`translate(${n.x}, ${n.y})`}
               onMouseEnter={() => setHoverNode(n.id)} onMouseLeave={() => setHoverNode(null)}
-              style={{ cursor: "default", opacity: dim ? 0.3 : 1, transition: "opacity 0.25s ease" }}>
-              <circle r={on ? 5 : 3.5} fill={dot} className="text-fg-faint" style={{ transition: "all 0.2s ease" }} />
-              <text x={12} y={4} textAnchor="start" className={`text-[12.5px] font-medium ${on ? "fill-fg" : "fill-fg-muted"}`} style={{ transition: "fill 0.2s ease" }}>
+              style={{ cursor: "default", opacity: dim ? 0.3 : 1, transition: "opacity 0.25s cubic-bezier(0.16,1,0.3,1)" }}>
+              <circle r={on ? 5 : 3.5} fill={dot} className="text-fg-faint" style={{ transition: "r 0.2s cubic-bezier(0.16,1,0.3,1), fill 0.2s cubic-bezier(0.16,1,0.3,1)" }} />
+              <text x={12} y={4} textAnchor="start" className={`text-[12.5px] font-medium ${on ? "fill-fg" : "fill-fg-muted"}`} style={{ transition: "fill 0.2s cubic-bezier(0.16,1,0.3,1)" }}>
                 {n.label}{n.award ? " ★" : ""}
               </text>
             </g>

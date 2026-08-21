@@ -23,7 +23,6 @@ export default function HeroStats({
 }) {
   const STATS = (stats && stats.length > 0) ? stats : FALLBACK_STATS;
   const [counts, setCounts] = useState(STATS.map(() => 0));
-  const [hovered, setHovered] = useState<number | null>(null);
   const rootRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -74,47 +73,31 @@ export default function HeroStats({
   }, [startOnView]);
 
   return (
-    <div ref={rootRef} className={`grid gap-2 sm:gap-3 ${cols === 2 ? "grid-cols-2" : "grid-cols-4"}`}>
+    /* A ruled band, not four cards. The card version nested containers inside
+       the chapter's own card, gated the `sub` line behind hover (unreachable on
+       touch), and animated max-height to reveal it. Columns divided by hairlines
+       read as what this actually is — a table of measurements — and every line
+       is present at rest. */
+    <div
+      ref={rootRef}
+      className={`grid border-y border-border divide-border ${
+        cols === 2 ? "grid-cols-2 divide-x divide-y" : "grid-cols-4 divide-x"
+      }`}
+    >
       {STATS.map((stat, i) => (
-        <div
-          key={stat.label}
-          onMouseEnter={() => setHovered(i)}
-          onMouseLeave={() => setHovered(null)}
-          className={`group relative rounded border bg-surface p-3 sm:p-4 overflow-hidden cursor-default select-none transition-all duration-300 ${
-            hovered === i
-              ? "border-border-strong shadow-sm"
-              : "border-border hover:border-border-strong"
-          }`}
-        >
-          {/* Hover glow */}
-          <div
-            className="absolute inset-0 bg-gradient-to-br from-accent/4 via-transparent to-accent/2 transition-opacity duration-300"
-            style={{ opacity: hovered === i ? 1 : 0 }}
-          />
-
-          {/* Number */}
-          <p className="relative font-mono leading-none tabular-nums">
-            <span className={`text-xl sm:text-2xl lg:text-[1.75rem] font-bold transition-colors duration-300 ${hovered === i ? "text-accent" : "text-fg"}`}>
+        <div key={stat.label} className="px-4 py-5 first:pl-0">
+          <p className="font-mono leading-none tabular-nums">
+            <span className="text-xl font-bold text-fg sm:text-2xl lg:text-[1.75rem]">
               {counts[i]}
             </span>
-            <span className={`text-sm sm:text-base font-bold transition-colors duration-300 ${hovered === i ? "text-accent" : "text-fg-subtle"}`}>
+            <span className="text-sm font-bold text-fg-subtle sm:text-base">
               {stat.suffix}
             </span>
           </p>
-
-          {/* Label */}
-          <p className="relative mt-1.5 text-[9px] sm:text-[10px] font-bold uppercase tracking-widest text-fg-faint leading-tight">
+          <p className="mt-2 text-[10px] font-bold uppercase tracking-widest leading-tight text-fg-subtle">
             {stat.label}
           </p>
-
-          {/* Sub — fades in on hover */}
-          <p
-            className="relative mt-0.5 text-[9px] leading-tight text-fg-faint/70 transition-all duration-200 overflow-hidden"
-            style={{
-              maxHeight: hovered === i ? "2rem" : "0px",
-              opacity: hovered === i ? 1 : 0,
-            }}
-          >
+          <p className="mt-1 text-[11px] leading-snug text-fg-subtle">
             {stat.sub}
           </p>
         </div>

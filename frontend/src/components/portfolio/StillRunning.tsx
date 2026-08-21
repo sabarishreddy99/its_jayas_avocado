@@ -176,7 +176,7 @@ export default function StillRunning({
 
       {note && (
         <ScrollReveal delay={items.length * 110}>
-          <p className="hanging-quote mt-8 border-l border-border-strong pl-4 text-sm text-fg-subtle">
+          <p className="hanging-quote voice-serif mt-8 max-w-[62ch] border-l border-border-strong pl-5 text-[15px] leading-relaxed text-fg-subtle">
             {note}
           </p>
         </ScrollReveal>

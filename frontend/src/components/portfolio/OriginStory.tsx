@@ -39,7 +39,7 @@ export default function OriginStory({ why }: { why: WhyBlock }) {
 
         {why.pullQuote && (
           <ScrollReveal delay={why.paragraphs.length * 90} direction="right">
-            <p className="hanging-quote mt-8 border-l-2 border-border-strong pl-5 text-[15px] leading-relaxed text-fg-subtle">
+            <p className="hanging-quote voice-serif mt-8 max-w-[62ch] border-l border-border-strong pl-5 text-[15px] leading-relaxed text-fg-subtle">
               {why.pullQuote}
             </p>
           </ScrollReveal>

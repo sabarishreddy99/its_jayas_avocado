@@ -160,13 +160,10 @@ export default function Nav() {
       }`}
     >
 
-      {/* ── Gradient scrim ── softly bleeds the page bg colour downward,
-           creating a visual "air gap" between the nav and page content   */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-full h-16"
-        style={{ background: "linear-gradient(to bottom, var(--bg) 0%, transparent 100%)" }}
-      />
+      {/* The gradient scrim that used to sit here washed any line of body copy
+          passing under it to 1.7-2.3:1 — legible enough to notice, not enough
+          to read. The nav's own ground is opaque, so content now meets a clean
+          edge: fully readable, or fully behind the chrome. */}
 
       {/* ── Floating wrapper — gap on all screen sizes ── */}
       <div className="py-2 px-2 lg:px-4">
@@ -313,11 +310,11 @@ export default function Nav() {
             onClick={() => playClick("primary")}
             className="group ml-2 relative inline-flex items-center px-5 py-1.5 rounded-full bg-fg text-bg text-sm font-medium hover:opacity-75 transition-opacity duration-200 overflow-hidden"
           >
-            <span className="flex items-center gap-1.5 transition-all duration-300 ease-in-out group-hover:-translate-x-10 group-hover:opacity-0">
+            <span className="flex items-center gap-1.5 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:-translate-x-10 group-hover:opacity-0">
               <SparkleIcon size={13} className="shrink-0" />
               Ask Avocado
             </span>
-            <span className="absolute inset-0 flex items-center justify-center translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-all duration-300 ease-in-out text-sm font-medium">
+            <span className="absolute inset-0 flex items-center justify-center translate-x-10 opacity-0 group-hover:translate-x-0 group-hover:opacity-100 transition-[transform,opacity] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)] text-sm font-medium">
               Chat →
             </span>
           </Link>

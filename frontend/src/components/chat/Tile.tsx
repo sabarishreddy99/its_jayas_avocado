@@ -17,8 +17,8 @@ import type { ReactNode, MouseEventHandler } from "react";
 export type TileProps = {
   children: ReactNode;
   className?: string;
-  /** Tailwind gradient endpoints for the top sweep bar, e.g. "from-blue-500 to-cyan-500". */
-  sweep?: string;
+  /** Show the accent hairline that wipes in across the top edge on hover. */
+  sweep?: boolean;
   /** Show the geometric corner-bracket accents. */
   brackets?: boolean;
   /** Force interactive styling (card-lift + hover). Defaults to true when onClick/href is set. */
@@ -71,7 +71,7 @@ export default function Tile({
       {sweep && (
         <span
           aria-hidden
-          className={`absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r ${sweep} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300`}
+          className="absolute inset-x-0 top-0 h-px bg-accent origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300"
         />
       )}
       {brackets && <Brackets />}

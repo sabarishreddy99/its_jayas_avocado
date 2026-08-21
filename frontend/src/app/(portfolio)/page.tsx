@@ -95,7 +95,6 @@ const EXPLORE_PAGES = [
     href: "/experience",
     label: "Experience",
     desc: "Work history & roles",
-    accent: "from-blue-500 to-cyan-500",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
@@ -106,7 +105,6 @@ const EXPLORE_PAGES = [
     href: "/education",
     label: "Education",
     desc: "Degrees & institutions",
-    accent: "from-violet-500 to-purple-500",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/>
@@ -117,7 +115,6 @@ const EXPLORE_PAGES = [
     href: "/projects",
     label: "Projects",
     desc: "What I've shipped",
-    accent: "from-emerald-500 to-teal-500",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
@@ -128,7 +125,6 @@ const EXPLORE_PAGES = [
     href: "/lab",
     label: "Lab",
     desc: "Building in public",
-    accent: "from-rose-500 to-pink-500",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M9 3H5a2 2 0 0 0-2 2v4m6-6h10a2 2 0 0 1 2 2v4M9 3v11m0 0H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-2a2 2 0 0 0-2-2h-4m-6 0h6"/>
@@ -139,7 +135,6 @@ const EXPLORE_PAGES = [
     href: "/blog",
     label: "Blog",
     desc: "Notes & deep dives",
-    accent: "from-amber-500 to-yellow-400",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/>
@@ -150,7 +145,6 @@ const EXPLORE_PAGES = [
     href: "/gallery",
     label: "Gallery",
     desc: "Moments & visuals",
-    accent: "from-indigo-500 to-blue-400",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="M21 15l-5-5L5 21"/>
@@ -161,7 +155,6 @@ const EXPLORE_PAGES = [
     href: "/quotes",
     label: "Quotes",
     desc: "Lines that stuck",
-    accent: "from-fuchsia-500 to-violet-500",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
         <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
@@ -172,7 +165,6 @@ const EXPLORE_PAGES = [
     href: "/now",
     label: "Now",
     desc: "What I'm up to",
-    accent: "from-cyan-500 to-sky-400",
     icon: (
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
         <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
@@ -282,7 +274,7 @@ export default function PortfolioHome() {
                 const chipText = parts.length > 0 ? `${label} · ${parts.join(" · ")}` : label;
                 return (
                   <div className="animate-fade-up flex items-center gap-2" style={{ animationDelay: "0ms" }}>
-                    <span className={`inline-block w-1.5 h-1.5 rounded-full shrink-0 ${isOpen ? "bg-green-500 animate-pulse" : "bg-zinc-400 dark:bg-zinc-500"}`} />
+                    <span className={`inline-block w-1.5 h-1.5 rounded-full shrink-0 ${isOpen ? "bg-accent" : "bg-fg-faint"}`} />
                     <span className="text-[11px] font-medium tracking-wide text-fg-faint/80">{chipText}</span>
                   </div>
                 );
@@ -320,20 +312,23 @@ export default function PortfolioHome() {
               <div className="animate-fade-up flex flex-col gap-3.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3" style={{ animationDelay: "300ms" }}>
                 <div className="flex flex-col gap-1.5">
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5">
+                    <a
+                      href="#contact"
+                      className="group inline-flex items-center justify-center gap-2 rounded-full bg-fg px-7 py-3 text-sm font-medium text-bg transition-opacity duration-200 hover:opacity-75"
+                    >
+                      Schedule a call
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden
+                        className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </a>
                     <Link
                       href="/chat"
-                      className="group inline-flex items-center justify-center gap-2 rounded-full bg-fg text-bg px-7 py-3 text-sm font-medium hover:opacity-75 transition-opacity duration-200"
+                      className="group inline-flex items-center justify-center gap-2 rounded-full border border-border bg-surface px-6 py-3 text-sm font-medium text-fg transition-colors duration-200 hover:border-border-strong hover:bg-surface-raised"
                     >
                       <SparkleIcon size={14} className="shrink-0 transition-transform duration-200 group-hover:scale-110 group-hover:rotate-12" />
                       Ask Avocado
                     </Link>
-                    <a
-                      href="#contact"
-                      className="group inline-flex items-center gap-1.5 text-sm font-medium text-fg-muted hover:text-fg transition-colors duration-200"
-                    >
-                      Schedule a Call
-                      <span className="group-hover:translate-x-0.5 transition-transform duration-200">→</span>
-                    </a>
                   </div>
                   {hero?.avocadoNote && (
                     <p className="text-[11px] text-fg-faint max-w-[42ch]">{hero.avocadoNote}</p>
@@ -353,8 +348,12 @@ export default function PortfolioHome() {
                   </a>
                   {profile.resume && (
                     <a href={profile.resume} target="_blank" rel="noopener noreferrer"
-                      className="ml-2 inline-flex items-center text-[11px] font-medium text-fg-faint hover:text-fg bg-surface dark:bg-surface-raised border border-border/60 dark:border-border-strong rounded-chip px-3 py-2.5 sm:py-1.5 hover:border-fg-muted transition-all">
-                      Resume ↗
+                      className="group ml-2 inline-flex items-center gap-1.5 text-[13px] font-medium text-fg-muted transition-colors hover:text-fg">
+                      Resume
+                      <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden
+                        className="shrink-0 transition-transform duration-200 group-hover:-translate-y-0.5 group-hover:translate-x-0.5">
+                        <path d="M7 17L17 7M17 7H7M17 7v10" />
+                      </svg>
                     </a>
                   )}
                 </div>
@@ -413,7 +412,13 @@ export default function PortfolioHome() {
               </div>
             </Inner>
 
-            <HeroName name={profile.name} />
+            {/* At 390x844 the name band used to break the fold by ~37px, so the
+                first viewport closed on a row of half-glyphs. Clearing it lets
+                the hero end on its own meta row and gives the band a full
+                entrance of its own. */}
+            <div className="pt-10 sm:pt-0">
+              <HeroName name={profile.name} />
+            </div>
 
             <Inner className="pt-2 pb-8 sm:pb-9 md:pb-11">
               <Signature text={hero?.signature ?? "Do hard things!"} delay={900} />
@@ -524,32 +529,10 @@ export default function PortfolioHome() {
           nextHref="#skills"
           nextLabel="How I work"
         >
-          {/* The bio, now that the story has paid for it */}
-          <ScrollReveal>
-            <p className="text-lg sm:text-xl font-light leading-[1.75] text-fg-muted max-w-2xl">
-              <HighlightNumbers text={profile.bio} />
-            </p>
-          </ScrollReveal>
-
-          {/* The same career in resume voice. The bio above is how he
-              talks; this is what a recruiter is scanning for, and it was
-              already written and sitting unused in profile.json. */}
-          {profile.summary && (
-            <ScrollReveal delay={80}>
-              <div className="mt-7 border-l border-border pl-5">
-                <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-fg-faint">
-                  The resume version
-                </p>
-                <p className="max-w-[62ch] text-sm leading-relaxed text-fg-subtle">
-                  <HighlightNumbers text={profile.summary} />
-                </p>
-              </div>
-            </ScrollReveal>
-          )}
-
-          {/* The metrics — evidence, not an introduction */}
+          {/* The measurements open the chapter; the prose below explains them.
+              Reversed from evidence-after-claim, which read as an echo. */}
           {profile.heroStats && profile.heroStats.length > 0 && (
-            <div className="mt-10">
+            <div className="mb-10">
               {profile.heroStatsLabel && (
                 <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-fg-faint mb-4">
                   {profile.heroStatsLabel}
@@ -566,6 +549,29 @@ export default function PortfolioHome() {
                 <HeroStats stats={profile.heroStats} cols={2} startOnView />
               </div>
             </div>
+          )}
+
+          {/* The bio, now that the story has paid for it */}
+          <ScrollReveal delay={60}>
+            <p className="text-lg sm:text-xl font-light leading-[1.75] text-fg-muted max-w-2xl">
+              <HighlightNumbers text={profile.bio} />
+            </p>
+          </ScrollReveal>
+
+          {/* The same career in resume voice. The bio above is how he
+              talks; this is what a recruiter is scanning for, and it was
+              already written and sitting unused in profile.json. */}
+          {profile.summary && (
+            <ScrollReveal delay={80}>
+              <div className="mt-7 border-l border-border-strong pl-5">
+                <p className="mb-2 text-[10px] font-bold uppercase tracking-[0.18em] text-fg-faint">
+                  The resume version
+                </p>
+                <p className="max-w-[62ch] text-sm leading-relaxed text-fg-subtle">
+                  <HighlightNumbers text={profile.summary} />
+                </p>
+              </div>
+            </ScrollReveal>
           )}
 
           <div className="mt-12 flex items-center justify-between mb-6">
@@ -588,32 +594,34 @@ export default function PortfolioHome() {
                     sourceLinks={p.sourceLinks}
                   />
                 ) : (
-                  <div className="group relative flex-1 rounded-card border border-border bg-surface p-6 space-y-3 hover:border-border-strong card-lift overflow-hidden">
-                    <div className={`absolute inset-x-0 top-0 h-px ${p.award ? "bg-gradient-to-r from-amber-500 to-orange-400" : "bg-fg/20"} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300`} />
+                  <div className="group relative min-w-0 flex-1 rounded-card border border-border bg-surface p-5 sm:p-6 space-y-3 hover:border-border-strong card-lift overflow-hidden">
+                    <div className={`absolute inset-x-0 top-0 h-px ${p.award ? "bg-accent" : "bg-fg/20"} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300`} />
                     <svg className="absolute top-2.5 left-2.5 text-border/50 group-hover:text-accent/40 transition-colors duration-200 pointer-events-none" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
                       <path d="M9 1 L1 1 L1 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                     <svg className="absolute bottom-2.5 right-2.5 text-border/50 group-hover:text-accent/40 transition-colors duration-200 pointer-events-none" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
                       <path d="M1 9 L9 9 L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
-                    <div className="flex items-start justify-between gap-2">
-                      <h4 className="font-semibold text-fg text-sm leading-snug group-hover:text-accent transition-colors">{p.title}</h4>
+                    <div>
+                      <div className="mb-2 flex h-5 items-center">
                       {p.award && (
-                        <span className="text-[10px] font-semibold rounded-sm bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-400 border border-amber-200 dark:border-amber-800 px-2 py-0.5 whitespace-nowrap flex-shrink-0">
+                        <span className="inline-flex max-w-full items-center truncate rounded-chip border border-border-strong bg-surface-raised px-2 py-0.5 text-[10px] font-semibold text-fg">
                           <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="inline-block align-[-1px] mr-1" aria-hidden><path d="M8 21h8M12 17v4M6 4h12v5a6 6 0 0 1-12 0zM6 6H3v2a3 3 0 0 0 3 3M18 6h3v2a3 3 0 0 0-3 3" /></svg>{p.award}
                         </span>
                       )}
+                      </div>
+                      <h4 className="font-semibold text-fg text-sm leading-snug group-hover:text-accent transition-colors">{p.title}</h4>
                     </div>
-                    <p className="text-xs leading-5 text-fg-subtle">{p.description}</p>
-                    <div className="flex flex-wrap gap-1.5">
+                    <p className="line-clamp-6 text-xs leading-5 text-fg-subtle">{p.description}</p>
+                    <div className="flex min-w-0 flex-wrap gap-1.5">
                       {p.tags.slice(0, 4).map((t) => (
-                        <span key={t} className="rounded-full border border-border px-2.5 py-0.5 text-[10px] font-medium text-fg-subtle tracking-wide">
+                        <span key={t} className="max-w-full truncate rounded-full border border-border px-2.5 py-0.5 text-[10px] font-medium text-fg-subtle tracking-wide">
                           {t}
                         </span>
                       ))}
                     </div>
                     {p.note && (
-                      <p className="text-[11px] text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/50 border border-amber-100 dark:border-amber-900 rounded-sm px-2.5 py-1.5 leading-relaxed">
+                      <p className="text-[11px] text-fg-muted bg-surface-raised border border-border rounded-chip px-2.5 py-1.5 leading-relaxed">
                         {p.note}
                       </p>
                     )}
@@ -649,7 +657,7 @@ export default function PortfolioHome() {
         nextLabel="What colleagues say"
       >
         <ScrollReveal>
-          <div className="hanging-quote border-l border-border-strong pl-4 max-w-2xl mb-10">
+          <div className="hanging-quote border-l border-border-strong pl-5 max-w-[62ch] mb-10">
             <p className="voice-serif text-fg-muted" style={{ fontSize: "1.0625rem", lineHeight: 1.7 }}>
               {profile.obsession}
             </p>
@@ -761,20 +769,19 @@ export default function PortfolioHome() {
       >
         <ContactForm />
 
-        {/* Site index — the real navigation, demoted but never removed */}
-        <div className="mt-14 pt-8 border-t border-border md:mt-16 md:pt-10">
-          <div className="flex items-center gap-3 mb-5">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-fg-faint shrink-0">Quick Explore</p>
-            <div className="flex-1 h-px bg-gradient-to-r from-border to-transparent" aria-hidden />
-          </div>
+        {/* Site index — the real navigation, demoted but never removed. It sits
+            under a column rule rather than its own header so it reads as the
+            page's colophon, not a third decision competing with the two rails. */}
+        <div className="mt-16 md:mt-20">
+          <div className="chapter-rule mb-8" aria-hidden />
           <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-8">
-            {EXPLORE_PAGES.map(({ href, label, desc, accent, icon }) => (
+            {EXPLORE_PAGES.map(({ href, label, desc, icon }) => (
               <Link
                 key={href}
                 href={href}
                 className="group relative flex min-h-[104px] flex-col gap-2.5 p-4 rounded-card border border-border bg-surface hover:bg-surface-raised hover:border-border-strong transition-all overflow-hidden"
               >
-                <div className={`absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r ${accent} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300`} />
+                <div className="absolute inset-x-0 top-0 h-px bg-accent origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                 <span className="text-fg-faint group-hover:text-accent transition-colors">{icon}</span>
                 <div className="flex-1">
                   <p className="text-xs font-semibold text-fg leading-tight">{label}</p>
