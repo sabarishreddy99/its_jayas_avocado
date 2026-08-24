@@ -27,27 +27,15 @@ export default function EducationPage() {
         {/* Decorative bloom */}
         <div
           className="absolute -top-8 -right-8 w-72 h-72 rounded-full blur-3xl pointer-events-none -z-10"
-          style={{ background: "radial-gradient(circle, rgba(251,191,36,0.12) 0%, rgba(245,158,11,0.06) 60%, transparent 100%)" }}
+          style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--accent) 12%, transparent) 0%, color-mix(in srgb, var(--accent) 6%, transparent) 60%, transparent 100%)" }}
           aria-hidden
         />
 
-        <p className="text-[11px] font-bold uppercase tracking-widest text-fg-faint mb-3">Background · Academia</p>
+        <p className="text-[11px] font-medium tracking-wide text-fg-subtle mb-3">Background · Academia</p>
 
         {/* Title with gradient glyph */}
         <div className="flex items-baseline gap-4 mb-2">
-          <h1 className="text-3xl sm:text-4xl font-bold text-fg">Education</h1>
-          <span
-            className="text-2xl sm:text-3xl select-none"
-            style={{
-              background: "linear-gradient(135deg, #f59e0b, #f97316)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-            }}
-            aria-hidden
-          >
-            ✺
-          </span>
+          <h1 className="display-serif display-md text-fg">Education</h1>
         </div>
 
         {profile.page_education && (
@@ -59,8 +47,8 @@ export default function EducationPage() {
         {/* Stat chips */}
         <div className="flex flex-wrap gap-2 mt-4">
           {primaryGPA && (
-            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 rounded-full px-3 py-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
+            <span className="inline-flex items-center gap-1.5 text-[11px] font-semibold text-fg bg-surface-raised border border-border rounded-full px-3 py-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-fg" />
               GPA {primaryGPA}
             </span>
           )}
@@ -78,22 +66,22 @@ export default function EducationPage() {
       {/* Timeline */}
       <div className="relative">
         {/* Vertical line */}
-        <div className="absolute left-0 top-3 bottom-3 w-px bg-gradient-to-b from-amber-300 dark:from-amber-700 to-border" />
+        <div className="absolute left-0 top-3 bottom-3 w-px bg-gradient-to-b from-border dark:from-fg to-border" />
 
         <div className="space-y-10">
           {education.map((edu, i) => (
             <div key={i} className="pl-8 sm:pl-10 relative">
               {/* Timeline dot */}
-              <div className="flex absolute left-0 top-3 -translate-x-1/2 w-3 h-3 rotate-45 bg-surface border-2 border-amber-400 dark:border-amber-500 ring-2 ring-amber-100 dark:ring-amber-900" />
+              <div className="flex absolute left-0 top-3 -translate-x-1/2 w-3 h-3 rotate-45 bg-surface border-2 border-fg ring-2 ring-surface-raised dark:ring-fg" />
 
               <div className="group relative rounded-card border border-border bg-surface p-6 sm:p-7 hover:border-border-strong transition-all overflow-hidden card-lift">
                 {/* Hover sweep */}
-                <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-amber-400 to-orange-500 origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                <div className="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-fg to-fg origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
                 {/* Corner bracket accents */}
-                <svg className="absolute top-2.5 left-2.5 text-border/50 group-hover:text-amber-400/40 transition-colors duration-200 pointer-events-none" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
+                <svg className="absolute top-2.5 left-2.5 text-border/50 group-hover:text-fg/40 transition-colors duration-200 pointer-events-none" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
                   <path d="M9 1 L1 1 L1 9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
-                <svg className="absolute bottom-2.5 right-2.5 text-border/50 group-hover:text-amber-400/40 transition-colors duration-200 pointer-events-none" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
+                <svg className="absolute bottom-2.5 right-2.5 text-border/50 group-hover:text-fg/40 transition-colors duration-200 pointer-events-none" width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden>
                   <path d="M1 9 L9 9 L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
 
@@ -110,7 +98,7 @@ export default function EducationPage() {
                       {edu.start} – {edu.end}
                     </span>
                     {edu.gpa && (
-                      <span className="rounded-sm bg-amber-50 dark:bg-amber-950/50 border border-amber-200 dark:border-amber-800 px-3 py-0.5 text-[11px] font-semibold text-amber-700 dark:text-amber-400 whitespace-nowrap">
+                      <span className="rounded-sm bg-surface-raised border border-border px-3 py-0.5 text-[11px] font-semibold text-fg whitespace-nowrap">
                         GPA {edu.gpa}
                       </span>
                     )}
@@ -137,8 +125,8 @@ export default function EducationPage() {
                     {edu.highlights.map((h, j) => {
                       const isAward = h.toLowerCase().includes("award") || h.toLowerCase().includes("outstanding") || h.toLowerCase().includes("winner");
                       return (
-                        <li key={j} className="flex items-start gap-2.5 text-sm text-fg-muted leading-relaxed">
-                          <span className={`mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full ${isAward ? "bg-amber-400" : "bg-border-strong"}`} />
+                        <li key={j} className="flex items-start gap-2.5 text-sm text-fg-muted leading-relaxed max-w-[72ch]">
+                          <span className={`mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full ${isAward ? "bg-fg" : "bg-border-strong"}`} />
                           <span>{isAward ? <span className="font-medium text-fg">{h}</span> : h}</span>
                         </li>
                       );

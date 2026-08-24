@@ -306,6 +306,36 @@ export default function PortfolioHome() {
                     {hero.sub}
                   </p>
                 )}
+
+                {/* Below xl the annotation field cannot run — it is an absolutely
+                    positioned canvas. That left the phone's first viewport with no
+                    trace of the stances, so the systems argument only ever appeared
+                    on desktop. These are the same terms from the same source,
+                    stacked instead of scattered. */}
+                <ul
+                  aria-hidden
+                  className="mt-7 flex flex-wrap items-center gap-x-5 gap-y-2 xl:hidden"
+                >
+                  {(profile.opinions?.for ?? []).slice(0, 3).map((o, i) => (
+                    <li
+                      key={o.term}
+                      className="relative text-[17px] leading-none text-fg-subtle"
+                      style={{
+                        fontFamily: "var(--font-caveat), 'Segoe Print', cursive",
+                        transform: `rotate(${[-1.5, 1, -0.75][i]}deg)`,
+                      }}
+                    >
+                      {o.term}
+                      {i === 0 && (
+                        <span
+                          className="absolute -bottom-1 left-0 h-px w-full bg-accent/50"
+                          aria-hidden
+                        />
+                      )}
+                    </li>
+                  ))}
+                </ul>
+
               </div>
 
               {/* 4 · Two CTAs + social */}
@@ -427,62 +457,34 @@ export default function PortfolioHome() {
         </div>
       </section>
 
-      {/* ── 01 · The creed ────────────────────────────────────────────
-          Opens the story rather than decorating the hero. This is the claim
-          the rest of the page is evidence for, so it goes first and it goes
-          in full at every viewport. */}
-      {hope && (
-        <Chapter
-          n="01"
-          label={hope.eyebrow ?? "What I optimize for"}
-          deck="The reason the rest of this page exists."
-          id="creed"
-          nextHref="#why"
-          nextLabel="Where it started"
-        >
-          <HopeMolecules data={hope} variant="chapter" />
-        </Chapter>
-      )}
-
-      {/* ── 02 · Why I build ──────────────────────────────────────── */}
+      {/* ── 01 · Kavali, 2020 ──────────────────────────────────────── */}
       {profile.why && (
         <Chapter
-          n="02"
+          n="01"
           label={profile.why.label}
+          place="Kavali, Nellore"
+          year="2020"
+          measure="1 named user · HTML + SEO · live since Jun 2020"
           deck="Where this started, and why it still decides what I pick up."
           id="why"
-          nextHref="#still-running"
-          nextLabel="What's still up"
+          nextHref="#gradevitian"
+          nextLabel="The next site"
         >
           <OriginStory why={profile.why} />
         </Chapter>
       )}
 
-      {/* ── 03 · Still running ── the signature moment ────────────── */}
-      {shipped.length > 0 && (
-        <Chapter
-          n="03"
-          label={profile.shippedLabel ?? "Still running"}
-          deck="Things I shipped that are still in production. The counters are live."
-          id="still-running"
-          nextHref="#gradevitian"
-          nextLabel="The oldest one"
-        >
-          <StillRunning items={shipped} note={profile.shippedNote} />
-          <div className="mt-10 pt-8 border-t border-border">
-            <SiteVitals />
-          </div>
-        </Chapter>
-      )}
-
-      {/* ── 04 · gradeVITian ──────────────────────────────────────── */}
+      {/* ── 02 · Vellore, 2020 ──────────────────────────────────────── */}
       <Chapter
-        n="04"
+        n="02"
         label="gradeVITian"
+        place="Vellore · VIT"
+        year="2020"
+        measure="~17,000 people a month · sub-second mobile loads · on call since Aug 2020"
         deck="Built as an undergrad, still on call. Six years live and five graduating classes later."
         id="gradevitian"
-        nextHref="#opinions"
-        nextLabel="Where I stand"
+        nextHref="#projects"
+        nextLabel="Where it scaled"
       >
         <SpotlightSection hideEyebrow />
 
@@ -503,31 +505,18 @@ export default function PortfolioHome() {
         )}
       </Chapter>
 
-      {/* ── 05 · Where I stand ────────────────────────────────────────
-          The hinge: the page turns here from a record of what shipped into
-          an argument about how it gets built. */}
-      {profile.opinions && (
-        <Chapter
-          n="05"
-          label={profile.opinions.label}
-          deck={profile.opinions.deck}
-          id="opinions"
-          nextHref="#projects"
-          nextLabel="The work itself"
-        >
-          <Opinions data={profile.opinions} />
-        </Chapter>
-      )}
-
-      {/* ── 06 · The work ─────────────────────────────────────────── */}
+      {/* ── 03 · Offshore & NYU ─────────────────────────────────────────── */}
       {featured.length > 0 && (
         <Chapter
-          n="06"
+          n="03"
           label="The work"
+          place="Offshore · Shell PLC · NYU"
+          year="2021—present"
+          measure="200+ offshore stations · 115GB/day at zero data loss · 3K+ RPS at 99.9% uptime"
           deck="Production systems, and the numbers they hold up under."
           id="projects"
-          nextHref="#skills"
-          nextLabel="How I work"
+          nextHref="#creed"
+          nextLabel="Why any of it"
         >
           {/* The measurements open the chapter; the prose below explains them.
               Reversed from evidence-after-claim, which read as an echo. */}
@@ -641,6 +630,59 @@ export default function PortfolioHome() {
               </ScrollReveal>
             ))}
           </div>
+        </Chapter>
+      )}
+
+      {/* ── 04 · New York, 2026 ────────────────────────────────────────────
+          Opens the story rather than decorating the hero. This is the claim
+          the rest of the page is evidence for, so it goes first and it goes
+          in full at every viewport. */}
+      {hope && (
+        <Chapter
+          n="04"
+          label={hope.eyebrow ?? "What I optimize for"}
+          place="New York"
+          year="2026"
+          measure="hybrid retrieval · a public MCP server · live traces at /system"
+          deck="The reason the rest of this page exists."
+          id="creed"
+          nextHref="#still-running"
+          nextLabel="What's still up"
+        >
+          <HopeMolecules data={hope} variant="chapter" />
+        </Chapter>
+      )}
+
+      {/* ── 05 · Still running ── the signature moment ────────────── */}
+      {shipped.length > 0 && (
+        <Chapter
+          n="05"
+          label={profile.shippedLabel ?? "Still running"}
+          deck="Things I shipped that are still in production. The counters are live."
+          id="still-running"
+          nextHref="#opinions"
+          nextLabel="What the field taught"
+        >
+          <StillRunning items={shipped} note={profile.shippedNote} />
+          <div className="mt-10 pt-8 border-t border-border">
+            <SiteVitals />
+          </div>
+        </Chapter>
+      )}
+
+      {/* ── 06 · Where I stand ────────────────────────────────────────
+          The hinge: the page turns here from a record of what shipped into
+          an argument about how it gets built. */}
+      {profile.opinions && (
+        <Chapter
+          n="06"
+          label={profile.opinions.label}
+          deck={profile.opinions.deck}
+          id="opinions"
+          nextHref="#skills"
+          nextLabel="How I work"
+        >
+          <Opinions data={profile.opinions} />
         </Chapter>
       )}
 

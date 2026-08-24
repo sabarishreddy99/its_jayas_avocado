@@ -135,7 +135,7 @@ function SpotlightCard({ s, hideEyebrow = false }: { s: Spotlight; hideEyebrow?:
               <div className="grid grid-cols-2 divide-x divide-y divide-border border-y border-border">
                 {s.metrics.map((m) => (
                   <div key={m.label} className="px-4 py-4">
-                    <p className="font-mono text-2xl font-bold tabular-nums text-fg sm:text-3xl">{m.value}</p>
+                    <p className="font-mono text-base font-semibold tabular-nums text-fg sm:text-lg">{m.value}</p>
                     <p className="mt-1.5 text-[11px] leading-tight text-fg-subtle">{m.label}</p>
                   </div>
                 ))}

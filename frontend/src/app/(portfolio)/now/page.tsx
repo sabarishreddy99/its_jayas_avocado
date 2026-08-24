@@ -26,9 +26,9 @@ const items = [
       </svg>
     ),
     key: "building" as const,
-    color:  "text-indigo-500 dark:text-indigo-400",
-    border: "border-indigo-200 dark:border-indigo-800",
-    bg:     "bg-indigo-50/60 dark:bg-indigo-950/25",
+    color:  "text-accent",
+    border: "border-accent/30",
+    bg:     "bg-accent-light/60",
     delay:  "0ms",
   },
   {
@@ -39,9 +39,9 @@ const items = [
       </svg>
     ),
     key: "learning" as const,
-    color:  "text-violet-500 dark:text-violet-400",
-    border: "border-violet-200 dark:border-violet-800",
-    bg:     "bg-violet-50/60 dark:bg-violet-950/25",
+    color:  "text-accent",
+    border: "border-accent/30",
+    bg:     "bg-accent-light/60",
     delay:  "80ms",
   },
   {
@@ -52,9 +52,9 @@ const items = [
       </svg>
     ),
     key: "reading" as const,
-    color:  "text-emerald-500 dark:text-emerald-400",
-    border: "border-emerald-200 dark:border-emerald-800",
-    bg:     "bg-emerald-50/60 dark:bg-emerald-950/25",
+    color:  "text-accent",
+    border: "border-accent/30",
+    bg:     "bg-accent-light/60",
     delay:  "160ms",
   },
 ];
@@ -89,10 +89,10 @@ export default function NowPage() {
       {/* Header */}
       <div className="mb-10">
         <div className="flex items-center gap-2.5 mb-4">
-          <div className="w-[3px] h-5 rounded-full bg-gradient-to-b from-indigo-500 to-violet-500 shrink-0" />
+          <div className="w-[3px] h-5 rounded-full bg-gradient-to-b from-accent to-accent shrink-0" />
           <h2 className="text-sm font-bold uppercase tracking-wider text-fg-faint">Now</h2>
         </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-fg mb-3">What I&apos;m up to</h1>
+        <h1 className="display-serif display-md text-fg mb-3">What I&apos;m up to</h1>
         <p className="text-sm text-fg-subtle leading-relaxed max-w-md">
           A snapshot of what I&apos;m focused on, building, and thinking about. Inspired by{" "}
           <a
@@ -109,10 +109,10 @@ export default function NowPage() {
           <div className="mt-3 flex items-center gap-2 flex-wrap">
             <span className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[11px] font-medium border ${
               isStale
-                ? "text-amber-700 dark:text-amber-400 bg-amber-50 dark:bg-amber-950/30 border-amber-200 dark:border-amber-800"
+                ? "text-fg bg-surface-raised border-border"
                 : "text-fg-subtle bg-surface-raised border-border"
             }`}>
-              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isStale ? "bg-amber-400" : "bg-emerald-500"}`} />
+              <span className={`w-1.5 h-1.5 rounded-full shrink-0 ${isStale ? "bg-fg" : "bg-accent"}`} />
               Updated {updatedLabel}
               {isStale && " · may be stale"}
             </span>
@@ -130,21 +130,31 @@ export default function NowPage() {
 
       {/* Cards */}
       {now ? (
-        <div className="space-y-4">
+        /* Three tinted boxes told the reader nothing the labels did not already
+           say, and once the invented per-item hues were removed they were three
+           identical containers. Ruled rows instead: the label is the machine
+           naming the field, the value is reading text, and the hairlines do the
+           separating a card was standing in for. */
+        <dl className="border-t border-border-subtle">
           {items.map((item) => (
-            <div key={item.key}>
-              <div className={`flex items-start gap-4 rounded-2xl border ${item.border} ${item.bg} px-5 py-5 transition-all duration-300 hover:shadow-sm`}>
-                <span className={`mt-0.5 shrink-0 ${item.color}`}>{item.icon}</span>
-                <div>
-                  <p className={`text-[10px] font-bold uppercase tracking-widest mb-1.5 ${item.color}`}>
-                    {item.label}
-                  </p>
-                  <p className="text-sm text-fg leading-relaxed">{now[item.key]}</p>
-                </div>
-              </div>
+            <div
+              key={item.key}
+              className="group flex flex-col gap-1.5 border-b border-border-subtle py-5 sm:flex-row sm:gap-8"
+            >
+              <dt className="flex shrink-0 items-center gap-2 sm:w-40 sm:pt-0.5">
+                <span className="shrink-0 text-fg-faint transition-colors group-hover:text-accent">
+                  {item.icon}
+                </span>
+                <span className="font-mono text-[11px] uppercase tracking-[0.14em] text-fg-subtle">
+                  {item.label}
+                </span>
+              </dt>
+              <dd className="max-w-[62ch] text-[15px] leading-relaxed text-fg">
+                {now[item.key]}
+              </dd>
             </div>
           ))}
-        </div>
+        </dl>
       ) : (
         <p className="text-sm text-fg-subtle">Nothing here yet. Check back soon.</p>
       )}

@@ -17,18 +17,15 @@ export default function LabPage() {
         {/* Decorative background bloom */}
         <div
           className="absolute -top-8 -right-8 w-72 h-72 rounded-full blur-3xl pointer-events-none -z-10"
-          style={{ background: "radial-gradient(circle, rgba(16,185,129,0.1) 0%, rgba(20,184,166,0.06) 60%, transparent 100%)" }}
+          style={{ background: "radial-gradient(circle, color-mix(in srgb, var(--accent) 7%, transparent) 0%, transparent 70%)" }}
           aria-hidden
         />
 
-        <p className="text-[11px] font-bold uppercase tracking-widest text-fg-faint mb-3">Build Log · In the Open</p>
+        <p className="text-[11px] font-medium tracking-wide text-fg-subtle mb-2">Build Log · In the Open</p>
 
-        {/* Title with decorative glyph + switcher */}
+        {/* Title + switcher */}
         <div className="flex items-center justify-between gap-4 mb-2">
-          <div className="flex items-baseline gap-4">
-            <h1 className="text-3xl sm:text-4xl font-bold text-fg">Lab</h1>
-            <code className="text-lg sm:text-xl font-mono text-fg-faint select-none" aria-hidden>⬡</code>
-          </div>
+          <h1 className="display-serif display-md text-fg">Lab</h1>
           <BlogSwitcher
             posts={staticEntries.map((e) => ({ slug: e.slug, title: e.title, date: e.updatedAt }))}
             label="Browse"
@@ -37,7 +34,7 @@ export default function LabPage() {
           />
         </div>
 
-        <p className="text-sm font-medium text-emerald-600 dark:text-emerald-400 mb-3">Building in public</p>
+        <p className="text-sm font-medium text-accent mb-3">Building in public</p>
 
         {profile.page_lab && (
           <p className="text-sm text-fg-subtle max-w-xl leading-relaxed">
@@ -49,8 +46,8 @@ export default function LabPage() {
         {staticEntries.length > 0 && (
           <div className="flex flex-wrap gap-2 mt-4">
             {activeCount > 0 && (
-              <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/50 border border-emerald-200 dark:border-emerald-800 rounded-sm px-3 py-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-accent bg-accent-light border border-accent/30 rounded-sm px-3 py-1">
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse" />
                 {activeCount} active
               </span>
             )}

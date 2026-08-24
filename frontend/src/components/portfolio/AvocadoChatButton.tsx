@@ -126,7 +126,7 @@ export default function AvocadoChatButton() {
                       Ask Avocado
                     </p>
                     <div className="flex items-center gap-1.5 mt-1.5">
-                      <span className="h-1.5 w-1.5 rounded-full bg-green-500 animate-pulse shrink-0" />
+                      <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse shrink-0" />
                       <span className="font-mono text-[9px] tracking-[0.1em] uppercase text-fg-subtle">
                         Online
                       </span>

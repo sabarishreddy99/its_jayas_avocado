@@ -213,8 +213,8 @@ export default function ChatMessage({ message, streaming }: Props) {
                 title="Good response"
                 className={`flex items-center rounded-full border px-1.5 py-0.5 text-[10px] shadow-sm transition-colors ${
                   rated === 1
-                    ? "border-emerald-400 bg-emerald-50 dark:bg-emerald-950 text-emerald-600 dark:text-emerald-400"
-                    : "border-border bg-surface text-fg-faint hover:border-emerald-400 hover:text-emerald-600 dark:hover:text-emerald-400"
+                    ? "border-accent bg-accent-light text-accent"
+                    : "border-border bg-surface text-fg-faint hover:border-accent hover:text-accent"
                 }`}
               >
                 <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

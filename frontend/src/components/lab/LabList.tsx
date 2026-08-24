@@ -40,31 +40,31 @@ const STATUS_STYLES: Record<LabStatus, {
   sweep: string;
 }> = {
   active: {
-    dot: "bg-emerald-400 animate-pulse",
-    text: "text-emerald-700 dark:text-emerald-400",
-    bg: "bg-emerald-50 dark:bg-emerald-950/50 border-emerald-200 dark:border-emerald-800",
+    dot: "bg-accent animate-pulse",
+    text: "text-accent",
+    bg: "bg-accent-light border-accent/30",
     label: "Active",
-    pillActive: "bg-emerald-600 text-white border-emerald-600 shadow-sm",
-    leftBorder: "border-l-2 border-l-emerald-400 dark:border-l-emerald-500",
-    sweep: "from-emerald-500 to-teal-500",
+    pillActive: "bg-accent text-accent-fg border-accent",
+    leftBorder: "border-l border-l-accent",
+    sweep: "accent",
   },
   shipped: {
-    dot: "bg-indigo-400",
-    text: "text-indigo-700 dark:text-indigo-400",
-    bg: "bg-indigo-50 dark:bg-indigo-950/50 border-indigo-200 dark:border-indigo-800",
+    dot: "bg-fg",
+    text: "text-fg-muted",
+    bg: "bg-surface-raised border-border-strong",
     label: "Shipped",
-    pillActive: "bg-indigo-600 text-white border-indigo-600 shadow-sm",
-    leftBorder: "border-l-2 border-l-indigo-400 dark:border-l-indigo-500",
-    sweep: "from-indigo-500 to-violet-500",
+    pillActive: "bg-fg text-bg border-fg",
+    leftBorder: "border-l border-l-border-strong",
+    sweep: "accent",
   },
   paused: {
-    dot: "bg-amber-400",
-    text: "text-amber-700 dark:text-amber-400",
-    bg: "bg-amber-50 dark:bg-amber-950/50 border-amber-200 dark:border-amber-800",
+    dot: "bg-fg-faint",
+    text: "text-fg-subtle",
+    bg: "bg-surface border-border",
     label: "Paused",
-    pillActive: "bg-amber-500 text-white border-amber-500 shadow-sm",
-    leftBorder: "border-l-2 border-l-amber-400 dark:border-l-amber-500",
-    sweep: "from-amber-500 to-orange-500",
+    pillActive: "bg-fg-subtle text-bg border-fg-subtle",
+    leftBorder: "border-l border-l-border",
+    sweep: "accent",
   },
 };
 
@@ -137,7 +137,7 @@ export default function LabList({ entries }: { entries: LabMeta[] }) {
                 className={`group relative block rounded-sm border border-border bg-surface p-5 sm:p-6 hover:shadow-md transition-all overflow-hidden ${s.leftBorder}`}
               >
                 {/* Hover sweep bar */}
-                <div className={`absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r ${s.sweep} origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300`} />
+                <div className="absolute inset-x-0 top-0 h-px bg-accent origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
 
                 {/* Header row */}
                 <div className="flex items-start justify-between gap-4 mb-3">

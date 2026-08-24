@@ -17,8 +17,12 @@ export default function ScrollToTop() {
     <button
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
       aria-label="Scroll to top"
-      className={`fixed bottom-6 left-5 z-40 w-9 h-9 rounded-full bg-surface border border-border shadow-sm
-                  flex items-center justify-center text-fg-faint hover:text-fg hover:border-fg-muted
+      /* Hidden below sm. At 390px this sat alongside the chat FAB, so two floating
+         buttons occluded body text at every scroll position — a pull-quote lost its
+         last line to it. Phones already scroll to top from the status bar; the chat
+         FAB is a product affordance and keeps its corner. */
+      className={`fixed bottom-6 left-5 z-40 hidden h-9 w-9 rounded-full border border-border bg-surface shadow-sm sm:flex
+                  items-center justify-center text-fg-faint hover:text-fg hover:border-fg-muted
                   transition-all duration-200
                   ${visible ? "opacity-100 translate-y-0 pointer-events-auto" : "opacity-0 translate-y-2 pointer-events-none"}`}
     >

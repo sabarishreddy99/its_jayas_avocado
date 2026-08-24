@@ -17,9 +17,9 @@ import type { ApiLabEntry } from "@/lib/api/content";
 type Props = { params: Promise<{ slug: string }> };
 
 const STATUS_STYLES: Record<LabStatus, { dot: string; text: string; bg: string; label: string }> = {
-  active:  { dot: "bg-emerald-400 animate-pulse", text: "text-emerald-700 dark:text-emerald-400", bg: "bg-emerald-50 dark:bg-emerald-950/50 border-emerald-200 dark:border-emerald-800", label: "Active" },
-  shipped: { dot: "bg-indigo-400",                text: "text-indigo-700 dark:text-indigo-400",   bg: "bg-indigo-50 dark:bg-indigo-950/50 border-indigo-200 dark:border-indigo-800",   label: "Shipped" },
-  paused:  { dot: "bg-amber-400",                 text: "text-amber-700 dark:text-amber-400",     bg: "bg-amber-50 dark:bg-amber-950/50 border-amber-200 dark:border-amber-800",     label: "Paused" },
+  active:  { dot: "bg-accent animate-pulse", text: "text-accent", bg: "bg-accent-light border-accent/30", label: "Active" },
+  shipped: { dot: "bg-fg",                text: "text-fg-muted",   bg: "bg-surface-raised border-border-strong",   label: "Shipped" },
+  paused:  { dot: "bg-fg-faint",                 text: "text-fg-subtle",     bg: "bg-surface border-border",     label: "Paused" },
 };
 
 function extractHeadings(markdown: string): Heading[] {
@@ -92,7 +92,7 @@ function LabEntryApiView({ entry, allEntries }: { entry: ApiLabEntry; allEntries
                 <FontSizeControl />
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg leading-tight mb-3">
+              <h1 className="display-serif text-3xl sm:text-4xl text-fg leading-tight mb-3">
                 {entry.title}
               </h1>
               <p className="text-sm text-fg-subtle leading-relaxed mb-4">{entry.description}</p>
@@ -109,7 +109,7 @@ function LabEntryApiView({ entry, allEntries }: { entry: ApiLabEntry; allEntries
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-sm bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 px-2.5 py-1 text-[11px] font-medium text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition-colors inline-flex items-center gap-1"
+                    className="rounded-sm bg-accent-light border border-accent/30 px-2.5 py-1 text-[11px] font-medium text-accent hover:border-accent/60 transition-colors inline-flex items-center gap-1"
                   >
                     {link.label}
                     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -127,7 +127,7 @@ function LabEntryApiView({ entry, allEntries }: { entry: ApiLabEntry; allEntries
             <MobileTOC headings={headings} />
 
             <ProseReveal
-              className="prose max-w-none leading-[1.85]"
+              className="prose max-w-none font-[family-name:var(--font-blog)] leading-[1.85]"
               style={{ fontSize: "var(--blog-font-size, 1.0rem)" }}
             >
               <BlogPostMarkdown content={entry.content} />
@@ -298,7 +298,7 @@ export default async function LabEntryPage({ params }: Props) {
                 <FontSizeControl />
               </div>
 
-              <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-fg leading-tight mb-3">
+              <h1 className="display-serif text-3xl sm:text-4xl text-fg leading-tight mb-3">
                 {entry.title}
               </h1>
               <p className="text-sm text-fg-subtle leading-relaxed mb-4">{entry.description}</p>
@@ -315,7 +315,7 @@ export default async function LabEntryPage({ params }: Props) {
                     href={link.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="rounded-sm bg-indigo-50 dark:bg-indigo-950/40 border border-indigo-200 dark:border-indigo-800 px-2.5 py-1 text-[11px] font-medium text-indigo-600 dark:text-indigo-400 hover:bg-indigo-100 dark:hover:bg-indigo-900/40 transition-colors inline-flex items-center gap-1"
+                    className="rounded-sm bg-accent-light border border-accent/30 px-2.5 py-1 text-[11px] font-medium text-accent hover:border-accent/60 transition-colors inline-flex items-center gap-1"
                   >
                     {link.label}
                     <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
@@ -341,7 +341,7 @@ export default async function LabEntryPage({ params }: Props) {
             <MobileTOC headings={headings} />
 
             <ProseReveal
-              className="prose max-w-none leading-[1.85]"
+              className="prose max-w-none font-[family-name:var(--font-blog)] leading-[1.85]"
               style={{ fontSize: "var(--blog-font-size, 1.0rem)" }}
             >
               <MDXRemote

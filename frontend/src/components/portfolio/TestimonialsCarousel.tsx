@@ -43,7 +43,7 @@ function TestimonialCard({ item }: { item: Testimonial }) {
       <div className="mt-5 pt-4 border-t border-border-subtle">
         <div className="flex items-start justify-between gap-4">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="shrink-0 w-9 h-9 rounded-full bg-accent flex items-center justify-center text-accent-fg text-xs font-bold">
+            <div className="shrink-0 w-9 h-9 rounded-full bg-surface-raised border border-border-strong flex items-center justify-center text-fg text-xs font-bold">
               {initials(item.name)}
             </div>
             <div className="min-w-0">

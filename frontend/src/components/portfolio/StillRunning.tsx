@@ -6,8 +6,8 @@ import type { ShippedThing } from "@/data/profile";
 
 /** Placeholder rendered before mount — same glyph count as a live counter, so
  *  hydration swaps digits in without shifting the row. */
-const PLACEHOLDER = "· y ··· d ··:··:··";
-const PLACEHOLDER_COARSE = "· y ··· d ··:··";
+const PLACEHOLDER = "· y ·· d";
+const PLACEHOLDER_COARSE = "· y ·· d";
 
 /** Elapsed time since `from`, as calendar years + remaining days + clock. */
 function elapsed(fromISO: string, nowMs: number) {
@@ -25,14 +25,8 @@ function elapsed(fromISO: string, nowMs: number) {
 
   const rest = now.getTime() - anniversary.getTime();
   const days = Math.floor(rest / 86_400_000);
-  const hours = Math.floor(rest / 3_600_000) % 24;
-  const minutes = Math.floor(rest / 60_000) % 60;
-  const seconds = Math.floor(rest / 1000) % 60;
-
-  return { years, days, hours, minutes, seconds };
+  return { years, days };
 }
-
-const pad = (n: number, width = 2) => String(n).padStart(width, "0");
 
 function spoken(fromISO: string, nowMs: number) {
   const { years, days } = elapsed(fromISO, nowMs);
@@ -138,13 +132,14 @@ export default function StillRunning({
                       {coarse ? PLACEHOLDER_COARSE : PLACEHOLDER}
                     </span>
                   ) : (
+                    /* The clock that used to follow read the same h:m:s on every
+                       row: each shippedAt is date-only, so every anniversary
+                       falls at the same midnight and the offset is identical.
+                       Three rows showing one time contradicted the deck above
+                       them. Years and days are per-row, real, and still live. */
                     <>
                       <span className="text-fg">
-                        {e.years} y {pad(e.days, 3)} d
-                      </span>{" "}
-                      <span className="text-fg-subtle">
-                        {pad(e.hours)}:{pad(e.minutes)}
-                        {!coarse && `:${pad(e.seconds)}`}
+                        {e.years}<span className="text-fg-subtle"> y </span>{e.days}<span className="text-fg-subtle"> d</span>
                       </span>
                     </>
                   )}

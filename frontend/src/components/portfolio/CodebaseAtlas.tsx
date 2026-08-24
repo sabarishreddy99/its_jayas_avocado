@@ -86,7 +86,7 @@ function Mono({ children }: { children: ReactNode }) {
 
 function Note({ label, children }: { label: string; children: ReactNode }) {
   return (
-    <div className="rounded-card border border-border border-l-2 border-l-accent bg-surface px-4 py-3.5 mb-5">
+    <div className="rounded-card border border-border border-l border-l-accent bg-surface px-4 py-3.5 mb-5">
       <p className="text-[10px] font-bold uppercase tracking-[0.13em] text-accent mb-1.5">
         {label}
       </p>
@@ -230,7 +230,7 @@ export default function CodebaseAtlas() {
               ),
             },
           ].map((s) => (
-            <div key={s.name} className="rounded-card border border-border border-t-2 border-t-accent bg-surface px-4 py-4">
+            <div key={s.name} className="rounded-card border border-border border-t border-t-accent bg-surface px-4 py-4">
               <h3 className="text-[15px] font-semibold text-fg mb-0.5">{s.name}</h3>
               <p className="font-mono text-[11.5px] text-fg-faint mb-2.5 break-all">{s.domain}</p>
               <p className="text-[13px] text-fg-muted leading-relaxed">{s.body}</p>

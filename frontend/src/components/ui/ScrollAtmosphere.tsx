@@ -8,12 +8,12 @@ import { useEffect, useRef } from "react";
 // previous chapter's tint.)
 const SECTIONS = [
   "hero",
-  "creed",
   "why",
-  "still-running",
   "gradevitian",
-  "opinions",
   "projects",
+  "creed",
+  "still-running",
+  "opinions",
   "skills",
   "testimonials",
   "contact",

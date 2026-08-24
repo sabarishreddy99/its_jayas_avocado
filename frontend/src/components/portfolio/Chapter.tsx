@@ -57,6 +57,9 @@ export default function Chapter({
   n,
   label,
   deck,
+  place,
+  year,
+  measure,
   id,
   rail = true,
   className = "",
@@ -68,6 +71,15 @@ export default function Chapter({
   label: string;
   /** One line of scent: what this chapter argues. */
   deck?: string;
+  /**
+   * Field-notes dateline. A chapter that records a real deployment names the
+   * place and the year it shipped, the way a field note is filed. Chapters
+   * that argue rather than record leave it unset and read exactly as before.
+   */
+  place?: string;
+  year?: string;
+  /** The measurement that site cost or produced. Machine voice, so mono. */
+  measure?: string;
   id: string;
   /**
    * `false` drops the two-column grid so the body spans the full measure.
@@ -104,31 +116,51 @@ export default function Chapter({
         {n}
       </span>
 
+      {/* The mono numeral that used to sit here printed the same number as the
+          ghost numeral it was physically sitting on top of, and it put a third
+          line above every heading. The ghost carries the count; the dateline
+          below carries the filing. The mark stays as the rail's bullet. */}
       <div className="relative flex items-baseline gap-3">
         <AvocadoMark className="chapter-avo h-[15px] w-[15px] translate-y-[2px] shrink-0" />
-        <span className="font-mono text-[11px] font-bold tabular-nums text-accent shrink-0">
-          {n}
-        </span>
         {/* While the header is a full-width band the hairline fills the
             leftover measure, the way it did in the old horizontal header.
             For a rail chapter that stops at lg, where the header becomes a
             narrow column and the rule below takes over the job. A non-rail
             chapter is a band at every width, so it keeps the hairline. */}
         <div
-          className={`h-px flex-1 bg-gradient-to-r from-border to-transparent ${
+          className={`h-px flex-1 bg-linear-to-r from-border to-transparent ${
             rail ? "lg:hidden" : ""
           }`}
           aria-hidden
         />
       </div>
 
-      <h2 className="display-serif display-md relative mt-2 text-fg">{label}</h2>
+      {place && (
+        <p className="relative mt-2 flex flex-wrap items-baseline gap-x-2 font-mono text-[11px] uppercase tracking-[0.16em] text-fg-subtle">
+          <span className="text-fg-muted">{place}</span>
+          {year && (
+            <>
+              <span className="text-fg-faint" aria-hidden>/</span>
+              <span className="tabular-nums">{year}</span>
+            </>
+          )}
+        </p>
+      )}
+
+      <h2 className={`display-serif display-md relative text-fg ${place ? "mt-1.5" : "mt-2"}`}>{label}</h2>
 
       <div className="chapter-rule ink-rule mt-4 lg:mt-5" aria-hidden />
 
       {deck && (
         <p className="relative mt-4 max-w-[46ch] text-sm leading-relaxed text-fg-subtle text-pretty">
           {deck}
+        </p>
+      )}
+
+      {/* What the site cost or produced — the machine reporting, so mono. */}
+      {measure && (
+        <p className="relative mt-4 border-t border-border-subtle pt-3 font-mono text-[11px] leading-relaxed text-fg-subtle">
+          {measure}
         </p>
       )}
     </header>

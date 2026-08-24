@@ -129,7 +129,6 @@ function BlogPostApiView({ post, allPosts }: { post: ApiBlogPost; allPosts: Post
                   currentSlug={post.slug}
                 />
               </div>
-              <ShareButtons slug={post.slug} title={post.title} />
             </header>
 
             <MobileTOC headings={headings} />
@@ -140,6 +139,10 @@ function BlogPostApiView({ post, allPosts }: { post: ApiBlogPost; allPosts: Post
             >
               <BlogPostMarkdown content={post.content} />
             </ProseReveal>
+
+            <div className="mt-10 border-t border-border-subtle pt-6">
+              <ShareButtons slug={post.slug} title={post.title} />
+            </div>
 
             <BlogEngagement slug={post.slug} />
           </article>
@@ -433,7 +436,6 @@ export default async function BlogPostPage({ params }: Props) {
                   currentSlug={slug}
                 />
               </div>
-              <ShareButtons slug={post.slug} title={post.title} />
             </header>
 
             {/* Mobile TOC — inline before content */}
@@ -449,6 +451,10 @@ export default async function BlogPostPage({ params }: Props) {
                 options={{ mdxOptions: { remarkPlugins: [remarkGfm], rehypePlugins: [rehypeSlug, [rehypePrettyCode, prettyCodeOptions]] } }}
               />
             </ProseReveal>
+
+            <div className="mt-10 border-t border-border-subtle pt-6">
+              <ShareButtons slug={post.slug} title={post.title} />
+            </div>
 
             <BlogEngagement slug={post.slug} />
           </article>

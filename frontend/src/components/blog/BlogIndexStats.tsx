@@ -373,6 +373,10 @@ export function BlogPostList({ posts, summary }: { posts: PostMeta[]; summary: S
 
   const q = query.toLowerCase().trim();
   const allTags = Array.from(new Set(posts.flatMap((p) => p.tags))).sort();
+  // Search, three sort modes and a tag row are an archive's apparatus. Under a
+  // handful of posts they cost ~230px in front of the content on a page whose
+  // job is to get someone reading. They return on their own as the archive grows.
+  const showFilters = posts.length >= 8;
   const filtered = posts.filter((p) => {
     const matchesTag = !activeTag || p.tags.includes(activeTag);
     const matchesQuery =
@@ -403,6 +407,7 @@ export function BlogPostList({ posts, summary }: { posts: PostMeta[]; summary: S
   return (
     <div>
       {/* Search */}
+      {showFilters && (
       <div className="relative mb-5">
         <svg
           className="absolute left-3 top-1/2 -translate-y-1/2 text-fg-faint"
@@ -431,7 +436,10 @@ export function BlogPostList({ posts, summary }: { posts: PostMeta[]; summary: S
         )}
       </div>
 
+      )}
+
       {/* Sort controls */}
+      {showFilters && (
       <div className="flex flex-wrap items-center gap-x-3 gap-y-2 mb-5">
         <span className="text-[10px] font-bold uppercase tracking-widest text-fg-faint shrink-0">Sort</span>
         <div className="flex flex-wrap gap-1.5">
@@ -469,8 +477,10 @@ export function BlogPostList({ posts, summary }: { posts: PostMeta[]; summary: S
         </div>
       </div>
 
+      )}
+
       {/* Tag filter — horizontal scroll on mobile, wraps on sm+ */}
-      {allTags.length > 1 && (
+      {showFilters && allTags.length > 1 && (
         <div className="flex flex-nowrap sm:flex-wrap overflow-x-auto sm:overflow-x-visible gap-2 mb-8 pb-1 sm:pb-0">
           <button
             onClick={() => setActiveTag(null)}

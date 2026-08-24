@@ -23,15 +23,12 @@ export default function BlogIndexPage() {
   return (
     <div className="mx-auto w-full max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl px-4 sm:px-6 xl:px-8 py-12 sm:py-16">
       <header className="mb-12 sm:mb-16">
-        <p className="text-[11px] font-bold uppercase tracking-widest text-fg-faint mb-3">
+        <p className="text-[11px] font-medium tracking-wide text-fg-subtle mb-2">
           Writing · Decoding WHY&apos;s
         </p>
 
         <div className="flex items-center justify-between gap-4 mb-2">
-          <div className="flex items-baseline gap-3">
-            <h1 className="text-3xl sm:text-4xl font-bold text-fg">My Scratchpad</h1>
-            <span className="text-2xl sm:text-3xl select-none text-fg-faint" aria-hidden>✦</span>
-          </div>
+          <h1 className="display-serif display-md text-fg">My Scratchpad</h1>
           <BlogSwitcher
             posts={staticPosts.map((p) => ({ slug: p.slug, title: p.title, date: p.date }))}
           />

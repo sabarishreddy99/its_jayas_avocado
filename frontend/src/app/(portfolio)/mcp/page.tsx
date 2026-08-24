@@ -22,10 +22,10 @@ export default function McpPage() {
   return (
     <div className="mx-auto w-full max-w-4xl px-4 sm:px-6 py-12 sm:py-16">
       <header className="mb-10">
-        <p className="text-[11px] font-bold uppercase tracking-[0.18em] text-accent mb-2">
+        <p className="text-[11px] font-medium tracking-wide text-fg-subtle mb-2">
           Model Context Protocol
         </p>
-        <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-fg">
+        <h1 className="display-serif display-md text-fg">
           Connect your own LLM to my work
         </h1>
         <p className="mt-3 text-sm text-fg-muted leading-relaxed max-w-2xl">

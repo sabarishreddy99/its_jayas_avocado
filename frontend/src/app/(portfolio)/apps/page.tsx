@@ -14,10 +14,10 @@ export const metadata = {
 };
 
 const STATUS_STYLE: Record<AppStatus, { dot: string; text: string; label: string }> = {
-  live:     { dot: "bg-emerald-400", text: "text-emerald-700 dark:text-emerald-400", label: "Live" },
-  beta:     { dot: "bg-sky-400",     text: "text-sky-700 dark:text-sky-400",         label: "Beta" },
-  wip:      { dot: "bg-amber-400",   text: "text-amber-700 dark:text-amber-400",     label: "WIP" },
-  archived: { dot: "bg-zinc-400",    text: "text-zinc-600 dark:text-zinc-400",       label: "Archived" },
+  live:     { dot: "bg-accent", text: "text-accent", label: "Live" },
+  beta:     { dot: "bg-accent",     text: "text-accent",         label: "Beta" },
+  wip:      { dot: "bg-fg",   text: "text-fg",     label: "WIP" },
+  archived: { dot: "bg-fg-subtle",    text: "text-fg-subtle",       label: "Archived" },
 };
 
 function hostOf(url: string): string {
@@ -32,11 +32,10 @@ export default function AppsPage() {
 
       {/* Header */}
       <header className="mb-10 sm:mb-12">
-        <p className="text-[11px] font-bold uppercase tracking-widest text-fg-faint mb-3">Work · Hosted</p>
+        <p className="text-[11px] font-medium tracking-wide text-fg-subtle mb-3">Work · Hosted</p>
 
         <div className="flex items-baseline gap-3 mb-2">
-          <h1 className="text-3xl sm:text-4xl font-bold text-fg">Apps</h1>
-          <span className="text-xl sm:text-2xl font-mono select-none text-fg-faint" aria-hidden>{"⌘"}</span>
+          <h1 className="display-serif display-md text-fg">Apps</h1>
         </div>
 
         <p className="text-sm text-fg-subtle max-w-xl leading-relaxed mb-4">
@@ -50,7 +49,7 @@ export default function AppsPage() {
           </span>
           {liveCount > 0 && (
             <span className="inline-flex items-center gap-1.5 text-[11px] font-medium text-fg-muted bg-surface border border-border rounded-full px-3 py-1">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400" />
+              <span className="w-1.5 h-1.5 rounded-full bg-accent" />
               {liveCount} live
             </span>
           )}

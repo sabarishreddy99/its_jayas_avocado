@@ -21,12 +21,12 @@ export default function LeadCaptureCard({ messages, persona }: LeadCaptureCardPr
   if (dismissed) return null;
   if (submitted) {
     return (
-      <div className="mt-3 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/30 px-4 py-3">
+      <div className="mt-3 rounded-xl border border-accent/30 bg-accent-light px-4 py-3">
         <div className="flex items-center gap-2">
-          <span className="text-emerald-500 text-base">✓</span>
+          <span className="text-accent text-base" aria-hidden>✓</span>
           <div>
-            <p className="text-[13px] font-semibold text-emerald-700 dark:text-emerald-400">Intro sent to Jaya</p>
-            <p className="text-[11px] text-emerald-600 dark:text-emerald-500 mt-0.5">
+            <p className="text-[13px] font-semibold text-accent">Intro sent to Jaya</p>
+            <p className="text-[11px] text-fg-muted mt-0.5">
               He typically responds within 24 hours at his email.
             </p>
           </div>

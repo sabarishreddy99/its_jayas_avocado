@@ -7,12 +7,12 @@ import { usePathname } from "next/navigation";
 // a mismatch renders a rail that never activates, with no error.
 const SECTIONS = [
   { id: "hero",          label: "Intro"         },
-  { id: "creed",         label: "Creed"         },
-  { id: "why",           label: "Why"           },
+  { id: "why",           label: "Kavali"        },
+  { id: "gradevitian",   label: "Vellore"       },
+  { id: "projects",      label: "Offshore & NYU" },
+  { id: "creed",         label: "New York"      },
   { id: "still-running", label: "Still Running" },
-  { id: "gradevitian",   label: "gradeVITian"   },
   { id: "opinions",      label: "Where I Stand" },
-  { id: "projects",      label: "Work"          },
   { id: "skills",        label: "Craft"         },
   { id: "testimonials",  label: "Kind Words"    },
   { id: "contact",       label: "Connect"       },

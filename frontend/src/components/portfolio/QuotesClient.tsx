@@ -14,46 +14,46 @@ const CAT_CONFIG: Record<QuoteCategory, {
   pillActive: string;
 }> = {
   Work: {
-    border: "border-indigo-100 dark:border-indigo-900/60 hover:border-indigo-200 dark:hover:border-indigo-800",
-    badge: "bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400",
-    quote: "text-indigo-200 dark:text-indigo-900",
-    pill: "bg-surface border border-border text-fg-faint hover:text-fg hover:border-indigo-300 dark:hover:border-indigo-700",
-    pillActive: "bg-indigo-600 text-white border-indigo-600 shadow-sm",
+    border: "border-border hover:border-border-strong",
+    badge: "bg-surface-raised text-fg-muted",
+    quote: "text-border",
+    pill: "bg-surface border border-border text-fg-faint hover:text-fg hover:border-border-strong",
+    pillActive: "bg-accent text-accent-fg border-accent shadow-sm",
   },
   Life: {
-    border: "border-emerald-100 dark:border-emerald-900/60 hover:border-emerald-200 dark:hover:border-emerald-800",
-    badge: "bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400",
-    quote: "text-emerald-200 dark:text-emerald-900",
-    pill: "bg-surface border border-border text-fg-faint hover:text-fg hover:border-emerald-300 dark:hover:border-emerald-700",
-    pillActive: "bg-emerald-600 text-white border-emerald-600 shadow-sm",
+    border: "border-border hover:border-border-strong",
+    badge: "bg-surface-raised text-fg-muted",
+    quote: "text-border",
+    pill: "bg-surface border border-border text-fg-faint hover:text-fg hover:border-border-strong",
+    pillActive: "bg-accent text-accent-fg border-accent shadow-sm",
   },
   Technology: {
-    border: "border-blue-100 dark:border-blue-900/60 hover:border-blue-200 dark:hover:border-blue-800",
-    badge: "bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400",
-    quote: "text-blue-200 dark:text-blue-900",
-    pill: "bg-surface border border-border text-fg-faint hover:text-fg hover:border-blue-300 dark:hover:border-blue-700",
-    pillActive: "bg-blue-600 text-white border-blue-600 shadow-sm",
+    border: "border-border hover:border-border-strong",
+    badge: "bg-surface-raised text-fg-muted",
+    quote: "text-border",
+    pill: "bg-surface border border-border text-fg-faint hover:text-fg hover:border-border-strong",
+    pillActive: "bg-accent text-accent-fg border-accent shadow-sm",
   },
   Philosophy: {
-    border: "border-violet-100 dark:border-violet-900/60 hover:border-violet-200 dark:hover:border-violet-800",
-    badge: "bg-violet-50 dark:bg-violet-950/60 text-violet-600 dark:text-violet-400",
-    quote: "text-violet-200 dark:text-violet-900",
-    pill: "bg-surface border border-border text-fg-faint hover:text-fg hover:border-violet-300 dark:hover:border-violet-700",
-    pillActive: "bg-violet-600 text-white border-violet-600 shadow-sm",
+    border: "border-border hover:border-border-strong",
+    badge: "bg-surface-raised text-fg-muted",
+    quote: "text-border",
+    pill: "bg-surface border border-border text-fg-faint hover:text-fg hover:border-border-strong",
+    pillActive: "bg-accent text-accent-fg border-accent shadow-sm",
   },
   Creativity: {
-    border: "border-amber-100 dark:border-amber-900/60 hover:border-amber-200 dark:hover:border-amber-800",
-    badge: "bg-amber-50 dark:bg-amber-950/60 text-amber-600 dark:text-amber-400",
-    quote: "text-amber-200 dark:text-amber-900",
-    pill: "bg-surface border border-border text-fg-faint hover:text-fg hover:border-amber-300 dark:hover:border-amber-700",
-    pillActive: "bg-amber-500 text-white border-amber-500 shadow-sm",
+    border: "border-border hover:border-border-strong",
+    badge: "bg-surface-raised text-fg-muted",
+    quote: "text-border",
+    pill: "bg-surface border border-border text-fg-faint hover:text-fg hover:border-border-strong",
+    pillActive: "bg-accent text-accent-fg border-accent",
   },
   Mindset: {
-    border: "border-teal-100 dark:border-teal-900/60 hover:border-teal-200 dark:hover:border-teal-800",
-    badge: "bg-teal-50 dark:bg-teal-950/60 text-teal-600 dark:text-teal-400",
-    quote: "text-teal-200 dark:text-teal-900",
-    pill: "bg-surface border border-border text-fg-faint hover:text-fg hover:border-teal-300 dark:hover:border-teal-700",
-    pillActive: "bg-teal-600 text-white border-teal-600 shadow-sm",
+    border: "border-border hover:border-border-strong",
+    badge: "bg-surface-raised text-fg-muted",
+    quote: "text-border",
+    pill: "bg-surface border border-border text-fg-faint hover:text-fg hover:border-border-strong",
+    pillActive: "bg-accent text-accent-fg border-accent shadow-sm",
   },
 };
 
@@ -72,12 +72,12 @@ function QuoteCard({ quote }: { quote: Quote }) {
         </span>
         <div className="flex items-center gap-1.5">
           {quote.featured && (
-            <span className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 border border-indigo-200 dark:border-indigo-800">
+            <span className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full bg-surface-raised text-fg-muted border border-border">
               Featured
             </span>
           )}
           {quote.favorite && (
-            <span className="text-amber-400 text-sm" title="Favorite">★</span>
+            <span className="text-accent text-sm" title="Favorite" aria-hidden>★</span>
           )}
         </div>
       </div>
@@ -125,7 +125,7 @@ function FeaturedQuote({ quote }: { quote: Quote }) {
             {quote.author}
             {quote.source && <span className="text-fg-faint font-normal">, <em>{quote.source}</em></span>}
           </p>
-          <span className="text-amber-400">★</span>
+          <span className="text-accent" aria-hidden>★</span>
         </div>
       </div>
     </div>
@@ -142,9 +142,9 @@ function getQuoteOfWeek(quotes: Quote[]): Quote {
 function WeeklyQuote({ quote }: { quote: Quote }) {
   const cfg = CAT_CONFIG[quote.category];
   return (
-    <div className="relative rounded-2xl border-2 border-indigo-200 dark:border-indigo-800 bg-gradient-to-br from-indigo-50/60 to-violet-50/40 dark:from-indigo-950/30 dark:to-violet-950/20 p-6 sm:p-7 overflow-hidden mb-10">
-      <div className="absolute top-3 right-4 text-[11px] font-bold uppercase tracking-widest text-indigo-400 dark:text-indigo-500 flex items-center gap-1.5">
-        <span className="w-1.5 h-1.5 rounded-full bg-indigo-400 animate-pulse inline-block" />
+    <div className="relative rounded-card border border-border-strong bg-surface-raised p-6 sm:p-7 overflow-hidden mb-10">
+      <div className="absolute top-3 right-4 text-[11px] font-bold uppercase tracking-widest text-accent flex items-center gap-1.5">
+        <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse inline-block" />
         Quote of the Week
       </div>
       <div className={`text-5xl font-serif leading-none mb-3 select-none ${cfg.quote} opacity-80`} aria-hidden>❝</div>
@@ -188,25 +188,12 @@ export default function QuotesClient({ quotes }: { quotes: Quote[] }) {
 
       {/* Hero */}
       <div className="mb-14 sm:mb-16">
-        <p className="text-[11px] font-bold uppercase tracking-widest text-fg-faint mb-3">
+        <p className="text-[11px] font-medium tracking-wide text-fg-subtle mb-3">
           Collected Wisdom
         </p>
 
-        {/* Large gradient ❝ */}
-        <div
-          className="text-[96px] leading-none font-serif mb-2 select-none"
-          style={{
-            background: "linear-gradient(135deg, #6366f1, #8b5cf6)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
-          aria-hidden
-        >
-          ❝
-        </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight text-fg mb-2">
+        <h1 className="display-serif display-md text-fg mb-2">
           Favorite Quotes
         </h1>
         {profile.page_quotes && (

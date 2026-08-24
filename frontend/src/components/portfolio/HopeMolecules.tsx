@@ -256,8 +256,8 @@ export default function HopeMolecules({
         <p
           className={
             isChapter
-              ? "mt-7 text-[15px] font-medium text-accent lg:mt-9"
-              : "mt-3.5 text-[13px] font-medium text-accent lg:mt-5"
+              ? "mt-7 text-[15px] font-medium text-fg lg:mt-9"
+              : "mt-3.5 text-[13px] font-medium text-fg lg:mt-5"
           }
         >
           {data.closing}

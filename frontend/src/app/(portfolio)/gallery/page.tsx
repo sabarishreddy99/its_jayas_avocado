@@ -24,15 +24,8 @@ export default function GalleryPage() {
           style={{ background: "radial-gradient(circle, rgba(139,92,246,0.12) 0%, rgba(99,102,241,0.06) 60%, transparent 100%)" }}
           aria-hidden
         />
-        <p className="text-[11px] font-bold uppercase tracking-widest text-fg-faint mb-3">Moments · Milestones</p>
-        <div className="flex items-baseline gap-4 mb-2">
-          <h1 className="text-3xl sm:text-4xl font-bold text-fg">Gallery</h1>
-          <span
-            className="text-2xl sm:text-3xl select-none"
-            style={{ background: "linear-gradient(135deg, #8b5cf6, #6366f1)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
-            aria-hidden
-          >◆</span>
-        </div>
+        <p className="text-[11px] font-medium tracking-wide text-fg-subtle mb-3">Moments · Milestones</p>
+        <h1 className="display-serif display-md text-fg mb-2">Gallery</h1>
         {profile.page_gallery && (
           <p className="text-sm text-fg-subtle max-w-xl leading-relaxed">
             {profile.page_gallery}

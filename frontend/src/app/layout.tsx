@@ -140,6 +140,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <script dangerouslySetInnerHTML={{ __html: `try{var t=localStorage.getItem('color-theme')||'midnight';document.documentElement.setAttribute('data-theme',t);var d=localStorage.getItem('theme');if(d==='dark'||((!d||d==='system')&&window.matchMedia('(prefers-color-scheme: dark)').matches)){document.documentElement.classList.add('dark');}}catch(e){}` }} />
       </head>
       <body className="min-h-full flex flex-col bg-bg text-fg">
+        <div hidden dangerouslySetInnerHTML={{ __html: `<!--
+impeccable direction contract · seed 5f636ff2 · surface: / (home) · mode: persuade
+
+THESIS: This engineer is legible through the places his software was deployed, not
+through a list of skills. Refuses the reverse-chronological career timeline.
+
+OWN-WORLD: Unchanged. Editorial newsprint, Three Voices, ink-on-paper primaries,
+Signal Indigo for live state only, three corners, two easing curves.
+
+STORY: A recruiter sees five real deployment sites, each with the people it served
+on the left and the system it took on the right, and books a call.
+
+FIRST VIEWPORT: Hero unchanged - Garamond headline left, handwritten annotation
+field right, ink pill on Schedule a call. The spine announces itself at the first
+dateline below the fold: KAVALI, NELLORE / 2020, one named user.
+
+FORM: Field Notes - deployment sites in shipping order. Index 5 of 7 on the ranked
+list; dealt by the roll and locked by the user.
+
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
+-->` }} />
         <ThemeProvider>
           <SiteTracker />
           <PWARegister />

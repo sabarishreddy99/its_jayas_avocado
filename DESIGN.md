@@ -1,6 +1,6 @@
 ---
 name: jayaremala.com
-description: An editorial newsprint system where every typeface is an assigned speaker — the system, the author, and the machine.
+description: An editorial newsprint system where every typeface is an assigned speaker — the system, the author, the machine, and the reader.
 colors:
   bg: "#fefefb"
   surface: "#f5f4f0"
@@ -13,42 +13,51 @@ colors:
   fg-muted: "#3a342c"
   fg-subtle: "#5a5248"
   fg-faint: "#8c867e"
-  accent: "#4f46e5"
-  accent-hover: "#4338ca"
-  accent-light: "#eef2ff"
-  accent-fg: "#ffffff"
-  accent-secondary: "#8b5cf6"
+  signal-indigo: "#3730a3"
+  signal-indigo-hover: "#312e81"
+  signal-indigo-light: "#e9e8f7"
+  signal-indigo-fg: "#ffffff"
+  signal-violet: "#6d28d9"
+  accent-shared: "#4f46e5"
+  accent-shared-secondary: "#8b5cf6"
   dark-bg: "#000000"
   dark-surface: "#0c0c0c"
   dark-surface-raised: "#181818"
   dark-border: "#252525"
+  dark-border-subtle: "#161616"
   dark-border-strong: "#3a3a3a"
   dark-fg: "#f0f0f0"
   dark-fg-muted: "#cccccc"
   dark-fg-subtle: "#888888"
   dark-fg-faint: "#484848"
-  dark-accent: "#818cf8"
-  dark-accent-hover: "#a5b4fc"
-  dark-accent-light: "#1a1a2e"
-  dark-accent-secondary: "#a78bfa"
+  dark-signal-indigo: "#6f7bf7"
+  dark-signal-indigo-hover: "#93a0fb"
+  dark-signal-indigo-light: "#14142b"
+  dark-signal-violet: "#8b7cf6"
 typography:
   display:
     fontFamily: "EB Garamond, Georgia, Times New Roman, serif"
     fontSize: "clamp(2.65rem, 4.4vw, 4.25rem)"
     fontWeight: 600
-    lineHeight: 1.03
+    lineHeight: 1.0
     letterSpacing: "-0.016em"
     fontFeature: "kern 1, liga 1"
-  headline:
-    fontFamily: "Roboto, system-ui, Arial, sans-serif"
+  display-lg:
+    fontFamily: "EB Garamond, Georgia, Times New Roman, serif"
     fontSize: "clamp(2rem, 4.4vw, 3.5rem)"
-    fontWeight: 700
-    lineHeight: 1.1
-    letterSpacing: "-0.022em"
+    fontWeight: 600
+    lineHeight: 1.03
+    letterSpacing: "-0.016em"
+  headline:
+    fontFamily: "EB Garamond, Georgia, Times New Roman, serif"
+    fontSize: "clamp(1.5rem, 2.4vw, 2.1rem)"
+    fontWeight: 600
+    lineHeight: 1.12
+    letterSpacing: "-0.016em"
   title:
     fontFamily: "Roboto, system-ui, sans-serif"
-    fontSize: "1.5rem"
-    fontWeight: 500
+    fontSize: "1rem"
+    fontWeight: 600
     lineHeight: 1.25
     letterSpacing: "-0.006em"
   body:
@@ -67,76 +76,86 @@ typography:
     fontSize: "1.0625rem"
     fontWeight: 400
     lineHeight: 1.85
-  label:
-    fontFamily: "Roboto, system-ui, sans-serif"
-    fontSize: "0.625rem"
-    fontWeight: 600
-    letterSpacing: "0.07em"
-  signature:
-    fontFamily: "Cormorant Garamond, EB Garamond, Georgia, serif"
-    fontWeight: 500
-    letterSpacing: "0.005em"
-    lineHeight: 1.1
-  mono:
+  voice-serif:
+    fontFamily: "EB Garamond, Georgia, Times New Roman, serif"
+    fontSize: "0.9375rem"
+    fontWeight: 400
+    lineHeight: 1.75
+  dateline:
     fontFamily: "Geist Mono, ui-monospace, monospace"
     fontSize: "0.6875rem"
     fontWeight: 400
+    letterSpacing: "0.16em"
+  label:
+    fontFamily: "Roboto, system-ui, sans-serif"
+    fontSize: "0.625rem"
+    fontWeight: 700
+    letterSpacing: "0.2em"
+  signature:
+    fontFamily: "Cormorant Garamond, EB Garamond, Georgia, serif"
+    fontWeight: 500
+    lineHeight: 1.1
+    letterSpacing: "0.005em"
+  marginalia:
+    fontFamily: "Caveat, Segoe Print, Bradley Hand, cursive"
+    fontWeight: 400
+    lineHeight: 1.05
 rounded:
   chip: "0.5rem"
   panel: "0.75rem"
   card: "1rem"
-  card-lg: "1rem"
   pill: "9999px"
 spacing:
-  xs: "0.375rem"
-  sm: "0.5rem"
-  md: "0.75rem"
-  lg: "1.25rem"
-  xl: "1.5rem"
-  nav-h: "50px"
+  micro: "0.375rem"
+  xs: "0.625rem"
+  sm: "1rem"
+  md: "1.5rem"
+  lg: "2.5rem"
+  chapter: "4rem"
+  chapter-lg: "8rem"
 components:
-  button-primary:
+  button-ink:
     backgroundColor: "{colors.fg}"
     textColor: "{colors.bg}"
-    rounded: "{rounded.pill}"
-    padding: "0.375rem 1.25rem"
     typography: "{typography.body}"
-  button-primary-hover:
+    rounded: "{rounded.pill}"
+    padding: "0.625rem 1.25rem"
+  button-ink-hover:
     backgroundColor: "{colors.fg}"
     textColor: "{colors.bg}"
-  button-accent:
-    backgroundColor: "{colors.accent}"
-    textColor: "{colors.accent-fg}"
+  button-quiet:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.fg-faint}"
     rounded: "{rounded.chip}"
     padding: "0.375rem 0.875rem"
-  button-accent-hover:
-    backgroundColor: "{colors.accent-hover}"
-    textColor: "{colors.accent-fg}"
-  card:
+  chip-filter:
+    backgroundColor: "{colors.surface}"
+    textColor: "{colors.fg-faint}"
+    rounded: "{rounded.chip}"
+    padding: "0.375rem 0.875rem"
+  chip-filter-active:
+    backgroundColor: "{colors.fg}"
+    textColor: "{colors.bg}"
+    rounded: "{rounded.chip}"
+  card-tile:
     backgroundColor: "{colors.surface}"
     textColor: "{colors.fg}"
     rounded: "{rounded.card}"
     padding: "1.25rem"
-  chip-active:
-    backgroundColor: "{colors.accent}"
-    textColor: "{colors.accent-fg}"
-    rounded: "{rounded.pill}"
-    padding: "0.125rem 0.625rem"
-  chip-inactive:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.fg-faint}"
-    rounded: "{rounded.pill}"
-    padding: "0.125rem 0.625rem"
-  input:
+  input-field:
     backgroundColor: "{colors.bg}"
     textColor: "{colors.fg}"
     rounded: "{rounded.chip}"
-    padding: "0.5rem 0.75rem"
-  search-trigger:
-    backgroundColor: "{colors.surface-raised}"
-    textColor: "{colors.fg-faint}"
+    padding: "0.625rem 0.875rem"
+  input-chat:
+    backgroundColor: "{colors.bg}"
+    textColor: "{colors.fg}"
     rounded: "{rounded.pill}"
-    padding: "0.375rem 0.375rem 0.375rem 0.875rem"
+    padding: "0.625rem 0.875rem"
+  nav-bar:
+    backgroundColor: "{colors.bg}"
+    textColor: "{colors.fg-muted}"
+    height: "50px"
 ---
 
 # Design System: jayaremala.com
@@ -145,325 +164,261 @@ components:
 
 **Creative North Star: "Three Voices"**
 
-This system is built on a casting decision, not a style. Every typeface on the
-site is an assigned speaker, and the assignment is the rule that makes nine
-loaded fonts read as discipline instead of indulgence. **Roboto is the system
-talking** — chrome, headings, UI, the default voice a visitor meets.
-**Garamond is Jaya talking** — the hero, the chapter labels, the prose
-headings, the signature. **Geist Mono is the machine reporting** — code,
-metrics, keyboard hints, trace output. A visitor never has to be told which is
-which; they can hear it.
+The site is a printed thing that happens to run in a browser. Its material is
+newsprint and ink: an off-white sheet, a deep near-black ink, hairline column
+rules doing the work that boxes and shadows do elsewhere. Nothing floats
+decoratively; where something lifts, it lifts because you touched it.
 
-The material underneath is newsprint. A fractal-noise grain sits over every
-page at 2.8% opacity in multiply, dropping to 1.8% in screen on dark. Column
-rules are heavy at the spine and fade to nothing before the margin, the way a
-printed rule does. Long-form text carries hanging punctuation, a Garamond drop
-cap in the accent, balanced heading wraps, and a 68ch measure. The homepage is
-a single continuous column of numbered chapters at every viewport width — one
-DOM tree, no layout branch, the rail going sticky only at `lg`.
+The organizing idea is that type is casting, not decoration. **Roboto is the
+system talking** — chrome, labels, UI copy, the default `midnight` theme
+applied pre-hydration by an inline script so the first paint is already
+correct. **EB Garamond (and Cormorant for the signature) is the author
+talking** — hero and chapter headlines, pull-quotes, opinions, the signature
+mark. **Geist Mono is the machine reporting** — measurements, datelines,
+uptime counters, model ids, anything the build knows rather than claims.
+**Source Serif 4 is the reader's voice** — long-form `/blog` and `/lab` prose,
+set at reading size and never themed away. A visitor should be able to tell who
+is speaking without reading a word.
 
-Restraint is the default state and response is earned by contact. Cards carry
-no shadow at all in light mode; depth arrives only on hover, as a 3px lift.
-Every button drops to `scale(0.97)` in 75ms when pressed. The palette is
-almost entirely ink and paper, with one indigo held back for the few things
-that are genuinely live.
+Density is editorial, not dashboard: one column, generous vertical rhythm
+between chapters, tight leading inside them. Colour is almost entirely absent —
+the page is ink on paper, and a single indigo appears only where something is
+alive. The confirmed anti-reference is the generic developer-portfolio dark
+mode: neon-on-charcoal, gradient hero, glassmorphic cards, a rainbow of tag
+colours. This system rejects all of it.
 
 **Key Characteristics:**
-
-- Nine typefaces, each with exactly one assigned speaker
-- Newsprint grain over every surface; column rules that fade to the margin
-- Ink-on-paper primary actions — the accent is never the main button
-- Flat in light, materially deep in dark; two different papers, not one tinted
-- Motion is a single easing curve (`cubic-bezier(0.16, 1, 0.3, 1)`) plus a 75ms press
-- A serif that survives every theme, because the author's voice is not themeable
-
-**Confirmed anti-reference: the generic developer-portfolio dark mode.** No
-neon-on-black terminal aesthetic, no monospace-everything, no glowing gradient
-orbs, no `</> Full Stack Developer` hero. Monospace here is a reporting voice
-with a job, not a costume.
+- Ink-on-paper primaries; a cool newsprint sheet and a deep near-black ink
+- One accent, Signal Indigo, reserved for live state
+- Four assigned typefaces, each with a fixed speaker
+- Hairline rules and ruled bands instead of nested cards
+- Flat at rest; depth is earned by interaction
+- One continuous reading column at every viewport
+- Paper grain over the whole page (2.8% multiply noise, 1.8% screen in dark)
 
 ## Colors
 
-Ink and paper carry the entire system; one indigo is held in reserve for what
-is live.
+Two papers and one ink, plus a single indigo that means "this is running".
 
 ### Primary
+- **Signal Indigo** (`{colors.signal-indigo}` light, `{colors.dark-signal-indigo}` dark): the portfolio's only accent. It marks live state and nothing else — the pulsing dot on a still-running product, an open booking slot, the active nav item, the focus ring, the drop cap, the prose link, the hairline that wipes across a tile on hover. Deepened from the shared site indigo toward the ink so it reads as a second ink rather than a UI highlight (9.86:1 on light paper, 5.85:1 on black).
+- **Shared Indigo** (`{colors.accent-shared}`): the unscoped `:root` accent that gradeVITian still runs on. The portfolio overrides it inside `.portfolio`; it is not the portfolio's colour.
 
-- **Signal Indigo** (`accent`): the site's single accent, and a deliberate,
-  binding choice. It marks what is live and what is current — link underlines,
-  the drop cap on every article's opening letter, active filter chips, the
-  pinging status dot on shipped products, focus rings, and the selection
-  highlight at 24% mix. It lightens to a periwinkle in dark mode
-  (`dark-accent`) so it survives a true-black ground.
-- **Signal Violet** (`accent-secondary`): appears only as the far stop of the
-  gradient on section micro-labels (`.label-gradient`) and nowhere else. It is
-  a terminator for one gradient, not a second accent.
-- **Indigo Wash** (`accent-light`): the tint behind blockquotes and the
-  soft-selected state of pipeline nodes.
+### Secondary
+- **Signal Violet** (`{colors.signal-violet}`): a supporting hue with a deliberately narrow brief — the second stop of the gradient micro-label and the ambient scan-line. Never a state, never a category.
 
 ### Neutral
-
-- **Newsprint** (`bg`) and its three surface steps (`surface`,
-  `surface-raised`, `surface-sunken`): the paper stack. Cards sit on
-  `surface`, dropdowns and the search trigger on `surface-raised`.
-- **Ink** (`fg`) with three descending voices (`fg-muted`, `fg-subtle`,
-  `fg-faint`): body copy runs at `fg-muted`, not full ink; `fg-faint` carries
-  timestamps, list markers, and captions.
-- **Column Rules** (`border`, `border-subtle`, `border-strong`): print rule
-  weights. `border-strong` is the hover border on cards and the spine end of
-  every chapter rule.
-- **Pure Black** (`dark-bg`): dark mode is true `#000000`, OLED-ready, with
-  `dark-fg` at a soft `#f0f0f0` rather than pure white.
+- **Newsprint** (`{colors.bg}`): the page. Off-white with a faint warm cast in the shipped hex.
+- **Sheet** (`{colors.surface}`) / **Raised Sheet** (`{colors.surface-raised}`) / **Sunken Sheet** (`{colors.surface-sunken}`): the only tonal steps. Cards, hover beds, table headers.
+- **Column Rule** (`{colors.border}`), **Faint Rule** (`{colors.border-subtle}`), **Heavy Rule** (`{colors.border-strong}`): the three line weights. Heavy opens a rule and marks a pull-quote's spine; standard divides ruled bands; faint separates rows inside one band.
+- **Ink** (`{colors.fg}`) → **Muted** (`{colors.fg-muted}`) → **Subtle** (`{colors.fg-subtle}`) → **Faint** (`{colors.fg-faint}`): the full four-step ink ramp, and the system's real hierarchy device. Distinction is full ink; dormant is faint.
+- **Pure Black** (`{colors.dark-bg}`): dark mode is true black, OLED-ready, with a near-white ink. Not a dark grey theme.
 
 ### Named Rules
+**The One Ink Rule.** Emphasis is ink weight, not hue. A thing is important because it is set in full `fg` while its neighbours sit at `fg-subtle`, never because it was tinted. Audit test: desaturate a screen; if the hierarchy survives, it obeyed the rule.
 
-**The One Ink Rule.** The primary action is ink on paper — `fg` background,
-`bg` text, pill geometry. Signal Indigo is never the primary button. It marks
-state and liveness; the moment it becomes a call to action it stops meaning
-anything.
+**The Two Papers Rule.** There are two papers, `bg` and `surface`, plus a raised and a sunken step for edges. A surface never invents a third tint, a tinted card, or a coloured panel.
 
-**The Two Papers Rule.** Light and dark are not one palette in two tints. Light
-is paper: flat, no card shadow, grain in multiply. Dark is pure black: real
-layered shadows, grain in screen. Never port a treatment across without
-re-deciding it.
+**The Cool Newsprint Rule.** The neutral ramp is normatively cool blue-slate — quality newsprint under natural light. The shipped hexes carry a warm cast (`#fefefb` / `#181410`) that is known drift, not intent; the correction is still pending. New neutrals are chosen cool.
 
-**The Cool Newsprint Rule (drift — correct before extending).** The intended
-neutral character is a *cool blue-slate* off-white with deep blue-black ink,
-as the token comments state. The shipped hexes have drifted warm — `#fefefb`
-is bone, `#181410` is a brown-black, `#c6c2bb` is a warm gray. The cool intent
-is normative; the current values are the incumbent implementation pending
-correction. Do not add new neutrals matching the warm drift, and do not treat
-the warmth as the system's character in new work.
+**The Signal Rule.** Signal Indigo means live: something running, open, active, or focused. It is not a brand wash, not a category colour, and not a hover flourish on a static element. Live is indigo, distinguished is full ink, dormant is faint — three states, one hue.
+
+**The No-Category-Colour Rule.** Tags, skills, project types, roles and post kinds are never colour-coded. They are distinguished by ink weight, rule weight, and position.
 
 ## Typography
 
-**Display Font:** EB Garamond (with Georgia, Times New Roman)
-**UI / Body Font:** Roboto (with system-ui, Arial) — the default theme's face
-**Long-form Font:** Source Serif 4 (with Georgia)
-**Mono Font:** Geist Mono
-**Signature Font:** Cormorant Garamond, italic
-**Handwriting:** Caveat, for the hero doodle field only
+**Display Font:** EB Garamond (with Georgia, Times New Roman, serif) — via `.display-serif`
+**Body Font:** Roboto (with system-ui, Arial, sans-serif) — the `midnight` default
+**Reading Font:** Source Serif 4 (with Georgia, serif) — `--font-blog`, long-form only
+**Label/Mono Font:** Geist Mono (with ui-monospace, monospace)
+**Signature:** Cormorant Garamond italic; **Marginalia:** Caveat
 
-**Character:** A humanist Garamond announcing, a neutral grotesque operating,
-and a precise mono reporting. The pairing works because the roles never
-overlap — the serif is never used for chrome and the grotesque is never used
-for the author's voice.
-
-The default theme is `midnight`, set pre-hydration from `localStorage`, and it
-re-points `--font-display` and `--font-sans` at Roboto. Inter and Geist Sans
-are the non-midnight grotesques and the face the two subdomain sites inherit;
-Playfair Display serves the gradeVITian and VRF Bricks wordmarks. Because
-Garamond and Source Serif 4 are bound through variables that `midnight`
-deliberately does *not* override, the author's voice and the reading voice are
-identical in every theme.
+**Character:** A humanist Garamond announcing over a neutral Roboto that reports,
+with a monospace that only ever states measured fact and a reading serif kept
+for the reader alone. The pairing is a newspaper's: a masthead voice, a body
+voice, and an agate voice, each doing one job.
 
 ### Hierarchy
-
-- **Display** (`.display-serif` + `.display-xl/lg/md`, Garamond 600, clamp
-  2.65–4.25rem, line-height 1.03, tracking −0.016em): hero headlines and
-  chapter labels. Garamond's small x-height means every step is set larger and
-  leaded tighter than a grotesque equivalent would be. Italic within display
-  drops to weight 500 and tracking −0.008em.
-- **Headline** (h1, line-height 1.1, tracking −0.02em / −0.022em in midnight):
-  page headings.
-- **Title** (h2/h3, weight 600 — 500 in midnight, line-height 1.2–1.25):
-  section and card headings.
-- **Body** (`--text-body`, 0.9375rem; paragraphs line-height 1.8): card and
-  interface copy. `--text-lead` (1.0625rem) opens bios and intros.
-- **Prose** (Source Serif 4, 1.0625rem, line-height 1.85, max 68ch): article
-  and lab body text, set in `fg-muted` with hanging punctuation. Prose
-  headings switch to EB Garamond; `.prose h4` becomes an uppercase
-  0.875rem/700 label at 0.07em tracking.
-- **Label** (`--text-nano`, 0.625rem): chips, eyebrows, section micro-labels.
-  `--text-micro` (0.6875rem) carries captions, timestamps, and hints.
-- **Signature** (Cormorant Garamond italic 500): the sign-off mark only — a
-  fine-nib italic standing in for a handwritten hand.
+- **Display** (600, `clamp(2.65rem, 4.4vw, 4.25rem)`, 1.0, `-0.016em`): the hero headline. Garamond's small x-height means every step is set larger and leaded tighter than a grotesque equivalent would be. The vw factor is deliberately modest so the headline never pushes the CTAs and signature below the fold.
+- **Display Large** (600, `clamp(2rem, 4.4vw, 3.5rem)`): page titles across `/blog`, `/lab`, `/experience`, `/projects`, `/education`, `/apps`, `/now`.
+- **Headline** (600, `clamp(1.5rem, 2.4vw, 2.1rem)`, 1.12): chapter labels in the home page rail.
+- **Title** (600, `1rem`, 1.25, `-0.006em`): card and section headings; Roboto.
+- **Body** (400, `0.9375rem`, 1.55): all UI and card copy. `text-lead` (`1.0625rem`, 1.8) for bios and intro paragraphs.
+- **Prose** (400, `1.0625rem`, 1.85, max 68ch): `/blog` and `/lab` article bodies in Source Serif 4, with Garamond headings, a Garamond drop cap in Signal Indigo, and hanging punctuation.
+- **Dateline** (`0.6875rem`, uppercase, `0.16em`, tabular): Geist Mono. `PLACE / YEAR` above a chapter heading, and every measurement line beneath one.
+- **Label** (700, `0.625rem`, uppercase, `0.2em`): section micro-labels and stat captions.
+- **Ghost numeral** (Garamond 500, `clamp(4rem, 8vw, 8.5rem)`, 5–6% ink, lining + tabular figures): the chapter's typographic anchor, set behind the rail label.
 
 ### Named Rules
+**The Assigned Speaker Rule.** Four faces, four speakers: Roboto is the system, Garamond/Cormorant is the author, Geist Mono is the machine, Source Serif 4 is the reader. Before setting a new string, name its speaker; that names the face. A measurement never appears in Garamond, and an opinion never appears in mono.
 
-**The Assigned Speaker Rule.** Before adding a typeface, name its speaker. If
-the job belongs to a voice already cast — system, author, machine, reader — use
-that face. A tenth font with no speaker is a bug.
+**The Unthemeable Voice Rule.** `--font-garamond`, `--font-cormorant` and `--font-blog` are deliberately never overridden by `[data-theme]`. The author's voice and the reader's voice survive every theme; only the system's voice swaps.
 
-**The Unthemeable Voice Rule.** `--font-garamond`, `--font-cormorant`, and
-`--font-blog` are never overridden by a theme. Themes may swap the system's
-voice; they may not swap the author's or the reader's.
+**The Escape Hatch Rule.** The display serif is a class (`.display-serif`), never a `--font-display` override. That variable is the hatch `midnight` — the default theme — uses to swap the whole site to Roboto, and gradeVITian and VRF Bricks inherit it and must stay grotesque. Overriding it would silently break the experience most visitors get.
 
-**The Escape Hatch Rule.** Promote a serif to headline duty with the
-`.display-serif` class, never by overriding `--font-display`. That variable is
-how `midnight` swaps the whole site to Roboto, and both subdomains inherit it —
-overriding it breaks the default experience and two other products at once.
+**The Ghost Numeral Rule.** A chapter is counted once, by the oversized ghost numeral in the rail. No second mono numeral, no third line above the heading; the dateline below carries the filing.
 
 ## Layout
 
-One continuous column, everywhere. The homepage is a stack of numbered
-chapters, each a plain `<section>` with a rail that goes sticky at `lg`
-(1024px) and is a normal stacked block below it — a single DOM tree with no
-JS-driven layout branch.
+One continuous reading column at every viewport. The home page is a stack of
+plain `<section>` chapters inside a container that steps `max-w-6xl` →
+`xl:max-w-7xl` → `2xl:max-w-[90rem]`, padded `px-4` → `sm:px-6` → `md:px-8`,
+with a wider right gutter at `xl` (`xl:pr-16`) reserving a lane for the fixed
+section indicator.
 
-`--nav-h` (50px) is the CSS source of truth for the sticky nav height, and
-anchor targets clear it via `scroll-margin-top: calc(var(--nav-h) + 0.875rem)`
-so a jump never parks a heading under the chrome. Prose headings carry a 6rem
-scroll margin for the same reason.
+Each chapter is a two-column grid only from `lg` up: a `13rem` → `xl:15rem` →
+`2xl:17rem` rail beside a `minmax(0,1fr)` body, gap `lg:3.5rem` → `xl:5rem`.
+Below `lg` the rail is a normal stacked block. The rail goes `lg:sticky` in pure
+CSS — no matchMedia, no ResizeObserver, no scroll handler — so its identity
+stays with you while the body scrolls past, and it degrades on its own.
 
-Containers step up rather than filling: `max-w-6xl` at base, `xl:max-w-7xl`,
-`2xl:max-w-[90rem]` for the nav and wide sections; `max-w-2xl` is the common
-single-column block. Reading measures are set in characters, not pixels — 68ch
-for prose, 62ch and 56ch for narrower editorial passages. Breakpoints are
-Tailwind's defaults (640 / 768 / 1024 / 1280 / 1536); 1024 is the one that
-carries real structural weight.
+Vertical rhythm is the chapter interval: `pt-16 pb-12` on phones rising through
+`sm` / `md` / `lg` to `xl:pt-36 pb-24`. The sticky nav is 50px (`--nav-h`), and
+chapters carry `scroll-margin-top: calc(var(--nav-h) + 0.875rem)` so an anchor
+jump never parks a heading under the chrome.
 
-Spacing follows Tailwind's 0.25rem base. Cards are padded 1.25rem, rising to
-1.5rem at `sm`. Mobile drops the sticky card-stacking behavior entirely rather
-than shrinking it.
+Reading measures are capped explicitly: prose 68ch, testimonials 68ch,
+experience and education bullet lists 72ch, standfirsts and body columns 62ch,
+decks and short annotations 46ch.
+
+Breakpoints are Tailwind defaults (`sm` 640, `md` 768, `lg` 1024, `xl` 1280,
+`2xl` 1536). Mobile disables the legacy sticky card-stacking entirely
+(`.stack-pin` → static below 768px) so native momentum scroll stays smooth.
 
 ### Named Rules
+**The One Column Rule.** The page is one column of reading at every width. Side rails carry identity, never content the reader must have. A layout that only works above `lg` is not a layout.
 
-**The One Column Rule.** The page reads as one column at every width.
-Responsive work adjusts rhythm and stickiness, never the number of columns the
-eye has to track.
+**The Measure Rule.** Every run of text declares its measure. Nothing sets wider than 72ch, and prose sets at 68ch.
 
 ## Elevation & Depth
 
-Hybrid, and split by theme. **Light mode is flat** — `--shadow-card` is
-literally `none`, and depth comes from the surface stack plus border weight.
-**Dark mode is materially layered** — cards carry a real two-part shadow at
-rest and a three-part shadow on hover, tuned in a blue-black
-(`rgb(5 3 15 / …)`) rather than neutral black.
+The system is flat at rest. `--shadow-card` is literally `none` in light mode;
+depth in daylight is carried by hairline borders and the two paper tints, not by
+shadow. Dark mode gets a minimal resting shadow (a 1px/3px pair at 50%/35%
+black) because on true black a border alone loses the edge.
 
-Depth in light mode is therefore *motion*, not shadow: the `card-lift` hover
-raises a card 3px and only then introduces a shadow.
+Shadow is a response, not a property. `.card-lift` translates a surface up 3px
+and swaps to `--shadow-card-hover` over 300ms on the site's one easing curve;
+`:active` settles it back to `translateY(0) scale(0.99)` in 75ms. Buttons scale
+to 0.97 on press globally. The only ambient shadow left is `--shadow-stack`, an
+upward cast under stacked sections, and the reading-mode spotlight
+(`0 0 0 100vmax rgba(0,0,0,0.62)`) which is a scrim expressed as a shadow so it
+survives ancestor stacking contexts.
 
 ### Shadow Vocabulary
-
-- **`--shadow-card`** (`none` light / `0 1px 3px 0 rgb(5 3 15/.5), 0 1px 2px -1px rgb(5 3 15/.35)` dark): the resting state of every card.
-- **`--shadow-card-hover`** (`0 12px 32px -8px rgb(0 0 0/.08)` light / a three-layer blue-black stack in dark): applied by `.card-lift` on hover.
-- **`--shadow-stack`** (`0 -16px 48px -8px rgb(0 0 0/.12)` light, `/.50` dark): upward-cast shadow for stacking sections, so a section reads as sliding over the one before it.
+- **Rest, light** (`box-shadow: none`): the default. Borders do the work.
+- **Rest, dark** (`0 1px 3px 0 rgb(5 3 15 / 0.5), 0 1px 2px -1px rgb(5 3 15 / 0.35)`): the minimum needed to hold an edge on black.
+- **Lift, light** (`0 12px 32px -8px rgb(0 0 0 / 0.08)`): hover on an interactive tile only.
+- **Lift, dark** (`0 4px 16px -2px rgb(5 3 15 / 0.65), 0 8px 32px -4px rgb(5 3 15 / 0.50), 0 1px 3px 0 rgb(5 3 15 / 0.35)`): the same gesture, more layers to read on black.
+- **Stack** (`0 -16px 48px -8px rgb(0 0 0 / 0.12)`; `0.50` in dark): the upward cast under a stacked section.
 
 ### Named Rules
+**The Earned Depth Rule.** Surfaces are flat until touched. Shadow is the response to hover, focus, or press — never a resting decoration, and never a substitute for a rule or a tint.
 
-**The Earned Depth Rule.** Surfaces are flat at rest in light mode. A shadow is
-a response to state — hover, stacking, focus — never decoration on an idle
-element.
+**The Ruled Band Rule.** A group of related figures is a ruled band — `border-y` on the group, `divide-x` between the cells — not a row of cards. Cards nested inside cards are the failure mode this replaced; every line in a band is present at rest, never gated behind a hover a touch device cannot reach.
+
+**The No-Scrim Rule.** The nav meets content at a clean edge. It carries the page background, not a translucent wash — a scrim over the sticky chrome dropped body copy behind it to roughly 2:1 and was removed.
 
 ## Shapes
 
-Three semantic corners and nothing else: `chip` (0.5rem) for chips, tags and
-small controls; `panel` (0.75rem) for dropdowns, drawers and code blocks;
-`card` (1rem) for content cards. Pills (`9999px`) are reserved for two things —
-the primary CTA and status/filter chips — which is what makes the pill read as
-"this is an action or a state."
+Three corners and no more: `chip` (0.5rem) for tags, small controls and input
+fields; `panel` (0.75rem) for dropdowns, drawers and code blocks; `card` (1rem)
+for the canonical content card. A fourth shape exists and is deliberately not on
+the ramp — the full pill (`9999px`), reserved for actions and the chat input,
+so a thing you press never has the same silhouette as a thing you read.
 
-Borders do structural work everywhere. A card is `border-border` at rest and
-`border-border-strong` on hover; the hover border change is part of the lift,
-not a separate effect. Chapter rules are gradients, not solid lines: heavy at
-the spine (`border-strong`), mid at 34% (`border`), transparent by the margin.
+Borders are the primary form language. Three weights of the same hairline —
+`border-strong` where a rule begins, `border` where it divides, `border-subtle`
+where it merely separates rows — carry nearly all structure. The chapter rule is
+a gradient hairline that starts heavy at the spine and vanishes before the
+margin: a column rule, not a UI divider. Pull-quotes hang off a single
+`border-l border-border-strong` with hanging punctuation. Dotted chains
+(radial-gradient at 3px/11px, masked to fade at both ends) stand in for dividers
+where a hard rule would be too loud.
 
-Scrollbars are 5px with a fully-rounded `border-strong` thumb on a transparent
-track, and hidden entirely on horizontal chip rows and the chat textarea.
+Recurring geometry: the 24px dot grid (hero, nav, footer), the corner-bracket
+motif on bracketed tiles, and the avocado mark used as the chapter bullet.
 
 ### Named Rules
+**The Three Corners Rule.** Chip, panel, card. A new surface picks one of the three or it picks the pill because it is an action. There is no fourth radius.
 
-**The Three Corners Rule.** Every radius comes from `chip`, `panel`, or `card`
-— or it is a pill. An arbitrary `rounded-[14px]` is a bug.
+**The Rule Before The Box Rule.** Reach for a hairline before a container. If a border, a gradient rule, or a divided band can express the grouping, it does — a bordered box is the last resort, not the first.
 
 ## Components
 
 ### Buttons
-
-- **Shape:** fully rounded pill for the primary action; `chip` radius (0.5rem) for accent and inline actions.
-- **Primary:** ink on paper — `fg` background, `bg` text, `0.375rem 1.25rem` padding, medium weight, `hover:opacity-75` over 200ms. Used for the CTA in the nav, admin saves, and both subdomains' primary actions.
-- **Accent:** `accent` background, white text, `chip` radius, semibold at 12px, hovering to `accent-hover`. Reserved for in-context actions inside a tool surface (the MCP explorer, chat cards), never for the page's main CTA.
-- **Press:** every non-disabled button and `a[role=button]` drops to `scale(0.97)` with a 75ms transition. This is global and applies without opt-in.
-- **Focus:** a 2px `accent` outline at 3px offset with a 6px radius, applied globally on `:focus-visible` only. Inputs inside styled containers suppress it and let the container show focus instead.
-
-### Cards / Containers
-
-- **Corner Style:** `card` (1rem, shipped as `rounded-2xl` in most call sites).
-- **Background:** `surface`, on the `bg` page ground.
-- **Border:** `border` at rest → `border-strong` on hover.
-- **Shadow Strategy:** see Elevation — none at rest in light, real depth in dark.
-- **Internal Padding:** 1.25rem, rising to 1.5rem at `sm`.
-- **Interaction:** `.card-lift` raises 3px on hover and settles to `translateY(0) scale(0.99)` in 75ms on press, all on `cubic-bezier(0.16, 1, 0.3, 1)`.
+- **Shape:** Full pill (`9999px`) for actions; chip (0.5rem) for quiet controls.
+- **Primary — the ink pill:** solid ink on paper (`bg-fg` / `text-bg`), `0.625rem 1.25rem`, Roboto 500 at body size. The single highest-commitment affordance on any page: Schedule a call, Send message, Ask Avocado.
+- **Hover / Focus:** opacity to 75% over 200ms — the ink thins, it does not change colour. Global `:active` scales to 0.97 in 75ms. Focus-visible is a 2px Signal Indigo outline at 3px offset, 6px radius, applied globally.
+- **Quiet / Ghost:** paper background, hairline border, `fg-faint` text rising to `fg` on hover. No fill, no shadow.
 
 ### Chips
+- **Style:** Chip radius, `bg-surface`, hairline border, `fg-faint` label at 12px with a 10px count badge.
+- **State:** Selected inverts to solid ink (`bg-fg` / `text-bg` / `border-fg`); unselected stays paper. Filter state is expressed by inversion, never by hue.
 
-- **Style:** pill geometry, 10px semibold label.
-- **Selected:** `accent` background, `accent-fg` text, `accent` border, subtle shadow — and in the skills grid, a `scale(1.05)`.
-- **Unselected:** `surface` background, `border` border, `fg-faint` text, hovering to `fg` text and a 50%-alpha accent border.
+### Cards / Containers
+- **Corner Style:** Card (1rem), from the shared `Tile` primitive.
+- **Background:** `surface` on `bg`, hairline `border`.
+- **Shadow Strategy:** none at rest; `card-lift` only when the tile is interactive (see Elevation & Depth).
+- **Border:** hairline, strengthening to `border-strong` on hover.
+- **Internal Padding:** `1.25rem` typical, `1.5rem` at `sm` and up.
+- **Sweep:** an optional 1px Signal Indigo hairline pinned to the top edge that wipes in left-to-right (`scale-x-0` → `scale-x-100`, 300ms) on hover. It is a boolean, not a colour — there is no per-tile gradient.
+- **Brackets:** optional 10px corner brackets at 50% border ink, warming to 40% accent on hover.
 
 ### Inputs / Fields
-
-- **Style:** `bg` background inside a `border` stroke at `chip` radius, `0.5rem 0.75rem` padding, `fg-faint` placeholder.
-- **Focus:** outline suppressed; the border shifts to `accent`. The border *is* the focus indicator for fields.
-- **Chat textarea:** transparent background, no ring at all — the surrounding composer owns the focus state, and its scrollbar is hidden.
+- **Style:** Chip radius, page background (`bg`), hairline border, `0.625rem 0.875rem`. Font-size is forced to 16px below 640px to stop iOS auto-zoom.
+- **Focus:** the container takes the state, not the field — `focus-within:border-accent`. The inner `input`/`textarea` has its own outline and ring suppressed by design.
+- **Chat input:** the same field as a full pill, with a double box-shadow focus ring (3px page-coloured gap, then 5px indigo at 45%) instead of a border shift.
+- **Disabled:** 60% opacity, border held at `border`.
 
 ### Navigation
+- **Style:** sticky, 50px tall, on the page background with no scrim and no blur over content. Content meets it at a clean edge.
+- **Typography:** Roboto at 14px for links; the wordmark is a 20px serif at wide tracking.
+- **States:** a sliding rounded-md indicator follows the hovered item; the active item is full ink with an indigo icon; inactive is `fg-muted`. Dropdowns are panel-radius surfaces at 95% opacity with a 14px backdrop blur and a hairline ring — blur applies to menus, never to the bar.
+- **Mobile:** an 11px-minimum-height icon row and a panel-radius drawer; a chat FAB sits fixed on portfolio pages.
+- **Ambient:** a 24px dot grid fades to 18% inside the nav pill once the page is scrolled.
 
-- **Style:** sticky at `top-0`, `z-40`, on a solid `bg` ground, 50px tall, with a dot-grid texture that fades in to 18% opacity once scrolled.
-- **Behavior:** hides on scroll-down and returns on scroll-up, with an idle timer.
-- **Desktop:** three grouped triggers with hover dropdowns at `panel` radius, and a magnetic spotlight indicator that glides between triggers.
-- **Active state:** `accent` icon and `fg` semibold label inside the dropdown; the spotlight carries the hover state.
-- **Search trigger:** a pill on `surface-raised` with a `⌘K` / `Ctrl K` keycap in a bordered `kbd`, platform-detected on mount.
+### The Chapter Dateline
+The home page's signature device. A chapter that records a real deployment is
+filed like a field note: a mono `PLACE / YEAR` line at 11px, uppercase, `0.16em`
+tracking, with the place in `fg-muted`, the slash in `fg-faint`, and the year
+tabular. The Garamond chapter label sits directly under it, then the gradient
+column rule draws itself left-to-right over 900ms, then an optional 46ch deck,
+then — separated by a `border-subtle` top rule — the mono measure line: what that
+site cost or produced. Chapters that argue rather than record leave the dateline
+unset and read as a plain heading. Four of the home page's chapters are filed
+this way.
 
-### Signature: The Paper Grain
-
-A fixed full-viewport `body::after` overlay carrying an inline SVG
-`feTurbulence` fractal noise (baseFrequency 0.75, 4 octaves), at 2.8% opacity
-in `multiply` on light and 1.8% in `screen` on dark. It sits at `z-index: 9998`
-with `pointer-events: none`. It is the single element that makes every other
-surface read as paper, and it is why flat light-mode cards do not look empty.
-
-### Signature: The Drop Cap
-
-The first letter of every article's opening paragraph floats left at 3.1em in
-EB Garamond 700, set in Signal Indigo, with a 0.78 line-height. The opening
-paragraph itself runs at 1.09em in `fg-subtle`. Together they are the "settle
-in" signal for long-form.
-
-### Signature: The Ink Rule
-
-An 900ms `scaleX(0 → 1)` from `transform-origin: left` on
-`cubic-bezier(0.22, 1, 0.36, 1)` — a rule that draws itself the way a pen
-finishes a stroke. Used under the signature mark.
-
-### Motion
-
-Two curves carry the whole system. `cubic-bezier(0.16, 1, 0.3, 1)` is the
-standard ease for reveals (0.55s), card lift (0.3s), and drawers;
-`cubic-bezier(0.22, 1, 0.36, 1)` is the entrance curve for page transitions
-(0.4s) and the ink rule (900ms). Theme changes cross-fade background, color,
-border, and shadow over 0.25s. Presses are 75ms.
-
-`prefers-reduced-motion: reduce` is honored globally — scroll reveals resolve
-to their visible state with no transition, and ambient loops are disabled.
-
-### Named Rules
-
-**The Two Curves Rule.** New motion uses `cubic-bezier(0.16, 1, 0.3, 1)` for
-state response or `cubic-bezier(0.22, 1, 0.36, 1)` for entrances. Bounce and
-elastic easing are not part of this system.
+### The Still-Running Ledger
+A row per shipped product, dot-leadered across the measure. A pulsing Signal
+Indigo dot (a solid dot under an `animate-ping` halo) marks live; an archived
+entry drops to a faint static dot. The uptime is mono and tabular and counts real
+years and days. Rows have no borders — they are a hover bed (`surface-raised`) at
+panel radius and a leader line of `border`-coloured dots that warms to 40% accent
+on hover.
 
 ## Do's and Don'ts
 
 ### Do:
-
-- **Do** make the primary action ink-on-paper (`bg-fg text-bg`, pill) and let Signal Indigo mark state instead.
-- **Do** assign a speaker before adding a typeface — system (Roboto), author (Garamond), machine (Geist Mono), or reader (Source Serif 4).
-- **Do** promote a serif to headline duty with `.display-serif`, never by overriding `--font-display`.
-- **Do** pick radii from `chip` (0.5rem), `panel` (0.75rem), or `card` (1rem), or use a pill.
-- **Do** use `.card-lift` for interactive cards so the 3px hover, the border shift, and the 75ms press all arrive together.
-- **Do** set reading measures in `ch` (68 for prose, 62 or 56 for narrow passages).
-- **Do** carry `prefers-reduced-motion` on every new animation — the homepage is motion-dense and the media query is already the house standard.
-- **Do** reference semantic tokens (`bg-surface`, `text-fg-muted`, `border-border`) rather than raw Tailwind palette classes.
+- **Do** name the speaker before choosing a face: system (Roboto), author (Garamond/Cormorant), machine (Geist Mono), reader (Source Serif 4).
+- **Do** build hierarchy from the four-step ink ramp — `fg` → `fg-muted` → `fg-subtle` → `fg-faint` — before reaching for any colour.
+- **Do** reserve Signal Indigo for live state: running, open, active, focused.
+- **Do** express a group of figures as a ruled band (`border-y` + `divide-x`) at reading scale, with every line visible at rest.
+- **Do** pick one of the three corners (chip 0.5rem, panel 0.75rem, card 1rem), or the pill if it is an action.
+- **Do** cap the measure — 68ch for prose, 72ch for bullet lists, 62ch for body columns.
+- **Do** let depth be earned: flat at rest, `card-lift` on hover, 0.97 on press.
+- **Do** file a real deployment with a mono `PLACE / YEAR` dateline and a mono measure line.
+- **Do** add every new ambient or infinite animation to the `prefers-reduced-motion` block, and reset the property it holds hostage (`scaleX(1)`, `stroke-dashoffset: 0`, `opacity: 0`) rather than only killing the animation.
+- **Do** keep the author's and reader's faces out of `--font-display`; that variable is the theme escape hatch.
 
 ### Don't:
-
-- **Don't** build the generic developer-portfolio dark mode — neon-on-black, monospace-everything, glowing gradient orbs. Mono is a reporting voice here, not a theme.
-- **Don't** add a shadow to a light-mode element at rest. Depth in light is motion and border weight.
-- **Don't** use bounce or elastic easing; the system has exactly two curves.
-- **Don't** animate `width`, `height`, `padding`, or `margin`. Use `transform` and `opacity`.
-- **Don't** spread Signal Indigo into decoration — it means "live" or "current," and dilution costs it that meaning.
-- **Don't** introduce new neutrals matching the current warm drift; the intended character is cool blue-slate (see The Cool Newsprint Rule).
-- **Don't** override `--font-garamond`, `--font-cormorant`, or `--font-blog` in a theme. The author's and reader's voices are not themeable.
-- **Don't** branch the homepage into a second layout tree for mobile — one column, one DOM, stickiness toggled at `lg`.
+- **Don't** colour-code categories, tags, skills, or post types. No emerald/teal/amber/orange/sky/violet ramps on reading surfaces.
+- **Don't** introduce a third paper tint or a tinted card to signal state; invert to ink instead.
+- **Don't** nest a card inside a card. If it needs grouping, rule it.
+- **Don't** put a scrim, wash, or blur behind the sticky nav over body content.
+- **Don't** gate information behind hover — a touch device will never see it.
+- **Don't** override `--font-display`, `--font-garamond`, `--font-cormorant`, or `--font-blog` per theme.
+- **Don't** add a resting shadow in light mode; `--shadow-card` is `none` there on purpose.
+- **Don't** invent a fourth radius or a bespoke per-component corner.
+- **Don't** set a measurement in a serif or an opinion in mono.
+- **Don't** reach for the generic developer-portfolio dark mode: neon on charcoal, gradient heroes, glass cards, rainbow tags.

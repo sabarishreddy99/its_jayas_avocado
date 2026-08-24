@@ -183,7 +183,7 @@ function GalleryImage({ item }: { item: GalleryItem }) {
   const [failed, setFailed] = useState(false);
   if (failed) {
     return (
-      <div className="flex aspect-[4/3] items-center justify-center bg-gradient-to-br from-indigo-500/15 to-violet-500/15 p-4">
+      <div className="flex aspect-[4/3] items-center justify-center bg-surface-raised p-4">
         <p className="text-[11px] font-medium text-fg-muted text-center">{item.title}</p>
       </div>
     );

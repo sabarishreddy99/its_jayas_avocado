@@ -1,516 +1,301 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-08-21T17:18:38Z",
+  "generatedAt": "2026-08-23T00:00:00Z",
   "title": "Design System: jayaremala.com",
   "extensions": {
     "colorMeta": {
-      "accent": {
+      "signal-indigo": {
         "role": "primary",
         "displayName": "Signal Indigo",
-        "canonical": "oklch(51.1% 0.2301 277.0)",
-        "hex": "#4f46e5",
-        "purpose": "The single accent. Marks what is live and what is current: link underlines, the article drop cap, active filter chips, status dots, focus rings.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0920 277.0)",
-          "oklch(26.4% 0.1271 277.0)",
-          "oklch(37.9% 0.1621 277.0)",
-          "oklch(49.3% 0.1972 277.0)",
-          "oklch(60.7% 0.2279 277.0)",
-          "oklch(72.1% 0.1928 277.0)",
-          "oklch(83.6% 0.1578 277.0)",
-          "oklch(95.0% 0.1227 277.0)"
-        ]
+        "canonical": "#3730a3",
+        "darkValue": "#6f7bf7",
+        "note": "Portfolio-scoped override of the shared site indigo, set on .portfolio. Deepened toward the ink so it reads as a second ink rather than a UI highlight. 9.86:1 on #fefefb, 5.85:1 on #000000.",
+        "tonalRamp": ["#14113d", "#1d1a5c", "#27227b", "#312c99", "#3730a3", "#5d57bd", "#8b86d6", "#c4c1ec"]
       },
-      "accent-secondary": {
+      "signal-violet": {
         "role": "secondary",
         "displayName": "Signal Violet",
-        "canonical": "oklch(60.6% 0.2189 292.7)",
-        "hex": "#8b5cf6",
-        "purpose": "The far stop of the section micro-label gradient, and nowhere else. A gradient terminator, not a second accent.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0876 292.7)",
-          "oklch(26.4% 0.1209 292.7)",
-          "oklch(37.9% 0.1543 292.7)",
-          "oklch(49.3% 0.1876 292.7)",
-          "oklch(60.7% 0.2168 292.7)",
-          "oklch(72.1% 0.1835 292.7)",
-          "oklch(83.6% 0.1501 292.7)",
-          "oklch(95.0% 0.1168 292.7)"
-        ]
+        "canonical": "#6d28d9",
+        "darkValue": "#8b7cf6",
+        "note": "Narrow brief: second stop of the gradient micro-label and the ambient scan-line. Never a state, never a category.",
+        "tonalRamp": ["#1f0a41", "#320f68", "#45148f", "#5920b4", "#6d28d9", "#8d5be3", "#b294ee", "#dccef8"]
       },
-      "accent-light": {
-        "role": "primary",
-        "displayName": "Indigo Wash",
-        "canonical": "oklch(96.2% 0.0179 272.3)",
-        "hex": "#eef2ff",
-        "purpose": "Tint behind blockquotes and soft-selected pipeline nodes.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0072 272.3)",
-          "oklch(26.4% 0.0099 272.3)",
-          "oklch(37.9% 0.0126 272.3)",
-          "oklch(49.3% 0.0154 272.3)",
-          "oklch(60.7% 0.0178 272.3)",
-          "oklch(72.1% 0.0150 272.3)",
-          "oklch(83.6% 0.0123 272.3)",
-          "oklch(95.0% 0.0096 272.3)"
-        ]
+      "accent-shared": {
+        "role": "tertiary",
+        "displayName": "Shared Indigo",
+        "canonical": "#4f46e5",
+        "darkValue": "#818cf8",
+        "note": "The unscoped :root accent. gradeVITian runs on it; the portfolio overrides it. Not the portfolio's colour.",
+        "tonalRamp": ["#171449", "#221d6b", "#2e278d", "#3f37c4", "#4f46e5", "#7a72ec", "#a6a1f3", "#d2d0f9"]
       },
       "bg": {
         "role": "neutral",
         "displayName": "Newsprint",
-        "canonical": "oklch(99.6% 0.0039 106.5)",
-        "hex": "#fefefb",
-        "purpose": "The page ground. Carries the fractal-noise grain overlay at 2.8% multiply.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0016 106.5)",
-          "oklch(26.4% 0.0022 106.5)",
-          "oklch(37.9% 0.0028 106.5)",
-          "oklch(49.3% 0.0034 106.5)",
-          "oklch(60.7% 0.0039 106.5)",
-          "oklch(72.1% 0.0033 106.5)",
-          "oklch(83.6% 0.0027 106.5)",
-          "oklch(95.0% 0.0021 106.5)"
-        ]
+        "canonical": "#fefefb",
+        "darkValue": "#000000",
+        "note": "Normative intent is cool blue-slate newsprint; the shipped hex carries a warm cast. Known drift, correction pending (The Cool Newsprint Rule).",
+        "tonalRamp": ["#191815", "#33312b", "#4d4a41", "#6d685c", "#928c7e", "#b8b2a5", "#dedad3", "#fefefb"]
       },
       "surface": {
         "role": "neutral",
-        "displayName": "Paper Stack",
-        "canonical": "oklch(96.7% 0.0054 95.1)",
-        "hex": "#f5f4f0",
-        "purpose": "Card and panel ground, one step off the page.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0022 95.1)",
-          "oklch(26.4% 0.0030 95.1)",
-          "oklch(37.9% 0.0038 95.1)",
-          "oklch(49.3% 0.0046 95.1)",
-          "oklch(60.7% 0.0054 95.1)",
-          "oklch(72.1% 0.0045 95.1)",
-          "oklch(83.6% 0.0037 95.1)",
-          "oklch(95.0% 0.0029 95.1)"
-        ]
+        "displayName": "Sheet",
+        "canonical": "#f5f4f0",
+        "darkValue": "#0c0c0c",
+        "tonalRamp": ["#1a1a17", "#33322d", "#4d4b44", "#6b685f", "#918d82", "#b7b3a8", "#dbd9d2", "#f5f4f0"]
       },
-      "fg": {
+      "surface-raised": {
         "role": "neutral",
-        "displayName": "Ink",
-        "canonical": "oklch(19.5% 0.0102 67.2)",
-        "hex": "#181410",
-        "purpose": "Full-strength text, primary button ground, and the hover border on nothing else.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0041 67.2)",
-          "oklch(26.4% 0.0056 67.2)",
-          "oklch(37.9% 0.0072 67.2)",
-          "oklch(49.3% 0.0087 67.2)",
-          "oklch(60.7% 0.0101 67.2)",
-          "oklch(72.1% 0.0085 67.2)",
-          "oklch(83.6% 0.0070 67.2)",
-          "oklch(95.0% 0.0054 67.2)"
-        ]
+        "displayName": "Raised Sheet",
+        "canonical": "#eceae6",
+        "darkValue": "#181818",
+        "tonalRamp": ["#1a1917", "#32302c", "#4b4842", "#69655d", "#8e8a80", "#b4b0a6", "#d3d0ca", "#eceae6"]
       },
-      "fg-muted": {
+      "surface-sunken": {
         "role": "neutral",
-        "displayName": "Reading Ink",
-        "canonical": "oklch(32.9% 0.0161 75.1)",
-        "hex": "#3a342c",
-        "purpose": "Body and prose copy. Body text never runs at full Ink.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0064 75.1)",
-          "oklch(26.4% 0.0089 75.1)",
-          "oklch(37.9% 0.0114 75.1)",
-          "oklch(49.3% 0.0138 75.1)",
-          "oklch(60.7% 0.0160 75.1)",
-          "oklch(72.1% 0.0135 75.1)",
-          "oklch(83.6% 0.0110 75.1)",
-          "oklch(95.0% 0.0086 75.1)"
-        ]
-      },
-      "fg-faint": {
-        "role": "neutral",
-        "displayName": "Margin Ink",
-        "canonical": "oklch(62.3% 0.0138 75.3)",
-        "hex": "#8c867e",
-        "purpose": "Timestamps, list markers, captions, placeholder text.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0055 75.3)",
-          "oklch(26.4% 0.0076 75.3)",
-          "oklch(37.9% 0.0098 75.3)",
-          "oklch(49.3% 0.0119 75.3)",
-          "oklch(60.7% 0.0137 75.3)",
-          "oklch(72.1% 0.0116 75.3)",
-          "oklch(83.6% 0.0095 75.3)",
-          "oklch(95.0% 0.0074 75.3)"
-        ]
+        "displayName": "Sunken Sheet",
+        "canonical": "#e3e0da",
+        "darkValue": "#000000",
+        "tonalRamp": ["#191814", "#312f29", "#49463e", "#666255", "#8b8677", "#b0ab9c", "#cbc7bf", "#e3e0da"]
       },
       "border": {
         "role": "neutral",
         "displayName": "Column Rule",
-        "canonical": "oklch(81.5% 0.0107 81.8)",
-        "hex": "#c6c2bb",
-        "purpose": "Default card and panel stroke; the mid stop of every chapter rule.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0043 81.8)",
-          "oklch(26.4% 0.0059 81.8)",
-          "oklch(37.9% 0.0075 81.8)",
-          "oklch(49.3% 0.0091 81.8)",
-          "oklch(60.7% 0.0106 81.8)",
-          "oklch(72.1% 0.0089 81.8)",
-          "oklch(83.6% 0.0073 81.8)",
-          "oklch(95.0% 0.0057 81.8)"
-        ]
+        "canonical": "#c6c2bb",
+        "darkValue": "#252525",
+        "note": "The standard hairline. Divides ruled bands and outlines tiles.",
+        "tonalRamp": ["#191814", "#302e29", "#48453d", "#645f54", "#89836f", "#a8a297", "#c6c2bb", "#e6e3de"]
+      },
+      "border-subtle": {
+        "role": "neutral",
+        "displayName": "Faint Rule",
+        "canonical": "#dedad3",
+        "darkValue": "#161616",
+        "tonalRamp": ["#1a1815", "#322f2a", "#4a463e", "#676156", "#8c8578", "#b1aa9d", "#dedad3", "#f1efeb"]
       },
       "border-strong": {
         "role": "neutral",
-        "displayName": "Spine Rule",
-        "canonical": "oklch(65.5% 0.0151 67.6)",
-        "hex": "#978f87",
-        "purpose": "Card hover border and the heavy end of a chapter rule.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0060 67.6)",
-          "oklch(26.4% 0.0083 67.6)",
-          "oklch(37.9% 0.0106 67.6)",
-          "oklch(49.3% 0.0129 67.6)",
-          "oklch(60.7% 0.0149 67.6)",
-          "oklch(72.1% 0.0126 67.6)",
-          "oklch(83.6% 0.0103 67.6)",
-          "oklch(95.0% 0.0080 67.6)"
-        ]
+        "displayName": "Heavy Rule",
+        "canonical": "#978f87",
+        "darkValue": "#3a3a3a",
+        "note": "Where a rule begins and where a pull-quote hangs.",
+        "tonalRamp": ["#181613", "#2f2c28", "#46423c", "#5f5a51", "#7b756b", "#978f87", "#bab4ac", "#ddd9d4"]
       },
-      "dark-bg": {
+      "fg": {
         "role": "neutral",
-        "displayName": "Pure Black",
-        "canonical": "oklch(0.0% 0.0000 0.0)",
-        "hex": "#000000",
-        "purpose": "True black dark ground, OLED-ready. Grain flips to 1.8% screen.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0000 0.0)",
-          "oklch(26.4% 0.0000 0.0)",
-          "oklch(37.9% 0.0000 0.0)",
-          "oklch(49.3% 0.0000 0.0)",
-          "oklch(60.7% 0.0000 0.0)",
-          "oklch(72.1% 0.0000 0.0)",
-          "oklch(83.6% 0.0000 0.0)",
-          "oklch(95.0% 0.0000 0.0)"
-        ]
+        "displayName": "Ink",
+        "canonical": "#181410",
+        "darkValue": "#f0f0f0",
+        "note": "Top of the four-step ink ramp. Full ink is the system's emphasis device (The One Ink Rule).",
+        "tonalRamp": ["#0a0806", "#181410", "#2b251e", "#3f372d", "#5a5148", "#837b71", "#b0a9a0", "#e0dbd5"]
       },
-      "dark-accent": {
-        "role": "primary",
-        "displayName": "Signal Indigo (Dark)",
-        "canonical": "oklch(68.0% 0.1583 276.9)",
-        "hex": "#818cf8",
-        "purpose": "Signal Indigo lightened to survive a true-black ground.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0633 276.9)",
-          "oklch(26.4% 0.0874 276.9)",
-          "oklch(37.9% 0.1116 276.9)",
-          "oklch(49.3% 0.1357 276.9)",
-          "oklch(60.7% 0.1568 276.9)",
-          "oklch(72.1% 0.1327 276.9)",
-          "oklch(83.6% 0.1086 276.9)",
-          "oklch(95.0% 0.0844 276.9)"
-        ]
-      },
-      "dark-fg": {
+      "fg-muted": {
         "role": "neutral",
-        "displayName": "Soft White",
-        "canonical": "oklch(95.5% 0.0000 89.9)",
-        "hex": "#f0f0f0",
-        "purpose": "Dark-mode text. Deliberately not pure white.",
-        "tonalRamp": [
-          "oklch(15.0% 0.0000 89.9)",
-          "oklch(26.4% 0.0000 89.9)",
-          "oklch(37.9% 0.0000 89.9)",
-          "oklch(49.3% 0.0000 89.9)",
-          "oklch(60.7% 0.0000 89.9)",
-          "oklch(72.1% 0.0000 89.9)",
-          "oklch(83.6% 0.0000 89.9)",
-          "oklch(95.0% 0.0000 89.9)"
-        ]
+        "displayName": "Muted Ink",
+        "canonical": "#3a342c",
+        "darkValue": "#cccccc",
+        "tonalRamp": ["#0d0b09", "#1c1915", "#2b2620", "#3a342c", "#544c41", "#7d7466", "#a9a196", "#d6d2cc"]
+      },
+      "fg-subtle": {
+        "role": "neutral",
+        "displayName": "Subtle Ink",
+        "canonical": "#5a5248",
+        "darkValue": "#888888",
+        "tonalRamp": ["#0f0e0c", "#1f1c18", "#2f2b25", "#413b33", "#5a5248", "#7f766a", "#a8a096", "#d3cfc9"]
+      },
+      "fg-faint": {
+        "role": "neutral",
+        "displayName": "Faint Ink",
+        "canonical": "#8c867e",
+        "darkValue": "#484848",
+        "note": "Dormant state. Anything not live and not distinguished sits here.",
+        "tonalRamp": ["#131210", "#26231f", "#39352f", "#4e4941", "#6a6459", "#8c867e", "#b3aea7", "#dbd8d3"]
       }
     },
     "typographyMeta": {
-      "display": {
-        "displayName": "Display — the author announcing",
-        "purpose": "Hero headlines and chapter labels. EB Garamond promoted to headline duty via .display-serif, never by overriding --font-display."
-      },
-      "headline": {
-        "displayName": "Headline — the system",
-        "purpose": "Page h1. Roboto under the default midnight theme; Inter otherwise."
-      },
-      "title": {
-        "displayName": "Title — the system",
-        "purpose": "Section and card headings (h2/h3)."
-      },
-      "body": {
-        "displayName": "Body — the system",
-        "purpose": "Interface and card copy at 0.9375rem."
-      },
-      "lead": {
-        "displayName": "Lead",
-        "purpose": "Opening paragraphs and bios at 1.0625rem."
-      },
-      "prose": {
-        "displayName": "Prose — the reader",
-        "purpose": "Long-form article and lab body in Source Serif 4 at a 68ch measure. Never overridden by a theme."
-      },
-      "label": {
-        "displayName": "Label",
-        "purpose": "Chips, eyebrows, and section micro-labels at 0.625rem."
-      },
-      "signature": {
-        "displayName": "Signature — the hand",
-        "purpose": "The Cormorant Garamond italic sign-off mark. One consumer only."
-      },
-      "mono": {
-        "displayName": "Mono — the machine reporting",
-        "purpose": "Code, metrics, keycaps, and trace output in Geist Mono."
-      }
+      "display": { "displayName": "Display — the author announcing", "purpose": "Hero headline only. EB Garamond via .display-serif + .display-xl. Modest vw factor so the headline never pushes the CTAs and signature below the fold." },
+      "display-lg": { "displayName": "Display Large", "purpose": "Page titles across /blog, /lab, /experience, /projects, /education, /apps, /now." },
+      "headline": { "displayName": "Headline", "purpose": "Chapter labels in the home page rail (.display-md)." },
+      "title": { "displayName": "Title — the system talking", "purpose": "Card and section headings. Roboto 600." },
+      "body": { "displayName": "Body — the system talking", "purpose": "All UI and card copy at 15px/1.55." },
+      "lead": { "displayName": "Lead", "purpose": "Bios and intro paragraphs at 17px/1.8." },
+      "prose": { "displayName": "Prose — the reader's voice", "purpose": "/blog and /lab article bodies. Source Serif 4, 68ch, Garamond headings, indigo drop cap. Never themed away." },
+      "voice-serif": { "displayName": "Voice Serif — the author talking", "purpose": "Pull-quotes, opinions, origin story. Garamond at reading size with text-wrap: pretty." },
+      "dateline": { "displayName": "Dateline — the machine reporting", "purpose": "PLACE / YEAR above a filed chapter, and every measurement line beneath one. Geist Mono, tabular." },
+      "label": { "displayName": "Label", "purpose": "Section micro-labels and stat captions. 10px, uppercase, 0.2em." },
+      "signature": { "displayName": "Signature", "purpose": "The fine-nib italic mark standing in for a handwritten signature. One consumer." },
+      "marginalia": { "displayName": "Marginalia", "purpose": "The hero doodle field only. Caveat, variable weight axis, one consumer." }
     },
     "shadows": [
-      {
-        "name": "card-rest-light",
-        "value": "none",
-        "purpose": "Light-mode cards are flat at rest. Depth in light mode is motion, not shadow."
-      },
-      {
-        "name": "card-rest-dark",
-        "value": "0 1px 3px 0 rgb(5 3 15 / 0.5), 0 1px 2px -1px rgb(5 3 15 / 0.35)",
-        "purpose": "Dark-mode resting card depth, tuned blue-black rather than neutral."
-      },
-      {
-        "name": "card-hover-light",
-        "value": "0 12px 32px -8px rgb(0 0 0 / 0.08)",
-        "purpose": "Applied by .card-lift on hover, arriving with the 3px raise."
-      },
-      {
-        "name": "card-hover-dark",
-        "value": "0 4px 16px -2px rgb(5 3 15 / 0.65), 0 8px 32px -4px rgb(5 3 15 / 0.50), 0 1px 3px 0 rgb(5 3 15 / 0.35)",
-        "purpose": "Three-layer dark hover stack."
-      },
-      {
-        "name": "stack-light",
-        "value": "0 -16px 48px -8px rgb(0 0 0 / 0.12)",
-        "purpose": "Upward-cast shadow so a stacking section reads as sliding over the previous one."
-      },
-      {
-        "name": "stack-dark",
-        "value": "0 -16px 48px -8px rgb(0 0 0 / 0.50)",
-        "purpose": "Dark variant of the section stacking shadow."
-      },
-      {
-        "name": "focus-ring",
-        "value": "outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 6px",
-        "purpose": "Global :focus-visible treatment. Fields suppress it and shift their border to accent instead."
-      }
+      { "name": "card-rest-light", "value": "none", "purpose": "The default in light mode. Hairline borders and the two paper tints carry depth; there is no resting shadow." },
+      { "name": "card-rest-dark", "value": "0 1px 3px 0 rgb(5 3 15 / 0.5), 0 1px 2px -1px rgb(5 3 15 / 0.35)", "purpose": "The minimum needed to hold a card edge against true black." },
+      { "name": "card-hover-light", "value": "0 12px 32px -8px rgb(0 0 0 / 0.08)", "purpose": "Applied by .card-lift on hover of an interactive tile, paired with translateY(-3px)." },
+      { "name": "card-hover-dark", "value": "0 4px 16px -2px rgb(5 3 15 / 0.65), 0 8px 32px -4px rgb(5 3 15 / 0.50), 0 1px 3px 0 rgb(5 3 15 / 0.35)", "purpose": "The same gesture on black; more layers to stay readable." },
+      { "name": "stack", "value": "0 -16px 48px -8px rgb(0 0 0 / 0.12)", "purpose": "Upward cast under a stacked section (.stack-sect). 0.50 alpha in dark." },
+      { "name": "reading-spotlight", "value": "0 0 0 100vmax rgba(0, 0, 0, 0.62)", "purpose": "Reading mode dims the page with a giant shadow rather than an overlay, so it survives ancestor stacking contexts." },
+      { "name": "focus-ring-chat", "value": "0 0 0 3px var(--bg), 0 0 0 5px color-mix(in srgb, var(--accent) 45%, transparent)", "purpose": "The chat input's focus state — a page-coloured gap then an indigo ring, instead of a border shift." }
     ],
     "motion": [
-      {
-        "name": "ease-standard",
-        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
-        "purpose": "State response: scroll reveals (0.55s), card lift (0.3s), drawers."
-      },
-      {
-        "name": "ease-entrance",
-        "value": "cubic-bezier(0.22, 1, 0.36, 1)",
-        "purpose": "Entrances: page transition (0.4s), the ink rule (900ms)."
-      },
-      {
-        "name": "press",
-        "value": "transform: scale(0.97); transition-duration: 75ms",
-        "purpose": "Global active state on every non-disabled button and a[role=button]."
-      },
-      {
-        "name": "theme-crossfade",
-        "value": "background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease",
-        "purpose": "Theme switch cross-fade on body."
-      },
-      {
-        "name": "reduced-motion",
-        "value": "@media (prefers-reduced-motion: reduce)",
-        "purpose": "Reveals resolve to visible with no transition; ambient loops disabled. Required on all new motion."
-      }
+      { "name": "ease-settle", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "The site's primary curve. Scroll reveals (550ms), card lift (300ms), bubble-in, drawer. Fast out, long settle." },
+      { "name": "ease-draw", "value": "cubic-bezier(0.22, 1, 0.36, 1)", "purpose": "The pen curve. Page transition (400ms), the ink rule drawing itself left-to-right (900ms), the doodle ink stroke (820ms), the hang-tag swing." },
+      { "name": "press", "value": "transform: scale(0.97); duration 75ms", "purpose": "Global button press. Cards settle to scale(0.99) on the same duration." },
+      { "name": "hover-lift", "value": "translateY(-3px); 300ms ease-settle", "purpose": "The only resting-to-raised transition in the system." },
+      { "name": "sweep", "value": "scaleX(0) -> scaleX(1); 300ms, origin left", "purpose": "The accent hairline wiping across a tile's top edge on hover." },
+      { "name": "theme-swap", "value": "background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease", "purpose": "Body-level transition so a theme change reads as a dissolve." },
+      { "name": "reduced-motion", "value": "prefers-reduced-motion: reduce", "purpose": "Kills scroll-behavior, every ambient loop, .animate-ping, .animate-pulse, and all entrance animations — and resets the property each one holds hostage (scaleX(1), stroke-dashoffset: 0, opacity: 0) rather than only stopping the animation." }
     ],
     "breakpoints": [
-      {
-        "name": "sm",
-        "value": "640px"
-      },
-      {
-        "name": "md",
-        "value": "768px"
-      },
-      {
-        "name": "lg",
-        "value": "1024px"
-      },
-      {
-        "name": "xl",
-        "value": "1280px"
-      },
-      {
-        "name": "2xl",
-        "value": "1536px"
-      },
-      {
-        "name": "nav-h",
-        "value": "50px"
-      }
+      { "name": "sm", "value": "640px" },
+      { "name": "md", "value": "768px" },
+      { "name": "lg", "value": "1024px" },
+      { "name": "xl", "value": "1280px" },
+      { "name": "2xl", "value": "1536px" },
+      { "name": "nav-h", "value": "50px" }
     ]
   },
   "components": [
     {
-      "name": "Primary Button",
+      "name": "Ink Pill (primary action)",
       "kind": "button",
-      "refersTo": "button-primary",
-      "description": "The one call to action: ink on paper, pill geometry. Never the accent.",
-      "html": "<button class=\"ds-btn-primary\">Ask Avocado</button>",
-      "css": ".ds-btn-primary { background: var(--fg); color: var(--bg); border: none; border-radius: 9999px; padding: 0.375rem 1.25rem; font-family: var(--font-sans), system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; cursor: pointer; transition: opacity 0.2s ease, transform 0.2s ease; } .ds-btn-primary:hover { opacity: 0.75; } .ds-btn-primary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; } .ds-btn-primary:active { transform: scale(0.97); transition-duration: 75ms; }"
+      "refersTo": "button-ink",
+      "description": "The single highest-commitment affordance on any page: Schedule a call, Send message, Ask Avocado. Solid ink on paper; hover thins the ink rather than changing its colour.",
+      "html": "<button class=\"ds-btn-ink\">Schedule a call</button>",
+      "css": ".ds-btn-ink { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--fg, #181410); color: var(--bg, #fefefb); font-family: var(--font-roboto), system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; padding: 0.625rem 1.25rem; border: none; border-radius: 9999px; cursor: pointer; transition: opacity 200ms ease, transform 200ms ease; } .ds-btn-ink:hover { opacity: 0.75; } .ds-btn-ink:focus-visible { outline: 2px solid var(--accent, #3730a3); outline-offset: 3px; } .ds-btn-ink:active { transform: scale(0.97); transition-duration: 75ms; }"
     },
     {
-      "name": "Accent Button",
+      "name": "Quiet Button",
       "kind": "button",
-      "refersTo": "button-accent",
-      "description": "In-context action inside a tool surface. Chip radius, never the page's main CTA.",
-      "html": "<button class=\"ds-btn-accent\">Run tool</button>",
-      "css": ".ds-btn-accent { background: var(--accent); color: var(--accent-fg); border: none; border-radius: 0.5rem; padding: 0.375rem 0.875rem; font-family: var(--font-sans), system-ui, sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.2s ease, transform 0.2s ease; } .ds-btn-accent:hover { background: var(--accent-hover); } .ds-btn-accent:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; } .ds-btn-accent:active { transform: scale(0.97); transition-duration: 75ms; }"
+      "refersTo": "button-quiet",
+      "description": "The secondary action. Paper, hairline, faint ink rising to full ink on hover. No fill, no shadow.",
+      "html": "<button class=\"ds-btn-quiet\">View the build log</button>",
+      "css": ".ds-btn-quiet { display: inline-flex; align-items: center; gap: 0.375rem; background: var(--surface, #f5f4f0); color: var(--fg-faint, #8c867e); font-family: var(--font-roboto), system-ui, sans-serif; font-size: 0.75rem; font-weight: 500; padding: 0.375rem 0.875rem; border: 1px solid var(--border, #c6c2bb); border-radius: 0.5rem; cursor: pointer; transition: color 150ms ease, border-color 150ms ease; } .ds-btn-quiet:hover { color: var(--fg, #181410); border-color: var(--border-strong, #978f87); } .ds-btn-quiet:focus-visible { outline: 2px solid var(--accent, #3730a3); outline-offset: 3px; } .ds-btn-quiet:active { transform: scale(0.97); transition-duration: 75ms; }"
     },
     {
-      "name": "Content Card",
+      "name": "Filter Chip",
+      "kind": "chip",
+      "refersTo": "chip-filter",
+      "description": "Tag and filter control. Selected state inverts to solid ink — never a hue. Carries a count badge.",
+      "html": "<div style=\"display:flex;gap:0.5rem\"><button class=\"ds-chip\">All <span class=\"ds-chip-count\">14</span></button><button class=\"ds-chip ds-chip-active\">Shipped <span class=\"ds-chip-count\">6</span></button></div>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 0.375rem; background: var(--surface, #f5f4f0); color: var(--fg-faint, #8c867e); font-family: var(--font-roboto), system-ui, sans-serif; font-size: 0.75rem; font-weight: 500; padding: 0.375rem 0.875rem; border: 1px solid var(--border, #c6c2bb); border-radius: 0.5rem; cursor: pointer; transition: color 150ms ease, background 150ms ease, border-color 150ms ease; } .ds-chip:hover { color: var(--fg, #181410); } .ds-chip:focus-visible { outline: 2px solid var(--accent, #3730a3); outline-offset: 3px; } .ds-chip-active { background: var(--fg, #181410); color: var(--bg, #fefefb); border-color: var(--fg, #181410); } .ds-chip-count { font-size: 0.625rem; font-weight: 600; padding: 0.125rem 0.375rem; border-radius: 0.25rem; background: rgba(0,0,0,0.06); } .ds-chip-active .ds-chip-count { background: rgba(255,255,255,0.18); }"
+    },
+    {
+      "name": "Tile (card canon)",
       "kind": "card",
-      "refersTo": "card",
-      "description": "Flat at rest in light, lifting 3px on hover with the border shifting to the spine rule.",
-      "html": "<article class=\"ds-card\"><h3 class=\"ds-card-title\">RAG retrieval pipeline</h3><p class=\"ds-card-body\">Hybrid BM25 + dense retrieval with RRF merge, cutting P99 by 78%.</p></article>",
-      "css": ".ds-card { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem; box-shadow: var(--shadow-card); transition: box-shadow 0.3s cubic-bezier(0.16,1,0.3,1), transform 0.3s cubic-bezier(0.16,1,0.3,1), border-color 0.3s ease; } .ds-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-card-hover); border-color: var(--border-strong); } .ds-card:active { transform: translateY(0) scale(0.99); transition-duration: 75ms; } .ds-card-title { margin: 0 0 0.5rem; font-family: var(--font-sans), system-ui, sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: -0.015em; color: var(--fg); } .ds-card-body { margin: 0; font-family: var(--font-sans), system-ui, sans-serif; font-size: 0.9375rem; line-height: 1.8; color: var(--fg-muted); }"
+      "refersTo": "card-tile",
+      "description": "The site's one card recipe: card radius, hairline border, sheet background, flat at rest, lifting only when interactive. The accent sweep is a boolean hairline on the top edge, not a gradient.",
+      "html": "<a href=\"#\" class=\"ds-tile\"><span class=\"ds-tile-sweep\" aria-hidden=\"true\"></span><p class=\"ds-tile-label\">Live</p><h3 class=\"ds-tile-title\">Avocado</h3><p class=\"ds-tile-body\">A RAG assistant grounded in the same JSON that renders these pages.</p></a>",
+      "css": ".ds-tile { display: block; position: relative; overflow: hidden; background: var(--surface, #f5f4f0); border: 1px solid var(--border, #c6c2bb); border-radius: 1rem; padding: 1.25rem; text-decoration: none; box-shadow: var(--shadow-card, none); transition: box-shadow 300ms cubic-bezier(0.16,1,0.3,1), transform 300ms cubic-bezier(0.16,1,0.3,1), border-color 300ms ease; } .ds-tile:hover { transform: translateY(-3px); border-color: var(--border-strong, #978f87); box-shadow: var(--shadow-card-hover, 0 12px 32px -8px rgb(0 0 0 / 0.08)); } .ds-tile:active { transform: translateY(0) scale(0.99); transition-duration: 75ms; } .ds-tile:focus-visible { outline: 2px solid var(--accent, #3730a3); outline-offset: 3px; } .ds-tile-sweep { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--accent, #3730a3); transform: scaleX(0); transform-origin: left; transition: transform 300ms ease; } .ds-tile:hover .ds-tile-sweep { transform: scaleX(1); } .ds-tile-label { margin: 0; font-family: var(--font-roboto), system-ui, sans-serif; font-size: 0.625rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.2em; color: var(--accent, #3730a3); } .ds-tile-title { margin: 0.5rem 0 0; font-family: var(--font-roboto), system-ui, sans-serif; font-size: 1rem; font-weight: 600; letter-spacing: -0.006em; color: var(--fg, #181410); } .ds-tile-body { margin: 0.375rem 0 0; font-family: var(--font-roboto), system-ui, sans-serif; font-size: 0.9375rem; line-height: 1.55; color: var(--fg-subtle, #5a5248); max-width: 46ch; }"
     },
     {
-      "name": "Filter Chip (Selected)",
-      "kind": "chip",
-      "refersTo": "chip-active",
-      "description": "Active filter state. One of the few places Signal Indigo becomes a background.",
-      "html": "<button class=\"ds-chip-active\">Infrastructure</button>",
-      "css": ".ds-chip-active { background: var(--accent); color: var(--accent-fg); border: 1px solid var(--accent); border-radius: 9999px; padding: 0.125rem 0.625rem; font-family: var(--font-sans), system-ui, sans-serif; font-size: 10px; font-weight: 600; cursor: pointer; box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05); transition: transform 0.2s ease; } .ds-chip-active:active { transform: scale(0.97); transition-duration: 75ms; }"
-    },
-    {
-      "name": "Filter Chip (Unselected)",
-      "kind": "chip",
-      "refersTo": "chip-inactive",
-      "description": "Resting filter state. Hover warms the label to full ink and hints the accent on the border.",
-      "html": "<button class=\"ds-chip\">Edge AI</button>",
-      "css": ".ds-chip { background: var(--surface); color: var(--fg-faint); border: 1px solid var(--border); border-radius: 9999px; padding: 0.125rem 0.625rem; font-family: var(--font-sans), system-ui, sans-serif; font-size: 10px; font-weight: 600; cursor: pointer; transition: color 0.2s ease, border-color 0.2s ease, transform 0.2s ease; } .ds-chip:hover { color: var(--fg); border-color: color-mix(in srgb, var(--accent) 50%, transparent); } .ds-chip:active { transform: scale(0.97); transition-duration: 75ms; }"
-    },
-    {
-      "name": "Text Input",
+      "name": "Text Field",
       "kind": "input",
-      "refersTo": "input",
-      "description": "The border is the focus indicator; the global ring is suppressed on fields.",
-      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"you@company.com\" />",
-      "css": ".ds-input { width: 100%; background: var(--bg); color: var(--fg); border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.5rem 0.75rem; font-family: var(--font-sans), system-ui, sans-serif; font-size: 12px; transition: border-color 0.15s ease; } .ds-input::placeholder { color: var(--fg-faint); } .ds-input:focus { outline: none; border-color: var(--accent); } .ds-input:focus-visible { outline: none; }"
+      "refersTo": "input-field",
+      "description": "The container takes the focus state, not the field. Chip radius, page background, hairline that turns indigo on focus-within.",
+      "html": "<div><label class=\"ds-field-label\" for=\"ds-name\">Name</label><div class=\"ds-field\"><input id=\"ds-name\" class=\"ds-field-input\" placeholder=\"Your name\" /></div></div>",
+      "css": ".ds-field-label { display: block; margin-bottom: 0.375rem; font-family: var(--font-roboto), system-ui, sans-serif; font-size: 0.75rem; font-weight: 500; color: var(--fg-subtle, #5a5248); } .ds-field { background: var(--bg, #fefefb); border: 1px solid var(--border, #c6c2bb); border-radius: 0.5rem; padding: 0.625rem 0.875rem; transition: border-color 150ms ease; } .ds-field:focus-within { border-color: var(--accent, #3730a3); } .ds-field-input { width: 100%; background: transparent; border: none; outline: none; font-family: var(--font-roboto), system-ui, sans-serif; font-size: 0.875rem; color: var(--fg, #181410); } .ds-field-input::placeholder { color: var(--fg-faint, #8c867e); }"
     },
     {
-      "name": "Search Trigger",
+      "name": "Chat Input",
+      "kind": "input",
+      "refersTo": "input-chat",
+      "description": "The same field as a full pill. Focus is a double box-shadow ring — a page-coloured gap then indigo — rather than a border shift, so the pill's silhouette never changes width.",
+      "html": "<div class=\"ds-chat\"><textarea class=\"ds-chat-area\" rows=\"1\" placeholder=\"Ask about the work…\"></textarea><button class=\"ds-chat-send\" aria-label=\"Send\"><svg width=\"15\" height=\"15\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M12 19V5\"/><path d=\"M5 12l7-7 7 7\"/></svg></button></div>",
+      "css": ".ds-chat { display: flex; align-items: center; gap: 0.5rem; background: var(--bg, #fefefb); border: 1px solid var(--border, #c6c2bb); border-radius: 9999px; padding: 0.625rem 0.875rem; box-shadow: none; transition: border-color 150ms ease, box-shadow 150ms ease; } .ds-chat:hover { border-color: var(--border-strong, #978f87); } .ds-chat:focus-within { box-shadow: 0 0 0 3px var(--bg, #fefefb), 0 0 0 5px color-mix(in srgb, var(--accent, #3730a3) 45%, transparent); } .ds-chat-area { flex: 1; resize: none; background: transparent; border: none; outline: none; font-family: var(--font-roboto), system-ui, sans-serif; font-size: 0.875rem; line-height: 1.25rem; padding: 0.375rem 0; color: var(--fg, #181410); scrollbar-width: none; } .ds-chat-area::placeholder { color: var(--fg-subtle, #5a5248); } .ds-chat-send { flex: none; width: 2.25rem; height: 2.25rem; display: inline-flex; align-items: center; justify-content: center; border: none; border-radius: 9999px; background: var(--fg, #181410); color: var(--bg, #fefefb); cursor: pointer; transition: opacity 200ms ease; } .ds-chat-send:hover { opacity: 0.75; } .ds-chat-send:active { transform: scale(0.97); transition-duration: 75ms; } .ds-chat-send:focus-visible { outline: 2px solid var(--accent, #3730a3); outline-offset: 3px; }"
+    },
+    {
+      "name": "Navigation Bar",
       "kind": "nav",
-      "refersTo": "search-trigger",
-      "description": "Nav search affordance with a platform-detected keycap. Pill on the raised surface.",
-      "html": "<button class=\"ds-search\"><svg width=\"13\" height=\"13\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><circle cx=\"11\" cy=\"11\" r=\"7\"/><path d=\"M21 21l-4.3-4.3\"/></svg><span>Search…</span><kbd class=\"ds-kbd\">⌘K</kbd></button>",
-      "css": ".ds-search { display: inline-flex; align-items: center; gap: 0.5rem; width: 14rem; background: var(--surface-raised); color: var(--fg-faint); border: 1px solid var(--border); border-radius: 9999px; padding: 0.375rem 0.375rem 0.375rem 0.875rem; font-family: var(--font-sans), system-ui, sans-serif; font-size: 0.75rem; cursor: pointer; transition: color 0.2s ease, border-color 0.2s ease; } .ds-search:hover { color: var(--fg); border-color: var(--fg-muted); } .ds-search span { flex: 1; text-align: left; } .ds-kbd { margin-left: auto; background: var(--bg); border: 1px solid var(--border); border-radius: 0.375rem; padding: 0.125rem 0.375rem; font-family: var(--font-mono), ui-monospace, monospace; font-size: 10px; line-height: 1; color: var(--fg-faint); }"
+      "refersTo": "nav-bar",
+      "description": "Sticky, 50px, on the page background. No scrim and no blur over content — the bar meets body copy at a clean edge. Active is full ink, inactive is muted, and the indicator is a rounded-md bed behind the hovered item.",
+      "html": "<header class=\"ds-nav\"><a class=\"ds-nav-mark\" href=\"#\">Jaya</a><nav class=\"ds-nav-links\"><a class=\"ds-nav-link ds-nav-link-active\" href=\"#\">Work</a><a class=\"ds-nav-link\" href=\"#\">Blog</a><a class=\"ds-nav-link\" href=\"#\">Lab</a></nav><a class=\"ds-nav-cta\" href=\"#\">Ask Avocado</a></header>",
+      "css": ".ds-nav { display: flex; align-items: center; justify-content: space-between; gap: 1rem; height: 50px; padding: 0 1rem; background: var(--bg, #fefefb); border-bottom: 1px solid transparent; } .ds-nav-mark { font-family: var(--font-playfair), Georgia, serif; font-size: 1.25rem; font-weight: 400; letter-spacing: 0.1em; color: var(--fg, #181410); text-decoration: none; transition: opacity 200ms ease; } .ds-nav-mark:hover { opacity: 0.7; } .ds-nav-links { display: flex; align-items: center; gap: 0.25rem; } .ds-nav-link { display: inline-flex; align-items: center; padding: 0.375rem 0.75rem; border-radius: 0.375rem; font-family: var(--font-roboto), system-ui, sans-serif; font-size: 0.875rem; color: var(--fg-muted, #3a342c); text-decoration: none; transition: color 200ms ease, background 200ms ease; } .ds-nav-link:hover { color: var(--fg, #181410); background: var(--surface-raised, #eceae6); } .ds-nav-link-active { color: var(--fg, #181410); font-weight: 600; } .ds-nav-link:focus-visible { outline: 2px solid var(--accent, #3730a3); outline-offset: 3px; } .ds-nav-cta { display: inline-flex; align-items: center; padding: 0.375rem 1.25rem; border-radius: 9999px; background: var(--fg, #181410); color: var(--bg, #fefefb); font-family: var(--font-roboto), system-ui, sans-serif; font-size: 0.875rem; font-weight: 500; text-decoration: none; transition: opacity 200ms ease; } .ds-nav-cta:hover { opacity: 0.75; }"
     },
     {
-      "name": "Live Status Dot",
+      "name": "Chapter Dateline",
       "kind": "custom",
       "refersTo": null,
-      "description": "Signature liveness marker on shipped products — a pinging halo behind a solid accent dot. The canonical 'this is still running' signal.",
-      "html": "<span class=\"ds-live\"><span class=\"ds-live-ping\"></span><span class=\"ds-live-dot\"></span></span><span class=\"ds-live-label\">Live since Aug 2020</span>",
-      "css": ".ds-live { position: relative; display: inline-flex; height: 0.375rem; width: 0.375rem; margin-right: 0.5rem; } .ds-live-ping { position: absolute; inset: 0; border-radius: 9999px; background: var(--accent); opacity: 0.6; animation: ds-ping 1.6s cubic-bezier(0,0,0.2,1) infinite; } .ds-live-dot { position: relative; height: 0.375rem; width: 0.375rem; border-radius: 9999px; background: var(--accent); } .ds-live-label { font-family: var(--font-sans), system-ui, sans-serif; font-size: 0.6875rem; color: var(--fg-faint); } @keyframes ds-ping { 75%, 100% { transform: scale(2.2); opacity: 0; } } @media (prefers-reduced-motion: reduce) { .ds-live-ping { animation: none; } }"
+      "description": "The home page's signature device. A chapter that records a real deployment is filed like a field note: mono PLACE / YEAR, the Garamond label, a gradient column rule that draws itself left-to-right, a 46ch deck, and a mono measure line for what the site cost or produced. The ghost numeral carries the count; there is no second mono numeral.",
+      "html": "<header class=\"ds-dateline-rail\"><span class=\"ds-dateline-ghost\" aria-hidden=\"true\">03</span><p class=\"ds-dateline\"><span class=\"ds-dateline-place\">Offshore · Shell PLC · NYU</span><span class=\"ds-dateline-sep\" aria-hidden=\"true\">/</span><span class=\"ds-dateline-year\">2021—present</span></p><h2 class=\"ds-dateline-label\">The rig that never went dark</h2><div class=\"ds-dateline-rule\" aria-hidden=\"true\"></div><p class=\"ds-dateline-deck\">Two products shipped in 2020 are still in production and still maintained.</p><p class=\"ds-dateline-measure\">115 GB/day · 3K+ RPS · 99.9% uptime</p></header>",
+      "css": ".ds-dateline-rail { position: relative; max-width: 17rem; } .ds-dateline-ghost { position: absolute; top: -1.5rem; left: -0.5rem; pointer-events: none; user-select: none; font-family: var(--font-eb-garamond), Georgia, serif; font-weight: 500; font-variant-numeric: lining-nums tabular-nums; font-feature-settings: \"lnum\" 1, \"tnum\" 1; line-height: 0.78; font-size: clamp(4rem, 8vw, 8.5rem); color: color-mix(in srgb, var(--fg, #181410) 5%, transparent); } .ds-dateline { position: relative; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.5rem; margin: 0; font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 11px; text-transform: uppercase; letter-spacing: 0.16em; color: var(--fg-subtle, #5a5248); } .ds-dateline-place { color: var(--fg-muted, #3a342c); } .ds-dateline-sep { color: var(--fg-faint, #8c867e); } .ds-dateline-year { font-variant-numeric: tabular-nums; } .ds-dateline-label { position: relative; margin: 0.375rem 0 0; font-family: var(--font-eb-garamond), Georgia, \"Times New Roman\", serif; font-weight: 600; font-size: clamp(1.5rem, 2.4vw, 2.1rem); line-height: 1.12; letter-spacing: -0.016em; text-wrap: balance; color: var(--fg, #181410); } .ds-dateline-rule { height: 1px; margin-top: 1rem; background: linear-gradient(90deg, var(--border-strong, #978f87) 0%, var(--border, #c6c2bb) 34%, transparent 100%); transform-origin: left center; animation: ds-ink-rule 900ms cubic-bezier(0.22, 1, 0.36, 1) both; } @keyframes ds-ink-rule { from { transform: scaleX(0); } to { transform: scaleX(1); } } .ds-dateline-deck { position: relative; margin: 1rem 0 0; max-width: 46ch; font-family: var(--font-roboto), system-ui, sans-serif; font-size: 0.875rem; line-height: 1.6; text-wrap: pretty; color: var(--fg-subtle, #5a5248); } .ds-dateline-measure { position: relative; margin: 1rem 0 0; padding-top: 0.75rem; border-top: 1px solid var(--border-subtle, #dedad3); font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 11px; line-height: 1.6; color: var(--fg-subtle, #5a5248); } @media (prefers-reduced-motion: reduce) { .ds-dateline-rule { animation: none; transform: scaleX(1); } }"
     },
     {
-      "name": "Drop Cap Paragraph",
+      "name": "Ruled Stat Band",
       "kind": "custom",
       "refersTo": null,
-      "description": "The long-form 'settle in' signal: a Garamond initial in Signal Indigo over a slightly enlarged opening paragraph.",
-      "html": "<p class=\"ds-dropcap\">Retrieval is the part everyone skips. The model is downstream of whatever you hand it, so the interesting work happens before a single token is generated.</p>",
-      "css": ".ds-dropcap { max-width: 68ch; margin: 0; font-family: var(--font-blog), Georgia, serif; font-size: 1.09rem; line-height: 1.72; color: var(--fg-subtle); hanging-punctuation: first allow-end last; } .ds-dropcap::first-letter { float: left; font-family: var(--font-garamond), Georgia, serif; font-weight: 700; font-size: 3.1em; line-height: 0.78; margin: 0.02em 0.12em 0 0; color: var(--accent); }"
+      "description": "A table of measurements, not a row of cards. border-y on the group, divide-x between the cells, every line present at rest. Replaced four bordered cards whose sub-line was gated behind a hover no touch device could reach.",
+      "html": "<div class=\"ds-band\"><div class=\"ds-band-cell\"><p class=\"ds-band-value\">78<span class=\"ds-band-suffix\">%</span></p><p class=\"ds-band-label\">Latency Cut</p><p class=\"ds-band-sub\">P99 RAG on 3K+ RPS</p></div><div class=\"ds-band-cell\"><p class=\"ds-band-value\">3<span class=\"ds-band-suffix\">K+</span></p><p class=\"ds-band-label\">Peak RPS</p><p class=\"ds-band-sub\">99.9% uptime</p></div><div class=\"ds-band-cell\"><p class=\"ds-band-value\">15<span class=\"ds-band-suffix\">ms</span></p><p class=\"ds-band-label\">Edge Inference</p><p class=\"ds-band-sub\">Snapdragon NPU</p></div></div>",
+      "css": ".ds-band { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); border-top: 1px solid var(--border, #c6c2bb); border-bottom: 1px solid var(--border, #c6c2bb); } .ds-band-cell { padding: 1.25rem 1rem; border-left: 1px solid var(--border, #c6c2bb); } .ds-band-cell:first-child { border-left: none; padding-left: 0; } .ds-band-value { margin: 0; font-family: var(--font-geist-mono), ui-monospace, monospace; line-height: 1; font-variant-numeric: tabular-nums; font-size: 1.75rem; font-weight: 700; color: var(--fg, #181410); } .ds-band-suffix { font-size: 1rem; font-weight: 700; color: var(--fg-subtle, #5a5248); } .ds-band-label { margin: 0.5rem 0 0; font-family: var(--font-roboto), system-ui, sans-serif; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; line-height: 1.2; color: var(--fg-subtle, #5a5248); } .ds-band-sub { margin: 0.25rem 0 0; font-family: var(--font-roboto), system-ui, sans-serif; font-size: 11px; line-height: 1.35; color: var(--fg-subtle, #5a5248); }"
+    },
+    {
+      "name": "Still-Running Ledger Row",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "One shipped product per row, dot-leadered across the measure. A pulsing Signal Indigo dot marks live; an archived entry drops to a faint static dot. Uptime is mono and tabular and counts real years and days. No borders — a hover bed at panel radius and a leader line that warms to accent.",
+      "html": "<div class=\"ds-ledger\"><a href=\"#\" class=\"ds-ledger-row\"><span class=\"ds-ledger-dot\"><span class=\"ds-ledger-ping\" aria-hidden=\"true\"></span><span class=\"ds-ledger-core\"></span></span><span class=\"ds-ledger-name\">gradeVITian</span><span class=\"ds-ledger-leader\" aria-hidden=\"true\">·······································································</span><span class=\"ds-ledger-what\">VIT student tools</span><span class=\"ds-ledger-uptime\">5<span class=\"ds-ledger-unit\"> y </span>112<span class=\"ds-ledger-unit\"> d</span></span></a></div>",
+      "css": ".ds-ledger { display: flex; flex-direction: column; gap: 0.25rem; } .ds-ledger-row { display: flex; align-items: baseline; gap: 0.625rem; margin: 0 -0.75rem; padding: 0.875rem 0.75rem; border-radius: 0.75rem; text-decoration: none; transition: background 200ms ease; } .ds-ledger-row:hover { background: var(--surface-raised, #eceae6); } .ds-ledger-row:focus-visible { outline: 2px solid var(--accent, #3730a3); outline-offset: 3px; } .ds-ledger-dot { position: relative; display: inline-flex; flex: none; width: 0.375rem; height: 0.375rem; transform: translateY(-1px); } .ds-ledger-ping { position: absolute; inset: 0; border-radius: 9999px; background: var(--accent, #3730a3); opacity: 0.6; animation: ds-ping 1.6s cubic-bezier(0,0,0.2,1) infinite; } .ds-ledger-core { position: relative; width: 0.375rem; height: 0.375rem; border-radius: 9999px; background: var(--accent, #3730a3); } @keyframes ds-ping { 75%, 100% { transform: scale(2.2); opacity: 0; } } .ds-ledger-name { flex: none; font-family: var(--font-roboto), system-ui, sans-serif; font-size: 0.875rem; font-weight: 600; color: var(--fg, #181410); } .ds-ledger-leader { flex: 1; min-width: 0; overflow: hidden; white-space: nowrap; user-select: none; color: var(--border, #c6c2bb); transition: color 200ms ease; } .ds-ledger-row:hover .ds-ledger-leader { color: color-mix(in srgb, var(--accent, #3730a3) 40%, transparent); } .ds-ledger-what { flex: none; font-family: var(--font-roboto), system-ui, sans-serif; font-size: 13px; color: var(--fg-subtle, #5a5248); } .ds-ledger-uptime { flex: none; font-family: var(--font-geist-mono), ui-monospace, monospace; font-size: 13px; font-variant-numeric: tabular-nums; color: var(--fg, #181410); } .ds-ledger-unit { color: var(--fg-subtle, #5a5248); } @media (prefers-reduced-motion: reduce) { .ds-ledger-ping { animation: none; opacity: 0; } }"
+    },
+    {
+      "name": "Pull Quote",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "The author talking. Garamond at reading size, hung off a single heavy hairline with hanging punctuation, capped at 62ch. No card, no tint, no quotation-mark graphic.",
+      "html": "<blockquote class=\"ds-pull\">“Unreviewed and undocumented is unfinished.”</blockquote>",
+      "css": ".ds-pull { margin: 2rem 0 0; padding-left: 1.25rem; border-left: 1px solid var(--border-strong, #978f87); max-width: 62ch; font-family: var(--font-eb-garamond), Georgia, \"Times New Roman\", serif; font-weight: 400; font-size: 15px; line-height: 1.75; text-wrap: pretty; hanging-punctuation: first; color: var(--fg-subtle, #5a5248); }"
     }
   ],
   "narrative": {
     "northStar": "Three Voices",
-    "overview": "This system is built on a casting decision, not a style. Every typeface on the site is an assigned speaker, and the assignment is the rule that makes nine loaded fonts read as discipline instead of indulgence. Roboto is the system talking — chrome, headings, UI, the default voice a visitor meets. Garamond is Jaya talking — the hero, the chapter labels, the prose headings, the signature. Geist Mono is the machine reporting — code, metrics, keyboard hints, trace output. A visitor never has to be told which is which; they can hear it.\n\nThe material underneath is newsprint. A fractal-noise grain sits over every page at 2.8% opacity in multiply, dropping to 1.8% in screen on dark. Column rules are heavy at the spine and fade to nothing before the margin, the way a printed rule does. Long-form text carries hanging punctuation, a Garamond drop cap in the accent, balanced heading wraps, and a 68ch measure. The homepage is a single continuous column of numbered chapters at every viewport width — one DOM tree, no layout branch, the rail going sticky only at lg.\n\nRestraint is the default state and response is earned by contact. Cards carry no shadow at all in light mode; depth arrives only on hover, as a 3px lift. Every button drops to scale(0.97) in 75ms when pressed. The palette is almost entirely ink and paper, with one indigo held back for the few things that are genuinely live.",
+    "overview": "The site is a printed thing that happens to run in a browser. Its material is newsprint and ink: an off-white sheet, a deep near-black ink, hairline column rules doing the work that boxes and shadows do elsewhere. Nothing floats decoratively; where something lifts, it lifts because you touched it.\n\nThe organizing idea is that type is casting, not decoration. Roboto is the system talking — chrome, labels, UI copy, the default `midnight` theme applied pre-hydration by an inline script so the first paint is already correct. EB Garamond (and Cormorant for the signature) is the author talking — hero and chapter headlines, pull-quotes, opinions, the signature mark. Geist Mono is the machine reporting — measurements, datelines, uptime counters, model ids, anything the build knows rather than claims. Source Serif 4 is the reader's voice — long-form /blog and /lab prose, set at reading size and never themed away. A visitor should be able to tell who is speaking without reading a word.\n\nDensity is editorial, not dashboard: one column, generous vertical rhythm between chapters, tight leading inside them. Colour is almost entirely absent — the page is ink on paper, and a single indigo appears only where something is alive. The confirmed anti-reference is the generic developer-portfolio dark mode: neon-on-charcoal, gradient hero, glassmorphic cards, a rainbow of tag colours. This system rejects all of it.",
     "keyCharacteristics": [
-      "Nine typefaces, each with exactly one assigned speaker",
-      "Newsprint grain over every surface; column rules that fade to the margin",
-      "Ink-on-paper primary actions — the accent is never the main button",
-      "Flat in light, materially deep in dark; two different papers, not one tinted",
-      "Motion is a single easing curve (cubic-bezier(0.16, 1, 0.3, 1)) plus a 75ms press",
-      "A serif that survives every theme, because the author's voice is not themeable"
+      "Ink-on-paper primaries; a cool newsprint sheet and a deep near-black ink",
+      "One accent, Signal Indigo, reserved for live state",
+      "Four assigned typefaces, each with a fixed speaker",
+      "Hairline rules and ruled bands instead of nested cards",
+      "Flat at rest; depth is earned by interaction",
+      "One continuous reading column at every viewport",
+      "Paper grain over the whole page (2.8% multiply noise, 1.8% screen in dark)"
     ],
     "rules": [
-      {
-        "name": "The One Ink Rule",
-        "body": "The primary action is ink on paper — fg background, bg text, pill geometry. Signal Indigo is never the primary button. It marks state and liveness; the moment it becomes a call to action it stops meaning anything.",
-        "section": "colors"
-      },
-      {
-        "name": "The Two Papers Rule",
-        "body": "Light and dark are not one palette in two tints. Light is paper: flat, no card shadow, grain in multiply. Dark is pure black: real layered shadows, grain in screen. Never port a treatment across without re-deciding it.",
-        "section": "colors"
-      },
-      {
-        "name": "The Cool Newsprint Rule",
-        "body": "The intended neutral character is a cool blue-slate off-white with deep blue-black ink, as the token comments state. The shipped hexes have drifted warm — #fefefb is bone, #181410 is a brown-black, #c6c2bb is a warm gray. The cool intent is normative; the current values are the incumbent implementation pending correction. Do not add new neutrals matching the warm drift.",
-        "section": "colors"
-      },
-      {
-        "name": "The Assigned Speaker Rule",
-        "body": "Before adding a typeface, name its speaker. If the job belongs to a voice already cast — system, author, machine, reader — use that face. A tenth font with no speaker is a bug.",
-        "section": "typography"
-      },
-      {
-        "name": "The Unthemeable Voice Rule",
-        "body": "--font-garamond, --font-cormorant, and --font-blog are never overridden by a theme. Themes may swap the system's voice; they may not swap the author's or the reader's.",
-        "section": "typography"
-      },
-      {
-        "name": "The Escape Hatch Rule",
-        "body": "Promote a serif to headline duty with the .display-serif class, never by overriding --font-display. That variable is how midnight swaps the whole site to Roboto, and both subdomains inherit it — overriding it breaks the default experience and two other products at once.",
-        "section": "typography"
-      },
-      {
-        "name": "The One Column Rule",
-        "body": "The page reads as one column at every width. Responsive work adjusts rhythm and stickiness, never the number of columns the eye has to track.",
-        "section": "layout"
-      },
-      {
-        "name": "The Earned Depth Rule",
-        "body": "Surfaces are flat at rest in light mode. A shadow is a response to state — hover, stacking, focus — never decoration on an idle element.",
-        "section": "elevation"
-      },
-      {
-        "name": "The Three Corners Rule",
-        "body": "Every radius comes from chip (0.5rem), panel (0.75rem), or card (1rem) — or it is a pill. An arbitrary rounded-[14px] is a bug.",
-        "section": "shapes"
-      },
-      {
-        "name": "The Two Curves Rule",
-        "body": "New motion uses cubic-bezier(0.16, 1, 0.3, 1) for state response or cubic-bezier(0.22, 1, 0.36, 1) for entrances. Bounce and elastic easing are not part of this system.",
-        "section": "components"
-      }
+      { "name": "The One Ink Rule", "body": "Emphasis is ink weight, not hue. A thing is important because it is set in full `fg` while its neighbours sit at `fg-subtle`, never because it was tinted. Audit test: desaturate a screen; if the hierarchy survives, it obeyed the rule.", "section": "colors" },
+      { "name": "The Two Papers Rule", "body": "There are two papers, `bg` and `surface`, plus a raised and a sunken step for edges. A surface never invents a third tint, a tinted card, or a coloured panel.", "section": "colors" },
+      { "name": "The Cool Newsprint Rule", "body": "The neutral ramp is normatively cool blue-slate — quality newsprint under natural light. The shipped hexes carry a warm cast (#fefefb / #181410) that is known drift, not intent; the correction is still pending. New neutrals are chosen cool.", "section": "colors" },
+      { "name": "The Signal Rule", "body": "Signal Indigo means live: something running, open, active, or focused. It is not a brand wash, not a category colour, and not a hover flourish on a static element. Live is indigo, distinguished is full ink, dormant is faint — three states, one hue.", "section": "colors" },
+      { "name": "The No-Category-Colour Rule", "body": "Tags, skills, project types, roles and post kinds are never colour-coded. They are distinguished by ink weight, rule weight, and position.", "section": "colors" },
+      { "name": "The Assigned Speaker Rule", "body": "Four faces, four speakers: Roboto is the system, Garamond/Cormorant is the author, Geist Mono is the machine, Source Serif 4 is the reader. Before setting a new string, name its speaker; that names the face. A measurement never appears in Garamond, and an opinion never appears in mono.", "section": "typography" },
+      { "name": "The Unthemeable Voice Rule", "body": "`--font-garamond`, `--font-cormorant` and `--font-blog` are deliberately never overridden by `[data-theme]`. The author's voice and the reader's voice survive every theme; only the system's voice swaps.", "section": "typography" },
+      { "name": "The Escape Hatch Rule", "body": "The display serif is a class (`.display-serif`), never a `--font-display` override. That variable is the hatch `midnight` — the default theme — uses to swap the whole site to Roboto, and gradeVITian and VRF Bricks inherit it and must stay grotesque. Overriding it would silently break the experience most visitors get.", "section": "typography" },
+      { "name": "The Ghost Numeral Rule", "body": "A chapter is counted once, by the oversized ghost numeral in the rail. No second mono numeral, no third line above the heading; the dateline below carries the filing.", "section": "typography" },
+      { "name": "The One Column Rule", "body": "The page is one column of reading at every width. Side rails carry identity, never content the reader must have. A layout that only works above `lg` is not a layout.", "section": "layout" },
+      { "name": "The Measure Rule", "body": "Every run of text declares its measure. Nothing sets wider than 72ch, and prose sets at 68ch.", "section": "layout" },
+      { "name": "The Earned Depth Rule", "body": "Surfaces are flat until touched. Shadow is the response to hover, focus, or press — never a resting decoration, and never a substitute for a rule or a tint.", "section": "elevation" },
+      { "name": "The Ruled Band Rule", "body": "A group of related figures is a ruled band — `border-y` on the group, `divide-x` between the cells — not a row of cards. Cards nested inside cards are the failure mode this replaced; every line in a band is present at rest, never gated behind a hover a touch device cannot reach.", "section": "elevation" },
+      { "name": "The No-Scrim Rule", "body": "The nav meets content at a clean edge. It carries the page background, not a translucent wash — a scrim over the sticky chrome dropped body copy behind it to roughly 2:1 and was removed.", "section": "elevation" },
+      { "name": "The Three Corners Rule", "body": "Chip, panel, card. A new surface picks one of the three or it picks the pill because it is an action. There is no fourth radius.", "section": "shapes" },
+      { "name": "The Rule Before The Box Rule", "body": "Reach for a hairline before a container. If a border, a gradient rule, or a divided band can express the grouping, it does — a bordered box is the last resort, not the first.", "section": "shapes" },
+      { "name": "The Two Curves Rule", "body": "The system has two easing curves and no third: cubic-bezier(0.16, 1, 0.3, 1) for a surface settling into place, and cubic-bezier(0.22, 1, 0.36, 1) for a stroke being drawn. Every transition picks one.", "section": "elevation" }
     ],
     "dos": [
-      "Do make the primary action ink-on-paper (bg-fg text-bg, pill) and let Signal Indigo mark state instead.",
-      "Do assign a speaker before adding a typeface — system (Roboto), author (Garamond), machine (Geist Mono), or reader (Source Serif 4).",
-      "Do promote a serif to headline duty with .display-serif, never by overriding --font-display.",
-      "Do pick radii from chip (0.5rem), panel (0.75rem), or card (1rem), or use a pill.",
-      "Do use .card-lift for interactive cards so the 3px hover, the border shift, and the 75ms press all arrive together.",
-      "Do set reading measures in ch (68 for prose, 62 or 56 for narrow passages).",
-      "Do carry prefers-reduced-motion on every new animation — the homepage is motion-dense and the media query is already the house standard.",
-      "Do reference semantic tokens (bg-surface, text-fg-muted, border-border) rather than raw Tailwind palette classes."
+      "Do name the speaker before choosing a face: system (Roboto), author (Garamond/Cormorant), machine (Geist Mono), reader (Source Serif 4).",
+      "Do build hierarchy from the four-step ink ramp — fg → fg-muted → fg-subtle → fg-faint — before reaching for any colour.",
+      "Do reserve Signal Indigo for live state: running, open, active, focused.",
+      "Do express a group of figures as a ruled band (border-y + divide-x) at reading scale, with every line visible at rest.",
+      "Do pick one of the three corners (chip 0.5rem, panel 0.75rem, card 1rem), or the pill if it is an action.",
+      "Do cap the measure — 68ch for prose, 72ch for bullet lists, 62ch for body columns.",
+      "Do let depth be earned: flat at rest, card-lift on hover, 0.97 on press.",
+      "Do file a real deployment with a mono PLACE / YEAR dateline and a mono measure line.",
+      "Do add every new ambient or infinite animation to the prefers-reduced-motion block, and reset the property it holds hostage (scaleX(1), stroke-dashoffset: 0, opacity: 0) rather than only killing the animation.",
+      "Do keep the author's and reader's faces out of --font-display; that variable is the theme escape hatch."
     ],
     "donts": [
-      "Don't build the generic developer-portfolio dark mode — neon-on-black, monospace-everything, glowing gradient orbs. Mono is a reporting voice here, not a theme.",
-      "Don't add a shadow to a light-mode element at rest. Depth in light is motion and border weight.",
-      "Don't use bounce or elastic easing; the system has exactly two curves.",
-      "Don't animate width, height, padding, or margin. Use transform and opacity.",
-      "Don't spread Signal Indigo into decoration — it means 'live' or 'current,' and dilution costs it that meaning.",
-      "Don't introduce new neutrals matching the current warm drift; the intended character is cool blue-slate.",
-      "Don't override --font-garamond, --font-cormorant, or --font-blog in a theme. The author's and reader's voices are not themeable.",
-      "Don't branch the homepage into a second layout tree for mobile — one column, one DOM, stickiness toggled at lg."
+      "Don't colour-code categories, tags, skills, or post types. No emerald/teal/amber/orange/sky/violet ramps on reading surfaces.",
+      "Don't introduce a third paper tint or a tinted card to signal state; invert to ink instead.",
+      "Don't nest a card inside a card. If it needs grouping, rule it.",
+      "Don't put a scrim, wash, or blur behind the sticky nav over body content.",
+      "Don't gate information behind hover — a touch device will never see it.",
+      "Don't override --font-display, --font-garamond, --font-cormorant, or --font-blog per theme.",
+      "Don't add a resting shadow in light mode; --shadow-card is none there on purpose.",
+      "Don't invent a fourth radius or a bespoke per-component corner.",
+      "Don't set a measurement in a serif or an opinion in mono.",
+      "Don't reach for the generic developer-portfolio dark mode: neon on charcoal, gradient heroes, glass cards, rainbow tags."
     ]
   }
 }
