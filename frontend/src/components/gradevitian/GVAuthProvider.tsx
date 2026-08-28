@@ -2,6 +2,7 @@
 
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
 import {
+  apiGoogleAuth,
   apiLogin,
   apiMe,
   apiPing,
@@ -18,6 +19,9 @@ interface GVAuthContextValue {
   token: string | null;
   login: (identifier: string, password: string) => Promise<void>;
   signup: (input: { name: string; email: string; username: string; password: string }) => Promise<void>;
+  /** Exchange a Google ID token for a session. Resolves true when the account was
+   *  just created, so the caller can greet a first-time user differently. */
+  loginWithGoogle: (credential: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -77,6 +81,14 @@ export function GVAuthProvider({ children }: { children: React.ReactNode }) {
     [],
   );
 
+  const loginWithGoogle = useCallback(async (credential: string) => {
+    const { token: t, user: u, created } = await apiGoogleAuth(credential);
+    setToken(t);
+    setTokenState(t);
+    setUser(u);
+    return created;
+  }, []);
+
   const logout = useCallback(() => {
     clearToken();
     setTokenState(null);
@@ -84,7 +96,7 @@ export function GVAuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <GVAuthContext.Provider value={{ user, loading, token, login, signup, logout }}>
+    <GVAuthContext.Provider value={{ user, loading, token, login, signup, loginWithGoogle, logout }}>
       {children}
     </GVAuthContext.Provider>
   );

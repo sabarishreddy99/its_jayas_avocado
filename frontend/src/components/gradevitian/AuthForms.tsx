@@ -6,7 +6,9 @@ import GVLink from "@/components/gradevitian/GVLink";
 import { useGVAuth } from "@/components/gradevitian/GVAuthProvider";
 import { useGvBase } from "@/lib/gradevitian/useGvBase";
 import { apiForgotPassword, apiResetPassword } from "@/lib/gradevitian/auth";
+import { GOOGLE_CLIENT_ID } from "@/lib/google";
 import { Button, Card, Field, Input } from "@/components/gradevitian/ui";
+import GoogleSignInButton from "@/components/gradevitian/GoogleSignInButton";
 
 function ErrorNote({ msg }: { msg: string }) {
   if (!msg) return null;
@@ -21,6 +23,28 @@ function ErrorNote({ msg }: { msg: string }) {
       </svg>
       <span>{msg}</span>
     </p>
+  );
+}
+
+/** Google button + "or" rule above the email/password form. Renders nothing when
+ *  Google Sign-In isn't configured for this build. */
+function GoogleOption({
+  text,
+  onError,
+}: {
+  text: "signin_with" | "signup_with";
+  onError: (message: string) => void;
+}) {
+  if (!GOOGLE_CLIENT_ID) return null;
+  return (
+    <>
+      <GoogleSignInButton text={text} onError={onError} />
+      <div className="flex items-center gap-3" aria-hidden>
+        <span className="h-px flex-1 bg-border-subtle" />
+        <span className="text-micro uppercase tracking-wide text-fg-subtle">or</span>
+        <span className="h-px flex-1 bg-border-subtle" />
+      </div>
+    </>
   );
 }
 
@@ -71,6 +95,7 @@ export function LoginForm() {
 
   return (
     <FormShell title="Log in" subtitle="Welcome back, VITian. Your saved work is right where you left it.">
+      <GoogleOption text="signin_with" onError={setError} />
       <form onSubmit={submit} className="flex flex-col gap-4">
         <ErrorNote msg={error} />
         <Field label="Email or username"><Input value={identifier} onChange={(e) => setIdentifier(e.target.value)} autoComplete="username" required /></Field>
@@ -113,6 +138,7 @@ export function SignupForm() {
 
   return (
     <FormShell title="Make it yours" subtitle="Free forever. Join 20K+ VITians and keep your calculations, goals and grades on every device.">
+      <GoogleOption text="signup_with" onError={setError} />
       <form onSubmit={submit} className="flex flex-col gap-4">
         <ErrorNote msg={error} />
         <Field label="Name"><Input value={v.name} onChange={(e) => setV({ ...v, name: e.target.value })} required /></Field>

@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import json
 import logging
+import secrets
 import sqlite3
 from pathlib import Path
 
@@ -41,9 +42,19 @@ def init_db() -> None:
                 email      TEXT    NOT NULL UNIQUE,
                 username   TEXT    NOT NULL UNIQUE,
                 pwd_hash   TEXT    NOT NULL,
+                google_sub TEXT,
+                avatar_url TEXT    NOT NULL DEFAULT '',
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             )
         """)
+        # Migrate older DBs that predate Google Sign-In. `pwd_hash` stays NOT NULL —
+        # Google-only accounts store an empty string, which verify_password rejects,
+        # so they can only be password-signed-in after a password reset.
+        user_cols = {r[1] for r in conn.execute("PRAGMA table_info(gv_users)").fetchall()}
+        if "google_sub" not in user_cols:
+            conn.execute("ALTER TABLE gv_users ADD COLUMN google_sub TEXT")
+        if "avatar_url" not in user_cols:
+            conn.execute("ALTER TABLE gv_users ADD COLUMN avatar_url TEXT NOT NULL DEFAULT ''")
         conn.execute("""
             CREATE TABLE IF NOT EXISTS gv_password_resets (
                 id         INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -131,6 +142,10 @@ def init_db() -> None:
                 count       INTEGER NOT NULL DEFAULT 0
             )
         """)
+        conn.execute(
+            "CREATE UNIQUE INDEX IF NOT EXISTS idx_gv_users_google ON gv_users(google_sub) "
+            "WHERE google_sub IS NOT NULL"
+        )
         conn.execute("CREATE INDEX IF NOT EXISTS idx_gv_calcs_user  ON gv_saved_calcs(user_id)")
         conn.execute("CREATE INDEX IF NOT EXISTS idx_gv_resets_user ON gv_password_resets(user_id)")
     logger.info("gradeVITian DB ready")
@@ -315,11 +330,19 @@ def email_or_username_taken(email: str, username: str) -> bool:
     return row is not None
 
 
-def create_user(name: str, email: str, username: str, pwd_hash: str) -> dict:
+def create_user(
+    name: str,
+    email: str,
+    username: str,
+    pwd_hash: str,
+    google_sub: str | None = None,
+    avatar_url: str = "",
+) -> dict:
     with _connect() as conn:
         cur = conn.execute(
-            "INSERT INTO gv_users (name, email, username, pwd_hash) VALUES (?, ?, ?, ?)",
-            (name, email, username, pwd_hash),
+            "INSERT INTO gv_users (name, email, username, pwd_hash, google_sub, avatar_url) "
+            "VALUES (?, ?, ?, ?, ?, ?)",
+            (name, email, username, pwd_hash, google_sub, avatar_url),
         )
         user_id = cur.lastrowid
     return get_user_by_id(user_id)  # type: ignore[return-value]
@@ -330,13 +353,66 @@ def set_user_password(user_id: int, pwd_hash: str) -> None:
         conn.execute("UPDATE gv_users SET pwd_hash=? WHERE id=?", (pwd_hash, user_id))
 
 
+# ── Google Sign-In ────────────────────────────────────────────────────────────
+
+def get_user_by_google_sub(google_sub: str) -> dict | None:
+    """Look up the account linked to a Google subject id (the stable `sub` claim —
+    never the email, which a user can change)."""
+    with _connect() as conn:
+        row = conn.execute("SELECT * FROM gv_users WHERE google_sub=?", (google_sub,)).fetchone()
+    return _public_user(row) if row else None
+
+
+def link_google_account(user_id: int, google_sub: str, avatar_url: str = "") -> None:
+    """Attach a Google identity to an existing account (and refresh its avatar).
+    An empty avatar_url leaves whatever is already stored untouched."""
+    with _connect() as conn:
+        if avatar_url:
+            conn.execute(
+                "UPDATE gv_users SET google_sub=?, avatar_url=? WHERE id=?",
+                (google_sub, avatar_url, user_id),
+            )
+        else:
+            conn.execute("UPDATE gv_users SET google_sub=? WHERE id=?", (google_sub, user_id))
+
+
+def unique_username(preferred: str) -> str:
+    """Return `preferred`, or the first `preferred2`, `preferred3`… that is free.
+
+    Used when creating an account from a Google profile, which carries no username.
+    """
+    # `_` is a LIKE wildcard and usernames may contain one, so escape the prefix —
+    # otherwise `foo_bar` would also match `fooxbar` and pointlessly suffix the name.
+    prefix = preferred.lower().replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+    with _connect() as conn:
+        taken = {
+            r["u"] for r in conn.execute(
+                "SELECT lower(username) AS u FROM gv_users "
+                "WHERE lower(username) LIKE ? ESCAPE '\\'",
+                (prefix + "%",),
+            )
+        }
+    if preferred.lower() not in taken:
+        return preferred
+    for n in range(2, 1000):
+        candidate = f"{preferred}{n}"
+        if candidate.lower() not in taken:
+            return candidate
+    return f"{preferred}{secrets.token_hex(3)}"
+
+
 def _public_user(row: sqlite3.Row) -> dict:
+    cols = row.keys()
     return {
         "id": row["id"],
         "name": row["name"],
         "email": row["email"],
         "username": row["username"],
         "created_at": row["created_at"],
+        "avatar_url": (row["avatar_url"] if "avatar_url" in cols else "") or "",
+        # Lets the UI say "signed in with Google" and hide password-only affordances.
+        "google_linked": bool(row["google_sub"]) if "google_sub" in cols else False,
+        "has_password": bool(row["pwd_hash"]),
     }
 
 

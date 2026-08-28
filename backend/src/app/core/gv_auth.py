@@ -106,6 +106,53 @@ def hash_reset_token(raw: str) -> str:
     return hashlib.sha256(raw.encode()).hexdigest()
 
 
+# ── Google Sign-In (Identity Services ID token) ───────────────────────────────
+
+def google_client_id() -> str:
+    """The OAuth client ID incoming Google ID tokens must be issued for.
+
+    GV_GOOGLE_CLIENT_ID when set, otherwise the client used by the admin Google
+    integration — so a single Cloud project web client can serve both.
+    """
+    from app.core.settings import settings
+    return settings.gv_google_client_id.strip() or settings.google_oauth_client_id.strip()
+
+
+def verify_google_credential(credential: str) -> dict:
+    """Verify a Google Identity Services ID token and return its claims.
+
+    google-auth (already a dependency for the Gmail/Drive integrations) checks the
+    signature against Google's rotating public keys plus `iss`, `aud` and `exp`.
+    Never trust the token's payload without this — it arrives straight from the
+    browser and is trivially forged otherwise.
+    """
+    client_id = google_client_id()
+    if not client_id:
+        raise HTTPException(status_code=503, detail="Google sign-in is not configured.")
+
+    try:
+        from google.auth.transport import requests as google_requests
+        from google.oauth2 import id_token as google_id_token
+
+        claims = google_id_token.verify_oauth2_token(
+            credential, google_requests.Request(), client_id, clock_skew_in_seconds=10
+        )
+    except Exception as exc:
+        logger.warning("Google credential rejected: %s", exc)
+        raise HTTPException(status_code=401, detail="Google sign-in failed. Please try again.") from exc
+
+    if claims.get("iss") not in ("accounts.google.com", "https://accounts.google.com"):
+        raise HTTPException(status_code=401, detail="Google sign-in failed. Please try again.")
+    # An unverified address could belong to someone else — it must never be able to
+    # take over an existing gradeVITian account through the email-matching path.
+    if not claims.get("email") or not claims.get("email_verified"):
+        raise HTTPException(
+            status_code=401,
+            detail="That Google account has no verified email address.",
+        )
+    return claims
+
+
 # ── FastAPI dependencies ──────────────────────────────────────────────────────
 
 def _user_from_header(authorization: str | None) -> dict | None:

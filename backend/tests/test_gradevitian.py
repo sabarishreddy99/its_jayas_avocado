@@ -54,6 +54,85 @@ def test_signup_login_me(client):
     assert r.json()["user"]["email"] == "test1@example.com"
 
 
+@pytest.fixture()
+def google(monkeypatch):
+    """Stub the Google ID-token verifier so tests never hit Google's JWKS endpoint.
+    Returns a helper that posts a "credential" carrying the given claims."""
+    import app.routers.gradevitian as router_mod
+
+    claims: dict = {}
+    monkeypatch.setattr(router_mod, "verify_google_credential", lambda cred: claims)
+
+    def sign_in(client, *, sub="google-sub-1", email="grace@vitstudent.ac.in",
+                name="Grace Hopper", picture="https://lh3.googleusercontent.com/a/x"):
+        claims.clear()
+        claims.update({"sub": sub, "email": email, "name": name, "picture": picture,
+                       "email_verified": True})
+        return client.post("/gv/auth/google", json={"credential": "x" * 40})
+
+    return sign_in
+
+
+def test_google_signup_creates_account(client, google):
+    r = google(client)
+    assert r.status_code == 200, r.text
+    body = r.json()
+    assert body["created"] is True
+    user = body["user"]
+    assert user["email"] == "grace@vitstudent.ac.in"
+    assert user["username"] == "grace"
+    assert user["google_linked"] is True
+    assert user["has_password"] is False
+    assert "pwd_hash" not in user
+
+    me = client.get("/gv/auth/me", headers={"Authorization": f"Bearer {body['token']}"})
+    assert me.status_code == 200
+    assert me.json()["user"]["id"] == user["id"]
+
+
+def test_google_signin_is_idempotent(client, google):
+    first = google(client).json()
+    second = google(client).json()
+    assert second["created"] is False
+    assert second["user"]["id"] == first["user"]["id"]
+
+
+def test_google_links_to_existing_password_account(client, google):
+    signed_up = _signup(client, "9").json()["user"]
+    r = google(client, email="test9@example.com", sub="google-sub-9")
+    assert r.status_code == 200
+    body = r.json()
+    assert body["created"] is False
+    assert body["user"]["id"] == signed_up["id"]
+    # The password still works after linking.
+    assert body["user"]["has_password"] is True
+    assert client.post(
+        "/gv/auth/login", json={"identifier": "testuser9", "password": "secret123"}
+    ).status_code == 200
+
+
+def test_google_account_has_no_password_login(client, google):
+    google(client)
+    r = client.post("/gv/auth/login",
+                    json={"identifier": "grace@vitstudent.ac.in", "password": "anything"})
+    assert r.status_code == 401
+
+
+def test_google_username_collision_gets_suffixed(client, google):
+    google(client, sub="a", email="grace@vitstudent.ac.in")
+    r = google(client, sub="b", email="grace@gmail.com")
+    assert r.json()["user"]["username"] == "grace2"
+
+
+def test_google_disabled_without_client_id(client, monkeypatch):
+    """No client ID configured — the endpoint says so rather than trusting the token."""
+    from app.core.settings import settings
+    monkeypatch.setattr(settings, "gv_google_client_id", "")
+    monkeypatch.setattr(settings, "google_oauth_client_id", "")
+    r = client.post("/gv/auth/google", json={"credential": "x" * 40})
+    assert r.status_code == 503
+
+
 def test_duplicate_signup_rejected(client):
     assert _signup(client, "2").status_code == 200
     assert _signup(client, "2").status_code == 409
@@ -274,10 +353,14 @@ def test_admin_metrics_endpoint_requires_token(client, monkeypatch):
     assert set(body.keys()) == {"users", "saved_calcs", "comments", "engagement"}
 
 
-def test_admin_metrics_endpoint_disabled_without_admin_token(client, monkeypatch):
-    # No ADMIN_TOKEN configured → the endpoint is disabled and fails closed (403),
-    # so the PII it returns (user names + emails) can never be served unguarded.
+def test_admin_metrics_endpoint_disabled_without_admin_auth(client, monkeypatch):
+    # No admin credential configured at all — neither ADMIN_TOKEN nor Google
+    # sign-in — so the endpoint is disabled and fails closed (403), and the PII it
+    # returns (user names + emails) can never be served unguarded.
     from app.core.settings import settings
     monkeypatch.setattr(settings, "admin_token", "", raising=False)
+    monkeypatch.setattr(settings, "admin_emails", "", raising=False)
+    monkeypatch.setattr(settings, "gv_google_client_id", "", raising=False)
+    monkeypatch.setattr(settings, "google_oauth_client_id", "", raising=False)
     assert client.get("/gv/admin/metrics",
                       headers={"Authorization": "Bearer anything"}).status_code == 403

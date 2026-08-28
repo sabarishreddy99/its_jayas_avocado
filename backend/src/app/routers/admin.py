@@ -6,6 +6,8 @@ from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 from pydantic import BaseModel
 
+from app.core import admin_auth
+from app.core.limiter import limiter
 from app.core.settings import settings
 from app.rag.ingest import DATA_DIR, run_ingest
 
@@ -17,10 +19,37 @@ _reingest_state: dict = {"running": False, "result": None, "error": None}
 
 
 def _require_token(creds: HTTPAuthorizationCredentials | None = Depends(_bearer)) -> None:
-    if not settings.admin_token:
+    """Accepts either credential — a Google admin session or the static ADMIN_TOKEN.
+    Shared by every admin-only route across the API (content, stats, gradeVITian)."""
+    if not admin_auth.admin_auth_configured():
         raise HTTPException(status_code=403, detail="Admin endpoint disabled")
-    if creds is None or creds.credentials != settings.admin_token:
+    if creds is None or not admin_auth.is_valid_admin_credential(creds.credentials):
         raise HTTPException(status_code=401, detail="Invalid token")
+
+
+class GoogleSignInRequest(BaseModel):
+    # The ID token ("credential") handed to the browser by Google Identity Services.
+    credential: str
+
+
+@router.post("/auth/google")
+@limiter.limit("20/hour")
+def admin_google_sign_in(body: GoogleSignInRequest, request: Request) -> dict:
+    """Trade a Google ID token for an admin session token.
+
+    Only accounts on ADMIN_EMAILS get one; anyone else is refused with 403 no
+    matter how valid their Google token is. The returned token is a drop-in
+    replacement for ADMIN_TOKEN on every admin endpoint.
+    """
+    return admin_auth.sign_in_with_google(body.credential)
+
+
+@router.get("/auth/me", dependencies=[Depends(_require_token)])
+def admin_whoami(creds: HTTPAuthorizationCredentials | None = Depends(_bearer)) -> dict:
+    """Who the current credential belongs to. `email` is empty for the static token,
+    which has no identity behind it."""
+    email = admin_auth.verify_admin_token(creds.credentials) if creds else None
+    return {"email": email or "", "via": "google" if email else "token"}
 
 
 async def _run_ingest_background(force: bool) -> None:

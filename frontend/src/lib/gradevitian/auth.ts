@@ -8,7 +8,12 @@ export interface GVUser {
   email: string;
   username: string;
   created_at: string;
+  /** Google profile photo, empty for password-only accounts. */
+  avatar_url: string;
+  google_linked: boolean;
+  has_password: boolean;
 }
+
 
 export interface SavedCalc {
   id: number;
@@ -60,6 +65,13 @@ export async function apiLogin(input: {
   identifier: string; password: string;
 }): Promise<{ token: string; user: GVUser }> {
   return apiRequest("/gv/auth/login", "POST", input);
+}
+
+/** Exchange a Google Identity Services ID token for a gradeVITian session. */
+export async function apiGoogleAuth(
+  credential: string,
+): Promise<{ token: string; user: GVUser; created: boolean }> {
+  return apiRequest("/gv/auth/google", "POST", { credential });
 }
 
 export async function apiMe(token: string): Promise<{ user: GVUser }> {

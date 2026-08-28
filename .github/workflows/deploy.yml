@@ -83,6 +83,7 @@ jobs:
           # Search Console "HTML tag" token for gradevitian.jayaremala.com.
           # Absent = the verification meta tag is simply omitted.
           NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION: ${{ secrets.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION }}
+          NEXT_PUBLIC_GOOGLE_CLIENT_ID: ${{ secrets.NEXT_PUBLIC_GOOGLE_CLIENT_ID }}
           NODE_ENV: production
 
       - name: Upload Pages artifact

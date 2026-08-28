@@ -21,6 +21,7 @@ from app.core.gv_auth import (
     hash_reset_token,
     new_reset_token,
     optional_user,
+    verify_google_credential,
     verify_password,
 )
 from app.core.gv_moderation import moderate
@@ -37,11 +38,12 @@ _bearer = HTTPBearer(auto_error=False)
 
 
 def _require_admin(creds: HTTPAuthorizationCredentials | None = Depends(_bearer)) -> None:
-    """Guards the comment-moderation queue with ADMIN_TOKEN (same as /admin/*)."""
-    from app.core.settings import settings
-    if not settings.admin_token:
+    """Guards the comment-moderation queue with the same credentials as /admin/* —
+    a Google admin session or the static ADMIN_TOKEN."""
+    from app.core import admin_auth
+    if not admin_auth.admin_auth_configured():
         raise HTTPException(status_code=403, detail="Admin endpoint disabled")
-    if creds is None or creds.credentials != settings.admin_token:
+    if creds is None or not admin_auth.is_valid_admin_credential(creds.credentials):
         raise HTTPException(status_code=401, detail="Invalid token")
 
 
@@ -57,6 +59,11 @@ class SignupRequest(BaseModel):
 class LoginRequest(BaseModel):
     identifier: str = Field(min_length=1)  # email or username
     password: str = Field(min_length=1)
+
+
+class GoogleAuthRequest(BaseModel):
+    # The ID token ("credential") handed to the browser by Google Identity Services.
+    credential: str = Field(min_length=20, max_length=8000)
 
 
 class ForgotPasswordRequest(BaseModel):
@@ -119,6 +126,55 @@ def login(body: LoginRequest, request: Request) -> dict:
         raise HTTPException(status_code=401, detail="Incorrect login credentials.")
     user = gv.get_user_by_id(record["id"])
     return {"token": create_token(record["id"]), "user": user}
+
+
+@router.post("/auth/google")
+@limiter.limit("30/hour")
+def google_auth(body: GoogleAuthRequest, request: Request) -> dict:
+    """Sign in (or sign up) with a Google Identity Services ID token.
+
+    Matching is by the Google subject id first, then by verified email — so a
+    student who signed up with a password and later taps "Continue with Google"
+    lands back in the same account instead of a duplicate. Accounts created here
+    have no password until they run the forgot-password flow.
+    """
+    claims = verify_google_credential(body.credential)
+    sub = str(claims["sub"])
+    email = str(claims["email"]).lower()
+    name = (claims.get("name") or claims.get("given_name") or email.split("@")[0]).strip()[:80]
+    avatar = (claims.get("picture") or "")[:500]
+
+    user = gv.get_user_by_google_sub(sub)
+    created = False
+
+    if user is None:
+        existing = gv.get_user_by_login(email)
+        if existing:
+            gv.link_google_account(existing["id"], sub, avatar)
+            user = gv.get_user_by_id(existing["id"])
+        else:
+            user = gv.create_user(
+                name=name,
+                email=email,
+                username=gv.unique_username(_username_from_email(email)),
+                pwd_hash="",  # Google-only account — verify_password rejects this.
+                google_sub=sub,
+                avatar_url=avatar,
+            )
+            created = True
+            _send_welcome_email(user)
+    elif avatar and user.get("avatar_url") != avatar:
+        gv.link_google_account(user["id"], sub, avatar)
+        user = gv.get_user_by_id(user["id"])
+
+    return {"token": create_token(user["id"]), "user": user, "created": created}
+
+
+def _username_from_email(email: str) -> str:
+    """Seed a username from an email local part, keeping only characters the signup
+    form allows. VIT addresses look like `firstname.lastname2021@vitstudent.ac.in`."""
+    stem = re.sub(r"[^a-zA-Z0-9._@]", "", email.split("@")[0]).strip("._@").lower()
+    return (stem or "vitian")[:36].ljust(3, "0")
 
 
 @router.get("/auth/me")

@@ -2,7 +2,7 @@
 
 Live at **[jayaremala.com](https://jayaremala.com)**
 
-Personal AI-assisted portfolio for **Jaya Sabarish Reddy Remala**. Two entry points: a full-screen RAG-powered AI chatbot (Avocado) and a classic portfolio with experience, projects, education, blog, lab, and quotes. Content is editable via a token-gated admin panel — dynamic content (blog/lab/quotes) writes live to a DB, and file-based sections stage their edits and ship in a **single batched GitHub commit** (one push, one deploy). A third surface, **[gradeVITian](https://gradevitian.jayaremala.com)** — the relaunched VIT student-tools app — lives in the same codebase on its own subdomain (see [gradeVITian](#gradevitian--student-tools-subdomain)).
+Personal AI-assisted portfolio for **Jaya Sabarish Reddy Remala**. Two entry points: a full-screen RAG-powered AI chatbot (Avocado) and a classic portfolio with experience, projects, education, blog, lab, and quotes. Content is editable via an admin panel gated by Google Sign-In (allow-listed email) — dynamic content (blog/lab/quotes) writes live to a DB, and file-based sections stage their edits and ship in a **single batched GitHub commit** (one push, one deploy). A third surface, **[gradeVITian](https://gradevitian.jayaremala.com)** — the relaunched VIT student-tools app — lives in the same codebase on its own subdomain (see [gradeVITian](#gradevitian--student-tools-subdomain)).
 
 Avocado is also **agentic**: an opt-in "Agent mode" lets the model pick tools per turn (and call them live), the same read-only tools are exposed over a **public MCP server** (`/mcp/`) so a recruiter can plug their own Claude/Cursor into Jaya's portfolio, and a **book-a-call** flow surfaces real Google Calendar openings + a one-click booking link inside the chat. The model layer fails over across providers — **Gemini → Groq → OpenRouter** — so the chatbot keeps answering after any single free tier is exhausted.
 
@@ -24,7 +24,7 @@ Avocado is also **agentic**: an opt-in "Agent mode" lets the model pick tools pe
 │  └───────────┬────────────┘        └─────────────┬──────────────────────┘   │
 │              │                                   │                          │
 │  ┌────────────────────────────────────────────┐  │                          │
-│  │  /admin  (no-index, token-gated)           │  │                          │
+│  │  /admin  (no-index, Google sign-in)        │  │                          │
 │  │  Stats · Content editors · Bulk delete     │  │                          │
 │  │  GitHub MDX sync · Immediate reingest      │  │                          │
 │  └────────────────────────────────────────────┘  │                          │
@@ -100,7 +100,7 @@ How edits reach production — including the admin **stage → one commit** flow
 **gradeVITian** subdomain served off the same box.
 
 ```
-  /admin  (token-gated)
+  /admin  (Google sign-in, allow-listed email)
   ├─ Blog / Lab / Quotes  ───────────────►  content.db  ──►  served live via /content API
   │                                          (DB rows, client-fetched — no rebuild)
   │
@@ -342,6 +342,20 @@ After every write, a background task calls the appropriate `regenerate_*_json()`
 
 The database is seeded from existing JSON files on first startup — no manual migration needed.
 
+**Admin authentication** — The desk is opened by **Google Sign-In restricted to an
+email allow-list** (`ADMIN_EMAILS`), not by a shared secret. The browser gets an ID
+token from Google Identity Services, `POST /admin/auth/google` verifies its signature
+and checks the verified email against the list, and returns a short-lived HMAC session
+token that is a drop-in replacement for `ADMIN_TOKEN` on every admin endpoint. Removing
+an address from `ADMIN_EMAILS` revokes its live sessions on the next request, because
+the allow-list is re-checked on every verification rather than baked into the token.
+
+`ADMIN_TOKEN` still works as a **machine credential** — curl, scripts, and break-glass
+access if Google is unreachable — and the login screen keeps it one click away behind
+"Use admin token instead". Set at least one of the two, or every admin endpoint reports
+itself disabled (403) rather than sitting unprotected. The same guard covers
+`/admin/*`, `/content/*` writes, `/stats/admin` and the gradeVITian moderation queue.
+
 **MDX GitHub sync from admin** — When a blog post or lab entry is created, updated, or deleted via the Content API admin editors, the corresponding `.mdx` file in the repo is also committed (or deleted) via the GitHub Contents API. This keeps the static frontend and MDX-rendered routes in sync with what the Content API serves, even when editing through the admin panel instead of a git commit.
 
 **MDX content sync** — `content.db` is only seeded on first startup (empty table). Blog posts and lab entries written as MDX files and pushed via GH Actions go into `blog.json` / `lab.json` but were not reaching `content.db` after the initial seed. `sync_blog_json_to_db()` and `sync_lab_json_to_db()` (called from `_sync_content_db()` before every ingest) insert any new slugs found in the JSON files but missing from `content.db`, ensuring every MDX post is ingested on the next deploy or re-ingest button click.
@@ -499,7 +513,7 @@ Daily S3 backup → s3://itsjaya-backups-analytics/analytics_db/
 | `/now` | What Jaya is currently building, learning, and reading |
 | `/mcp` | Public MCP server explainer + live tool playground + Claude/Cursor connect configs |
 | `/system` | Live observability — latency percentiles, RAG pipeline timing, model fallback |
-| `/admin` | Stats dashboard · content editors · bulk delete · GitHub MDX sync · immediate reingest (no-index, token-gated) |
+| `/admin` | Stats dashboard · content editors · bulk delete · GitHub MDX sync · immediate reingest (no-index, Google sign-in) |
 
 All portfolio routes share a layout via the `(portfolio)` route group — adds no URL segment.
 

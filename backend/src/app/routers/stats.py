@@ -184,10 +184,14 @@ def post_experience_rating(body: ExperienceRatingIn) -> None:
 
 @router.get("/admin")
 def get_admin_stats(authorization: str = Header(default="")) -> dict:
-    if not settings.admin_token:
-        raise HTTPException(status_code=403, detail="Admin access not configured — set ADMIN_TOKEN env var")
+    from app.core import admin_auth
+    if not admin_auth.admin_auth_configured():
+        raise HTTPException(
+            status_code=403,
+            detail="Admin access not configured — set ADMIN_EMAILS + GV_GOOGLE_CLIENT_ID, or ADMIN_TOKEN",
+        )
     token = authorization.removeprefix("Bearer ").strip()
-    if token != settings.admin_token:
+    if not admin_auth.is_valid_admin_credential(token):
         raise HTTPException(status_code=403, detail="Invalid token")
 
     p = _ADMIN_PERIODS

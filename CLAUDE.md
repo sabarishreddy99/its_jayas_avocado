@@ -59,7 +59,7 @@ the `(portfolio)` route group adds no URL segment.
 | `/blog`, `/blog/[slug]`, `/blog/tag/[tag]` | Blog index, post, tag index |
 | `/lab`, `/lab/[slug]` | Living build logs (MDX, same loader shape as blog) |
 | `/gallery` `/quotes` `/now` `/system` `/mcp` | Supporting pages |
-| `/admin`, `/admin/google-callback` | Token-gated content admin (no-index) |
+| `/admin`, `/admin/google-callback` | Content admin, Google sign-in on an email allow-list (no-index) |
 | `/gradevitian/*` | gradeVITian (served at its subdomain root) |
 | `/vrfbricks/*` | VRF Bricks (served at its subdomain root) |
 
@@ -208,7 +208,8 @@ docker compose -f infra/compose.yml up --build
 - `integrations/` — Google `calendar` / `drive` / `gmail` / `google_auth`, `digest`
 - `agent/tools.py` — the read-only tool surface shared by Agent mode and MCP
 - `obs/trace.py` — per-request tracing feeding the `/system` dashboard
-- `core/` — `settings.py`, `limiter.py`, `gv_auth.py`, `gv_moderation.py`
+- `core/` — `settings.py`, `limiter.py`, `gv_auth.py`, `gv_moderation.py`,
+  `admin_auth.py` (admin Google sign-in + the shared admin credential check)
 
 ### API surface
 
@@ -220,7 +221,7 @@ docker compose -f infra/compose.yml up --build
 | `/gv` | `gradevitian.py` | auth, calculators, comments, rulebook `/ask`, metrics |
 | `/stats` | `stats.py` | `/overview`, `/system`, `/system/traces`, `/visit` |
 | `/tools` | `tools.py` | agent tool listing + invocation |
-| `/admin` | `admin.py` | reingest, Google OAuth, Drive/Gmail sync, digest |
+| `/admin` | `admin.py` | `/auth/google` sign-in, reingest, Google OAuth, Drive/Gmail sync, digest |
 | `/mcp/` | mounted | public read-only MCP server (`fastmcp`) |
 
 ### RAG flow for `/ai/chat`

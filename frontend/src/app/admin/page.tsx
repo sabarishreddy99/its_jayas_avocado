@@ -4,6 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { API_BASE_URL } from "@/lib/api/client";
+import { GOOGLE_CLIENT_ID } from "@/lib/google";
+import GoogleIdentityButton from "@/components/ui/GoogleIdentityButton";
 import ContentBlogEditor from "@/components/admin/ContentBlogEditor";
 import ContentLabEditor from "@/components/admin/ContentLabEditor";
 import LabEditor from "@/components/admin/LabEditor";
@@ -1033,6 +1035,37 @@ function LoginForm({ onAuth }: { onAuth: (token: string) => void }) {
   const [visible, setVisible] = useState(false);
   const [lockedUntil, setLockedUntil] = useState<number>(0);
   const [remaining, setRemaining] = useState(0);
+  // Google is the way in; the static token stays one click away as break-glass for
+  // when Google is unreachable, and is the only option if it isn't configured.
+  const [useToken, setUseToken] = useState(false);
+  const showTokenForm = !GOOGLE_CLIENT_ID || useToken;
+
+  /** Trade the Google ID token for an admin session token. The backend only issues
+   *  one to an allow-listed email, and what comes back is a drop-in replacement for
+   *  ADMIN_TOKEN — so every existing call in this file keeps working untouched. */
+  const handleGoogle = useCallback(
+    (credential: string) => {
+      setLoading(true);
+      setError("");
+      void (async () => {
+        try {
+          const res = await fetch(`${API_BASE_URL}/admin/auth/google`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ credential }),
+          });
+          const data = await res.json().catch(() => ({}));
+          if (!res.ok) throw new Error(data.detail || "Google sign-in was refused.");
+          clearAttempts();
+          onAuth(data.token);
+        } catch (e) {
+          setError(e instanceof Error ? e.message : "Google sign-in failed.");
+          setLoading(false);
+        }
+      })();
+    },
+    [onAuth],
+  );
 
   useEffect(() => {
     const { count, until } = getAttemptState();
@@ -1107,29 +1140,28 @@ function LoginForm({ onAuth }: { onAuth: (token: string) => void }) {
           onSubmit={handleSubmit}
           className="rounded-2xl border border-border bg-surface p-6 sm:p-7 space-y-5 shadow-[0_18px_50px_-28px_rgb(0_0_0/0.35)]"
         >
-          <div className="space-y-1.5">
-            <label className="block text-[11px] font-semibold uppercase tracking-wider text-fg-subtle">
-              Admin token
-            </label>
-            <div className="relative">
-              <input
-                type={visible ? "text" : "password"}
-                value={token}
-                onChange={(e) => setToken(e.target.value)}
-                placeholder="Enter ADMIN_TOKEN…"
-                className="w-full rounded-lg border border-border bg-bg px-3 py-2.5 text-sm text-fg placeholder:text-fg-subtle focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all font-mono pr-16"
-                autoFocus
+          {GOOGLE_CLIENT_ID && (
+            <div className="space-y-3">
+              <GoogleIdentityButton
+                clientId={GOOGLE_CLIENT_ID}
+                text="signin_with"
+                shape="rectangular"
+                busy={loading}
+                onCredential={handleGoogle}
+                onError={setError}
               />
+              <p className="text-center text-[11px] text-fg-faint">
+                Only allow-listed Google accounts can open this desk.
+              </p>
               <button
                 type="button"
-                tabIndex={-1}
-                onClick={() => setVisible(!visible)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-semibold uppercase tracking-wider text-fg-faint hover:text-fg-muted transition-colors"
+                onClick={() => setUseToken((v) => !v)}
+                className="w-full text-center text-[11px] font-medium text-fg-faint hover:text-fg-muted transition-colors"
               >
-                {visible ? "Hide" : "Show"}
+                {useToken ? "Back to Google sign-in" : "Use admin token instead"}
               </button>
             </div>
-          </div>
+          )}
 
           {error && (
             <div className="rounded border border-rose-200 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/30 px-3 py-2.5 flex items-start gap-2">
@@ -1140,29 +1172,57 @@ function LoginForm({ onAuth }: { onAuth: (token: string) => void }) {
             </div>
           )}
 
-          <button
-            type="submit"
-            disabled={!token || loading || isLocked}
-            className="w-full rounded-lg bg-fg text-bg py-3 text-sm font-semibold hover:bg-fg-muted transition-colors disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
-          >
-            {isLocked ? (
-              `Locked, ${remaining}s`
-            ) : loading ? (
-              <>
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="animate-spin">
-                  <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
-                </svg>
-                Verifying…
-              </>
-            ) : (
-              <>
-                Sign in
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-              </>
-            )}
-          </button>
+          {showTokenForm && (
+            <>
+              <div className="space-y-1.5">
+                <label className="block text-[11px] font-semibold uppercase tracking-wider text-fg-subtle">
+                  Admin token
+                </label>
+                <div className="relative">
+                  <input
+                    type={visible ? "text" : "password"}
+                    value={token}
+                    onChange={(e) => setToken(e.target.value)}
+                    placeholder="Enter ADMIN_TOKEN…"
+                    className="w-full rounded-lg border border-border bg-bg px-3 py-2.5 text-sm text-fg placeholder:text-fg-subtle focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 transition-all font-mono pr-16"
+                    autoFocus
+                  />
+                  <button
+                    type="button"
+                    tabIndex={-1}
+                    onClick={() => setVisible(!visible)}
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-[10px] font-semibold uppercase tracking-wider text-fg-faint hover:text-fg-muted transition-colors"
+                  >
+                    {visible ? "Hide" : "Show"}
+                  </button>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                disabled={!token || loading || isLocked}
+                className="w-full rounded-lg bg-fg text-bg py-3 text-sm font-semibold hover:bg-fg-muted transition-colors disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
+              >
+                {isLocked ? (
+                  `Locked, ${remaining}s`
+                ) : loading ? (
+                  <>
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="animate-spin">
+                      <path d="M21 12a9 9 0 1 1-6.219-8.56"/>
+                    </svg>
+                    Verifying…
+                  </>
+                ) : (
+                  <>
+                    Sign in
+                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                      <path d="M5 12h14M12 5l7 7-7 7"/>
+                    </svg>
+                  </>
+                )}
+              </button>
+            </>
+          )}
         </form>
 
         <div className="text-center">

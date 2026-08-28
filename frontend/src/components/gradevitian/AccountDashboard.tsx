@@ -87,9 +87,24 @@ export default function AccountDashboard() {
         <div className="relative overflow-hidden rounded-3xl border border-border-subtle bg-gradient-to-br from-accent/[0.1] to-transparent p-6 sm:p-8">
           <div className="flex flex-wrap items-center justify-between gap-5">
             <div className="flex items-center gap-4">
-              <div className="grid h-16 w-16 place-items-center rounded-2xl bg-accent text-2xl font-bold text-accent-fg shadow-md shadow-accent/30">
-                {initials}
-              </div>
+              {user.avatar_url ? (
+                // Google profile photo. A plain <img> rather than next/image: the
+                // host is a static export, and the URL is an arbitrary Google CDN
+                // path that would otherwise need a remotePatterns entry.
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={user.avatar_url}
+                  alt=""
+                  width={64}
+                  height={64}
+                  referrerPolicy="no-referrer"
+                  className="h-16 w-16 rounded-2xl object-cover shadow-md shadow-accent/30"
+                />
+              ) : (
+                <div className="grid h-16 w-16 place-items-center rounded-2xl bg-accent text-2xl font-bold text-accent-fg shadow-md shadow-accent/30">
+                  {initials}
+                </div>
+              )}
               <div>
                 <h1 className="text-balance text-2xl font-bold tracking-[-0.02em] text-fg sm:text-3xl">Hi, {user.name.split(" ")[0]}.</h1>
                 <p className="mt-0.5 text-fg-muted">@{user.username} · {user.email}</p>

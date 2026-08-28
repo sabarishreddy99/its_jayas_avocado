@@ -86,5 +86,51 @@ name, already wired into the build) to the "HTML tag" token, then verify the
 - `GV_DB_PATH` — **set to `/data/gradevitian.db`** on Lightsail so it lives on the mounted
   `/data` volume (the default `./chroma_db/...` is inside the container and is lost on
   redeploy). `deploy.sh` restores it from S3 and `backup.sh` backs it up nightly.
+- `GV_GOOGLE_CLIENT_ID` — enables `POST /gv/auth/google` (see below). Empty falls back to
+  `GOOGLE_OAUTH_CLIENT_ID`; both empty = the endpoint returns 503.
 - Password-reset / welcome emails reuse the connected Gmail account (admin OAuth). If
   Gmail isn't connected, signup/reset still succeed; the email is skipped.
+
+Backend env in production lives in `/home/ubuntu/itsjaya.env` on Lightsail — `deploy.sh`
+passes it to the container with `--env-file`.
+
+## Google Sign-In
+
+"Continue with Google" on `/login` and `/signup`, using Google Identity Services'
+**ID-token flow** — Google hands the browser a signed JWT, the frontend POSTs it to
+`POST /gv/auth/google`, and the backend verifies the signature against Google's public
+keys (via `google-auth`, already a dependency) before minting a normal gradeVITian
+token. No redirect URI, no client secret, no server-side callback — which is what lets
+it work on a static export.
+
+**One-time Cloud Console setup.** Create an OAuth 2.0 Client ID of type *Web
+application*, and under **Authorized JavaScript origins** add every origin the button is
+served from:
+
+```
+http://localhost:3000
+https://gradevitian.jayaremala.com
+https://jayaremala.com
+```
+
+Leave *Authorized redirect URIs* empty. Then set the same client ID in two places:
+
+| Where | Key |
+|---|---|
+| GitHub Actions secret (baked into the static build) | `NEXT_PUBLIC_GOOGLE_CLIENT_ID` |
+| `/home/ubuntu/itsjaya.env` on Lightsail | `GV_GOOGLE_CLIENT_ID` |
+
+For local development put `NEXT_PUBLIC_GOOGLE_CLIENT_ID` in `frontend/.env.local` and
+`GV_GOOGLE_CLIENT_ID` in the repo-root `.env`. With neither set, the button is hidden
+and the email/password form works exactly as before.
+
+**Account model.** `gv_users` gained `google_sub` (Google's stable subject id, uniquely
+indexed) and `avatar_url`. Sign-in matches on `google_sub` first, then on *verified*
+email — so a student who signed up with a password and later taps the Google button
+lands in the same account rather than a duplicate. An unverified Google email is
+rejected outright, since it would otherwise be a takeover path.
+
+Accounts created through Google store `pwd_hash = ''`, which `verify_password` always
+rejects — they have no password until the owner runs the forgot-password flow. The
+`/gv/auth/me` payload carries `google_linked` and `has_password` so the UI can tell the
+two kinds of account apart.

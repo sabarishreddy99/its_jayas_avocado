@@ -35,12 +35,29 @@ class Settings(BaseSettings):
     # they point at the SAME environment that created the token. Override locally
     # (e.g. http://localhost:3000/gradevitian) when testing the reset flow.
     gv_base_url: str = "https://gradevitian.jayaremala.com"
+    # Google Sign-In for gradeVITian (Google Identity Services ID-token flow).
+    # The *Web application* OAuth client ID whose Authorized JavaScript origins
+    # include the gradeVITian site. The same value is baked into the frontend as
+    # NEXT_PUBLIC_GOOGLE_CLIENT_ID — the backend verifies that incoming ID tokens
+    # carry it as their audience. Empty falls back to GOOGLE_OAUTH_CLIENT_ID, and
+    # if that is empty too, POST /gv/auth/google returns 503.
+    gv_google_client_id: str = ""
     # Second-pass LLM moderation for feedback comments (catches nuanced abuse the
     # keyword filter misses). Set false to rely on keywords only.
     gv_llm_moderation: bool = True
-    # Set ADMIN_TOKEN env var to enable POST /admin/reingest.
-    # Empty string (default) disables the endpoint entirely.
+    # Static admin credential — a machine/break-glass token for curl and scripts.
+    # Humans sign in to /admin with Google instead (see admin_emails below).
+    # Empty string closes this path; if Google sign-in is also unconfigured the
+    # admin endpoints report themselves disabled.
     admin_token: str = ""
+    # Comma-separated allow-list of Google accounts that may sign in to /admin.
+    # A Google ID token only opens the desk if its verified email is listed here.
+    # No default on purpose: an environment that forgets to set it admits nobody
+    # rather than quietly admitting whoever the default named.
+    admin_emails: str = ""
+    # Signs admin session tokens. Falls back to GV_JWT_SECRET, then to an ephemeral
+    # per-process secret (dev only — sessions reset on restart).
+    admin_jwt_secret: str = ""
 
     # Google OAuth2 — obtained from Google Cloud Console
     google_oauth_token_path: str = "/data/google_oauth_token.json"
