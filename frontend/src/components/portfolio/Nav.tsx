@@ -39,7 +39,13 @@ export default function Nav() {
   const hideTimer     = useRef<ReturnType<typeof setTimeout> | null>(null);
   const idleTimer     = useRef<ReturnType<typeof setTimeout> | null>(null);
   const openRef       = useRef(open);
-  useEffect(() => { openRef.current = open; }, [open]);
+  // The floating Avocado button sits at z-50, above the header's z-40 stacking
+  // context, so on a phone it lands on top of the open drawer's last rows and
+  // eats their taps. Broadcast the drawer state and let it step aside.
+  useEffect(() => {
+    openRef.current = open;
+    window.dispatchEvent(new CustomEvent("nav:drawer", { detail: { open } }));
+  }, [open]);
 
   // ── Dropdown menus (desktop) ──────────────────────────────────
   const [openIdx, setOpenIdx] = useState<number | null>(null);
@@ -374,9 +380,14 @@ export default function Nav() {
         </div>
         </div>{/* ↑ pill */}
 
-        {/* ── Mobile drawer — floats below pill, same glass treatment, grouped by section ── */}
+        {/* ── Mobile drawer — floats below pill, same glass treatment, grouped by section ──
+            The drawer lives inside the sticky header, so its full height (12 links + 3
+            group headings + 3 utility rows ≈ 730px) exceeds a phone viewport and the tail
+            end was pinned off-screen with no way to reach it. Cap it to the space below
+            the pill and let it scroll itself; overscroll-contain keeps that scroll from
+            chaining into the page underneath. ── */}
         {open && (
-          <div className="md:hidden mt-1.5 overflow-hidden rounded-xl
+          <div className="md:hidden mt-1.5 overflow-y-auto overflow-x-hidden overscroll-contain max-h-[calc(100dvh-5.75rem)] rounded-xl
             bg-surface/92 backdrop-blur-[14px]
             [box-shadow:0_8px_32px_-8px_rgb(0_0_0/0.10),_0_2px_8px_-2px_rgb(0_0_0/0.06)]
             dark:[box-shadow:0_8px_32px_-8px_rgb(0_0_0/0.45),_0_2px_8px_-2px_rgb(0_0_0/0.25)]">

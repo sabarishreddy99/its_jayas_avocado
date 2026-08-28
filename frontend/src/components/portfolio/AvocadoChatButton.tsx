@@ -26,6 +26,17 @@ export default function AvocadoChatButton() {
 
   useEffect(() => { setMounted(true); }, []);
 
+  // Nav's mobile drawer opens over this corner. It lives inside a z-40 sticky
+  // header and can never paint above this z-50 button, so the button yields
+  // instead — below `md` only, which is the sole width the drawer exists at.
+  const [navDrawerOpen, setNavDrawerOpen] = useState(false);
+  useEffect(() => {
+    const onDrawer = (e: Event) =>
+      setNavDrawerOpen((e as CustomEvent<{ open: boolean }>).detail.open);
+    window.addEventListener("nav:drawer", onDrawer);
+    return () => window.removeEventListener("nav:drawer", onDrawer);
+  }, []);
+
   const openCard = useCallback(() => {
     setClosing(false);
     setShow(true);
@@ -72,8 +83,14 @@ export default function AvocadoChatButton() {
   if (!mounted || hidden) return null;
 
   return (
-    <div className="fixed bottom-6 right-5 sm:bottom-8 sm:right-8 z-50 flex flex-col items-end gap-3
-      transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]">
+    <div
+      className={`fixed bottom-6 right-5 sm:bottom-8 sm:right-8 z-50 flex flex-col items-end gap-3
+        transition-[opacity,transform] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          navDrawerOpen
+            ? "max-md:pointer-events-none max-md:opacity-0 max-md:translate-y-3 max-md:scale-95"
+            : ""
+        }`}
+    >
 
       {/* ── Popup card ─────────────────────────────────────────────── */}
       {show && (
