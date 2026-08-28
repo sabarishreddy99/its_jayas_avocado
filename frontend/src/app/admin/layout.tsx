@@ -9,8 +9,7 @@ export const metadata: Metadata = {
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
     <GitHubStagingProvider>
-      {/* padding so the fixed PublishBar never covers page content */}
-      <div className="pb-24">{children}</div>
+      <div className="admin-surface">{children}</div>
       <PublishBar />
     </GitHubStagingProvider>
   );

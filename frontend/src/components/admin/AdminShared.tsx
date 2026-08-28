@@ -21,14 +21,14 @@ export function triggerReingest(): void {
 // ── Base class strings (re-usable in editors that build inputs directly) ──────
 
 export const inputCls =
-  "w-full rounded-lg border border-border bg-bg px-3 py-2.5 text-sm text-fg " +
-  "placeholder:text-fg-subtle focus:outline-none focus:border-accent " +
-  "focus:ring-2 focus:ring-accent/10 transition-all disabled:opacity-40";
+  "w-full rounded-lg border border-border bg-bg px-3.5 py-3 text-sm text-fg shadow-[inset_0_1px_0_rgb(0_0_0/0.02)] " +
+  "placeholder:text-fg-faint hover:border-border-strong focus:outline-none focus:border-accent " +
+  "focus:ring-2 focus:ring-accent/15 transition-[border-color,box-shadow,background-color] disabled:cursor-not-allowed disabled:bg-surface-raised disabled:opacity-50";
 
 export const selectCls =
-  "w-full rounded-lg border border-border bg-bg px-3 py-2.5 text-sm text-fg " +
-  "focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/10 " +
-  "transition-all disabled:opacity-40";
+  "w-full rounded-lg border border-border bg-bg px-3.5 py-3 text-sm text-fg " +
+  "hover:border-border-strong focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 " +
+  "transition-[border-color,box-shadow,background-color] disabled:cursor-not-allowed disabled:bg-surface-raised disabled:opacity-50";
 
 // ── Section card wrapper ───────────────────────────────────────────────────────
 
@@ -40,9 +40,9 @@ export function AdminCard({
   className?: string;
 }) {
   return (
-    <div className={`rounded-xl border border-border bg-surface p-5 sm:p-6 ${className}`}>
+    <section className={`rounded-2xl border border-border bg-surface p-5 sm:p-7 ${className}`}>
       {children}
-    </div>
+    </section>
   );
 }
 
@@ -58,10 +58,10 @@ export function SectionHeader({
   actions?: React.ReactNode;
 }) {
   return (
-    <div className="flex items-start justify-between gap-4 mb-5">
+    <div className="flex items-start justify-between gap-4 mb-6 pb-4 border-b border-border-subtle">
       <div>
-        <h2 className="text-sm font-bold text-fg leading-tight">{title}</h2>
-        {sub && <p className="text-[11px] text-fg-faint mt-0.5 leading-relaxed">{sub}</p>}
+        <h2 className="text-lg font-semibold text-fg leading-tight tracking-tight">{title}</h2>
+        {sub && <p className="text-xs text-fg-subtle mt-1.5 leading-relaxed max-w-2xl">{sub}</p>}
       </div>
       {actions && <div className="shrink-0">{actions}</div>}
     </div>
@@ -78,7 +78,7 @@ export function FieldLabel({
   required?: boolean;
 }) {
   return (
-    <p className="text-[10px] font-semibold uppercase tracking-wider text-fg-subtle mb-1.5 flex items-center gap-1">
+    <p className="text-[11px] font-semibold text-fg-muted mb-2 flex items-center gap-1">
       {children}
       {required && <span className="text-rose-500 normal-case tracking-normal font-normal">*</span>}
     </p>
@@ -154,7 +154,8 @@ export function Toggle({
     <button
       type="button"
       onClick={() => onChange(!checked)}
-      className={`inline-flex items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-medium border transition-all ${
+      aria-pressed={checked}
+      className={`inline-flex min-h-9 items-center gap-2 rounded-lg px-3 py-1.5 text-xs font-medium border focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 transition-colors ${
         checked
           ? "bg-accent/10 border-accent/30 text-accent"
           : "border-border text-fg-muted hover:border-fg-muted hover:bg-surface-raised"
@@ -216,7 +217,7 @@ export function DirtyBadge({ dirty }: { dirty: boolean }) {
   if (!dirty) return null;
   return (
     <span className="inline-flex items-center gap-1.5 rounded-lg bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-800 px-2.5 py-1 text-[10px] font-semibold text-amber-700 dark:text-amber-400">
-      <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+      <span className="w-1.5 h-1.5 rounded-full bg-amber-400" />
       Unsaved
     </span>
   );
@@ -299,7 +300,7 @@ export function SaveRow({
   loaded,
   pat,
   dirty = true,
-  label = "Save & Deploy",
+  label = "Stage changes",
 }: {
   onSave: () => void;
   saving: boolean;
@@ -329,7 +330,7 @@ export function SaveRow({
             >
               <path d="M21 12a9 9 0 1 1-6.219-8.56" />
             </svg>
-            Saving…
+            Staging…
           </>
         ) : (
           <>
@@ -364,7 +365,7 @@ export function SaveRow({
             <line x1="12" y1="8" x2="12" y2="12" />
             <line x1="12" y1="16" x2="12.01" y2="16" />
           </svg>
-          Click Load first
+          Load the current file before editing
         </p>
       )}
       {dirty && loaded && pat.trim() && <DirtyBadge dirty={true} />}

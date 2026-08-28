@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { API_BASE_URL } from "@/lib/api/client";
 import ContentBlogEditor from "@/components/admin/ContentBlogEditor";
 import ContentLabEditor from "@/components/admin/ContentLabEditor";
@@ -22,6 +23,8 @@ import GalleryEditor from "@/components/admin/GalleryEditor";
 import KnowledgeDataView from "@/components/admin/KnowledgeDataView";
 import { StatCard, fmt } from "@/components/admin/StatCard";
 import GradevitianPanel from "@/components/admin/GradevitianPanel";
+import AdminThemeControl from "@/components/admin/AdminThemeControl";
+import AdminFooter from "@/components/admin/AdminFooter";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
@@ -1080,32 +1083,29 @@ function LoginForm({ onAuth }: { onAuth: (token: string) => void }) {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center bg-bg px-4 overflow-hidden">
-      {/* Subtle dot-grid background */}
-      <div
-        className="absolute inset-0 pointer-events-none opacity-[0.35]"
-        style={{ backgroundImage: "radial-gradient(circle, var(--color-border, #3f3f46) 1px, transparent 1px)", backgroundSize: "28px 28px" }}
-      />
-      {/* Soft radial glow behind the card */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-        <div className="w-96 h-96 rounded-full bg-indigo-500/5 blur-3xl" />
-      </div>
+      <div className="absolute inset-x-0 top-0 h-px bg-border-strong" />
 
       <div className="relative w-full max-w-sm space-y-7">
         {/* Brand mark */}
         <div className="flex flex-col items-center gap-3">
-          <div className="w-11 h-11 rounded bg-gradient-to-br from-emerald-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/25">
-            <span className="text-white font-bold text-lg leading-none select-none">A</span>
-          </div>
+          <Image
+            src="/icon-192.png"
+            alt="Jaya Sabarish Reddy Remala"
+            width={44}
+            height={44}
+            priority
+            className="size-11 rounded-lg border border-border-strong bg-white object-cover"
+          />
           <div className="text-center">
-            <h1 className="text-base font-bold text-fg tracking-tight">Avocado Admin</h1>
-            <p className="text-[11px] text-fg-faint mt-0.5">jayaremala.com dashboard</p>
+            <h1 className="display-serif text-2xl font-semibold text-fg tracking-tight">Avocado Admin</h1>
+            <p className="text-xs text-fg-subtle mt-1">Private publishing desk for jayaremala.com</p>
           </div>
         </div>
 
         {/* Card */}
         <form
           onSubmit={handleSubmit}
-          className="rounded-xl border border-border bg-surface p-6 space-y-4 shadow-xl shadow-black/10"
+          className="rounded-2xl border border-border bg-surface p-6 sm:p-7 space-y-5 shadow-[0_18px_50px_-28px_rgb(0_0_0/0.35)]"
         >
           <div className="space-y-1.5">
             <label className="block text-[11px] font-semibold uppercase tracking-wider text-fg-subtle">
@@ -1143,7 +1143,7 @@ function LoginForm({ onAuth }: { onAuth: (token: string) => void }) {
           <button
             type="submit"
             disabled={!token || loading || isLocked}
-            className="w-full rounded bg-gradient-to-r from-indigo-600 to-violet-600 text-white py-2.5 text-sm font-semibold hover:from-indigo-500 hover:to-violet-500 transition-all shadow-md shadow-indigo-500/20 hover:shadow-lg hover:shadow-indigo-500/30 disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2"
+            className="w-full rounded-lg bg-fg text-bg py-3 text-sm font-semibold hover:bg-fg-muted transition-colors disabled:opacity-40 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40 focus-visible:ring-offset-2 focus-visible:ring-offset-surface"
           >
             {isLocked ? (
               `Locked, ${remaining}s`
@@ -3480,6 +3480,38 @@ function QuotesEditor() {
 
 type Period = "week" | "month" | "all";
 const PERIOD_LABELS: Record<Period, string> = { week: "This week", month: "This month", all: "All time" };
+type AdminView =
+  | "analytics" | "gradevitian" | "write-blog" | "write-lab" | "quotes"
+  | "blog-api" | "lab" | "quotes-api" | "availability" | "now" | "data"
+  | "sync" | "integrations" | "profile" | "hero-stats" | "spotlights"
+  | "experience" | "education" | "projects" | "apps" | "skills"
+  | "testimonials" | "gallery";
+
+const VIEW_META: Record<AdminView, { title: string; description: string }> = {
+  analytics: { title: "Analytics", description: "See how people find, read, and use the portfolio." },
+  gradevitian: { title: "gradeVITian", description: "Review student-tool activity, content, and moderation." },
+  "write-blog": { title: "Write a blog post", description: "Draft and publish a long-form MDX article." },
+  "blog-api": { title: "Manage blog posts", description: "Edit live database-backed blog entries." },
+  "write-lab": { title: "Write a lab update", description: "Document an active build or technical decision." },
+  lab: { title: "Manage lab entries", description: "Edit live database-backed lab content." },
+  quotes: { title: "Curate quotes", description: "Edit the file-backed quote collection." },
+  "quotes-api": { title: "Manage live quotes", description: "Edit quotes stored in the content API." },
+  profile: { title: "Profile", description: "Update the biography, contact links, and positioning." },
+  "hero-stats": { title: "Hero metrics", description: "Maintain the proof points shown near the homepage hero." },
+  spotlights: { title: "Spotlights", description: "Choose the work featured most prominently on the homepage." },
+  experience: { title: "Experience", description: "Maintain roles, companies, dates, and impact statements." },
+  education: { title: "Education", description: "Update degrees, institutions, and academic highlights." },
+  projects: { title: "Projects", description: "Manage project stories, links, awards, and featured state." },
+  apps: { title: "Hosted apps", description: "Maintain the live products listed on the portfolio." },
+  skills: { title: "Skills", description: "Organize the tools and capabilities shown across the site." },
+  testimonials: { title: "Testimonials", description: "Maintain sourced recommendations and attribution." },
+  gallery: { title: "Gallery", description: "Upload, caption, order, and publish portfolio imagery." },
+  sync: { title: "Content sync", description: "Check whether the website and Avocado share current content." },
+  data: { title: "Raw JSON", description: "Inspect the generated knowledge data without editorial formatting." },
+  availability: { title: "Availability", description: "Control the availability status shown to visitors." },
+  now: { title: "Now page", description: "Keep the short public update about current work fresh." },
+  integrations: { title: "Integrations", description: "Manage Google access, resume sync, and digest delivery." },
+};
 
 function Dashboard({
   stats, onLogout, onRefresh, refreshing, secondsAgo, lastUpdated,
@@ -3492,13 +3524,14 @@ function Dashboard({
   lastUpdated: Date | null;
 }) {
   const [period, setPeriod] = useState<Period>("all");
-  const [activeView, setActiveView] = useState<
-    "analytics" | "gradevitian" | "write-blog" | "write-lab" | "quotes" | "blog-api" | "lab" | "quotes-api" |
-    "availability" | "now" | "data" | "sync" | "integrations" |
-    "profile" | "hero-stats" | "spotlights" | "experience" | "education" | "projects" | "apps" | "skills" | "testimonials" | "gallery"
-  >("analytics");
+  const [activeView, setActiveView] = useState<AdminView>("analytics");
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [navQuery, setNavQuery] = useState("");
+  const navSearchRef = useRef<HTMLInputElement>(null);
+  const activateView = useCallback((view: AdminView) => {
+    setActiveView(view);
+    localStorage.setItem("avocado_admin_last_view", view);
+  }, []);
   const [collapsedGroups, setCollapsedGroups] = useState<Set<string>>(() => {
     if (typeof window === "undefined") return new Set();
     try { return new Set(JSON.parse(localStorage.getItem("avocado_admin_collapsed_groups") ?? "[]")); }
@@ -3521,6 +3554,27 @@ function Dashboard({
     window.addEventListener("focus", checkPat);
     return () => window.removeEventListener("focus", checkPat);
   }, []);
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setSidebarOpen(true);
+        requestAnimationFrame(() => navSearchRef.current?.focus());
+      }
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
+  useEffect(() => {
+    const frame = requestAnimationFrame(() => {
+      const requested = window.location.hash.slice(1) || localStorage.getItem("avocado_admin_last_view") || "";
+      if (Object.hasOwn(VIEW_META, requested)) setActiveView(requested as AdminView);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, []);
+  useEffect(() => {
+    window.history.replaceState(null, "", `${window.location.pathname}${window.location.search}#${activeView}`);
+  }, [activeView]);
   const conv        = stats.conversations[period];
   const site        = stats.site_visitors[period];
   const feedback    = stats.feedback[period];
@@ -3533,43 +3587,33 @@ function Dashboard({
   const models      = stats.models?.[period] ?? [];
   const topPosts    = [...stats.blog.posts].sort((a, b) => b.views - a.views).slice(0, 8);
 
-  type NavItem = { key: typeof activeView; label: string; group: string };
+  type NavItem = { key: AdminView; label: string; group: string };
   const NAV: NavItem[] = [
-    { key: "analytics",    label: "Analytics",    group: "Overview"  },
-    { key: "gradevitian",  label: "gradeVITian",  group: "Overview"  },
-    { key: "write-blog",   label: "Write Blog",   group: "Content"   },
-    { key: "blog-api",     label: "Blog · API",   group: "Content"   },
-    { key: "write-lab",    label: "Write Lab",    group: "Content"   },
-    { key: "lab",          label: "Lab · API",    group: "Content"   },
-    { key: "quotes",       label: "Quotes",       group: "Content"   },
-    { key: "quotes-api",   label: "Quotes · API", group: "Content"   },
-    { key: "profile",      label: "Profile",      group: "Portfolio" },
-    { key: "hero-stats",   label: "Hero Stats",   group: "Portfolio" },
-    { key: "spotlights",   label: "Spotlights",   group: "Portfolio" },
-    { key: "experience",   label: "Experience",   group: "Portfolio" },
-    { key: "education",    label: "Education",    group: "Portfolio" },
-    { key: "projects",     label: "Projects",     group: "Portfolio" },
-    { key: "apps",         label: "Hosted Apps",  group: "Portfolio" },
-    { key: "skills",       label: "Skills",       group: "Portfolio" },
-    { key: "testimonials", label: "Testimonials", group: "Portfolio" },
-    { key: "gallery",      label: "Gallery",      group: "Portfolio" },
-    { key: "sync",         label: "Sync",         group: "Settings"  },
-    { key: "data",         label: "Raw JSON",     group: "Settings"  },
-    { key: "availability", label: "Availability", group: "Settings"  },
-    { key: "now",          label: "Now Page",     group: "Settings"  },
-    { key: "integrations", label: "Integrations", group: "Settings"  },
+    { key: "analytics",    label: "Analytics",    group: "Insights" },
+    { key: "gradevitian",  label: "gradeVITian",  group: "Insights" },
+    { key: "write-blog",   label: "Write blog post", group: "Publishing" },
+    { key: "blog-api",     label: "Manage blog posts", group: "Publishing" },
+    { key: "write-lab",    label: "Write lab update", group: "Publishing" },
+    { key: "lab",          label: "Manage lab entries", group: "Publishing" },
+    { key: "quotes",       label: "Curate quotes", group: "Publishing" },
+    { key: "quotes-api",   label: "Manage live quotes", group: "Publishing" },
+    { key: "profile",      label: "Profile",      group: "Site content" },
+    { key: "hero-stats",   label: "Hero Metrics", group: "Site content" },
+    { key: "spotlights",   label: "Spotlights",   group: "Site content" },
+    { key: "experience",   label: "Experience",   group: "Site content" },
+    { key: "education",    label: "Education",    group: "Site content" },
+    { key: "projects",     label: "Projects",     group: "Site content" },
+    { key: "apps",         label: "Hosted Apps",  group: "Site content" },
+    { key: "skills",       label: "Skills",       group: "Site content" },
+    { key: "testimonials", label: "Testimonials", group: "Site content" },
+    { key: "gallery",      label: "Gallery",      group: "Site content" },
+    { key: "sync",         label: "Content Sync", group: "System" },
+    { key: "data",         label: "Raw JSON",     group: "System" },
+    { key: "availability", label: "Availability", group: "System" },
+    { key: "now",          label: "Now Page",     group: "System" },
+    { key: "integrations", label: "Integrations", group: "System" },
   ];
-  const groups = ["Overview", "Content", "Portfolio", "Settings"] as const;
-
-  const VIEW_LABELS: Record<typeof activeView, string> = {
-    analytics: "Analytics", gradevitian: "gradeVITian", "write-blog": "Write Blog", "write-lab": "Write Lab", quotes: "Quotes",
-    "blog-api": "Blog (API)", lab: "Lab (API)", "quotes-api": "Quotes (API)",
-    availability: "Availability", now: "Now Page", data: "Raw JSON", sync: "Sync Status",
-    integrations: "Google Integrations",
-    profile: "Profile", "hero-stats": "Hero Stats", experience: "Experience",
-    education: "Education", projects: "Projects", apps: "Hosted Apps", skills: "Skills", testimonials: "Testimonials",
-    gallery: "Gallery", spotlights: "Spotlights",
-  };
+  const groups = ["Insights", "Publishing", "Site content", "System"] as const;
 
   function NavIcon({ navKey }: { navKey: string }) {
     const paths: Record<string, React.ReactNode> = {
@@ -3610,7 +3654,7 @@ function Dashboard({
     const q = navQuery.trim().toLowerCase();
     const matched = NAV.filter(n => !q || n.label.toLowerCase().includes(q));
     return (
-      <nav className="flex-1 overflow-y-auto px-2 py-3 space-y-1" style={{ scrollbarWidth: "none" }}>
+      <nav aria-label="Admin sections" className="admin-scrollbar flex-1 overflow-y-auto px-3 py-4 space-y-1">
         {/* Quick filter */}
         <div className="px-1 pb-2">
           <div className="relative">
@@ -3619,11 +3663,13 @@ function Dashboard({
               <circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>
             </svg>
             <input
+              ref={navSearchRef}
               value={navQuery}
               onChange={(e) => setNavQuery(e.target.value)}
               placeholder="Find a section…"
-              className="w-full rounded-lg border border-border bg-bg pl-8 pr-7 py-1.5 text-xs text-fg placeholder:text-fg-faint focus:outline-none focus:border-accent transition-colors"
+              className="w-full rounded-lg border border-border bg-bg pl-8 pr-7 py-2 text-xs text-fg placeholder:text-fg-faint hover:border-border-strong focus:outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition-colors"
             />
+            {!navQuery && <span className="absolute right-2 top-1/2 -translate-y-1/2 hidden lg:inline text-[9px] text-fg-faint">⌘K</span>}
             {navQuery && (
               <button onClick={() => setNavQuery("")} aria-label="Clear"
                 className="absolute right-1.5 top-1/2 -translate-y-1/2 text-fg-faint hover:text-fg p-0.5 rounded">
@@ -3642,14 +3688,15 @@ function Dashboard({
             <div key={g}>
               <button
                 onClick={() => toggleGroup(g)}
-                className="w-full flex items-center gap-1.5 px-2 py-1.5 rounded-md text-fg-subtle hover:text-fg hover:bg-surface-raised transition-colors"
+                aria-expanded={!collapsed}
+                className="w-full flex items-center gap-1.5 px-2 py-2 rounded-md text-fg-subtle hover:text-fg hover:bg-surface-raised transition-colors"
               >
                 <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"
                   className={`shrink-0 transition-transform duration-200 ${collapsed ? "-rotate-90" : ""}`}>
                   <path d="M6 9l6 6 6-6"/>
                 </svg>
-                <span className="text-[9px] font-bold uppercase tracking-widest">{g}</span>
-                {groupActive && <span className="w-1 h-1 rounded-full bg-indigo-500 shrink-0" />}
+                <span className="text-[10px] font-bold uppercase tracking-wider">{g}</span>
+                {groupActive && <span className="w-1 h-1 rounded-full bg-accent shrink-0" />}
                 <span className="ml-auto text-[9px] font-semibold tabular-nums text-fg-faint bg-surface-raised rounded px-1.5 py-0.5">{items.length}</span>
               </button>
               {!collapsed && (
@@ -3659,18 +3706,19 @@ function Dashboard({
                     return (
                       <button
                         key={n.key}
-                        onClick={() => { setActiveView(n.key); setNavQuery(""); onSelect?.(); }}
-                        className={`group/i w-full flex items-center gap-2.5 pl-2.5 pr-2 py-2 rounded-lg text-xs font-medium transition-all text-left ${
+                        onClick={() => { activateView(n.key); setNavQuery(""); onSelect?.(); }}
+                        aria-current={isActive ? "page" : undefined}
+                        className={`group/i relative w-full flex items-center gap-2.5 pl-3 pr-2 py-2.5 rounded-lg text-xs font-medium transition-colors text-left ${
                           isActive
-                            ? "bg-indigo-50 dark:bg-indigo-950/50 text-indigo-700 dark:text-indigo-300 shadow-sm shadow-indigo-500/5"
+                            ? "bg-accent-light text-accent before:absolute before:inset-y-2 before:left-0 before:w-px before:bg-accent"
                             : "text-fg-muted hover:text-fg hover:bg-surface-raised"
                         }`}
                       >
-                        <span className={`shrink-0 transition-colors ${isActive ? "text-indigo-500" : "text-fg-faint group-hover/i:text-fg-muted"}`}>
+                        <span className={`shrink-0 transition-colors ${isActive ? "text-accent" : "text-fg-faint group-hover/i:text-fg-muted"}`}>
                           <NavIcon navKey={n.key} />
                         </span>
                         <span className="truncate">{n.label}</span>
-                        {isActive && <span className="ml-auto w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />}
+                        {isActive && <span className="ml-auto text-[9px] font-semibold uppercase tracking-wide">Open</span>}
                       </button>
                     );
                   })}
@@ -3688,7 +3736,7 @@ function Dashboard({
   }
 
   return (
-    <div className="min-h-screen bg-bg flex">
+    <div className="min-h-screen bg-bg flex selection:bg-accent selection:text-white">
 
       {/* ── Mobile overlay ── */}
       {sidebarOpen && (
@@ -3700,19 +3748,23 @@ function Dashboard({
 
       {/* ── Sidebar ── */}
       <aside className={`
-        fixed inset-y-0 left-0 z-50 w-60 max-w-[85vw] flex flex-col bg-surface border-r border-border
+        fixed inset-y-0 left-0 z-50 w-64 max-w-[88vw] flex flex-col bg-surface border-r border-border
         transition-transform duration-200 ease-in-out
         ${sidebarOpen ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0 lg:static lg:z-auto
       `}>
         {/* Sidebar header */}
-        <div className="flex items-center gap-2.5 px-4 py-[14px] border-b border-border shrink-0">
-          <div className="w-8 h-8 rounded bg-gradient-to-br from-emerald-500 to-indigo-600 flex items-center justify-center shadow-sm shadow-indigo-500/20 shrink-0">
-            <span className="text-white font-bold text-sm leading-none select-none">A</span>
-          </div>
+        <div className="flex items-center gap-3 px-4 py-4 border-b border-border shrink-0">
+          <Image
+            src="/icon-192.png"
+            alt="Jaya Sabarish Reddy Remala"
+            width={36}
+            height={36}
+            className="size-9 shrink-0 rounded-lg border border-border-strong bg-white object-cover"
+          />
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-bold text-fg leading-tight tracking-tight">Avocado</p>
-            <p className="text-[10px] text-fg-faint leading-none mt-0.5">Admin Dashboard</p>
+            <p className="text-sm font-semibold text-fg leading-tight tracking-tight">Avocado Admin</p>
+            <p className="text-[11px] text-fg-subtle leading-none mt-1">Publishing desk</p>
           </div>
           <button
             onClick={() => setSidebarOpen(false)}
@@ -3729,8 +3781,22 @@ function Dashboard({
         {renderNav(() => setSidebarOpen(false))}
 
         {/* Sidebar footer */}
-        <div className="shrink-0 px-4 pt-2 pb-3 border-t border-border" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
-          <p className="text-[9px] text-fg-subtle tracking-wide">jayaremala.com</p>
+        <div className="shrink-0 space-y-3 border-t border-border bg-surface-raised/35 px-4 pt-3" style={{ paddingBottom: 'max(0.75rem, env(safe-area-inset-bottom))' }}>
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0">
+              <p className="text-[11px] font-medium text-fg">Publishing access</p>
+              <p className="mt-0.5 truncate text-[10px] text-fg-subtle">{hasPat ? "GitHub connected" : "GitHub token required"}</p>
+            </div>
+            <span className={`inline-flex items-center gap-1.5 rounded-full border px-2 py-1 text-[9px] font-semibold ${hasPat ? "border-emerald-200 text-emerald-700 dark:border-emerald-800 dark:text-emerald-400" : "border-amber-200 text-amber-700 dark:border-amber-800 dark:text-amber-400"}`}>
+              <span className={`size-1.5 rounded-full ${hasPat ? "bg-emerald-500" : "bg-amber-400"}`} />
+              {hasPat ? "Ready" : "Setup"}
+            </span>
+          </div>
+          <AdminThemeControl />
+          <Link href="/" className="flex items-center justify-between rounded-lg border border-border bg-surface px-3 py-2.5 text-[11px] font-medium text-fg-muted transition-colors hover:border-border-strong hover:text-fg">
+            View jayaremala.com
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden><path d="M7 17L17 7M7 7h10v10"/></svg>
+          </Link>
         </div>
       </aside>
 
@@ -3751,8 +3817,8 @@ function Dashboard({
             </svg>
           </button>
           <div className="flex items-center gap-1.5 flex-1 min-w-0">
-            <span className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0" />
-            <p className="text-sm font-semibold text-fg truncate">{VIEW_LABELS[activeView]}</p>
+            <span className="w-1.5 h-1.5 rounded-full bg-accent shrink-0" />
+            <p className="text-sm font-semibold text-fg truncate">{VIEW_META[activeView].title}</p>
           </div>
           {lastUpdated && (
             <span className="text-[10px] text-fg-faint tabular-nums hidden sm:inline">
@@ -3802,13 +3868,13 @@ function Dashboard({
         </header>
 
         {/* Desktop top bar */}
-        <header className="hidden lg:flex items-center justify-between gap-4 px-6 py-3 border-b border-border bg-surface/90 backdrop-blur-md shrink-0 sticky top-0 z-10">
+        <header className="hidden lg:flex items-center justify-between gap-4 px-7 py-3.5 border-b border-border bg-surface shrink-0 sticky top-0 z-10">
           <div className="flex items-center gap-1.5 text-sm min-w-0">
             <span className="text-fg-faint font-medium">Avocado Admin</span>
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-fg-faint shrink-0">
               <polyline points="9 18 15 12 9 6"/>
             </svg>
-            <span className="font-semibold text-fg truncate">{VIEW_LABELS[activeView]}</span>
+            <span className="font-semibold text-fg truncate">{VIEW_META[activeView].title}</span>
           </div>
           <div className="flex items-center gap-2">
             {lastUpdated && (
@@ -3861,20 +3927,30 @@ function Dashboard({
         </header>
 
         {/* Content */}
-        <main className="flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-5xl px-4 sm:px-6 py-6 space-y-6" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}>
+        <main className="admin-scrollbar flex flex-1 flex-col overflow-y-auto">
+          <div className="mx-auto flex w-full max-w-6xl flex-1 flex-col gap-7 px-4 py-6 sm:px-7 sm:py-8" style={{ paddingBottom: 'max(1.5rem, env(safe-area-inset-bottom))' }}>
+
+        <div className="flex items-end justify-between gap-4 border-b border-border pb-5">
+          <div>
+            <h1 className="text-2xl sm:text-3xl font-semibold tracking-tight text-fg">{VIEW_META[activeView].title}</h1>
+            <p className="mt-1.5 text-sm text-fg-subtle">{VIEW_META[activeView].description}</p>
+          </div>
+          {activeView === "analytics" && lastUpdated && (
+            <p className="hidden sm:block text-[11px] text-fg-faint tabular-nums">Auto-refreshes every minute</p>
+          )}
+        </div>
 
         {/* Period tabs — analytics only */}
         {activeView === "analytics" && (
           <div className="w-full sm:w-fit">
-            <div className="grid grid-cols-3 sm:flex gap-1 bg-surface-raised rounded-xl p-1 border border-border">
+            <div className="grid grid-cols-3 sm:flex gap-1 bg-surface rounded-lg p-1 border border-border">
             {(["week", "month", "all"] as Period[]).map((p) => (
               <button
                 key={p}
                 onClick={() => setPeriod(p)}
                 className={`px-3 sm:px-4 py-1.5 rounded-lg text-xs font-medium transition-all text-center ${
                   period === p
-                    ? "bg-fg text-bg shadow-sm"
+                    ? "bg-fg text-bg"
                     : "text-fg-muted hover:text-fg hover:bg-surface"
                 }`}
               >
@@ -3883,6 +3959,25 @@ function Dashboard({
             ))}
             </div>
           </div>
+        )}
+
+        {activeView === "analytics" && (
+          <section aria-label="Quick actions" className="grid gap-px overflow-hidden rounded-xl border border-border bg-border sm:grid-cols-2 lg:grid-cols-4">
+            {([
+              ["write-blog", "Write a post", "Start a new blog draft"],
+              ["write-lab", "Update the lab", "Document current work"],
+              ["profile", "Edit profile", "Refresh public details"],
+              ["sync", "Check content sync", "Verify Avocado is current"],
+            ] as [AdminView, string, string][]).map(([view, title, description]) => (
+              <button key={view} onClick={() => activateView(view)} className="group bg-surface p-4 text-left transition-colors hover:bg-surface-raised focus-visible:z-10">
+                <span className="flex items-center justify-between text-sm font-semibold text-fg">
+                  {title}
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-fg-faint transition-transform group-hover:translate-x-0.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                </span>
+                <span className="mt-1 block text-[11px] text-fg-subtle">{description}</span>
+              </button>
+            ))}
+          </section>
         )}
 
         {activeView === "write-blog" && <BlogEditor />}
@@ -3911,7 +4006,7 @@ function Dashboard({
         {activeView === "analytics" && (<>
 
         {/* Top stat cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-x-4 sm:gap-x-6 gap-y-2">
           <StatCard
             label="Site Visitors"
             value={site.unique_visitors}
@@ -4260,13 +4355,11 @@ function Dashboard({
         {/* Site Guide */}
         <SiteGuide />
 
-        <p className="text-center text-[10px] text-fg-faint pb-4">
-          Avocado Admin · {new Date().getFullYear()} · Auto-refreshes every 60s
-        </p>
-
         </>)}
 
         {activeView === "gradevitian" && <GradevitianPanel />}
+
+        <AdminFooter githubReady={hasPat} />
 
           </div>
         </main>
@@ -4371,14 +4464,20 @@ export default function AdminPage() {
   if (!token) return <LoginForm onAuth={handleAuth} />;
 
   if (error && !stats) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p className="text-sm text-rose-600">{error}</p>
+    <div className="min-h-screen flex items-center justify-center bg-bg px-4">
+      <div className="max-w-md rounded-xl border border-rose-200 bg-rose-50 p-5 text-center dark:border-rose-800 dark:bg-rose-950/30">
+        <p className="text-sm font-medium text-rose-700 dark:text-rose-400">{error}</p>
+        <p className="mt-1 text-xs text-rose-600/80 dark:text-rose-400/80">Check the API connection, then reload this page.</p>
+      </div>
     </div>
   );
 
   if (!stats) return (
-    <div className="min-h-screen flex items-center justify-center">
-      <p className="text-sm text-fg-faint animate-pulse">Loading stats…</p>
+    <div className="min-h-screen flex items-center justify-center bg-bg">
+      <div className="flex items-center gap-3 text-sm text-fg-subtle" role="status">
+        <span className="size-4 rounded-full border-2 border-border border-t-accent animate-spin" />
+        Loading dashboard…
+      </div>
     </div>
   );
 

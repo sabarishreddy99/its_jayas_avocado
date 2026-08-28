@@ -13,10 +13,10 @@ export function StatCard({
     indigo: "text-indigo-600 dark:text-indigo-400",
   }[color];
   return (
-    <div className="rounded-xl border border-border bg-surface p-4 sm:p-5 flex flex-col gap-1.5">
-      <p className="text-[10px] font-semibold uppercase tracking-widest text-fg-subtle">{label}</p>
-      <p className={`text-2xl sm:text-3xl font-bold tabular-nums leading-none ${accent}`}>{typeof value === "number" ? fmt(value) : value}</p>
-      {sub && <p className="text-[10px] text-fg-faint leading-snug">{sub}</p>}
+    <div className="min-h-32 border-t border-border-strong bg-surface px-1 py-4 sm:py-5 flex flex-col gap-2">
+      <p className="text-[11px] font-semibold text-fg-muted">{label}</p>
+      <p className={`text-3xl sm:text-[2rem] font-semibold tabular-nums tracking-tight leading-none ${accent}`}>{typeof value === "number" ? fmt(value) : value}</p>
+      {sub && <p className="mt-auto text-[11px] text-fg-subtle leading-snug">{sub}</p>}
     </div>
   );
 }

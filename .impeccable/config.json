@@ -1,0 +1,14 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "bounce-easing",
+        "value": "animate-bounce",
+        "createdAt": "2026-08-28T14:34:24.474Z",
+        "reason": "Accessibility requirement: this selector disables an existing bounce animation under prefers-reduced-motion; it does not create bounce motion."
+      }
+    ]
+  }
+}
