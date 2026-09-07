@@ -20,7 +20,7 @@ export default function ExperiencePage() {
   const isActive = experience.some((e) => e.end === "Present");
 
   return (
-    <div className="mx-auto w-full max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl px-4 sm:px-6 xl:px-8 py-12 sm:py-16">
+    <div className="mx-auto w-full max-w-4xl lg:max-w-5xl xl:max-w-6xl px-4 sm:px-6 xl:px-8 py-12 sm:py-16">
 
       {/* Header */}
       <header className="mb-12 sm:mb-16 relative">
@@ -80,38 +80,43 @@ export default function ExperiencePage() {
                   <path d="M1 9 L9 9 L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
 
-                {/* Header row */}
-                <div className="flex flex-wrap items-start justify-between gap-2 mb-3">
-                  <div>
-                    <h2 className="text-base font-bold text-fg leading-tight">{job.role}</h2>
-                    <p className="text-sm font-medium text-accent">{job.company}</p>
-                  </div>
-                  <div className="text-right shrink-0">
-                    <span className="inline-block rounded-full border border-border px-3 py-0.5 text-[11px] font-medium text-fg-muted">
-                      {job.start} – {job.end}
-                    </span>
-                    <p className="text-[11px] text-fg-faint mt-0.5">{job.location}</p>
-                  </div>
-                </div>
+                {/* Meta column beside the bullets once the card is wide enough */}
+                <div className="lg:grid lg:grid-cols-[14rem_minmax(0,1fr)] xl:grid-cols-[16rem_minmax(0,1fr)] lg:gap-x-8 xl:gap-x-10">
+                  <div className="lg:self-start">
+                    {/* Header row */}
+                    <div className="flex flex-wrap items-start justify-between gap-2 mb-3 lg:block lg:mb-0">
+                      <div>
+                        <h2 className="text-base font-bold text-fg leading-tight">{job.role}</h2>
+                        <p className="text-sm font-medium text-accent">{job.company}</p>
+                      </div>
+                      <div className="text-right shrink-0 lg:text-left lg:mt-3">
+                        <span className="inline-block rounded-full border border-border px-3 py-0.5 text-[11px] font-medium text-fg-muted">
+                          {job.start} – {job.end}
+                        </span>
+                        <p className="text-[11px] text-fg-faint mt-0.5">{job.location}</p>
+                      </div>
+                    </div>
 
-                {job.tech && (
-                  <div className="flex flex-wrap gap-1.5 mb-4">
-                    {job.tech.split(", ").map((t) => (
-                      <span key={t} className="rounded-full border border-border px-2.5 py-0.5 text-[10px] font-medium text-fg-subtle tracking-wide">
-                        {t}
-                      </span>
+                    {job.tech && (
+                      <div className="flex flex-wrap gap-1.5 mb-4 lg:mb-0 lg:mt-4">
+                        {job.tech.split(", ").map((t) => (
+                          <span key={t} className="rounded-full border border-border px-2.5 py-0.5 text-[10px] font-medium text-fg-subtle tracking-wide">
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  <ul className="space-y-2.5 max-w-[76ch] lg:mt-0">
+                    {job.bullets.map((b, j) => (
+                      <li key={j} className="flex items-start gap-2.5 text-sm text-fg-muted leading-relaxed">
+                        <span className="mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-border-strong" />
+                        <span className="min-w-0 break-words">{b}</span>
+                      </li>
                     ))}
-                  </div>
-                )}
-
-                <ul className="space-y-2.5">
-                  {job.bullets.map((b, j) => (
-                    <li key={j} className="flex gap-2.5 text-sm text-fg-muted leading-relaxed max-w-[72ch]">
-                      <span className="mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full bg-border-strong" />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
+                  </ul>
+                </div>
               </div>
             </ScrollReveal>
           </li>

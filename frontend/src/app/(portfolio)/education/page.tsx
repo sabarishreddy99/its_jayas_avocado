@@ -20,7 +20,7 @@ export default function EducationPage() {
   const gradYear     = primaryEdu?.end?.split(" ").pop() ?? "";
 
   return (
-    <div className="mx-auto w-full max-w-4xl lg:max-w-5xl xl:max-w-6xl 2xl:max-w-7xl px-4 sm:px-6 xl:px-8 py-12 sm:py-16">
+    <div className="mx-auto w-full max-w-4xl lg:max-w-5xl xl:max-w-6xl px-4 sm:px-6 xl:px-8 py-12 sm:py-16">
 
       {/* Header */}
       <header className="mb-12 sm:mb-16 relative">
@@ -85,54 +85,59 @@ export default function EducationPage() {
                   <path d="M1 9 L9 9 L9 1" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
 
-                {/* Top row: institution + period */}
-                <div className="flex flex-wrap items-start justify-between gap-3 mb-1">
-                  <div>
-                    <h2 className="text-base font-bold text-fg leading-tight">
-                      {edu.institution}
-                    </h2>
-                    <p className="text-xs text-fg-faint mt-0.5">{edu.school}</p>
-                  </div>
-                  <div className="flex flex-col items-end gap-1 flex-shrink-0">
-                    <span className="rounded-full border border-border px-3 py-0.5 text-[11px] font-medium text-fg-muted whitespace-nowrap">
-                      {edu.start} – {edu.end}
-                    </span>
-                    {edu.gpa && (
-                      <span className="rounded-sm bg-surface-raised border border-border px-3 py-0.5 text-[11px] font-semibold text-fg whitespace-nowrap">
-                        GPA {edu.gpa}
+                {/* Meta column beside the highlights once the card is wide enough */}
+                <div className={`lg:grid lg:gap-x-8 xl:gap-x-10 ${edu.highlights && edu.highlights.length > 0 ? "lg:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[17rem_minmax(0,1fr)]" : ""}`}>
+                  <div className="lg:self-start">
+                    {/* Top row: institution + period */}
+                    <div className="flex flex-wrap items-start justify-between gap-3 mb-1 lg:block lg:mb-0">
+                      <div>
+                        <h2 className="text-base font-bold text-fg leading-tight">
+                          {edu.institution}
+                        </h2>
+                        <p className="text-xs text-fg-faint mt-0.5">{edu.school}</p>
+                      </div>
+                      <div className="flex flex-col items-end gap-1 flex-shrink-0 lg:flex-row lg:flex-wrap lg:items-center lg:mt-3">
+                        <span className="rounded-full border border-border px-3 py-0.5 text-[11px] font-medium text-fg-muted whitespace-nowrap">
+                          {edu.start} – {edu.end}
+                        </span>
+                        {edu.gpa && (
+                          <span className="rounded-sm bg-surface-raised border border-border px-3 py-0.5 text-[11px] font-semibold text-fg whitespace-nowrap">
+                            GPA {edu.gpa}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Degree + location row */}
+                    <div className="flex flex-wrap items-center gap-3 mt-3 mb-1 lg:mb-0">
+                      <p className="text-sm font-semibold text-accent">
+                        {edu.degree}, {edu.field}
+                      </p>
+                      <span className="flex items-center gap-1 text-[11px] text-fg-faint">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="flex-shrink-0">
+                          <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
+                          <circle cx="12" cy="10" r="3"/>
+                        </svg>
+                        {edu.location}
                       </span>
-                    )}
+                    </div>
                   </div>
-                </div>
 
-                {/* Degree + location row */}
-                <div className="flex flex-wrap items-center gap-3 mt-3 mb-1">
-                  <p className="text-sm font-semibold text-accent">
-                    {edu.degree}, {edu.field}
-                  </p>
-                  <span className="flex items-center gap-1 text-[11px] text-fg-faint">
-                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
-                      <circle cx="12" cy="10" r="3"/>
-                    </svg>
-                    {edu.location}
-                  </span>
+                  {/* Highlights */}
+                  {edu.highlights && edu.highlights.length > 0 && (
+                    <ul className="mt-4 space-y-2.5 border-t border-border-subtle pt-4 max-w-[76ch] lg:mt-0 lg:border-t-0 lg:pt-0">
+                      {edu.highlights.map((h, j) => {
+                        const isAward = h.toLowerCase().includes("award") || h.toLowerCase().includes("outstanding") || h.toLowerCase().includes("winner");
+                        return (
+                          <li key={j} className="flex items-start gap-2.5 text-sm text-fg-muted leading-relaxed">
+                            <span className={`mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full ${isAward ? "bg-fg" : "bg-border-strong"}`} />
+                            <span className="min-w-0 break-words">{isAward ? <span className="font-medium text-fg">{h}</span> : h}</span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
                 </div>
-
-                {/* Highlights */}
-                {edu.highlights && edu.highlights.length > 0 && (
-                  <ul className="mt-4 space-y-2.5 border-t border-border-subtle pt-4">
-                    {edu.highlights.map((h, j) => {
-                      const isAward = h.toLowerCase().includes("award") || h.toLowerCase().includes("outstanding") || h.toLowerCase().includes("winner");
-                      return (
-                        <li key={j} className="flex items-start gap-2.5 text-sm text-fg-muted leading-relaxed max-w-[72ch]">
-                          <span className={`mt-[7px] h-1.5 w-1.5 flex-shrink-0 rounded-full ${isAward ? "bg-fg" : "bg-border-strong"}`} />
-                          <span>{isAward ? <span className="font-medium text-fg">{h}</span> : h}</span>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
               </div>
             </div>
           ))}
