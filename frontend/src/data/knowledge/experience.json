@@ -4,12 +4,15 @@
     "role": "ML Software Engineer",
     "start": "Jun 2025",
     "end": "Present",
-    "location": "New York, NY",
-    "description": "Building GeneCart, AI-powered genomics tooling at NYU.",
-    "tech": "LangGraph, Machine Learning, PyTorch, Python, AWS, FastAPI, React, TypeScript, PostgreSQL",
+    "location": "New York, NY (Remote)",
+    "description": "Building GeneCart, an AI-assisted search and discovery platform for genomics researchers, and owning it end to end across the API, the agent layer, the data model, and the AWS infrastructure under it.",
+    "tech": "Python, FastAPI, PyTorch, LangGraph, PostgreSQL, pgvector, React, TypeScript, AWS, Kubernetes, Terraform, Ansible",
     "bullets": [
-      "Building GeneCart, an AI-assisted genomics discovery platform, owning the agent/LLM layer with LangGraph and PyTorch to make genomic data exploration actionable for researchers.",
-      "Designing the full-stack delivery path, FastAPI services, a React/TypeScript frontend, and PostgreSQL on AWS and Kubernetes."
+      "- Embedded with researchers to turn open-ended exploration needs into a shipped product, running discovery directly with scientists rather than working from a scoped backlog.",
+      "- Built the agent layer on LangGraph over FastAPI and pgvector, scoping the model to a fixed set of least-privilege server-side tools so interpreted intent can never issue an unbounded or unauthorized write, with a human retaining final authority on every mutation of research data.",
+      "- Designed the API contracts and normalized PostgreSQL schemas, specifying request validation, pagination behavior, and documented error responses so the frontend and the agent layer both build against one interface.",
+      "- Shipped the researcher-facing surface in React and TypeScript with real loading and error states, so scientists complete genomic exploration without an engineer in the loop.",
+      "- Provision the AWS footprint with Terraform modules and Ansible playbooks, so environments rebuild reproducibly from version control instead of by hand."
     ]
   },
   {
@@ -18,14 +21,16 @@
     "start": "Sep 2024",
     "end": "May 2025",
     "location": "New York, NY",
-    "description": "Led engineering of a production Multi-Agent research discovery platform for NYU's research department.",
-    "tech": "Python, LangGraph, Llama 3.1, FastAPI, Node.js, AWS ECS, Kubernetes, Redis, TypeScript",
+    "description": "Owned the search and agent platform for a research discovery product used daily across institutions, from prototype through production, and the shared services other teams built on top of it.",
+    "tech": "Python, LangGraph, PyTorch, Llama 3.1 70B, BGE-M3, Elasticsearch, FastAPI, Node.js, AsyncIO, Redis, AWS ECS, Kubernetes, Jenkins, Datadog, Grafana",
     "bullets": [
-      "Architected a production Multi-Agent Research Discovery Engine (LangGraph + Llama 3.1 70B) that semantically maps global researcher collaboration networks by indexing millions of papers from Elsevier's (Science Direct/Scopus), enabling cross-institutional discovery at a scale previously requiring manual curation.",
-      "Improved scientific query accuracy by 40% by engineering a Multi-Agent Search Router with hybrid retrieval, combining BGE-M3 dense embeddings with Reciprocal Rank Fusion (RRF) to resolve ambiguous cross-domain nomenclature lookups.",
-      "Sustained 99.9% uptime at 3,000+ RPS by building a horizontally scaled async pipeline (Node.js + FastAPI on AWS ECS) with fault-isolated workers and circuit-breaker patterns.",
-      "Reduced P99 retrieval latency by 78% (450ms to <100ms) by designing a Write-Through Redis caching strategy for multi-hop Chain-of-Retrieval queries across chained LangGraph agent calls.",
-      "Cut deployment lead times by 65% by owning the full CI/CD lifecycle, containerizing stateful LLM workloads on Kubernetes with zero-downtime rolling deploys."
+      "- Architected a production multi-agent platform on LangGraph serving self-hosted Llama 3.1 70B, chaining retrieval and tool-calling agents over millions of records and taking it from prototype to daily cross-institutional use.",
+      "- Owned the search backend, indexing millions of records into Elasticsearch with custom mappings and analyzers and serving multiple product surfaces through the Query DSL with faceted aggregations.",
+      "- Raised answer quality 40% with hybrid retrieval that fused BGE-M3 dense embeddings and BM25 lexical scoring through Reciprocal Rank Fusion, graded before and after against held-out query sets on NDCG@10 and precision@k, then regression-tested on every prompt change.",
+      "- Engineered query understanding with named entity recognition, entity linking, and query expansion to resolve ambiguous cross-domain nomenclature, then routed queries to whichever retrieval strategy scored best per intent class.",
+      "- Cut P99 latency 78%, from 450ms to under 100ms, and per-request compute 60%, by profiling the request path, parallelizing fan-out with AsyncIO behind per-upstream timeouts, and adding a write-through Redis cache.",
+      "- Held 99.9% uptime at 3,000+ RPS through 3x load spikes with circuit-breaker isolation and backpressure, and made failing multi-hop tool-call chains reproducible with distributed tracing.",
+      "- Built the golden-path service templates, adapters, and deployment standards later work was built on, and owned CI/CD on Kubernetes with automated test gates and zero-downtime blue-green deploys, cutting deployment lead time 65%."
     ]
   },
   {
@@ -48,12 +53,12 @@
     "start": "Sep 2024",
     "end": "May 2025",
     "location": "New York, NY",
-    "description": "TA across two graduate courses supporting 50+ students each semester.",
-    "tech": "Python, Jupyter, ML pipelines",
+    "description": "Teaching assistant for two graduate courses, Machine Learning and Data Structures and Algorithms, with 50+ students in each.",
+    "tech": "Python, Jupyter, machine learning, algorithms, mentoring",
     "bullets": [
-      "Mentored 50+ graduate students on Distributed System design patterns and algorithmic efficiency (Big O optimization); conducted code reviews for scalable ML pipeline implementations.",
-      "Collaborated with faculty to design assignments on real-world ML workflows including data preprocessing pipelines and model evaluation metrics.",
-      "Wrote Python scripts to automate grading of Jupyter notebooks, reducing feedback turnaround time by 40%."
+      "- Reviewed ML pipeline code for graduate students each week, giving written feedback on modeling and engineering decisions.",
+      "- Automated grading in Python, cutting feedback turnaround 40%.",
+      "- Held office hours and translated dense material for students from non-CS backgrounds, which is where I learned to explain technical tradeoffs to people who do not share my context."
     ]
   },
   {
@@ -62,14 +67,15 @@
     "start": "Jul 2021",
     "end": "Aug 2023",
     "location": "Bengaluru, India",
-    "description": "Embedded at Shell PLC, building fault-tolerant data infrastructure for global maritime energy logistics.",
-    "tech": "Java, Apache Kafka, Salesforce, Apex, LWC, PostgreSQL, AWS S3",
+    "description": "Deployed for two years as the external engineering partner to Shell PLC, a Fortune 50 client, on a professional-services engagement. Ran discovery on ambiguous operational requirements and drove projects with the client's engineering and operations stakeholders from scoping through production rollout.",
+    "tech": "Java, Spring Boot, Apache Kafka, PostgreSQL, Salesforce, AWS S3, Docker, Python, Spark, Databricks, ETL",
     "bullets": [
-      "Delivered zero data-loss maritime telemetry for Shell PLC by architecting a fault-tolerant Apache Kafka pipeline processing 115GB/day of extraction and shipment data across 200+ offshore crude oil stations in Brazil.",
-      "Reduced support ticket volume by 35% across 500+ vendors by launching a Self-Service Portal with automated credential lifecycle management and real-time KPI dashboards.",
-      "Increased system fault tolerance by 39% by decomposing a legacy monolithic Salesforce integration into event-driven Apex Async Micro-functions, eliminating cascading failures.",
-      "Reduced production incidents by 25% by engineering a defensive ETL validation layer that quarantines malformed payloads to an S3 Dead Letter Queue.",
-      "Engineered automated workflows for Shell's Self-Help Portal, integrating cross-platform APIs to reduce ITIL service requests by 45%."
+      "- Delivered zero data-loss ingestion of maritime telemetry from 200+ offshore stations through a fault-tolerant Kafka pipeline processing 115GB/day, holding exactly-once semantics under broker failure with idempotent consumers and dead-letter routing to S3.",
+      "- Traced recurring consumer lag to misconfigured replication factors, then added partition-health hooks, automated rebalancing, and schema-registry governance so producer schema changes could not silently corrupt downstream tables.",
+      "- Split a brittle monolithic integration along domain boundaries into event-driven services communicating over Kafka topics, removing cascading cross-domain failures and improving fault tolerance 39%.",
+      "- Cut production incidents 25% with an ingestion-time quarantine layer that validated payload shape and routed malformed records to a dead-letter queue with structured metadata for replay.",
+      "- Replaced a manual request queue with a Salesforce-based self-service portal for 500+ external vendors, covering identity self-service, password resets, and account lockout recovery, cutting support tickets 35% and ITIL service requests 45%.",
+      "- Ran downstream batch transformations and scheduled analytics on the telemetry in Spark and Databricks."
     ]
   },
   {
@@ -78,12 +84,13 @@
     "start": "Jan 2020",
     "end": "Jun 2021",
     "location": "Vellore, Tamil Nadu, India",
-    "description": "Built and scaled gradeVITian, a high-traffic progressive web app for academic grade forecasting.",
-    "tech": "PHP, MySQL, JavaScript, SEO",
+    "description": "Built and ran gradeVITian, a consumer web product for students, as sole engineer from idea through production. It is still running six years later.",
+    "tech": "PHP, MySQL, JavaScript, Next.js, FastAPI, PWA, service workers, technical SEO, Core Web Vitals",
     "bullets": [
-      "Engineered a PHP/MySQL backend that scaled to handle 17K+ monthly active users and 20K+ registered accounts.",
-      "Achieved a #2 Google Search ranking via advanced programmatic SEO and optimized frontend rendering for sub-second load times on mobile networks.",
-      "Designed normalized database schemas to ensure data integrity for high-volume grade calculations."
+      "- Took it from idea to 17,000+ monthly active users and 20,000+ accounts by shipping only the workflows students actually asked for.",
+      "- Designed the normalized MySQL schema behind high-volume grade calculations.",
+      "- Reached #2 on Google for the target queries through programmatic SEO, and tuned the app against Core Web Vitals with a PWA and service workers for sub-second mobile loads.",
+      "- Rebuilt it later on Next.js and FastAPI."
     ]
   }
 ]
