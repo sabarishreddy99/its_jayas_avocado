@@ -687,7 +687,7 @@ cd backend  && ruff check src && pytest
 | `GROQ_API_KEY` | `` | Optional — appends Groq free-tier models to the fallback chain |
 | `OPENROUTER_API_KEY` | `` | Optional — appends OpenRouter free-tier models to the fallback chain |
 | `GOOGLE_OAUTH_CLIENT_ID` / `_SECRET` | `` | Google OAuth (Gmail/Calendar/Drive) — connected once via the admin panel |
-| `CALENDAR_ID` / `CALENDAR_TZ` | `primary` / `America/New_York` | Calendar used for book-a-call Freebusy lookups |
+| `CALENDAR_ID` / `CALENDAR_TZ` | `primary` / `America/Chicago` | Calendar used for book-a-call Freebusy lookups |
 | `GV_JWT_SECRET` | `` | **Required in prod** — signs gradeVITian auth tokens (empty = ephemeral dev secret) |
 | `GV_DB_PATH` | `./chroma_db/gradevitian.db` | gradeVITian SQLite; set to `/data/gradevitian.db` on Lightsail |
 | `GV_BASE_URL` | `https://gradevitian.jayaremala.com` | Base URL for gradeVITian password-reset links (override locally) |

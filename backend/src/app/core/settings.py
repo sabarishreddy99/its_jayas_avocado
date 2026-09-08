@@ -69,7 +69,7 @@ class Settings(BaseSettings):
 
     # Google Calendar settings
     calendar_id: str = "primary"
-    calendar_tz: str = "America/New_York"
+    calendar_tz: str = "America/Chicago"
 
     # Deploy identity for the /system dashboard. Railway injects RAILWAY_GIT_COMMIT_SHA;
     # alias lets either DEPLOY_SHA or that var populate it.

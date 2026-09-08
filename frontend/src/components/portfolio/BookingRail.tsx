@@ -38,8 +38,25 @@ interface BookingPayload {
 
 const fetcher = () => apiGet<BookingPayload>("/ai/booking");
 
-/** "America/New_York" → "New York"; already-short values pass through. */
+/** "America/Chicago" → "CST" (or "CDT" in summer), resolved from the zone
+ *  itself so it never drifts out of sync with daylight saving.
+ *
+ *  The city fallback is deliberately kept for zones with no short name: the
+ *  IANA city is not always the one the reader expects — "America/Chicago" is
+ *  the correct zone for Dallas, but printing "Chicago" to a visitor just
+ *  raises a question the abbreviation answers.
+ *
+ *  Safe against hydration: slots only ever arrive from a client-side fetch,
+ *  so this never runs during the static render. */
 function tzLabel(tz: string): string {
+  try {
+    const name = new Intl.DateTimeFormat("en-US", { timeZone: tz, timeZoneName: "short" })
+      .formatToParts(new Date())
+      .find((p) => p.type === "timeZoneName")?.value;
+    if (name) return name;
+  } catch {
+    /* unknown zone — fall through to the city */
+  }
   return tz.split("/").pop()?.replace(/_/g, " ") ?? tz;
 }
 

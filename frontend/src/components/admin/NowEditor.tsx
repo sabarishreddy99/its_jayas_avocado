@@ -35,7 +35,7 @@ const FIELDS: { key: keyof Omit<NowBlock, "updated">; label: string; placeholder
   {
     key: "location",
     label: "Location",
-    placeholder: "e.g. New York, NY",
+    placeholder: "e.g. Dallas, TX",
   },
 ];
 

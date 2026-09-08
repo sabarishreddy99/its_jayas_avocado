@@ -13,8 +13,18 @@ export interface BookingCardData {
   slots: BookingSlot[];
 }
 
+/** "America/Chicago" → "CST" / "CDT", resolved from the zone so it tracks
+ *  daylight saving on its own. Falls back to the IANA city for zones with no
+ *  short name. Mirrors `tzLabel` in BookingRail. */
 function tzLabel(tz: string): string {
-  // "America/New_York" → "New York"; "New_York" → "New York"
+  try {
+    const name = new Intl.DateTimeFormat("en-US", { timeZone: tz, timeZoneName: "short" })
+      .formatToParts(new Date())
+      .find((p) => p.type === "timeZoneName")?.value;
+    if (name) return name;
+  } catch {
+    /* unknown zone — fall through to the city */
+  }
   return tz.split("/").pop()?.replace(/_/g, " ") ?? tz;
 }
 

@@ -10,7 +10,7 @@ const SECTIONS = [
   { id: "why",           label: "Kavali"        },
   { id: "gradevitian",   label: "Vellore"       },
   { id: "projects",      label: "Offshore & NYU" },
-  { id: "creed",         label: "New York"      },
+  { id: "creed",         label: "Dallas"        },
   { id: "still-running", label: "Still Running" },
   { id: "opinions",      label: "Where I Stand" },
   { id: "skills",        label: "Craft"         },

@@ -9,7 +9,7 @@ const API_URL   = `https://api.github.com/repos/${REPO}/contents/${FILE_PATH}`;
 const PAT_KEY   = "avocado_github_pat";
 
 const WORK_TYPES = ["Full-time", "Part-time", "Contract", "Freelance"];
-const LOCATIONS  = ["Remote", "NYC", "Hybrid", "On-site"];
+const LOCATIONS  = ["Remote", "Dallas", "Hybrid", "On-site"];
 
 interface Availability {
   open: boolean;
@@ -31,7 +31,7 @@ export default function AvailabilityEditor() {
   const [open, setOpen]           = useState(true);
   const [label, setLabel]         = useState("Available");
   const [types, setTypes]         = useState<string[]>(["Full-time"]);
-  const [locations, setLocations] = useState<string[]>(["Remote", "NYC"]);
+  const [locations, setLocations] = useState<string[]>(["Remote", "Hybrid"]);
 
   function savePat(value: string) {
     localStorage.setItem(PAT_KEY, value.trim());
@@ -54,7 +54,7 @@ export default function AvailabilityEditor() {
       setOpen(avail.open ?? true);
       setLabel(avail.label ?? "Available");
       setTypes(avail.types ?? ["Full-time"]);
-      setLocations(avail.locations ?? ["Remote", "NYC"]);
+      setLocations(avail.locations ?? ["Remote", "Hybrid"]);
       setLoaded(true);
     } catch (e: unknown) {
       setResult({ ok: false, message: `Error: ${(e as Error).message}` });

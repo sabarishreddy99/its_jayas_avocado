@@ -71,7 +71,7 @@ const jsonLd = {
     "FastAPI", "LangGraph", "Edge AI", "LLM Inference", "Python",
   ],
   award: profile.award,
-  address: { "@type": "PostalAddress", addressLocality: "New York", addressRegion: "NY", addressCountry: "US" },
+  address: { "@type": "PostalAddress", addressLocality: "Dallas", addressRegion: "TX", addressCountry: "US" },
 };
 
 /** Wrap standalone numbers (optionally with unit suffix) in mono-bold spans.
@@ -779,7 +779,7 @@ export default function PortfolioHome() {
         </Chapter>
       )}
 
-      {/* ── 04 · New York, 2026 ────────────────────────────────────────────
+      {/* ── 04 · Dallas, 2026 ──────────────────────────────────────────────
           Opens the story rather than decorating the hero. This is the claim
           the rest of the page is evidence for, so it goes first and it goes
           in full at every viewport. */}
@@ -787,7 +787,7 @@ export default function PortfolioHome() {
         <Chapter
           n="04"
           label={hope.eyebrow ?? "What I optimize for"}
-          place="New York"
+          place="Dallas"
           year="2026"
           measure="hybrid retrieval · a public MCP server · live traces at /system"
           deck="The reason the rest of this page exists."
