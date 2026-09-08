@@ -25,6 +25,7 @@ import OriginStory from "@/components/portfolio/OriginStory";
 import Signature from "@/components/portfolio/Signature";
 import HopeMolecules from "@/components/portfolio/HopeMolecules";
 import HeroDoodleField from "@/components/portfolio/HeroDoodleField";
+import GitHubActivity from "@/components/portfolio/GitHubActivity";
 import { experience } from "@/data/experience";
 
 export const metadata = {
@@ -50,7 +51,7 @@ const jsonLd = {
   jobTitle: "Software Engineer",
   description:
     "Software Engineer specializing in Agentic AI, distributed systems, and production ML infrastructure. Qualcomm Edge AI Hackathon Winner. NYU Tandon CS.",
-  email: "jr6421@nyu.edu",
+  email: profile.email,
   sameAs: [
     "https://linkedin.com/in/jayasabarishreddyr",
     "https://github.com/sabarishreddy99",
@@ -69,17 +70,21 @@ const jsonLd = {
     "Agentic AI", "Distributed Systems", "Machine Learning", "RAG",
     "FastAPI", "LangGraph", "Edge AI", "LLM Inference", "Python",
   ],
-  award: "Qualcomm Edge AI Hackathon Winner",
+  award: profile.award,
   address: { "@type": "PostalAddress", addressLocality: "New York", addressRegion: "NY", addressCountry: "US" },
 };
 
-/** Wrap standalone numbers (optionally with unit suffix) in mono-bold spans */
+/** Wrap standalone numbers (optionally with unit suffix) in mono-bold spans.
+ *
+ *  The leading (^|[^A-Za-z0-9.]) guard is what keeps "P99" and "Llama 3.1 70B"
+ *  intact: without it the split fires mid-token and the resume paragraph
+ *  rendered "cut P**99** RAG latency", breaking the word in two typefaces. */
 function HighlightNumbers({ text }: { text: string }) {
-  const parts = text.split(/(\d+(?:\.\d+)?(?:%|ms|GB|TB|MB|K\+?|M\+?|x|\+)?)/g);
+  const parts = text.split(/(?:^|(?<=[^A-Za-z0-9.]))(\d+(?:\.\d+)?(?:%|ms|GB|TB|MB|K\+?|M\+?|x|\+)?)(?![A-Za-z0-9])/g);
   return (
     <>
       {parts.map((part, i) =>
-        /^\d/.test(part) ? (
+        i % 2 === 1 ? (
           <span key={i} className="font-mono font-bold text-fg">{part}</span>
         ) : (
           part
@@ -179,6 +184,36 @@ function shortCompany(name: string) {
   return name.split(/\s+[–-]\s+|\s+\(/)[0].trim();
 }
 
+/** The same split, keeping the half `shortCompany` throws away.
+ *
+ *  The qualifier is not decoration: "Wipro Limited (Client: Shell PLC)" loses
+ *  the only recognisable name on the line if it is trimmed to "Wipro Limited",
+ *  and Shell is precisely the signal a reviewer is scanning for. */
+function splitCompany(name: string) {
+  const short = shortCompany(name);
+  const qualifier = name.slice(short.length).replace(/^[\s–\-(]+|[)\s]+$/g, "").trim();
+  return { short, qualifier: qualifier || null };
+}
+
+/** The home page's selected experience — curated via the `featured` flag in
+ *  experience.json, capped at four. Falls back to the most recent role at each
+ *  of the three most recent employers if nothing is flagged, so the strip
+ *  cannot silently empty itself if the flags are ever dropped. */
+function selectedExperience() {
+  const flagged = experience.filter((e) => e.featured);
+  if (flagged.length > 0) return flagged.slice(0, 4);
+
+  const seen = new Set<string>();
+  return experience
+    .filter((e) => {
+      const c = e.company.trim();
+      if (seen.has(c)) return false;
+      seen.add(c);
+      return true;
+    })
+    .slice(0, 3);
+}
+
 /** Career path derived from the experience data — deduped by company,
  *  most-recent first. Auto-updates whenever experience.json changes. */
 function careerPath() {
@@ -221,6 +256,7 @@ export default function PortfolioHome() {
   const hope = profile.hopeMolecules;
   const shipped = profile.shipped ?? [];
   const gradevitianNote = projects.find((p) => p.title === "gradeVITian")?.note;
+  const selectedRoles = selectedExperience();
 
   return (
     <div className="w-full">
@@ -291,6 +327,53 @@ export default function PortfolioHome() {
                 baseDelay={120}
               />
 
+              {/* 2b · The six-second answer.
+                  The headline is written for voice and says "things" on
+                  purpose. A reviewer gives the first screen a few seconds and
+                  used to leave it knowing only that he builds something — the
+                  discipline sat in the smallest type on the page and the award
+                  appeared nowhere above the fold. This is the byline under the
+                  title: what he does, and where it held up. Same facts as
+                  `previous` + `award`, no new claims. */}
+              {(hero?.discipline || (hero?.proof?.length ?? 0) > 0) && (
+                <div
+                  className="animate-fade-up flex flex-col gap-2.5"
+                  style={{ animationDelay: "170ms" }}
+                >
+                  {hero?.discipline && (
+                    <p className="text-[0.9375rem] font-medium leading-snug text-fg-muted text-pretty">
+                      {hero.discipline}
+                    </p>
+                  )}
+                  {hero?.proof && hero.proof.length > 0 && (
+                    <ul className="flex flex-wrap items-center gap-x-2 gap-y-1.5">
+                      {hero.proof.map((item) => {
+                        const isAward = item === profile.award || /hackathon|winner|award/i.test(item);
+                        return (
+                          <li key={item}>
+                            <span
+                              className={`inline-flex items-center gap-1 rounded-full border px-2.5 py-[3px] text-[11px] font-medium tracking-wide ${
+                                isAward
+                                  ? "border-accent/30 bg-accent-light text-accent"
+                                  : "border-border bg-surface text-fg-subtle"
+                              }`}
+                            >
+                              {isAward && (
+                                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                  strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden className="shrink-0">
+                                  <path d="M8 21h8M12 17v4M6 4h12v5a6 6 0 0 1-12 0zM6 6H3v2a3 3 0 0 0 3 3M18 6h3v2a3 3 0 0 0-3 3" />
+                                </svg>
+                              )}
+                              {isAward ? `${item} — Winner` : item}
+                            </span>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
+              )}
+
               {/* 3 · The story — Garamond, the one voice the UI can't produce */}
               <div className="animate-fade-up flex flex-col gap-3" style={{ animationDelay: "200ms" }}>
                 {hero?.lead && (
@@ -342,8 +425,15 @@ export default function PortfolioHome() {
               <div className="animate-fade-up flex flex-col gap-3.5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3" style={{ animationDelay: "300ms" }}>
                 <div className="flex flex-col gap-1.5">
                   <div className="flex flex-wrap items-center gap-x-4 gap-y-2.5">
+                    {/* The button said "Schedule a call" and scrolled to a
+                        message form — the label promised a calendar and the
+                        click delivered a textarea. booking_url was already in
+                        the data and used only inside the chatbot. */}
                     <a
-                      href="#contact"
+                      href={profile.booking_url || "#contact"}
+                      {...(profile.booking_url
+                        ? { target: "_blank", rel: "noopener noreferrer" }
+                        : {})}
                       className="group inline-flex items-center justify-center gap-2 rounded-full bg-fg px-7 py-3 text-sm font-medium text-bg transition-opacity duration-200 hover:opacity-75"
                     >
                       Schedule a call
@@ -360,9 +450,20 @@ export default function PortfolioHome() {
                       Ask Avocado
                     </Link>
                   </div>
-                  {hero?.avocadoNote && (
-                    <p className="text-[11px] text-fg-faint max-w-[42ch]">{hero.avocadoNote}</p>
-                  )}
+                  {/* A calendar shouldn't be the only door — keep the form one
+                      click away for anyone not ready to book time. */}
+                  <p className="text-[11px] text-fg-faint max-w-[42ch]">
+                    {hero?.avocadoNote ? `${hero.avocadoNote} ` : ""}
+                    {profile.booking_url && (
+                      <>
+                        Not ready to book?{" "}
+                        <a href="#contact" className="underline decoration-border underline-offset-2 transition-colors hover:text-accent">
+                          Send a message instead
+                        </a>
+                        .
+                      </>
+                    )}
+                  </p>
                 </div>
 
                 <span className="w-px h-5 bg-border shrink-0 hidden sm:inline-block" aria-hidden />
@@ -563,6 +664,51 @@ export default function PortfolioHome() {
             </ScrollReveal>
           )}
 
+          {/* Where it happened. The chapter proved the numbers and the bio
+              claimed the career, but a reviewer who never left the home page
+              saw no employer attached to either — Shell and NYU existed only
+              as chips eight screens further down. Curated to three, one
+              impact line each, per the selected-experience shape. */}
+          {selectedRoles.length > 0 && (
+            <div className="mt-12">
+              <div className="mb-6 flex items-center justify-between gap-4">
+                <h3 className="shrink-0 text-xs font-bold uppercase tracking-[0.2em] text-fg-faint">Where it happened</h3>
+                <Link href="/experience" className="shrink-0 text-xs font-medium text-accent hover:text-accent-hover">
+                  All roles →
+                </Link>
+              </div>
+
+              <ol className="space-y-3">
+                {selectedRoles.map((job, i) => {
+                  const { short, qualifier } = splitCompany(job.company);
+                  return (
+                    <ScrollReveal key={`${job.company}-${job.role}`} delay={i * 70}>
+                      <li className="group rounded-card border border-border bg-surface p-5 transition-colors hover:border-border-strong sm:p-6">
+                        <div className="lg:grid lg:grid-cols-[minmax(0,17rem)_minmax(0,1fr)] lg:gap-x-8">
+                          <div>
+                            <h4 className="text-sm font-bold leading-tight text-fg">{job.role}</h4>
+                            <p className="mt-0.5 text-sm font-medium text-accent">{short}</p>
+                            {qualifier && (
+                              <p className="mt-0.5 text-[0.6875rem] leading-snug text-fg-faint">{qualifier}</p>
+                            )}
+                            <p className="mt-2 font-mono text-[0.6875rem] tabular-nums text-fg-faint">
+                              {job.start} – {job.end}
+                            </p>
+                          </div>
+                          {job.bullets[0] && (
+                            <p className="mt-3 max-w-[76ch] text-sm leading-relaxed text-fg-muted lg:mt-0">
+                              <HighlightNumbers text={job.bullets[0]} />
+                            </p>
+                          )}
+                        </div>
+                      </li>
+                    </ScrollReveal>
+                  );
+                })}
+              </ol>
+            </div>
+          )}
+
           <div className="mt-12 flex items-center justify-between mb-6">
             <h3 className="text-xs font-bold uppercase tracking-[0.2em] text-fg-faint shrink-0">Featured Projects</h3>
             <Link href="/projects" className="text-xs font-medium text-accent hover:text-accent-hover">
@@ -664,6 +810,15 @@ export default function PortfolioHome() {
           nextLabel="What the field taught"
         >
           <StillRunning items={shipped} note={profile.shippedNote} />
+
+          {/* Live GitHub, next to the live counters — the chapter is already
+              the page's "what is up right now" section, so the commit data
+              belongs here rather than in a section of its own. Renders nothing
+              if GitHub is unreachable or rate-limited. */}
+          <div className="mt-10 pt-8 border-t border-border">
+            <GitHubActivity />
+          </div>
+
           <div className="mt-10 pt-8 border-t border-border">
             <SiteVitals />
           </div>

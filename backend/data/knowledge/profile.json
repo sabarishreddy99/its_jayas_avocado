@@ -9,12 +9,12 @@
   "prev_domain": "Energy, Bioinformatics, Scientific Research",
   "interested_domain": "Health Care, Finance, Consumer Space (Entertainment and Retail)",
   "location": "United States",
-  "email": "jr6421@nyu.edu",
+  "email": "sabarishreddyrj@gmail.com",
   "phone": "+1 (516) 907-8727",
   "github": "https://github.com/sabarishreddy99",
   "linkedin": "https://linkedin.com/in/jayasabarishreddyr",
   "resume": "https://drive.google.com/drive/u/0/folders/1vm35z-6VQjtO9A8ZBgCvvSP_7_POPTrV",
-  "booking_url": "https://calendar.app.google/3sScGpHpeSpvPjpSA",
+  "booking_url": "https://calendar.app.google/iepYLuvUV2AvAbQc9",
   "page_experience": "5+ years building production AI & distributed systems.",
   "page_education": "Academic foundations that underpin the systems I build.",
   "page_projects": "Things I've built: production systems, hackathon winners, and side projects.",
@@ -25,6 +25,13 @@
   "page_quotes": "Words that shaped how I think, build, and live. Collected across books, talks, and late-night reading sessions.",
   "hero": {
     "headline": "Hey, I'm Jaya. I build things, then I keep them running.",
+    "discipline": "Software Engineer — AI infrastructure & distributed systems",
+    "proof": [
+      "NYU",
+      "Shell PLC",
+      "Wipro",
+      "Qualcomm Edge AI Hackathon"
+    ],
     "lead": "The first thing I ever shipped was a one-page site for my dad's brick business, in a mid-sized town in India. It brought him real customers during COVID. Nothing I've built since has felt more like the point.",
     "sub": "These days that's AI infrastructure: retrieval pipelines, inference at the edge, telemetry that can't drop a byte. Same job, bigger machines.",
     "signature": "Do hard things!"
@@ -177,5 +184,6 @@
       "label": "Daily Throughput",
       "sub": "Zero data loss"
     }
-  ]
+  ],
+  "award": "Qualcomm Edge AI Hackathon Winner"
 }

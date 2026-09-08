@@ -25,6 +25,13 @@ export interface NowBlock {
 /** Hero copy — the voice of the page, kept in data so it can be edited without a deploy. */
 export interface HeroCopy {
   headline: string;
+  /** The scannable positioning line. The headline is written for voice and
+   *  deliberately says "things"; this is the line that answers "what does he
+   *  actually do" inside the six seconds a reviewer gives the first screen. */
+  discipline?: string;
+  /** Where the work happened — the same facts as `previous` and `award`,
+   *  trimmed to chip length. Credibility, above the fold. */
+  proof?: string[];
   lead: string;
   sub?: string;
   signature?: string;
@@ -104,6 +111,9 @@ export interface Profile {
   summary: string;
   obsession: string;
   previous: string;
+  /** Single recognisable award. Feeds both the hero proof row and the
+   *  schema.org Person block, which used to hardcode it. */
+  award?: string;
   prev_domain: string;
   interested_domain: string;
   location: string;

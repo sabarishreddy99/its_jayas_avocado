@@ -7,7 +7,7 @@ const SITE_URL   = "https://jayaremala.com";
 const SITE_TITLE = "Jaya Sabarish Reddy Remala | Blog";
 const SITE_DESC  = "Notes on AI systems, distributed infrastructure, and software craft.";
 const AUTHOR     = "Jaya Sabarish Reddy Remala";
-const AUTHOR_EMAIL = "jr6421@nyu.edu";
+const AUTHOR_EMAIL = "sabarishreddyrj@gmail.com";
 const API        = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:8000";
 
 function escapeXml(str: string) {

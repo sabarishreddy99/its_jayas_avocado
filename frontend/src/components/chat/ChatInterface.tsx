@@ -374,8 +374,8 @@ export default function ChatInterface() {
             content: isQuota
               ? "Avocado has exhausted all available Gemini AI models for today, the daily quota across the entire fallback chain has been reached.\n\n" +
                 `**Quota resets at ${time}** (in ~${countdown}). After that, everything will be back to normal automatically.\n\n` +
-                "In the meantime, feel free to reach Jaya directly at **jr6421@nyu.edu**."
-              : "Sorry, I ran into an issue generating a response. Please try again or reach Jaya directly at **jr6421@nyu.edu**.",
+                "In the meantime, feel free to reach Jaya directly at **sabarishreddyrj@gmail.com**."
+              : "Sorry, I ran into an issue generating a response. Please try again or reach Jaya directly at **sabarishreddyrj@gmail.com**.",
           },
         ]);
         return;
@@ -386,7 +386,7 @@ export default function ChatInterface() {
         sourcesToNavLinks(ragSources),
         detectNavLinks(text, accumulated),
       );
-      const content = accumulated.trim() || "Sorry, I couldn't generate a response. Please try again or reach Jaya directly at jr6421@nyu.edu.";
+      const content = accumulated.trim() || "Sorry, I couldn't generate a response. Please try again or reach Jaya directly at sabarishreddyrj@gmail.com.";
       const assistantMsg: Message = {
         role: "assistant",
         content,

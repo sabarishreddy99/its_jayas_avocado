@@ -92,7 +92,9 @@ export default function SearchModal({ items }: Props) {
         description: "Toggle appearance", href: "#",
         action: () => setTheme(resolvedTheme === "dark" ? "light" : "dark") } as SearchItem & { action: () => void },
       { type: "action", title: "Book a call",       description: "30-min intro on Google Calendar", href: "#",
-        action: () => window.open(profile.booking_url ?? "https://calendar.app.google/3sScGpHpeSpvPjpSA", "_blank", "noopener") } as SearchItem & { action: () => void },
+        /* No hardcoded fallback: a stale duplicate here would quietly keep
+           sending people to an old calendar after profile.json moved on. */
+        action: () => { if (profile.booking_url) window.open(profile.booking_url, "_blank", "noopener"); } } as SearchItem & { action: () => void },
       { type: "action", title: "Copy link to site", description: "Share jayaremala.com",            href: "#",
         action: () => navigator.clipboard?.writeText("https://jayaremala.com").catch(() => {}) } as SearchItem & { action: () => void },
     ];

@@ -8,6 +8,18 @@
         "value": "animate-bounce",
         "createdAt": "2026-08-28T14:34:24.474Z",
         "reason": "Accessibility requirement: this selector disables an existing bounce animation under prefers-reduced-motion; it does not create bounce motion."
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "1.35rem",
+        "createdAt": "2026-09-08T14:49:58.176Z",
+        "reason": "user confirmed: hero lead is a fluid clamp(1.0625rem, 1.6vw, 1.35rem); DESIGN.md ramp has no fluid equivalent"
+      },
+      {
+        "rule": "design-system-font-size",
+        "value": "13px",
+        "createdAt": "2026-09-08T14:49:58.260Z",
+        "reason": "user confirmed: Resume link sits deliberately between body (0.9375rem) and dateline (0.6875rem)"
       }
     ]
   }

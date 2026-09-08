@@ -66,7 +66,7 @@ const SECTIONS: { heading: string; fields: { key: keyof ProfileFields; label: st
     heading: "Contact & Links",
     fields: [
       { key: "location", label: "Location",  placeholder: "United States" },
-      { key: "email",    label: "Email",     placeholder: "jr6421@nyu.edu" },
+      { key: "email",    label: "Email",     placeholder: "sabarishreddyrj@gmail.com" },
       { key: "phone",    label: "Phone",     placeholder: "+1 (516) …" },
       { key: "linkedin",    label: "LinkedIn URL" },
       { key: "github",      label: "GitHub URL"   },
